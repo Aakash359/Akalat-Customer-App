@@ -27,8 +27,8 @@ export class Step2 extends Component {
     state = {
         data: [
             { id: 1, image: ImagesPath.loginBg },
-            { id: 2, image: ImagesPath.loginBg },
-            { id: 3, image: ImagesPath.loginBg },
+            { id: 2, image: ImagesPath.loginBg1 },
+            { id: 3, image: ImagesPath.loginBg2 },
         ],
     };
     renderItem = ({ item, index }) => {

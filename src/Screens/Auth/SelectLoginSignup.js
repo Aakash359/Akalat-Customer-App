@@ -13,7 +13,7 @@ function SelectLoginSignup() {
         navigate('SignUp');
     };
     return (
-        <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>            
+        <ImageBackground source={ImagesPath.bg} style={styles.imageBachgroundStyle}>            
              <View style={styles.container}>
                <View style={{marginTop:Scale(30),justifyContent:'center',flex:1}}>
                <Image source={ImagesPath.app_logo} style={styles.logoStyle1} />

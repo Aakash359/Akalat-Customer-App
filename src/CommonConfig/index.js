@@ -13,6 +13,7 @@ import {LoadWheel} from './LoadWheel';
 import {ShineLoader} from './ShineLoader';
 import {Alert} from './Alert';
 import {LogoutAlert} from './LogoutAlert';
+import {LocationAlert} from './LocationAlert';
 import {screenWidth, screenHeight} from './HelperFunctions/functions';
 
 export {
@@ -22,6 +23,7 @@ export {
   ShineLoader,
   Alert,
   LogoutAlert,
+  LocationAlert,
   LoadWheel,  
   Colors,
   Scale,

@@ -1,0 +1,157 @@
+import * as React from 'react';
+import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
+import { Colors, Scale, ImagesPath } from '../../CommonConfig';
+
+function HungryNow() {
+    const renderItems = ({ item, index }) => (
+        <View style={styles.cardStyle}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
+                <Text style={styles.headingText}>NeelGiri Restaurant</Text>
+                <Text style={styles.headingText}>1.5km</Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+                <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+                <View >
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Image source={ImagesPath.veg}/>
+                        <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
+                    </View>
+                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }}>Lorem ipsum is simply{'\n'}dummy text of the prinitng</Text>
+                </View>
+            </View>
+            <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
+                <Text style={styles.headingText}>$40.00  <Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through', }}>$100.00</Text>
+                </Text>
+                <View style={styles.addButton}>
+                <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
+              </View></View>
+              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity:3</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between',height:Scale(2), marginVertical:Scale(15) ,backgroundColor:"#E0E0E0"}}>
+                
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+                <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+                <View >
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Image source={ImagesPath.non_veg}/>
+                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
+                    </View>
+                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >Lorem ipsum is simply{'\n'}dummy text of the prinitng</Text>
+                </View>
+            </View>
+            <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
+                <Text style={styles.headingText}>$40.00  <Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal', textDecorationLine:'line-through', }}>$100.00</Text>
+                </Text>
+                <View style={styles.addButton}>
+                <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
+              </View></View>
+              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity:3</Text>
+       
+        </View>
+    );
+
+    return (
+        <View style={styles.container}>
+            <StatusBar
+                translucent={true}
+                backgroundColor={Colors.APPCOLOR}
+                barStyle="light-content"
+            />
+            <View style={styles.headerContainer}>
+                <Image source={ImagesPath.location} style={styles.location} />
+                <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
+                <View style={styles.bottomHeader}>
+                    <Image source={ImagesPath.notification} style={styles.notificationStyle} />
+                </View>
+            </View>
+                <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
+                    <FlatList
+                        data={[0, 1, 2, 3]}
+                        renderItem={renderItems}
+                    />
+                </ImageBackground>
+           
+        </View>
+    );
+}
+export default HungryNow;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Colors.APPCOLOR
+    },
+    headingText:{ fontSize: Scale(18), fontWeight: 'bold' },
+  addButton:{                  
+    height: Scale(33),
+    width: Scale(70),
+    borderColor: Colors.APPCOLOR,
+    borderRadius: 3,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+                },
+ 
+  textStyle: { color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold' },
+    loginInputCont: {
+        flex:1,
+        // top: Scale(-20),
+        paddingTop: Scale(10),
+        paddingBottom: Scale(50),
+        borderTopLeftRadius: Scale(25),
+        borderTopRightRadius: Scale(25),
+        backgroundColor: Colors.WHITE,
+    },
+    backgroundStyle: {
+        width: Scale(100),
+        height: Scale(100),
+        resizeMode: 'stretch',
+        borderRadius: Scale(30),
+        marginRight: Scale(10)
+    },
+
+    notificationStyle: {
+        width: Scale(25),
+        height: Scale(25),
+        resizeMode: 'contain',
+        tintColor: Colors.WHITE,
+        alignSelf: 'flex-end',
+    },
+    bottomHeader: {
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
+        flex: 1
+    },
+    headerContainer: {
+        height: Scale(100),
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: Colors.APPCOLOR,
+        // paddingVertical: Scale(35),
+        paddingHorizontal: Scale(25),
+    },
+    location: {
+        marginRight: Scale(10),
+        width: Scale(25),
+        height: Scale(25),
+        resizeMode: 'contain',
+        tintColor: Colors.WHITE
+    },
+    cardStyle: {
+        elevation: 3,
+        shadowOpacity: 3,
+        height: Scale(480),
+        width: '90%',
+        backgroundColor: '#ffffff',
+        borderWidth: 2,
+        borderColor: "#E0E0E0",
+        marginVertical: Scale(15),
+        padding: Scale(15),
+        alignSelf: 'center',
+        borderRadius: Scale(10)
+    },
+    iconStyle: {
+        color: Colors.APPCOLOR,
+        fontSize: Scale(15),
+        marginHorizontal: Scale(3)
+    },
+});

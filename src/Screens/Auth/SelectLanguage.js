@@ -8,17 +8,13 @@ import {
     Image,
 } from 'react-native';
 import {
-    SafeAreaView,
     SafeAreaInsetsContext,
 } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// assets
+
 import {
-    screenWidth,
-    screenHeight,
     ImagesPath,
     Colors,
-    Fonts,
     Scale,
     FIRST_LAUNCH,
     LOAD_PROPERTIES,
@@ -76,7 +72,7 @@ class SelectLanguage extends Component {
             <SafeAreaInsetsContext.Consumer>
                 {(insets) => (
                     <View style={{ flex: 1 }}>
-                        <ImageBackground source={ImagesPath.background} style={AuthStyle.imageBg}>
+                        <ImageBackground source={ImagesPath.bg} style={{height:'100%',width:"100%",resizeMode:'stretch'}}>
                             <View
                                 style={{
                                     flex: 1,
@@ -127,7 +123,7 @@ class SelectLanguage extends Component {
                                     ]}
                                     onPress={() => this.setState({ languageCode: '1001' })}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Image source={ImagesPath.us} />
+                                        <Image source={ImagesPath.us} style={{height:Scale(30),width:Scale(40) ,resizeMode:'stretch'}} />
                                         <Text style={AuthStyle.languageText}>English</Text>
                                     </View>
 

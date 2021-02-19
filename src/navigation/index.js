@@ -11,9 +11,9 @@ import SelectLoginSignup from '../Screens/Auth/SelectLoginSignup';
 import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import ResetPassword from '../Screens/Auth/ResetPassword';
 import Address from '../Screens/Auth/Address';
+import Home from './stack/HomeStack';
 import Otp from '../Screens/Auth/Otp';
-import HomeStack from './drawer';
-import { Icon,Text } from 'native-base';
+
 const Stack = createStackNavigator();
 function index() {
   return (
@@ -22,6 +22,11 @@ function index() {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -74,11 +79,7 @@ function index() {
           component={Step2}
           options={{headerShown:false}}
          />
-        <Stack.Screen
-          name="Home"
-          component={HomeStack}
-          options={{headerShown: false}}
-        />
+       
       </Stack.Navigator>
     </NavigationContainer>
   );

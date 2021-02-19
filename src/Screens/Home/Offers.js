@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Colors,Scale,} from '../../CommonConfig';
-function Ready() {
+function Offers() {
   return (
     <View style={styles.container}>
-      <Text>Ready Screen</Text>
+      <Text>Offers Screen</Text>
     </View>
   );
 }
-export default Ready;
+export default Offers;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

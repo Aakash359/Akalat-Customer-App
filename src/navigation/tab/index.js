@@ -1,52 +1,88 @@
 import * as React from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import New from '../../Screens/Home/New';
-import Preparing from '../../Screens/Home/Preparing';
-import Ready from '../../Screens/Home/Ready';
-import Past from '../../Screens/Home/Past';
-import {Colors,Scale,} from '../../CommonConfig';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import NearMe from '../../Screens/Home/NearMe';
+import Explore from '../../Screens/Home/Explore';
+import HomeScreen from '../stack/HungryStack';
+import MyAccount from '../../Screens/Home/MyAccount';
+import Card from '../../Screens/Home/Card';
+import ImageIcon from '../../containers/ImageIcon';
 
-const Tab = createMaterialTopTabNavigator();
+import { Scale, Colors, ImagesPath,LocationAlert } from '../../CommonConfig';
+const getOptions = ({tabBarLabel, icon}) => {
+  return {
+    tabBarIcon: ({color}) => <ImageIcon src={icon} tintColor={color} />,
+    tabBarLabel,
+    //headerBackTitle: null,
+    headerBackTitle: ' ',
+  };
+};
+const Tab =  createBottomTabNavigator();
 
 function index() {
   return (
     <Tab.Navigator
-      initialRouteName="New"
+      initialRouteName="HomeScreen"
       tabBarOptions={{
-        inactiveTintColor: Colors.BLACK,
-        activeTintColor: Colors.APPCOLOR,
-        labelStyle: {fontSize:Scale(14), textTransform: 'capitalize'},
-        indicatorStyle: {
-          borderBottomColor:Colors.APPCOLOR,
-          borderBottomWidth: Scale(2),
+        inactiveTintColor: Colors.BORDERCOLOR,
+        activeTintColor: Colors.DARK_RED,
+        labelStyle: {fontSize:Scale(14), textTransform: 'capitalize',marginBottom:5},
+        style: {
+          height: 65,
+          paddingTop: 10,
+          paddingBottom: 10,
+        //  borderTopLeftRadius: 12,
+          //borderTopRightRadius: 12,
         },
+        
       }}>
       <Tab.Screen
-        name="New"
-        component={New}
+        name="NearMe"
+        component={NearMe}
         options={{
-          tabBarLabel: 'New',
+          ...getOptions({
+            tabBarLabel: 'Near Me',
+            icon: ImagesPath.location,
+          }),
         }}
       />
       <Tab.Screen
-        name="Preparing"
-        component={Preparing}
+        name="Explore"
+        component={Explore}
         options={{
-          tabBarLabel: 'Preparing',
+          ...getOptions({
+            tabBarLabel: 'Explore',
+            icon: ImagesPath.search,
+          }),
         }}
       />
       <Tab.Screen
-        name="Ready"
-        component={Ready}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
-          tabBarLabel: 'Ready',
+          ...getOptions({
+            tabBarLabel: 'Hungry Now',
+            icon: ImagesPath.app_logo,
+          }),
+        }}
+      />
+      <Tab.Screen
+        name="Card"
+        component={Card}
+        options={{
+          ...getOptions({
+            tabBarLabel: 'Card',
+            icon: ImagesPath.card,
+          }),
         }}
       />
        <Tab.Screen
-        name="Past"
-        component={Past}
+        name="MyAccount"
+        component={MyAccount}
         options={{
-          tabBarLabel: 'Past',
+          ...getOptions({
+            tabBarLabel: 'My Account',
+            icon: ImagesPath.user,
+          }),
         }}
       />
     </Tab.Navigator>

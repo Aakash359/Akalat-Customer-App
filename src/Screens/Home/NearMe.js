@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Colors,Scale,} from '../../CommonConfig';
-function Preparing() {
+function NearMe() {
   return (
     <View style={styles.container}>
-      <Text>Preparing Screen</Text>
+      <Text>Near me Screen</Text>
     </View>
   );
 }
-export default Preparing;
+export default NearMe;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -8,7 +8,7 @@ function SignUp() {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const redirectToHome = () => {
-        navigate('Home');
+        navigate('Address');
     };
     return (
         <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>

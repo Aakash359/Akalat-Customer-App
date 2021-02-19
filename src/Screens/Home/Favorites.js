@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Colors,Scale,} from '../../CommonConfig';
-function Past() {
+function Favorites() {
   return (
     <View style={styles.container}>
-      <Text>Past Screen</Text>
+      <Text>Favorites Screen</Text>
     </View>
   );
 }
-export default Past;
+export default Favorites;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

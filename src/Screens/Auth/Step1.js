@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
     Image,
     KeyboardAvoidingView,
     ScrollView,
@@ -27,8 +26,8 @@ export class Step1 extends Component {
     state = {
         data: [
             { id: 1, image: ImagesPath.loginBg },
-            { id: 2, image: ImagesPath.loginBg },
-            { id: 3, image: ImagesPath.loginBg },
+            { id: 2, image: ImagesPath.loginBg1 },
+            { id: 3, image: ImagesPath.loginBg2 },
         ],
     };
     renderItem = ({ item, index }) => {
@@ -67,6 +66,9 @@ export class Step1 extends Component {
                                     horizontal={true}
                                     renderItem={this.renderItem}
                                     pagingEnabled={true}
+                                    keyExtractor={(item, index) => {
+                                        return item.id;
+                                      }}
                                     onViewableItemsChanged={this.onViewableItemsChanged}
                                     viewabilityConfig={{
                                         itemVisiblePercentThreshold: 50,
