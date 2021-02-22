@@ -9,6 +9,7 @@ import PlaceOrder from '../../Screens/Home/PlaceOrder';
 import TrackOrder from '../../Screens/Home/TrackOrder';
 import Profile from '../../Screens/Home/Profile';
 import Offers from '../../Screens/Home/Offers';
+import Share from '../../Screens/Home/Share';
 import EditProfile from '../../Screens/Home/EditProfile';
 import Favorites from '../../Screens/Home/Favorites';
 import MyOrders from '../../Screens/Home/MyOrders';
@@ -82,6 +83,12 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="MyOrders"
         component={MyOrders}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="Share"
+        component={Share}       
           options={{ headerShown: false}}
          
       />

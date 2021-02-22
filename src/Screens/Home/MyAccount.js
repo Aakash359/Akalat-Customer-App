@@ -8,7 +8,7 @@ function Profile() {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
   const redirectToEditProfile = () => {
-    navigate('Favorites');
+    navigate('Share');
   };
 
   return (
