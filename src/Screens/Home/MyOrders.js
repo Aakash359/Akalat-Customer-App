@@ -37,7 +37,25 @@ function MyOrders() {
         </View>
     );
     const renderItemPast = ({ item, index }) => (
-       <Text>Post order</Text>
+        <View style={styles.cardStyle}>
+            <View style={{ flexDirection: 'row', }}>
+                <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+                <View><Text style={styles.primaryText}>Fire & Grill</Text>
+                    <Text style={styles.normatText}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
+                </View>
+            </View>
+            <View style={styles.borderStyle} />
+            <Text style={[styles.seconderyText, { marginTop: Scale(-10) }]}>Items</Text>
+            <Text style={styles.itemText}>1 x Jambo Burger</Text>
+            <Text style={styles.itemText}>2 x Sahi Paneer</Text>
+            <Text style={styles.seconderyText}>created on</Text>
+            <Text style={styles.itemText}>Apr 20. 8:10am</Text>
+            <Text style={styles.seconderyText}>Total Amount</Text>
+            <Text style={styles.itemText}>$ 37</Text>
+            <View style={styles.heading}>
+                <Text style={[styles.cancelButton, { backgroundColor: Colors.APPCOLOR }]}>Re Order</Text>
+            </View>
+        </View>
     );
     return (
         <View style={styles.container}>
@@ -47,14 +65,14 @@ function MyOrders() {
             <View style={styles.buttonHeader}>
                 <Text style={styles.headerText}>My Orders </Text>
                 <View style={styles.buttonContainer}>
-                        <Text onPress={onPressChecked} style={checked ? styles.inActiveStyle : styles.textStyle}>Active</Text>
-                        <Text onPress={onPressChecked} style={checked ? styles.textStyle : styles.inActiveStyle}>Past</Text>
-                    </View>
+                    <Text onPress={onPressChecked} style={checked ? styles.inActiveStyle : styles.textStyle}>Active</Text>
+                    <Text onPress={onPressChecked} style={checked ? styles.textStyle : styles.inActiveStyle}>Past</Text>
+                </View>
             </View>
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <FlatList
-                    style={{paddingHorizontal: Scale(20),}}
-                    data={[0, 1, 2, 3]}                                       
+                    style={{ paddingHorizontal: Scale(20), }}
+                    data={[0, 1, 2, 3]}
                     renderItem={checked ? renderItemPast : renderItemsActive}
                     keyExtractor={(item, index) => index.toString()}
                 />
@@ -76,11 +94,32 @@ const styles = StyleSheet.create({
         borderRadius: Scale(20),
         marginRight: Scale(15)
     },
-    heading: { flexDirection: 'row', justifyContent: 'space-between', marginTop: Scale(20), marginBottom: Scale(10) },
-    seconderyText: { color: '#AB8F8E', fontSize: Scale(14), marginTop: Scale(10) },
-    itemText: { color: '#202020', fontSize: Scale(16) },
-    primaryText: { color: Colors.BLACK, fontSize: Scale(20), fontWeight: 'bold' },
-    buttonContainer:{ flexDirection: 'row', borderWidth: Scale(1), borderColor: Colors.WHITE, borderRadius: Scale(26) },
+    heading: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: Scale(20),
+        marginBottom: Scale(10)
+    },
+    seconderyText: {
+        color: '#AB8F8E',
+        fontSize: Scale(14),
+        marginTop: Scale(10)
+    },
+    itemText: {
+        color: '#202020',
+        fontSize: Scale(16)
+    },
+    primaryText: {
+        color: Colors.BLACK,
+        fontSize: Scale(20),
+        fontWeight: 'bold'
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        borderWidth: Scale(1),
+        borderColor: Colors.WHITE,
+        borderRadius: Scale(26)
+    },
     cancelButton: {
         width: '45%',
         height: Scale(40),
@@ -108,7 +147,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: Scale(5)
     },
-    normatText: { color: Colors.BLACK, fontSize: Scale(16), marginTop: Scale(7) },
+    normatText: {
+        color: Colors.BLACK,
+        fontSize: Scale(16),
+        marginTop: Scale(7)
+    },
     buttonStyle: {
         borderRadius: Scale(20),
         height: Scale(40),
@@ -133,27 +176,27 @@ const styles = StyleSheet.create({
         borderRadius: Scale(30),
         paddingHorizontal: Scale(30)
     },
-    textStyle:{        
-        backgroundColor:Colors.WHITE,        
-        borderRadius:Scale(20),
+    textStyle: {
+        backgroundColor: Colors.WHITE,
+        borderRadius: Scale(20),
         width: Scale(100),
         height: Scale(40),
-        textAlignVertical:'center',
-        textAlign:'center',
+        textAlignVertical: 'center',
+        textAlign: 'center',
         color: Colors.APPCOLOR,
         fontSize: Scale(15),
         fontWeight: 'bold'
     },
-    inActiveStyle:{
+    inActiveStyle: {
         width: Scale(100),
         height: Scale(40),
-        borderRadius:Scale(20),
-        textAlignVertical:'center',
-        textAlign:'center',
+        borderRadius: Scale(20),
+        textAlignVertical: 'center',
+        textAlign: 'center',
         color: Colors.WHITE,
         fontSize: Scale(15),
         fontWeight: 'bold'
-    } ,
+    },
     loginInputCont: {
         flex: 1,
         paddingTop: Scale(10),
