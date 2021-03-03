@@ -11,6 +11,7 @@ const ImagesPath = {
   icici: require('../Assets/Images/icici.png'),
   refer: require('../Assets/Images/refer.png'),
   copy: require('../Assets/Images/copy.png'),
+  right_new: require('../Assets/Images/right_new.png'),
   us: require('../Assets/Images/us.png'),
   loginBg: require('../Assets/Images/Group_3350.png'),
   loginBg1: require('../Assets/Images/Slide1.png'),

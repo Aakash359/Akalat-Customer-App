@@ -14,6 +14,9 @@ import EditProfile from '../../Screens/Home/EditProfile';
 import Favorites from '../../Screens/Home/Favorites';
 import MyOrders from '../../Screens/Home/MyOrders';
 import {headerLeftStyle} from '../Helper';
+import Settings from '../../Screens/Home/Settings';
+import ChangePassword from '../../Screens/Home/ChangePassword';
+import ManageAddress  from "../../Screens/Home/ManageAddress";
 import RightButton from '../../containers/RightButton';
 const Stack = createStackNavigator();
 
@@ -89,6 +92,24 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="Share"
         component={Share}       
+          options={{ headerShown: false}}
+         
+      />
+       <Stack.Screen
+        name="Settings"
+        component={Settings}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="ManageAddress"
+        component={ManageAddress}       
           options={{ headerShown: false}}
          
       />
