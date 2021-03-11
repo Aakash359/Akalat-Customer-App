@@ -1,37 +1,56 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, StatusBar, LayoutAnimation,FlatList, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, StatusBar, Switch,FlatList, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath, Fonts } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
-function ManageAddress() {
+function SavedCard() {
+    const [checked, setChecked] = useState(false);
+    const [switchValue, setSwitchValue] = useState(false);
     const [items, setItems] = React.useState([
-        {id:'2',place: 'Home', address: 'HN-256, C block, DLF phase 3, Gurgaon-122016',  },
-        {id:'2', place: 'Work', address: 'HN-256, C block, DLF phase 3, Gurgaon-122016', },
+        {name: 'Anuj Tyagi', cardNo: '1234 XXXX XXXX 5678',  },
+        {name: 'Anuj Tyag', cardNo: '1234 XXXX XXXX 9876', },
     
       ]);
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const redirectToAddress = () => {
-        navigate('Address');
+        navigate('AddNewCard');
     };
+    const onPressChecked = () => {
+        setChecked(!checked);
+    };
+    const toggleSwitch = (value) => {
+        setSwitchValue(value);
+      };
     const renderItems = ({ item, index }) => (
       
         <View style={styles.cardStyle}>
-            <View style={styles.cardHeader}>
+            <View style={styles.nameStyle}>
                 <View>
-                    <Text style={styles.placeText}>{item.place}</Text>
+                    <Text style={styles.nameText}>{item.name}</Text>
                 </View>
                 <View style={{flexDirection:'row',}}>
-                    <Text style={[styles.placeText,{color:Colors.APPCOLOR}]}>Delete  </Text>
-                    <Text style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
+                    <Text style={[styles.nameStyle,{color:Colors.APPCOLOR}]}>Delete  </Text>
+                    <Text style={[styles.nameStyle,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
                 </View>
             </View>
-            <Text style={styles.placeText}>
-                {item.address}
+            <Text style={styles.nameText}>
+                {item.cardNo}
                 </Text>
+                <View style={styles.bottomStyle}>
+                    <Text style={{fontSize:Scale(16),color:'#AB8F8E'}}>Set as default</Text>                
+                <Switch
+              trackColor={{ false: Colors.LIGHTGREY, true: Colors.DARK_RED }}
+              style={{transform: [{scaleX: 1.1}, {scaleY: 1.1}]}}
+              thumbColor={switchValue ? Colors.WHITE : Colors.WHITE}
+              ios_backgroundColor={Colors.GREEN}
+              onValueChange={toggleSwitch}
+              value={switchValue}
+            />
+            </View>
         </View>
     );
-  
+    
     return (
         <View style={styles.container}>
             <StatusBar
@@ -43,8 +62,8 @@ function ManageAddress() {
                 <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
             </View>
             <View style={styles.buttonHeader}>
-                <Text style={styles.headerText}>Manage Address </Text>
-                <Text onPress={redirectToAddress} style={styles.textStyle}>Add New Address</Text>
+                <Text style={styles.headerText}>Saved Cards</Text>
+                <Text onPress={redirectToAddress} style={styles.textStyle}>Add New Card</Text>
             </View>
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
@@ -61,24 +80,27 @@ function ManageAddress() {
         </View>
     );
 }
-export default ManageAddress;
+export default SavedCard;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.APPCOLOR
     },
-    textStyle: {
-        color: Colors.BORDERCOLOR,
-        fontSize: Scale(12),
-        //marginTop: Scale(10)
-    },
-    cardHeader:{
+    nameStyle:{
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
         marginBottom:Scale(10)
     },
-    placeText:{
+    bottomStyle:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+    borderColor:'#00000029',
+    marginTop:Scale(15),
+    paddingTop:Scale(10),
+    borderTopWidth:Scale(1.5)
+},
+    nameText:{
         fontSize:Scale(16),
         fontFamily:Fonts.Bold,
         color:Colors.BLACK
@@ -110,15 +132,12 @@ const styles = StyleSheet.create({
         marginHorizontal: Scale(25),
     },
     textStyle: {
-        // backgroundColor: Colors.WHITE,
         borderRadius: Scale(20),
         borderWidth: Scale(1),
         borderColor: Colors.WHITE,
-        //width: Scale(100),
         paddingHorizontal: Scale(15),
         height: Scale(40),
         textAlignVertical: 'center',
-        //textAlign: 'center',
         color: Colors.WHITE,
         fontSize: Scale(15),
         fontWeight: 'bold'
@@ -134,8 +153,6 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: Scale(20),
-        //marginHorizontal: Scale(25),
-        //marginBottom: Scale(25),
         color: Colors.WHITE
     },
     notificationStyle: {

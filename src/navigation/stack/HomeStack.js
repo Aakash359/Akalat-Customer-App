@@ -16,7 +16,16 @@ import MyOrders from '../../Screens/Home/MyOrders';
 import {headerLeftStyle} from '../Helper';
 import Settings from '../../Screens/Home/Settings';
 import ChangePassword from '../../Screens/Home/ChangePassword';
+import SavedCard from '../../Screens/Home/SavedCard';
+import HelpSupport from '../../Screens/Home/HelpSupport';
+import AboutUs from '../../Screens/Home/AboutUs';
+import PrivacyPolicy from '../../Screens/Home/PrivacyPolicy';
+import TermCondition from '../../Screens/Home/TermCondition';
+import FAQs from '../../Screens/Home/FAQs';
+import Filter from '../../Screens/Home/Filter';
+import Rating from '../../Screens/Home/Rating';
 import ManageAddress  from "../../Screens/Home/ManageAddress";
+import AddNewCard  from "../../Screens/Home/AddNewCard";
 import RightButton from '../../containers/RightButton';
 const Stack = createStackNavigator();
 
@@ -110,6 +119,60 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="ManageAddress"
         component={ManageAddress}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="SavedCard"
+        component={SavedCard}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="HelpSupport"
+        component={HelpSupport}       
+          options={{ headerShown: false}}
+         
+      />
+       <Stack.Screen
+        name="AboutUs"
+        component={AboutUs}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="TermCondition"
+        component={TermCondition}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="FAQs"
+        component={FAQs}       
+          options={{ headerShown: false}}
+         
+      />
+       <Stack.Screen
+        name="AddNewCard"
+        component={AddNewCard}       
+          options={{ headerShown: false}}
+         
+      />
+       <Stack.Screen
+        name="Filter"
+        component={Filter}       
+          options={{ headerShown: false}}
+         
+      />
+       <Stack.Screen
+        name="Rating"
+        component={Rating}       
           options={{ headerShown: false}}
          
       />

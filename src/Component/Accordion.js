@@ -12,7 +12,7 @@ const Accordion = ({item}) => {
     <View>
       <TouchableOpacity style={[styles.row,{borderBottomColor:expanded ? "#fff" : "#E0E0E0"}]} onPress={handleExpanded}>
         <View style={styles.LeftContainer}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title} numberOfLines={1}>{title}</Text>
         </View>
         <View style={styles.RightContainer}>
           <Icon
@@ -43,8 +43,8 @@ export default Accordion;
 const styles = StyleSheet.create({
   button: {
     alignItems: 'flex-start',
-    borderBottomWidth:1,    
-    borderBottomColor:"#E0E0E0",   
+    borderBottomWidth:2,    
+    borderBottomColor:"#00000029",   
     marginHorizontal:Scale(12), 
   },
   title: {
@@ -54,19 +54,20 @@ const styles = StyleSheet.create({
   itemInActive: {
     paddingBottom: Scale(10),
     fontSize: Scale(16),
-    color:Colors.GRAY,
+    color:"#202020",
    // paddingHorizontal:Scale(10),
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth:1, 
-    borderBottomColor:Colors.GRAY,   
-    paddingVertical: Scale(10),
+    borderBottomWidth:2, 
+    borderBottomColor:"#00000029",   
+    paddingVertical: Scale(17.5),
     marginHorizontal: Scale(10),
   },
   LeftContainer: {
     flex: 1,
+    marginRight:Scale(10),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

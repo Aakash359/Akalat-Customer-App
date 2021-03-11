@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView,TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, FlatList,StatusBar, ScrollView,TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
@@ -10,6 +10,9 @@ function HomeScreen() {
   const redirectToHomeMaker = () => {
       navigate('HungryNow');
   };
+  const redirectToFilter = () => {
+    navigate('Filter');
+};
   const redirectToNotification = () => {
     navigate('Notification');
 };
@@ -107,7 +110,7 @@ function HomeScreen() {
         <Image source={ImagesPath.location} style={styles.location} />
         <Text style={{color:Colors.WHITE}}>NH 28,C block DLF Phase 3...</Text>
         <View style={styles.bottomHeader}>
-          <TouchableOpacity onPress={redirectToNotification}>
+          <TouchableOpacity  onPress={redirectToNotification}>
           <Image source={ImagesPath.notification} style={styles.notificationStyle} />
           </TouchableOpacity>
         </View>
@@ -140,10 +143,12 @@ function HomeScreen() {
           <Text style={styles.normalText}>Sort By</Text>
           <Image source={ImagesPath.up} />
         </View>
-        <View style={styles.leftContainer}>
+        
+          <TouchableOpacity style={styles.leftContainer} onPress={redirectToFilter}>
           <Text style={styles.normalText}>Filters</Text>
           <Image source={ImagesPath.filter} />
-        </View>
+          </TouchableOpacity>
+        
       </View>
       <FlatList
         data={[0, 1, 2, 3]}

@@ -1,15 +1,17 @@
 import React,{useState} from 'react';
 import { Text, View, StyleSheet, StatusBar, Switch,ScrollView,Image,TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import { Icon, } from 'native-base';
-import { Colors, Scale, ImagesPath } from '../../CommonConfig';
+import { Colors, Scale, ImagesPath,LogoutAlert } from '../../CommonConfig';
 import { CustomButton } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 function Settings() {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation();  
+  const [logoutModal, setLogoutModal] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
   const navigation = useNavigation();
-  const redirectToEditProfile = () => {
-    navigate('Share');
+  const redirectToLogin = () => {
+    navigate('Login');
+    setLogoutModal(false);
   };
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
@@ -17,8 +19,8 @@ function Settings() {
   const [data, setData] = React.useState([
     { name: 'Change Password', screenName: 'ChangePassword' },
     { name: 'Manage Address', screenName: 'ManageAddress' },
-    { name: 'Saved Cards', screenName: 'Favorites' },
-    { name: 'Logout', screenName: 'Offers' },
+    { name: 'Saved Cards', screenName: 'SavedCard' },
+    
   ]);
 
   const renderItems = ({ item, index }) => (
@@ -29,7 +31,7 @@ function Settings() {
     </View>
     </TouchableOpacity>
   );
-
+ 
   return (
     <View style={styles.container}>
       <StatusBar
@@ -58,9 +60,24 @@ function Settings() {
           data={data}
           renderItem={renderItems}
         />
+        <TouchableOpacity onPress={() => setLogoutModal(true)}>      
+    <View  style={styles.cardStyle}>
+      <Text style={styles.textStyle}>{"Logout"}</Text>
+      <Image source={ImagesPath.right_new} />      
+    </View>
+    </TouchableOpacity>
         </ScrollView>
       </ImageBackground>
-
+      <LogoutAlert
+          visible={logoutModal}
+          title={'Logout'}
+          alertTitle={'Are you sure you want to\nlogout ? '}
+          rightButtonText={'Yes'}
+          leftButtonText={'No'}
+          //  onPressLeftButton={() => this.setState({ logoutModal: false })}
+          onPressLeftButton={() => setLogoutModal(false)}
+          onPressRightButton={redirectToLogin}
+        />
     </View>
   );
 }

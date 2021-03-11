@@ -7,7 +7,9 @@ import Constant, {
   ENGLISH,
   HINDI,
   GUJRATI,
-  LANGUAGE_CODE,
+  LANGUAGE_CODE,  
+  androidMapAPIKey,
+  iOSMapAPIKey,
 } from './Constant';
 import {LoadWheel} from './LoadWheel';
 import {ShineLoader} from './ShineLoader';
@@ -33,6 +35,7 @@ export {
   ENGLISH,
   HINDI,
   GUJRATI,
-  LANGUAGE_CODE,
-  
+  LANGUAGE_CODE,  
+  iOSMapAPIKey,
+  androidMapAPIKey,
 };

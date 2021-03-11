@@ -36,13 +36,19 @@ const LocationInput = ({
           />
         </View>
         <TextInput
-          underlineColorAndroid="transparent"
-          secureTextEntry={hidePassword1}
-          style={styles.textBox}
-          value={"HN -256, C block, DLF phase 3..."}
-          placeholder={placeholder}
-          placeholderTextColor={Colors.BORDERCOLOR}
-        />
+      style={styles.textBox}
+      name={name}
+      label={placeholder}      
+      onChangeText={onChangeText}
+      placeholder={placeholder}
+      keyboardType={keyboardType}
+      numberOfLines={1}    
+      onChange={onChangeText}
+      placeholderTextColor={Colors.BORDERCOLOR}
+      underlineColorAndroid="transparent"      
+       onBlur={onBlur}
+      {...props}
+    />
       </View>
     </View>
   );

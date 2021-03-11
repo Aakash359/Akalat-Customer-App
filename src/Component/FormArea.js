@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, TextInput,} from 'react-native';
-import {Colors,Scale,} from '../CommonConfig';
+import {StyleSheet, TextInput, View,Text} from 'react-native';
+import {Colors,Scale,Fonts,} from '../CommonConfig';
 
-const FormInput = ({
+const FormArea = ({
   returnKeyType,
   keyboardType,
   name,
+  label,
   placeholder,
   errorValue,
   onBlur,
@@ -13,7 +14,8 @@ const FormInput = ({
   ...props
 }) => (
   <>
- <TextInput
+<Text style={styles.textStyle}> {label}</Text>
+    <TextInput
       style={styles.textInputContainer}
       name={name}
       label={placeholder}
@@ -24,35 +26,35 @@ const FormInput = ({
       placeholderTextColor={Colors.BORDERCOLOR}
       underlineColorAndroid="transparent"      
        onBlur={onBlur}
-       multiline={true}
-       numberOfLines={10}
       {...props}
+      multiline
+      numberOfLines={6}
     />
   </>
 );
 
-export default FormInput;
+export default FormArea;
 
 const styles = StyleSheet.create({
-  textInputContainer: {
-      textAlignVertical:'top',
-  marginVertical: Scale(10),
-    height: Scale(100),
+  textInputContainer: {      
+    textAlignVertical: 'top',
+  marginBottom: Scale(10),
+    height: Scale(180),
     fontSize: Scale(16),
-    color: Colors.BORDERCOLOR,
+    color: Colors.BLACK,
     paddingHorizontal: Scale(10),
     borderWidth: Scale(1),
     borderColor: Colors.BORDERCOLOR,
-    width: '90%',
+    width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
     borderRadius:Scale(5),
   },
   textStyle:{
-      marginHorizontal:'5%',
     color:Colors.BORDERCOLOR,
     fontSize:Scale(14),
-    marginBottom:Scale(5),
-    marginTop:Scale(10)
+    marginBottom:Scale(10),
+    marginTop:Scale(15),
+    
   },
 });

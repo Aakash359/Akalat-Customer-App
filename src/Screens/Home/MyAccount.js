@@ -17,11 +17,11 @@ function Explore() {
     { name: 'Offers', screenName: 'Offers' },
     { name: 'Refer a Friend', screenName: 'Share' },
     { name: 'Settings', screenName: 'Settings' },
-    { name: 'Help & Support', screenName: 'Profile' },
-    { name: 'About Us', screenName: 'Profile' },
-    { name: 'Privacy Policy', screenName: 'Profile' },
-    { name: 'Terms and Conditions', screenName: 'Profile' },
-    { name: 'FAQs', screenName: 'Profile' },
+    { name: 'Help & Support', screenName: 'HelpSupport' },
+    { name: 'About Us', screenName: 'AboutUs' },
+    { name: 'Privacy Policy', screenName: 'PrivacyPolicy' },
+    { name: 'Terms and Conditions', screenName: 'TermCondition' },
+    { name: 'FAQs', screenName: 'FAQs' },
   ]);
   const redirectTocheck = () => {
     setChecked(!check);
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: Scale(25),
-    height: Scale(50),
+    height: Scale(60),
     borderBottomWidth: Scale(2),
     borderBottomColor: '#ABBFBE'
   },
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
-    height: Scale(140),
+    height: Scale(100),
     // paddingTop: Scale(35),
     alignItems: 'center',
     paddingHorizontal: Scale(25),

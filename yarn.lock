@@ -1190,6 +1190,11 @@
   resolved "https://registry.npm.taobao.org/@react-native-community/netinfo/download/@react-native-community/netinfo-5.9.10.tgz#97d3a9fa62a3a4838ec7a6ec91cfec5a26e365b6"
   integrity sha1-l9Op+mKjpIOOx6bskc/sWibjZbY=
 
+"@react-native-community/slider@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.npm.taobao.org/@react-native-community/slider/download/@react-native-community/slider-3.0.3.tgz#830167fd757ba70ac638747ba3169b2dbae60330"
+  integrity sha1-gwFn/XV7pwrGOHR7oxabLbrmAzA=
+
 "@react-native-firebase/app@^10.5.0":
   version "10.5.0"
   resolved "https://registry.npm.taobao.org/@react-native-firebase/app/download/@react-native-firebase/app-10.5.0.tgz#aa46cd3a62d2117914a6f81ffea0d1b3b9ef15c6"

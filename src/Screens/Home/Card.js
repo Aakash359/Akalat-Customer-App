@@ -4,6 +4,7 @@ import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { FormArea, CustomButton } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
+import { scale } from '../../CommonConfig/HelperFunctions/functions';
 function Card() {
   const [count, setIsPopupVisible] = useState(1);
   const increment = () => {
@@ -71,12 +72,14 @@ function Card() {
               </View>
             </View>
           </View>
+         <View style={{marginHorizontal:scale(30)}}>
           <FormArea
             placeholder="Any Instructions..."
             autoCapitalize="none"
           // maxLength={30}
 
           />
+          </View>
           <View style={{
             height: Scale(50), flexDirection: 'row', justifyContent: 'space-between',
             marginVertical: Scale(15), width: '90%', borderWidth: Scale(1), alignSelf: 'center', borderRadius: Scale(30)
