@@ -19,22 +19,22 @@ function Explore() {
       <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(16), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={[styles.iconStyle, { color: Colors.WHITE }]} />
             <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-              <Text style={{ color: '#fff', textAlign: 'right' }}>1.5km</Text>
+              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5km</Text>
             </View>
           </View>
         </View>
       </ImageBackground>
       <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{ fontSize: Scale(18), fontWeight: 'bold' }}>Fire & Orill <Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal' }}>(11:00am - 10:00pm)</Text>
-          <Text style={{ fontSize: Scale(16), fontWeight: 'normal' }}>{'\n'}Cafe,Europoan,Contrental, Bearage</Text> </Text>
-        <Icon name="heart" type="FontAwesome" style={{ color: Colors.BORDERCOLOR, fontSize: Scale(20), marginHorizontal: Scale(2), }} />
+        <Text style={{ fontSize: Scale(16), fontWeight: 'bold' }}>Fire & Orill <Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>(11:00am - 10:00pm)</Text>
+          <Text style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}Cafe,Europoan,Contrental, Bearage</Text> </Text>
+        <Icon name="heart" type="FontAwesome" style={{ color: "#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
 
       </View>
     </View>
@@ -47,7 +47,7 @@ function Explore() {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <Image source={ImagesPath.location} style={styles.location} />
         <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
         <View style={styles.bottomHeader}>
@@ -55,17 +55,16 @@ function Explore() {
             <Image source={ImagesPath.notification} style={styles.notificationStyle} />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
       <View style={{ paddingBottom: Scale(15), paddingHorizontal: Scale(20), alignItems: 'center', backgroundColor: Colors.APPCOLOR }}>
         <Searchbar
           style={styles.searchView}
           onIconPress={clearImmediate}
           inputStyle={{ fontSize: Scale(14), marginLeft: Scale(-15) }}
-          placeholder="Search restaurant, dishes(or food) here..."
+          placeholder="Search here..."
         />
       </View>
-      <ScrollView>
-        <View style={styles.filterContainer}>
+      <View style={styles.filterContainer}>
           <View style={check ? styles.leftContainer : styles.leftContainer1}>
             <TouchableOpacity onPress={redirectTocheck}>
               <Text style={check ? styles.normalText : styles.normalText1}>Restaurant</Text>
@@ -79,23 +78,30 @@ function Explore() {
           </View>
         </View>
         <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
+        <ScrollView>
+       
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Scale(25), paddingTop: Scale(10) }}>
-            <Text style={{ color: 'grey', fontSize: Scale(16) }}>Near By</Text>
+            <Text style={{ color: '#AB8F8E', fontSize: Scale(16) }}>Near By</Text>
             <Text style={{ color: Colors.DARK_RED, fontSize: Scale(16) }}>View All</Text>
           </View>
           <FlatList
+          style={{paddingBottom:Scale(100)}}
             data={[0, 1, 2, 3]}
             renderItem={renderItems}
           />
+           </ScrollView>
+       
         </ImageBackground>
-      </ScrollView>
+      
     </View>
   );
 }
 export default Explore;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1,    
+    backgroundColor: Colors.APPCOLOR,
+    paddingTop:Scale(20)
   },
   loginInputCont: {
     top: Scale(-20),
@@ -118,16 +124,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: Scale(150),
     resizeMode: 'stretch',
-    borderTopLeftRadius: Scale(30),
-    borderTopRightRadius: Scale(30),
-    backgroundColor: Colors.WHITE,
+    borderTopLeftRadius: Scale(10),
+    borderTopRightRadius: Scale(10),
+    overflow:'hidden',    
   },
   normalText: {
-    fontSize: Scale(16),
+    fontSize: Scale(12),
     color: Colors.WHITE
   },
   normalText1: {
-    fontSize: Scale(16),
+    fontSize: Scale(12),
     color: Colors.APPCOLOR
   },
   filterContainer: {
@@ -193,7 +199,7 @@ const styles = StyleSheet.create({
   cardStyle: {
     elevation: 3,
     shadowOpacity: 3,
-    height: Scale(220),
+    height: Scale(225),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: 2,
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(10)
   },
   iconStyle: {
-    color: Colors.APPCOLOR,
+    color: '#FFBB00',
     fontSize: Scale(15),
     marginHorizontal: Scale(3)
   },

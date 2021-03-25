@@ -94,8 +94,8 @@ class SelectLanguage extends Component {
                                     ]}
                                     onPress={() => this.setState({ languageCode: '1002' })}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Image source={ImagesPath.arabic} />
-                                        <Text style={AuthStyle.languageText}>Arabic</Text>
+                                        <Image source={ImagesPath.arabic}  style={{height:Scale(30),width:Scale(42) ,resizeMode:'stretch'}}/>
+                                        <Text style={AuthStyle.languageText} >Arabic</Text>
                                     </View>
                                     {this.state.languageCode == '1002' ? (
                                         <Image
@@ -123,7 +123,7 @@ class SelectLanguage extends Component {
                                     ]}
                                     onPress={() => this.setState({ languageCode: '1001' })}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Image source={ImagesPath.us} style={{height:Scale(30),width:Scale(40) ,resizeMode:'stretch'}} />
+                                        <Image source={ImagesPath.us} style={{height:Scale(35),width:Scale(40) ,resizeMode:'stretch'}} />
                                         <Text style={AuthStyle.languageText}>English</Text>
                                     </View>
 

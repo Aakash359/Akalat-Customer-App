@@ -42,7 +42,7 @@ function Explore() {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <Image source={ImagesPath.location} style={styles.location} />
         <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
         <View style={styles.bottomHeader}>
@@ -50,7 +50,7 @@ function Explore() {
             <Image source={ImagesPath.notification} style={styles.notificationStyle} />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
       <View style={styles.filterContainer} />
       <ImageBackground source={ImagesPath.background} style={[styles.loginInputCont, { flex: 1, marginBottom: Scale(-50) }]}>
         <FlatList
@@ -65,6 +65,8 @@ export default Explore;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.APPCOLOR,
+    paddingTop:Scale(40)
   },
   loginInputCont: {
     top: Scale(-50),
@@ -107,7 +109,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flex: 1
   },
-  headerContainer: {
+  headerContainer: {    
+    paddingTop:Scale(20),
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
     height: Scale(100),

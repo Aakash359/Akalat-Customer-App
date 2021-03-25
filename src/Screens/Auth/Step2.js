@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         fontSize: Scale(16),
         fontFamily: Fonts.Medium,
         marginTop: Scale(5),
-        marginBottom: Scale(25),
+        marginBottom: Scale(40),
         textAlign: 'center',
         width: '80%',
         color: Colors.GRAY,

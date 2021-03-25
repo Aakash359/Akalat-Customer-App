@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, StatusBar, Switch,FlatList, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
-import { Colors, Scale, ImagesPath, Fonts } from '../../CommonConfig';
+import { Colors, Scale, LogoutAlert,ImagesPath, Fonts } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
 function SavedCard() {
     const [checked, setChecked] = useState(false);
     const [switchValue, setSwitchValue] = useState(false);
+    const[deleteAdd , setDeleteAdd]=useState(false);
     const [items, setItems] = React.useState([
         {name: 'Anuj Tyagi', cardNo: '1234 XXXX XXXX 5678',  },
         {name: 'Anuj Tyag', cardNo: '1234 XXXX XXXX 9876', },
@@ -16,9 +17,7 @@ function SavedCard() {
     const redirectToAddress = () => {
         navigate('AddNewCard');
     };
-    const onPressChecked = () => {
-        setChecked(!checked);
-    };
+    
     const toggleSwitch = (value) => {
         setSwitchValue(value);
       };
@@ -30,8 +29,8 @@ function SavedCard() {
                     <Text style={styles.nameText}>{item.name}</Text>
                 </View>
                 <View style={{flexDirection:'row',}}>
-                    <Text style={[styles.nameStyle,{color:Colors.APPCOLOR}]}>Delete  </Text>
-                    <Text style={[styles.nameStyle,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
+                    <Text onPress={() => setDeleteAdd(true)} style={[styles.nameStyle,{color:Colors.APPCOLOR}]}>Delete  </Text>
+                    <Text onPress={() => navigate('EditCard')} style={[styles.nameStyle,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
                 </View>
             </View>
             <Text style={styles.nameText}>
@@ -76,7 +75,16 @@ function SavedCard() {
                     </ScrollView>
                 </KeyboardAvoidingView>
             </ImageBackground>
-
+            <LogoutAlert
+          visible={deleteAdd}
+          title={'Delete Card'}
+          alertTitle={'Are you sure you want to delete this Card?'}
+          rightButtonText={'Yes'}
+          leftButtonText={'No'}
+          //  onPressLeftButton={() => this.setState({ logoutModal: false })}
+          onPressLeftButton={() => setDeleteAdd(false)}
+          onPressRightButton={() => setDeleteAdd(false)}
+        />
         </View>
     );
 }
@@ -162,7 +170,8 @@ const styles = StyleSheet.create({
         tintColor: Colors.WHITE,
         alignSelf: 'flex-end',
     },
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

@@ -211,7 +211,8 @@ const styles = StyleSheet.create({
         color: Colors.WHITE
     },
 
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

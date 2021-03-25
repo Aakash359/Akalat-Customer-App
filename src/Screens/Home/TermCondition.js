@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
         marginBottom: Scale(25),
         color: Colors.WHITE
     },
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

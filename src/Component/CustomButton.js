@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
 
   secondaryButton: {
-    marginVertical:Scale(25),
+    marginVertical:Scale(20),
      borderRadius:Scale(20),
     justifyContent: 'center',
     backgroundColor: Colors.DARK_RED,

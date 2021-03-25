@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Text, View,PermissionsAndroid,Platform, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath,LocationAlert,androidMapAPIKey,iOSMapAPIKey } from '../../CommonConfig';
-import { FormInput, CustomButton, LocationInput } from '../../Component';
+import { FormInput, FormInput1,CustomButton, LocationInput } from '../../Component';
 import Location from "../../Component/Location";
 import { Icon } from 'native-base';
 import Geolocation from 'react-native-geolocation-service';
@@ -11,6 +11,7 @@ Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
 function Address() {
     const { navigate } = useNavigation();    
     const [logoutModal, setLogoutModal] = useState(false);
+    const [activeTab,setActiveTab]=useState(0);
     const navigation = useNavigation();
     const [
         currentAddress,
@@ -83,7 +84,7 @@ function Address() {
       };
     
     const redirectToHome = () => {
-        navigate('Home');
+        navigate('HomeStack');
     };
     return (
         <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
@@ -100,8 +101,9 @@ function Address() {
                        onChangeText={(val) => setAddress(val)}
                             maxLength={30} />
                             <Text style={{fontSize:Scale(16),textAlign:'center',color:Colors.BORDERCOLOR,marginVertical:Scale(10)}}>or</Text>
-                        <FormInput
+                        <FormInput1
                             placeholder="House No/Flat No"
+                            lable="EX- HN 256"
                             autoCapitalize="none"
                             maxLength={30}
                         />
@@ -111,14 +113,15 @@ function Address() {
                             maxLength={30}
                         />
                         <FormInput
-                            placeholder="Near by"
+                            placeholder="Nearby"
                             autoCapitalize="none"
                             maxLength={30}
                         />
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10) }}>
-                            <Text onPress={() => setLogoutModal(true)} style={styles.forgotButton1}>Home</Text>
-                            <Text style={styles.forgotButton}>Work</Text>
-                            <Text style={styles.forgotButton}>Other</Text>
+                        <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
+                            <Text onPress={() => setActiveTab(1)} style={activeTab == 1 ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
+                            <Text  onPress={() => setActiveTab(2)} style={activeTab == 2 ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
+                       
                         </View>
                         <View style={{ marginTop: Scale(10) }}>
                             <CustomButton title="Save & Continue" onSubmit={redirectToHome} isSecondary={true} />

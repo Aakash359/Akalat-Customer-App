@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
-import { FormInput, CustomButton } from '../../Component';
+import { FormInput, CustomButton, PasswordInput } from '../../Component';
 import { Icon } from 'native-base';
 function SignUp() {
     const { navigate } = useNavigation();
@@ -28,7 +28,7 @@ function SignUp() {
                             autoCapitalize="none"
                             maxLength={30}
                         />
-                        <FormInput
+                        <PasswordInput
                             placeholder="Mobile Number"
                             autoCapitalize="none"
                             keyboardType={'numeric'}
@@ -55,7 +55,7 @@ function SignUp() {
                         />
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: Scale(10) }}>
                             <Icon name="check-box" type="MaterialIcons" style={{ color: Colors.DARK_RED }} />
-                            <Text style={styles.forgotButton}>I accept <Text style={{ color: Colors.APPCOLOR }}>Privary Policy</Text> and <Text style={{ color: Colors.APPCOLOR }}>Terms &{'\n'}Conditions </Text></Text>
+                            <Text style={styles.forgotButton}>I accept <Text style={{ color: Colors.APPCOLOR }}>Privacy Policy</Text> and <Text style={{ color: Colors.APPCOLOR }}>Terms &{'\n'}Conditions </Text></Text>
 
                         </View>
                         <View style={{ marginTop: Scale(10) }}>

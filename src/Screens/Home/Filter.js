@@ -6,11 +6,13 @@ import { CustomButton, FormInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 function Filter() {
-    const [value, setValue] = useState('0')
+    const [value, setValue] = useState(4.1)
+    const [value1, setValue1] = useState(8)
+   
     const { navigate } = useNavigation();
     const navigation = useNavigation();
-    const redirectToRating = () => {
-        navigate('Rating');
+    const redirectToHome = () => {
+        navigate('Home');
     };
     const [isEnabled, setIsEnabled] = useState(true);
     
@@ -35,13 +37,15 @@ function Filter() {
                     <View style={{ marginTop:Scale(20),justifyContent:'center',height:Scale(100),paddingVertical:Scale(20),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
                         <Text>Distance</Text>
-                        <Text>8 Miles</Text>
+                        <Text style={{fontSize:Scale(14),color:Colors.DARK_RED}}>{value1 + ' Miles'}</Text>
                         </View>
                         <Slider
                             style={{ marginTop:Scale(20)  }}
-                            minimumValue={10}
-                            maximumValue={100}
-                            value={40}                        
+                            minimumValue={0}
+                            maximumValue={10}
+                            value={value1}
+                            onValueChange={(value) => setValue1(value)}                                                           
+                            thumbTintColor={Colors.APPCOLOR}                       
                             minimumTrackTintColor={Colors.APPCOLOR}
                             maximumTrackTintColor="#000000"
                         />
@@ -49,18 +53,20 @@ function Filter() {
                     <View style={{ marginTop:Scale(25),justifyContent:'center',height:Scale(100),paddingVertical:Scale(20),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
                         <Text>Distance</Text>
-                        <Text>8 Miles</Text>
+                        <Text style={{fontSize:Scale(14),color:Colors.DARK_RED}}>{value}</Text>
                         </View>
                         <Slider
                             style={{ marginTop:Scale(20)  }}
-                            minimumValue={10}
-                            maximumValue={100}
-                            value={40}                        
+                            minimumValue={0}
+                            maximumValue={10}
+                            value={value}                             
+                            onValueChange={(value) => setValue(value)} 
+                            thumbTintColor={Colors.APPCOLOR}                                                  
                             minimumTrackTintColor={Colors.APPCOLOR}
                             maximumTrackTintColor="#000000"
                         />
                     </View>
-                    <View style={{ marginTop:Scale(25),justifyContent:'center',paddingVertical:Scale(20),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
+                    <View style={{ marginTop:Scale(25),justifyContent:'center',paddingVertical:Scale(15),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
                         <Text>Veg only</Text>
                         <Switch
@@ -80,7 +86,7 @@ function Filter() {
                         <CustomButton title="Reset All"   />
                         </View>
                         <View style={{flex:1}}>
-                        <CustomButton title="Apply" isSecondary={true} onSubmit={redirectToRating} />
+                        <CustomButton title="Apply" isSecondary={true} onSubmit={redirectToHome} />
                         </View>
                         </View>
                         </View>
@@ -128,7 +134,8 @@ const styles = StyleSheet.create({
         tintColor: Colors.WHITE,
         alignSelf: 'flex-end',
     },
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

@@ -19,8 +19,7 @@ function Settings() {
   const [data, setData] = React.useState([
     { name: 'Change Password', screenName: 'ChangePassword' },
     { name: 'Manage Address', screenName: 'ManageAddress' },
-    { name: 'Saved Cards', screenName: 'SavedCard' },
-    
+    { name: 'Saved Cards', screenName: 'SavedCard' },    
   ]);
 
   const renderItems = ({ item, index }) => (
@@ -127,7 +126,8 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE,
     alignSelf: 'flex-end',
   },
-  headerContainer: {
+  headerContainer: {    
+    paddingTop:Scale(20),
     height: Scale(80),
     alignItems: 'center',
     flexDirection: 'row',

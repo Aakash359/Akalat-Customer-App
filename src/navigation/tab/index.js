@@ -6,7 +6,6 @@ import HomeScreen from '../stack/HungryStack';
 import MyAccount from '../../Screens/Home/MyAccount';
 import Card from '../../Screens/Home/Card';
 import ImageIcon from '../../containers/ImageIcon';
-
 import { Scale, Colors, ImagesPath,LocationAlert } from '../../CommonConfig';
 const getOptions = ({tabBarLabel, icon}) => {
   return {
@@ -61,7 +60,7 @@ function index() {
         options={{
           ...getOptions({
             tabBarLabel: 'Hungry Now',
-            icon: ImagesPath.app_logo,
+            icon: ImagesPath.hungry,
           }),
         }}
       />

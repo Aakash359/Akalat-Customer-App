@@ -1,18 +1,45 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, ImageBackground, Image,KeyboardAvoidingView,ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,CommonActions  } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
-import { FormInput,CustomButton } from '../../Component';
+import { FormInput,CustomButton ,PasswordInput} from '../../Component';
 import {Icon} from 'native-base';
 function Login() {
     const { navigate } = useNavigation();  
     const navigation = useNavigation();  
     const redirectToHome = () => {
-        navigate('Home');
+        navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'HomeStack',
+                  params: { user: 'jane' },
+                },
+              ],
+            }))
+     //   navigate('HomeStack');
     };
     const redirectToForgotPassword = () => {
         navigate('ForgotPassword');
     };
+    const [hidePassword, setHidePasswordl] = useState(true);
+   
+    const setPasswordVisibility = () => {
+        setHidePasswordl(!hidePassword);
+    };
+
+    let data = [{
+        value: 'India +91',
+        id:'+91'
+    }, {
+        value: 'United States +1',
+        id:'+1'
+    }, {
+        value: 'Canada +234',
+        id:'+234'
+    }];
+
     return (
         <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
             <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
@@ -22,7 +49,8 @@ function Login() {
                    <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle}/>
                <Text style={styles.primaryText}>Hello!</Text>               
                 <Text style={styles.normalText}>Welcome back</Text>
-                <FormInput
+               
+                <PasswordInput
                     placeholder="Mobile Number"
                     autoCapitalize="none"
                     keyboardType={'numeric'}
@@ -37,6 +65,7 @@ function Login() {
                     <Text onPress={redirectToForgotPassword} style={styles.forgotButton}>Forgot Password?</Text>                
                 <View style={{marginTop:Scale(30)}}>
                 <CustomButton title="Login" onSubmit={redirectToHome} isSecondary={true} />
+                
                 </View>
                   </View>
                   </ScrollView>

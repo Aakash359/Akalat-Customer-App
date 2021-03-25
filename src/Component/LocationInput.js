@@ -48,6 +48,7 @@ const LocationInput = ({
       underlineColorAndroid="transparent"      
        onBlur={onBlur}
       {...props}
+      editable={false}
     />
       </View>
     </View>
@@ -64,15 +65,16 @@ const styles = StyleSheet.create({
   textBoxContainer: {
       borderWidth:1,
       borderRadius:Scale(5),
-      borderColor:'grey',
+      borderColor:"#AB8F8E",
     flexDirection:'row',
     alignItems:'center'
   },
   textBox: {
     fontSize: 16,
+    color:Colors.BLACK,
     //alignSelf: 'stretch',
     height: Scale(45),
-    paddingRight: Scale(45),
+    paddingRight: Scale(5),
     paddingHorizontal: Scale(8),    
     paddingVertical: 0,
     borderRadius: Scale(5),

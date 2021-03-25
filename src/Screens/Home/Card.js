@@ -28,7 +28,7 @@ function Card() {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <Image source={ImagesPath.location} style={styles.location} />
         <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
         <View style={styles.bottomHeader}>
@@ -36,7 +36,7 @@ function Card() {
             <Image source={ImagesPath.notification} style={styles.notificationStyle} />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
        <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
        <ScrollView>
        
@@ -160,7 +160,8 @@ export default Card;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.APPCOLOR
+    backgroundColor: Colors.APPCOLOR,
+    paddingTop:Scale(40)
   },
 
   addButton: {
@@ -210,7 +211,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flex: 1
   },
-  headerContainer: {
+  headerContainer: {    
+    paddingTop:Scale(20),
     height: Scale(100),
     alignItems: 'center',
     flexDirection: 'row',

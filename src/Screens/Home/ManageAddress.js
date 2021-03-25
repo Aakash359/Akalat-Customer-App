@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, StatusBar, LayoutAnimation,FlatList, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
-import { Colors, Scale, ImagesPath, Fonts } from '../../CommonConfig';
+import { Colors, Scale, ImagesPath, Fonts,LogoutAlert } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
 function ManageAddress() {
     const [items, setItems] = React.useState([
@@ -9,10 +9,14 @@ function ManageAddress() {
         {id:'2', place: 'Work', address: 'HN-256, C block, DLF phase 3, Gurgaon-122016', },
     
       ]);
+      const[deleteAdd , setDeleteAdd]=useState(false);
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const redirectToAddress = () => {
-        navigate('Address');
+        navigate('AddNewAddress');
+    };
+    const EditAddress = () => {
+        navigate('EditAddress');
     };
     const renderItems = ({ item, index }) => (
       
@@ -22,8 +26,8 @@ function ManageAddress() {
                     <Text style={styles.placeText}>{item.place}</Text>
                 </View>
                 <View style={{flexDirection:'row',}}>
-                    <Text style={[styles.placeText,{color:Colors.APPCOLOR}]}>Delete  </Text>
-                    <Text style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
+                    <Text onPress={() => setDeleteAdd(true)} style={[styles.placeText,{color:Colors.APPCOLOR}]}>Delete  </Text>
+                    <Text onPress={EditAddress} style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
                 </View>
             </View>
             <Text style={styles.placeText}>
@@ -57,7 +61,16 @@ function ManageAddress() {
                     </ScrollView>
                 </KeyboardAvoidingView>
             </ImageBackground>
-
+            <LogoutAlert
+          visible={deleteAdd}
+          title={'Delete Address'}
+          alertTitle={'Are you sure you want to delete this address?'}
+          rightButtonText={'Yes'}
+          leftButtonText={'No'}
+          //  onPressLeftButton={() => this.setState({ logoutModal: false })}
+          onPressLeftButton={() => setDeleteAdd(false)}
+          onPressRightButton={() => setDeleteAdd(false)}
+        />
         </View>
     );
 }
@@ -145,7 +158,8 @@ const styles = StyleSheet.create({
         tintColor: Colors.WHITE,
         alignSelf: 'flex-end',
     },
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

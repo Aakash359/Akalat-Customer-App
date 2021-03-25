@@ -8,10 +8,13 @@ function HomeScreen() {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
   const redirectToHomeMaker = () => {
-      navigate('HungryNow');
+      navigate('HomeMaker');
   };
   const redirectToFilter = () => {
     navigate('Filter');
+};
+const redirectToSortBy = () => {
+  navigate('SortBy');
 };
   const redirectToNotification = () => {
     navigate('Notification');
@@ -23,22 +26,22 @@ function HomeScreen() {
       <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(16), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={[styles.iconStyle, { color: Colors.WHITE }]} />
             <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-              <Text style={{ color: '#fff', textAlign: 'right' }}>1.5km</Text>
+              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5km</Text>
             </View>
           </View>
         </View>
       </ImageBackground>
       <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{fontSize:Scale(18),fontWeight:'bold'}}>Fire & Orill <Text style={{color:'grey',fontSize:Scale(14),fontWeight:'normal'}}>(11:00am - 10:00pm)</Text>
-        <Text style={{fontSize:Scale(16),fontWeight:'normal'}}>{'\n'}Cafe,Europoan,Contrental, Bearage</Text> </Text>
-        <Icon name="heart" type="FontAwesome" style={{ color: Colors.BORDERCOLOR, fontSize: Scale(20), marginHorizontal: Scale(2), }} />
+        <Text style={{fontSize:Scale(16),fontWeight:'bold'}}>Fire & Orill <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal'}}>(11:00am - 10:00pm)</Text>
+        <Text style={{fontSize:Scale(12),fontWeight:'normal'}}>{'\n'}Cafe,Europoan,Contrental, Bearage</Text> </Text>
+        <Icon name="heart" type="FontAwesome" style={{ color:"#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
 
       </View>
       </TouchableOpacity>
@@ -54,12 +57,11 @@ function HomeScreen() {
       marginHorizontal:Scale(10),
       alignSelf: 'center',
       borderRadius: Scale(10)}}>
-      <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
+      <ImageBackground source={ImagesPath.reset} style={[styles.backgroundStyle,{borderRadius:Scale(10)}]}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{  paddingBottom: Scale(10), alignItems: 'flex-start', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(16), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>$9.0</Text>
-            <Text style={{ fontSize: Scale(16), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5),}}>
-              Spicy Mozzorella{'\n'}Italian Pizza
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>$9.0 </Text>
+            <Text style={{ fontSize: Scale(18), color: Colors.WHITE, marginLeft: Scale(7),  paddingVertical: Scale(5),}}>Spicy Mozzorella{'\n'}Italian Pizza
             </Text>
           </View>
         </View>
@@ -77,6 +79,8 @@ function HomeScreen() {
       marginHorizontal:Scale(10),
       alignSelf: 'center',
       borderRadius: Scale(10)}}>
+        
+    <TouchableOpacity onPress={() => navigate('Coupon')}>
       <ImageBackground source={ImagesPath.coupon} style={{
          width: '100%',
          height: Scale(55),
@@ -85,16 +89,16 @@ function HomeScreen() {
          borderTopRightRadius: Scale(30),
       }}>
          <View style={{  paddingBottom: Scale(10), alignItems: 'flex-start', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(14), color: 'grey',   paddingTop: Scale(5),}}>
-           COUPON
+            <Text style={{ fontSize: Scale(12), color: 'grey',   paddingTop: Scale(5),}}>
+            COUPON
             </Text>
-            <Text style={{ fontSize: Scale(16), color: Colors.WHITE,  }}>
-           40% off <Text style={{ fontSize: Scale(14), color: 'grey', marginLeft:Scale(30) }}> All Items</Text>
+            <Text style={{ fontSize: Scale(14), color: Colors.WHITE,marginTop:Scale(3)  }}>
+             40% off <Text style={{ fontSize: Scale(12), color: 'grey', marginLeft:Scale(30) }}>  All Items</Text>
             </Text>
           </View>
       
       </ImageBackground>   
-      
+      </TouchableOpacity>
     </View>
   );
 
@@ -106,7 +110,7 @@ function HomeScreen() {
         backgroundColor={Colors.APPCOLOR}   
         barStyle="light-content"
       />
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <Image source={ImagesPath.location} style={styles.location} />
         <Text style={{color:Colors.WHITE}}>NH 28,C block DLF Phase 3...</Text>
         <View style={styles.bottomHeader}>
@@ -114,8 +118,8 @@ function HomeScreen() {
           <Image source={ImagesPath.notification} style={styles.notificationStyle} />
           </TouchableOpacity>
         </View>
-      </View>
-      <View style={{ paddingBottom:Scale(20),paddingHorizontal: Scale(20), alignItems: 'center',backgroundColor:Colors.APPCOLOR }}>
+      </View> */}
+      <View style={{ paddingVertical:Scale(20),paddingHorizontal: Scale(20), alignItems: 'center',backgroundColor:Colors.APPCOLOR }}>
                 <Searchbar
                     style={styles.searchView}
                     onIconPress={clearImmediate}
@@ -139,11 +143,12 @@ function HomeScreen() {
         renderItem={renderItem}
       />
       <View style={styles.filterContainer}>
-        <View style={styles.leftContainer}>
+      <TouchableOpacity       
+         style={styles.leftContainer} onPress={redirectToSortBy}>
           <Text style={styles.normalText}>Sort By</Text>
           <Image source={ImagesPath.up} />
-        </View>
-        
+       
+        </TouchableOpacity>
           <TouchableOpacity style={styles.leftContainer} onPress={redirectToFilter}>
           <Text style={styles.normalText}>Filters</Text>
           <Image source={ImagesPath.filter} />
@@ -162,6 +167,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  
   },
   searchView: {
     borderRadius: 10,
@@ -176,11 +182,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: Scale(150),
     resizeMode: 'stretch',
-    borderTopLeftRadius: Scale(30),
-    borderTopRightRadius: Scale(30),
+    borderTopLeftRadius: Scale(10),
+    borderTopRightRadius: Scale(10),
+    overflow:'hidden',
   },
   normalText:{
-    fontSize:Scale(16),
+    fontSize:Scale(14),
     color:Colors.BORDERCOLOR
   },  
   filterContainer: {
@@ -229,7 +236,7 @@ const styles = StyleSheet.create({
   cardStyle: {
     elevation: 3,
     shadowOpacity: 3,
-    height: Scale(220),
+    height: Scale(225),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth:2,
@@ -239,7 +246,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(10)
   },
   iconStyle: {
-    color: Colors.APPCOLOR,
+    color: "#FFBB00",
     fontSize: Scale(15),
     marginHorizontal: Scale(3)
   },

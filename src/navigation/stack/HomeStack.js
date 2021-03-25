@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, {useState,useEffect} from 'react';
 import HamburgerButton from '../../containers/HamburgerButton';
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from '../tab';
+import Home from '../tab/index';
 import HomeMaker from '../../Screens/Home/HomeMaker';
 import Payment from '../../Screens/Home/Payment';
 import Notification from '../../Screens/Home/Notification';
@@ -13,29 +13,43 @@ import Share from '../../Screens/Home/Share';
 import EditProfile from '../../Screens/Home/EditProfile';
 import Favorites from '../../Screens/Home/Favorites';
 import MyOrders from '../../Screens/Home/MyOrders';
-import {headerLeftStyle} from '../Helper';
 import Settings from '../../Screens/Home/Settings';
 import ChangePassword from '../../Screens/Home/ChangePassword';
 import SavedCard from '../../Screens/Home/SavedCard';
 import HelpSupport from '../../Screens/Home/HelpSupport';
+import Order from '../../Screens/Home/Order';
 import AboutUs from '../../Screens/Home/AboutUs';
 import PrivacyPolicy from '../../Screens/Home/PrivacyPolicy';
 import TermCondition from '../../Screens/Home/TermCondition';
 import FAQs from '../../Screens/Home/FAQs';
 import Filter from '../../Screens/Home/Filter';
 import Rating from '../../Screens/Home/Rating';
+import SortBy from '../../Screens/Home/SortBy';
 import ManageAddress  from "../../Screens/Home/ManageAddress";
 import AddNewCard  from "../../Screens/Home/AddNewCard";
+import EditCard from '../../Screens/Home/EditCard';
+import SelectLocation from '../../Screens/Home/SelectLocation';
+import AddNewAddress from '../../Screens/Home/AddNewAddress';
+import Coupon from '../../Screens/Home/Coupon';
+import EditAddress from '../../Screens/Home/EditAddress';
 import RightButton from '../../containers/RightButton';
-const Stack = createStackNavigator();
+import {headerLeftStyle,} from '../Helper';
 
+import LogoTitle from '../../containers/LogoTitle';
+const Stack = createStackNavigator();
 function HomeStack(navigation) {
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
         component={Home}       
-          options={{ headerShown: false}}
+          options={{
+            headerTitle: props => <LogoTitle {...props} />,
+            ...headerLeftStyle(),
+            headerLeft: () => <HamburgerButton  navigation={navigation}/>,
+            headerRight: () => <RightButton navigation={navigation} />
+          }}
          
       />
       <Stack.Screen
@@ -173,6 +187,48 @@ function HomeStack(navigation) {
        <Stack.Screen
         name="Rating"
         component={Rating}       
+          options={{ headerShown: false}}
+         
+      />
+        <Stack.Screen
+        name="SortBy"
+        component={SortBy}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="SelectLocation"
+        component={SelectLocation}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="AddNewAddress"
+        component={AddNewAddress}       
+          options={{ headerShown: false}}
+         
+      />
+        <Stack.Screen
+        name="EditCard"
+        component={EditCard}       
+          options={{ headerShown: false}}
+         
+      />
+      <Stack.Screen
+        name="EditAddress"
+        component={EditAddress}       
+          options={{ headerShown: false}}
+         
+      />
+       <Stack.Screen
+        name="Order"
+        component={Order}       
+          options={{ headerShown: false}}
+         
+      />
+        <Stack.Screen
+        name="Coupon"
+        component={Coupon}       
           options={{ headerShown: false}}
          
       />

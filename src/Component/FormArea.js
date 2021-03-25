@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     paddingHorizontal: Scale(10),
     borderWidth: Scale(1),
-    borderColor: Colors.BORDERCOLOR,
+    borderColor: "#AB8F8E",
     width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',

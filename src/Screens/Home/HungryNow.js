@@ -121,7 +121,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flex: 1
     },
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(100),
         alignItems: 'center',
         flexDirection: 'row',

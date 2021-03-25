@@ -1,16 +1,31 @@
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
+import {View,StyleSheet, Image,TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   ImagesPath,
   Colors,
   Scale,
 } from '../CommonConfig';
 function RightButton() {
-  return <Image style={styles.image} source={ImagesPath.bell} resizeMode="stretch" />;
+  const { navigate } = useNavigation()  
+  const redirectToNotification = () => {
+    navigate('Notification');
+};
+  return (
+    <TouchableOpacity onPress={redirectToNotification}>
+     <Image style={styles.image} source={ImagesPath.bell} resizeMode="stretch" />
+     </TouchableOpacity>
+  );
+  
 }
 
 export default RightButton;
 
 const styles = StyleSheet.create({
-  image: {marginTop: 0, marginHorizontal: 10, height: Scale(30), width:Scale(30),tintColor:Colors.APPCOLOR},
+  image:{width: Scale(25),
+  height: Scale(25),
+  resizeMode: 'contain',
+  tintColor: Colors.WHITE,
+  marginRight:Scale(20)
+  }
 });

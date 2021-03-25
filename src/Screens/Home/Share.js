@@ -82,6 +82,8 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     headerContainer: {
+        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

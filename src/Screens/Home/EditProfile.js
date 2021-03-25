@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
         tintColor: Colors.WHITE,
         alignSelf: 'flex-end',
     },
-    headerContainer: {
+    headerContainer: {        
+        paddingTop:Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',

@@ -11,9 +11,9 @@ import SelectLoginSignup from '../Screens/Auth/SelectLoginSignup';
 import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import ResetPassword from '../Screens/Auth/ResetPassword';
 import Address from '../Screens/Auth/Address';
-import Home from './stack/HomeStack';
+import HomeStack from './stack/HomeStack';
 import Otp from '../Screens/Auth/Otp';
-
+import 'react-native-gesture-handler'
 const Stack = createStackNavigator();
 function index() {
   return (
@@ -25,8 +25,8 @@ function index() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Home"
-          component={Home}
+          name="HomeStack"
+          component={HomeStack}
           options={{headerShown: false}}
         />
         <Stack.Screen
