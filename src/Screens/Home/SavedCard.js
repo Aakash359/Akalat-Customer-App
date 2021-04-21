@@ -26,11 +26,11 @@ function SavedCard() {
         <View style={styles.cardStyle}>
             <View style={styles.nameStyle}>
                 <View>
-                    <Text style={styles.nameText}>{item.name}</Text>
+                    <Text style={[styles.nameText,{fontWeight:'bold'}]}>{item.name}</Text>
                 </View>
                 <View style={{flexDirection:'row',}}>
-                    <Text onPress={() => setDeleteAdd(true)} style={[styles.nameStyle,{color:Colors.APPCOLOR}]}>Delete  </Text>
-                    <Text onPress={() => navigate('EditCard')} style={[styles.nameStyle,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
+                    <Text onPress={() => setDeleteAdd(true)} style={[styles.nameStyle,{fontWeight:'bold',color:Colors.APPCOLOR}]}>Delete  </Text>
+                    <Text onPress={() => navigate('EditCard')} style={[styles.nameStyle,{fontWeight:'bold',color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
                 </View>
             </View>
             <Text style={styles.nameText}>

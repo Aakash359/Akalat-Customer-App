@@ -26,7 +26,7 @@ function Favorites() {
       <View style={styles.ratingContainer}>
         <View style={styles.buttonStyle1}>
           <Text style={styles.textStyle1}>4.7</Text>
-          <Text style={styles.normalText}>Rating</Text>
+          <Text style={styles.normalText}>Ratings</Text>
         </View>
         <View style={styles.buttonStyle1}>
           <Text style={styles.textStyle1}>25Min</Text>

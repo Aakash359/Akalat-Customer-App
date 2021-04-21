@@ -23,11 +23,11 @@ function ManageAddress() {
         <View style={styles.cardStyle}>
             <View style={styles.cardHeader}>
                 <View>
-                    <Text style={styles.placeText}>{item.place}</Text>
+                    <Text style={[styles.placeText,{fontWeight:'bold'}]}>{item.place}</Text>
                 </View>
                 <View style={{flexDirection:'row',}}>
-                    <Text onPress={() => setDeleteAdd(true)} style={[styles.placeText,{color:Colors.APPCOLOR}]}>Delete  </Text>
-                    <Text onPress={EditAddress} style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
+                    <Text onPress={() => setDeleteAdd(true)} style={[styles.placeText,{fontWeight:'bold',color:Colors.APPCOLOR}]}>Delete  </Text>
+                    <Text onPress={EditAddress} style={[styles.placeText,{fontWeight:'bold',color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
                 </View>
             </View>
             <Text style={styles.placeText}>
