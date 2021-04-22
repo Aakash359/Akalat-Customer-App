@@ -25,7 +25,7 @@ function Offers() {
       <View style={styles.borderStyle} />
       <View style={styles.heading}>
         <Icon type="Ionicons" name="settings-sharp" style={{ fontSize: Scale(20), color: Colors.DARK_RED }} />
-        <Text style={styles.itemText1}>  20% off use code <Text style={{ color: Colors.DARK_RED }}> "AKALAT20"</Text></Text>
+        <Text style={styles.itemText1}>  20% off  |  Use code <Text style={{ color: Colors.DARK_RED }}> "AKALAT20"</Text></Text>
       </View>
     </View>
   );
@@ -74,8 +74,8 @@ function Offers() {
       <View style={styles.buttonHeader}>
         <Text style={styles.headerText}>Offers </Text>
         <View style={styles.buttonContainer}>
-          <Text onPress={onPressChecked} style={checked ? styles.inActiveStyle : styles.textStyle}>Store Offers</Text>
-          <Text onPress={onPressChecked} style={checked ? styles.textStyle : styles.inActiveStyle}>Payment Offers</Text>
+          <Text onPress={onPressChecked} style={checked ? styles.inActiveStyle : styles.textStyle}>Store Offer</Text>
+          <Text onPress={onPressChecked} style={checked ? styles.textStyle : styles.inActiveStyle}>Payment Offer</Text>
         </View>
       </View>
       <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
@@ -100,9 +100,8 @@ const styles = StyleSheet.create({
     height: Scale(80),
     alignItems: 'center',
     justifyContent: 'center',
-    // borderWidth: 1,
     resizeMode: 'stretch',
-    // borderRadius: Scale(20),
+    borderRadius: Scale(25),
     marginRight: Scale(15)
   },
   heading: {

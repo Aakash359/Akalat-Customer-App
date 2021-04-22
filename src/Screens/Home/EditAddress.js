@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     forgotButton: {
         // backgroundColor:Colors.DARK_RED,
-        paddingHorizontal: Scale(30),
+        paddingHorizontal: Scale(25),
         paddingVertical: Scale(15),
         borderRadius: Scale(30),
         fontSize: Scale(16),
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     },
     forgotButton1: {
         backgroundColor: Colors.DARK_RED,
-        paddingHorizontal: Scale(30),
+        paddingHorizontal: Scale(24),
         paddingVertical: Scale(15),
         borderRadius: Scale(30),
         fontSize: Scale(16),

@@ -19,9 +19,9 @@ function PlaceOrder() {
                         <Image source={ImagesPath.checkmark} style={{alignSelf:'center'}}/>
                         <Text style={styles.primaryText}>Order Placed Succusfully</Text> 
                         <View style={{ marginTop: Scale(40) }}>
-                            <CustomButton title="Track Order" onSubmit={redirectToTrackOrder} isSecondary={true} />
+                        <CustomButton title="Track Order" onSubmit={redirectToTrackOrder} isSecondary={true} />
                         </View>
-                            <CustomButton title="Place New Order" onSubmit={redirectToHome} isSecondary={true} />
+                        <CustomButton title="Place New Order" onSubmit={redirectToHome} isSecondary={true} />
                     </View>
 
         </ImageBackground>

@@ -12,10 +12,7 @@ function AddNewAddress() {
     const [value, setValue]=useState(false);
     const { navigate } = useNavigation();
     const navigation = useNavigation();
-    const [
-        currentAddress,
-        setAddress
-    ] = useState('');
+    const [currentAddress,setAddress] = useState('');
     const redirectToMyAccount = () => {
         navigate('ManageAddress');
     };
@@ -105,7 +102,7 @@ function AddNewAddress() {
                             placeholder="Current Location"
                             autoCapitalize="none"                            
                             value={currentAddress}
-                       onChangeText={(val) => setAddress(val)}
+                            onChangeText={(val) => setAddress(val)}
                             maxLength={30} />
                             <Text style={{fontSize:Scale(16),textAlign:'center',color:Colors.BORDERCOLOR,marginVertical:Scale(10)}}>or</Text>
                         <FormInput
@@ -123,7 +120,7 @@ function AddNewAddress() {
                             autoCapitalize="none"
                             maxLength={30}
                         />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10) }}>
+                        <View style={{  flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10) }}>
                             <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
                             <Text onPress={() => setActiveTab(1)} style={activeTab == 1 ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
                             <Text  onPress={() => setActiveTab(2)} style={activeTab == 2 ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
@@ -150,8 +147,8 @@ const styles = StyleSheet.create({
         marginTop: Scale(10)
     },
     forgotButton: {
-        // backgroundColor:Colors.DARK_RED,
-        paddingHorizontal: Scale(30),
+       
+        paddingHorizontal: Scale(25),
         paddingVertical: Scale(15),
         borderRadius: Scale(30),
         fontSize: Scale(16),
@@ -160,8 +157,9 @@ const styles = StyleSheet.create({
         color: Colors.BORDERCOLOR,
     },
     forgotButton1: {
+        
         backgroundColor: Colors.DARK_RED,
-        paddingHorizontal: Scale(30),
+        paddingHorizontal: Scale(24),
         paddingVertical: Scale(15),
         borderRadius: Scale(30),
         fontSize: Scale(16),

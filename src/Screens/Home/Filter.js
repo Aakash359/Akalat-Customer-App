@@ -52,7 +52,7 @@ function Filter() {
                     </View>
                     <View style={{ marginTop:Scale(25),justifyContent:'center',height:Scale(100),paddingVertical:Scale(20),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
-                        <Text>Distance</Text>
+                        <Text>Rating</Text>
                         <Text style={{fontSize:Scale(14),color:Colors.DARK_RED}}>{value}</Text>
                         </View>
                         <Slider
@@ -70,7 +70,7 @@ function Filter() {
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
                         <Text>Veg only</Text>
                         <Switch
-              trackColor={{ false: Colors.DARK_RED, true: Colors.DARK_RED }}
+              trackColor={{ false: Colors.GRAY, true: Colors.RED }}
               style={{transform: [{scaleX: 1.1}, {scaleY: 1.1}]}}
               thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
               ios_backgroundColor={Colors.GREEN}
@@ -82,7 +82,7 @@ function Filter() {
                     </View>
                     <View style={{justifyContent:'flex-end',flex:1}}>
                     <View style={{marginTop:Scale(50),flexDirection:'row'}}>
-                        <View style={{flex:1,marginRight:Scale(10)}}>
+                        <View style={{flex:1,marginRight:Scale(15),}}>
                         <CustomButton title="Reset All"   />
                         </View>
                         <View style={{flex:1}}>

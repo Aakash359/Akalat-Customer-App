@@ -22,18 +22,19 @@ export default CustomButton;
 
 const styles = StyleSheet.create({ 
   primaryButton: {
-    marginVertical:Scale(20),
+    marginVertical:Scale(25),
      borderRadius:Scale(20),
     justifyContent: 'center',
     backgroundColor: "#F7A00D",
     width: '100%',
     height:Scale(45),
     alignSelf: 'center'
+    
   },
 
   secondaryButton: {
-    marginVertical:Scale(20),
-     borderRadius:Scale(20),
+    marginVertical:Scale(25),
+    borderRadius:Scale(20),
     justifyContent: 'center',
     backgroundColor: Colors.DARK_RED,
     width: '100%',
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
   secondaryText: {
     //textTransform: 'uppercase',        
     fontSize: Scale(18),
+    fontWeight:'bold',
     color: Colors.WHITE,
   },
 });

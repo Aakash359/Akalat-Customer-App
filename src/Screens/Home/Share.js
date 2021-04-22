@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, StatusBar, Image, Share, ImageBackground } from 'react-native';
-import { Icon } from 'native-base';
+import { Icon, Left } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { CustomButton, FormInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
@@ -28,8 +28,8 @@ function ShareScreen() {
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>               
                <Image source={ImagesPath.refer} style={{alignSelf:'center',marginTop:Scale(100)}}/>
                <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginVertical:Scale(10)}}>
-               <Text style={{fontSize:Scale(20),color:'#202020'}}>Irshad_hussain_2605  </Text> 
-               <Image source={ImagesPath.copy}/>
+               <Text style={{fontSize:Scale(20),color:'#202020',}}>Irshad_hussain_2605  </Text> 
+               <Image source={ImagesPath.copy} style={{left:15}}/>
                </View>
                <Text style={{textAlign:'center',fontSize:Scale(16),marginTop:Scale(20)}}>On the other hand, we denounce with righteous 
                    indignation and dislike men who are so beguiled</Text>                       

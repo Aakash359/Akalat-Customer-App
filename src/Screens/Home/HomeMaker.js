@@ -35,7 +35,7 @@ const renderCustomizeModal = () =>  {
 
                   {/* SUGAR */}
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: Scale(50), alignItems: 'center', paddingHorizontal: Scale(20) }}>
-                      <Text style={{ color: "#AB8F8E", fontSize: Scale(16), fontFamily: Fonts.Regular }}>Cheese</Text>
+                      <Text style={{ color: "#AB8F8E", fontSize: Scale(16), fontFamily: Fonts.Regular,fontWeight:'bold' }}>Cheese</Text>
                       <Image source={ImagesPath.downArrow} resizeMode={'contain'} style={{ height: Scale(15), tintColor: "#AB8F8E", width: Scale(15) }} />
                   </View>
 
@@ -49,12 +49,12 @@ const renderCustomizeModal = () =>  {
 
                   {/* MILK */}
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: Scale(50), alignItems: 'center', paddingHorizontal: Scale(20) }}>
-                      <Text style={{ color: "#AB8F8E", fontSize: Scale(16), fontFamily: Fonts.Regular }}>Make it a combo</Text>
+                      <Text style={{ color: "#AB8F8E", fontSize: Scale(16), fontFamily: Fonts.Regular,fontWeight:'bold' }}>Make it a combo</Text>
                       <Image source={ImagesPath.downArrow} resizeMode={'contain'} style={{ height: Scale(15), tintColor: "#AB8F8E", width: Scale(15) }} />
                   </View>                  
 
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: "#00000029", alignItems: 'center', borderBottomWidth: 0.6, height: Scale(45), marginHorizontal: Scale(20) }}>
-                      <Text style={{ color: Colors.MATEBLACK1, fontSize: Scale(14), fontFamily: Fonts.Regular }}>Regular Fries + Pepsi [ 330 Ml]<Text style={{color:'#AB8F8E'}}> | </Text><Text style={{ color: Colors.DARK_RED }}> $10</Text></Text>
+                      <Text style={{ color: Colors.MATEBLACK1, fontSize: Scale(14), fontFamily: Fonts.Regular }}>Regular Fries + Pepsi [ 330 Ml]<Text style={{color:'#AB8F8E'}}> | </Text><Text style={{ color: Colors.DARK_RED }}>$10</Text></Text>
                       <TouchableOpacity onPress={checked}>
                       <Image source={check ? ImagesPath.check1 : ImagesPath.uncheck} resizeMode={'contain'} style={{ height: Scale(15), width: Scale(15) }} />
                       </TouchableOpacity>
@@ -66,7 +66,7 @@ const renderCustomizeModal = () =>  {
                       </TouchableOpacity>
                   </View>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: "#00000029", alignItems: 'center', borderBottomWidth: 0.6, height: Scale(45), marginHorizontal: Scale(20) }}>
-                      <Text style={{ color: Colors.MATEBLACK1, fontSize: Scale(14), fontFamily: Fonts.Regular }}>King Fries + Pepsi [ 330 Ml]<Text style={{color:'#AB8F8E'}}> | </Text><Text style={{ color: Colors.DARK_RED }}>$ 20</Text></Text>
+                      <Text style={{ color: Colors.MATEBLACK1, fontSize: Scale(14), fontFamily: Fonts.Regular }}>King Fries + Pepsi [ 330 Ml]<Text style={{color:'#AB8F8E'}}> | </Text><Text style={{ color: Colors.DARK_RED }}>$20</Text></Text>
                       <TouchableOpacity onPress={checked}>
                       <Image source={check ? ImagesPath.check1 : ImagesPath.uncheck} resizeMode={'contain'} style={{ height: Scale(15), width: Scale(15) }} />
                       </TouchableOpacity>
@@ -113,11 +113,11 @@ const increment = () => {
                 <Text style={styles.normalText}>Rating</Text>
               </View>
               <View style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>25Min</Text>
+                <Text style={styles.textStyle}>25 Min</Text>
                 <Text style={styles.normalText}>Delivery Time</Text>
               </View>
               <View style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>2.7km</Text>
+                <Text style={styles.textStyle}>2.7 km</Text>
                 <Text style={styles.normalText}>Distance</Text>
               </View>
             </View>
@@ -133,7 +133,7 @@ const increment = () => {
             }}>
               <Text style={[styles.normalText, { fontSize: Scale(17) }]}>Veg Only</Text>
               <Switch
-                trackColor={{ false: Colors.GRAY, true: Colors.GRAY }}
+                trackColor={{ false: Colors.GRAY, true: Colors.RED }}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
                 ios_backgroundColor={Colors.GREEN}
                 onValueChange={toggleSwitch}
@@ -183,9 +183,9 @@ const increment = () => {
                                 <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Bold }}>{addItem +' items in cart'}</Text>
                             </View>
                              <TouchableOpacity onPress={() => setCustomizeModal(true)}
-                              //navigate('Order',{orderCount : addItem})
-                               style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '23%', height: Scale(30),marginRight:Scale(25) }}>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go to cart'}</Text>
+                              
+                               style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(25) }}>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go To Cart'}</Text>
                             </TouchableOpacity>
                         </View>
                         :null}
@@ -214,6 +214,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   bottomText: {
+    textShadowColor: 'rgb(255,255,255)',
+    textShadowOffset: {width: 0.1, height: 0.1},
+    textShadowRadius: 1,
     color: Colors.WHITE,
     fontSize: Scale(22),
     marginHorizontal: Scale(25),
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     height: Scale(50),
-    width: Scale(100),
+    width: Scale(92),
     borderColor: "#E0E0E0",
     borderRadius: 5,
     borderWidth: 1,

@@ -28,15 +28,7 @@ function Card() {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      {/* <View style={styles.headerContainer}>
-        <Image source={ImagesPath.location} style={styles.location} />
-        <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
-        <View style={styles.bottomHeader}>
-          <TouchableOpacity onPress={redirectToNotification}>
-            <Image source={ImagesPath.notification} style={styles.notificationStyle} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
+     
        <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
        <ScrollView>
        
@@ -198,7 +190,7 @@ const styles = StyleSheet.create({
     marginRight: Scale(10)
   },
   normatText: { color: Colors.BLACK, fontSize: Scale(16), marginTop: Scale(7) },
-  iconStyles: { fontSize: Scale(22), color: Colors.APPCOLOR },
+  iconStyles: { fontSize: Scale(20), color: Colors.APPCOLOR },
   notificationStyle: {
     width: Scale(25),
     height: Scale(25),

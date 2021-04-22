@@ -8,7 +8,7 @@ function Profile() {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const redirectToMyAccount = () => {
-        navigate('Profile');
+        navigate('Favorites');
     };
     return (
         <View style={styles.container}>

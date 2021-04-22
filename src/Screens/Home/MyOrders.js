@@ -26,7 +26,7 @@ function MyOrders() {
             <Text style={[styles.seconderyText, { marginTop: Scale(-10) }]}>Items</Text>
             <Text style={styles.itemText}>1 x Jambo Burger</Text>
             <Text style={styles.itemText}>2 x Sahi Paneer</Text>
-            <Text style={styles.seconderyText}>created on</Text>
+            <Text style={styles.seconderyText}>Ordered on</Text>
             <Text style={styles.itemText}>Apr 20. 8:10am</Text>
             <Text style={styles.seconderyText}>Total Amount</Text>
             <Text style={styles.itemText}>$ 37</Text>
@@ -48,12 +48,12 @@ function MyOrders() {
             <Text style={[styles.seconderyText, { marginTop: Scale(-10) }]}>Items</Text>
             <Text style={styles.itemText}>1 x Jambo Burger</Text>
             <Text style={styles.itemText}>2 x Sahi Paneer</Text>
-            <Text style={styles.seconderyText}>created on</Text>
+            <Text style={styles.seconderyText}>Ordered on</Text>
             <Text style={styles.itemText}>Apr 20. 8:10am</Text>
             <Text style={styles.seconderyText}>Total Amount</Text>
             <Text style={styles.itemText}>$ 37</Text>
             <View style={styles.heading}>
-                <Text style={[styles.cancelButton, { backgroundColor: Colors.APPCOLOR }]}>Re Order</Text>
+                <Text style={[styles.cancelButton, { backgroundColor: Colors.APPCOLOR }]}>Re-Order</Text>
             </View>
         </View>
     );

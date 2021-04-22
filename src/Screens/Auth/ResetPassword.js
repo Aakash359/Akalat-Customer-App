@@ -21,7 +21,7 @@ function ResetPassword() {
                         keyboardShouldPersistTaps={'handled'}
                         showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
-                            <Image source={ImagesPath.loginBg} style={{ width: screenWidth, flex: 1 }} />
+                            <Image source={ImagesPath.reset} style={{ width: screenWidth, flex: 1 }} />
                         </View>
                         <ImageBackground source={ImagesPath.background} style={AuthStyle.loginInputCont}>
                             <View style={{ paddingHorizontal: Scale(25), }}>
@@ -32,12 +32,16 @@ function ResetPassword() {
                                         style={styles.arrowStyle} />
                                 </TouchableOpacity>
                                 <Text style={styles.primaryText}>Reset Password</Text>
-                                <FormInput
-                                    placeholder="Password"
-                                    autoCapitalize="none"
-                                    secureTextEntry={true}
-                                    maxLength={30}
-                                />
+                                
+                                <View style={{marginVertical:Scale(10)}}>
+                                    <FormInput
+                                        placeholder="Password"
+                                        autoCapitalize="none"
+                                        secureTextEntry={true}
+                                        maxLength={30}
+                                    />
+                                </View>
+                               
                                 <FormInput
                                     placeholder="Confirm Password"
                                     autoCapitalize="none"
@@ -91,6 +95,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.BLACK,
         fontFamily: Fonts.Light,
-        marginTop: Scale(15),
+        marginTop: Scale(20),
     },
 })

@@ -1,0 +1,179 @@
+{
+    "login": {
+      "mobile_number": "Mobile/Email Address",
+      "mobile_number_placeholder": "Enter Mobile Number",
+      "password_placeholder": "Enter Password",
+      "login": "Login",
+      "dont_have_account": "Forgot Password?",
+      "sign_up": "Sign up",
+      "password": "Password"
+    },
+    "otp": {
+      "enter_otp": "Enter the 4-digit code send via SMS on",
+      "submit": "Submit",
+      "resend": "Resend"
+    },
+    "sign_up": {
+      "sign_up": "Signup",
+      "name": "Name",
+      "email": "Email Address",
+      "phone": "Phone",
+      "passsword": "Password",
+      "confirm_password": "Confirm Password",
+      "contact": "Emergency Contact No",
+      "blood_group": "Blood Group",
+      "select_country": "Select Country",
+      "select_state": "Select State",
+      "select_city": "Select City",
+      "select_region": "Select Region",
+      "address": "Address Line 1",
+      "zipcode": "Zip/Postal code",
+      "next": "Next"
+    },
+    "account_details": {
+      "sign_up": "SIGN UP",
+      "account_details": "Account Details",
+      "account_holder_name": "Account Holder Name",
+      "bank_name": "Bank Name",
+      "account_number": "Account Number",
+      "code": "IFSC Code",
+      "next": "Next"
+    },
+    "upload_documents": {
+      "sign_up": "SIGN UP",
+      "upload_doc": "Upload Documents",
+      "licence_no": "Licence No",
+      "expire_date": "Expire Date",
+      "upload_licence": "Upload Licence Image",
+      "upload": "Upload",
+      "iqama_id": "Iqama ID no",
+      "iqama_id_img": " Upload Iqama ID Image",
+      "pan_no": "Pan No",
+      "upload_pan": "Upload PAN Image",
+      "vehicle_no": "Vehicle No",
+      "upload_rc": "Upload RC Image",
+      "upload_vehicle_pci": "Upload Vehicle Pollution Certificate Image",
+      "submit": "Submit"
+    },
+    "drawer": {
+      "duty_status": "Duty Status",
+      "home": "Home",
+      "earning": "Earning",
+      "floating_cash": "Floating Cash",
+      "live_task": "Live Task",
+      "new_task": "New Task",
+      "past_delivery": "Past Delivery",
+      "login_history": "Login History",
+      "help": "Help",
+      "logout": "Logout"
+    },
+    "home": {
+      "home": "Home",
+      "welcome": "Welcome to the delivery partner app",
+      "last_week": "Last week",
+      "so_far_this_week": "So far this week",
+      "complete_more_task": "Completed more task & earn more!",
+      "start_duty": "Start Duty",
+      "lavena_food": "Lavena Food Delivery",
+      "on_duty": "ON DUTY",
+      "searching_for_orders": "Searching for orders",
+      "get_set_go": "Get, Set, Go",
+      "modal_msg1": "You will start getting orders soon,",
+      "modal_msg2": "so keep your phone charged. Time to",
+      "modal_msg3": "deliver with a smile!",
+      "ok_gotit": "OK, GOT IT"
+    },
+    "earning": {
+      "earning": "Earning",
+      "total_balance": "Total Balance",
+      "earning_history": "Earning History",
+      "cash_on_delivery": "cash on delivery"
+    },
+    "floating_cash": {
+      "floating_cash": "Floating Cash",
+      "transfer": "Transfer",
+      "available_balance": "Available Balance",
+      "transactions": "Transactions"
+    },
+    "live_task": {
+      "live_task": "Live Task",
+      "welcome_to_delivery": "Welcome to the delivery partner App",
+      "searching_for_orders": "SEARCHING FOR ORDERS",
+      "today_so_far": "Today so far",
+      "orders": "Orders",
+      "deliver": "Deliver",
+      "order": "Order",
+      "drop_location": "Drop location",
+      "more": "More"
+    },
+    "new_task": {
+      "new_task": "New Task",
+      "welcome_to_delivery": "Welcome to the delivery partner App",
+      "searching_for_orders": "SEARCHING FOR ORDERS",
+      "today_so_far": "Today so far",
+      "no_task": "No new tasks yet!"
+    },
+    "past_delivery": {
+      "past_delivery": "Past Delivery",
+      "order": "Order",
+      "deliver": "Deliver",
+      "drop_location": "Drop location",
+      "cod": "Cash on delivery",
+      "complete": "Complete",
+      "cancel": "Cancel"
+    },
+    "login_history": {
+      "login_history": "Login History"
+    },
+    "help": {
+      "help": "Help",
+      "title_issue": "Title of your issue",
+      "type_issue_title": "Type your issue title",
+      "reason_of_your_issue": "Reason of your issue",
+      "type_reason": "Type your reason",
+      "write_issue": "Write your issue below",
+      "type_issue": "Type your issue",
+      "submit": "Submit"
+    },
+    "notification": {
+      "notification": "Notification",
+      "notifications": "Notifications"
+    },
+    "pick_up": {
+      "pick_up": "Pickup",
+      "phone": "Phone",
+      "landmark": "Landmark",
+      "btn_text": "Reached Pickup Location"
+    },
+    "pick_up_complete": {
+      "pick_up": "Pickup",
+      "pickup_items": "Pickup Items",
+      "confirm_items": "Confirm Items",
+      "cod": "Cash on delivery",
+      "payment_mode": "Payment Mode",
+      "items_collected": "Items collected by delivery boy",
+      "pickup_complete": "Pickup Complete"
+    },
+    "deliver": {
+      "deliver": "deliver",
+      "delivery_location": "Delivery Location",
+      "landmark": "Landmark",
+      "phone": "Phone",
+      "btn_text": "Reached delivery Location",
+      "collect_cash": "Collect Cash from customer",
+      "collect_now": "Collect Now",
+      "collected": "Cash collected by delivery boy",
+      "delivery_completed": "Delivery Completed"
+    },
+    "map": {
+      "OrderAcccept": "Order Acccept",
+      "Pickup": "Pickup",
+      "Drop": "Drop",
+      "BillDetails": "Bill Details",
+      "Offerdiscount": "Offer discount",
+      "Cashondelivery": "Cash on delivery",
+      "VatInclude": "Vat Include",
+      "Total": "Total"
+    }
+  }
+  

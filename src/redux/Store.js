@@ -1,14 +1,45 @@
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
+// import {createStore, applyMiddleware} from 'redux';
 
-import rootReducer from './reducers';
+// import logger from 'redux-logger'
+// import rootReducer from './reducers';
 
-const middlewares = [thunk];
 
-if (__DEV__) {
-  middlewares.push(logger);
+// if (__DEV__) {
+//   middlewares.push(logger);
+// }
+
+// export default function configureStore() {
+//   return createStore(rootReducer, applyMiddleware(...middlewares));
+// }
+
+//LIBRARIES
+import { applyMiddleware, createStore, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger'
+import { persistStore, persistReducer } from 'redux-persist';
+import AsyncStorage from '@react-native-community/async-storage';
+//ASSETS
+import rootSaga from './saga';       // List of Sagas
+import rootReducer from './reducers'  // List of Reducers
+import { sagaMonitor } from './Config';
+
+const persistConfig = {
+  key: 'root',
+  timeout: 0,
+  storage: AsyncStorage,
 }
+const Reducers = persistReducer(persistConfig, rootReducer)
+//createSagaMiddleware creates Redux Middleware and connects saga to the redux 
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+const middlewares = [];
+const enhancers = [];
+middlewares.push(sagaMiddleware, logger);
+enhancers.push(applyMiddleware(...middlewares));
 
-export default function configureStore() {
-  return createStore(rootReducer, applyMiddleware(...middlewares));
-}
+export const Store = createStore(
+  Reducers,
+  compose(...enhancers),
+)
+//persistStore contains all the data from store
+export const Persistor = persistStore(Store);
+sagaMiddleware.run(rootSaga);

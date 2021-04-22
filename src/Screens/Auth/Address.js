@@ -117,7 +117,7 @@ function Address() {
                             autoCapitalize="none"
                             maxLength={30}
                         />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10) }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10)}}>
                         <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
                             <Text onPress={() => setActiveTab(1)} style={activeTab == 1 ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
                             <Text  onPress={() => setActiveTab(2)} style={activeTab == 2 ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
     },
     forgotButton: {
         // backgroundColor:Colors.DARK_RED,
-        paddingHorizontal: Scale(30),
-        paddingVertical: Scale(15),
+        paddingHorizontal: Scale(25),
+        paddingVertical: Scale(13),
         borderRadius: Scale(30),
         fontSize: Scale(16),
         borderWidth: 1,
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
     },
     forgotButton1: {
         backgroundColor: Colors.DARK_RED,
-        paddingHorizontal: Scale(30),
-        paddingVertical: Scale(15),
+        paddingHorizontal: Scale(25),
+        paddingVertical: Scale(13),
         borderRadius: Scale(30),
         fontSize: Scale(16),
         color: Colors.WHITE,

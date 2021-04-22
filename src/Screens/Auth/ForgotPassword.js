@@ -4,8 +4,13 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import {screenWidth,screenHeight,ImagesPath, Colors,Scale,Fonts,} from '../../CommonConfig';
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
-import { CustomButton, FormInput } from '../../Component';
+import {useSelector} from 'react-redux'
+import { CustomButton, FormInput , PasswordInput} from '../../Component';
+
 function ForgotPassword() {
+    const user = useSelector((state) => state.Auth);
+    console.log('================================user data',user);
+    
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     return (
@@ -20,7 +25,9 @@ function ForgotPassword() {
                         keyboardShouldPersistTaps={'handled'}
                         showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
-                            <Image source={ImagesPath.loginBg} style={{ width: screenWidth, flex: 1 }} />
+                            <Image source={ImagesPath.bug} 
+                            style={{ width: screenWidth, flex: 1 }} 
+                            />
                         </View>
                         <ImageBackground source={ImagesPath.background} style={AuthStyle.loginInputCont}>
                             <View style={{ paddingHorizontal: Scale(25), }}>
@@ -32,12 +39,15 @@ function ForgotPassword() {
                                 </TouchableOpacity>
                                 <Text style={styles.primaryText}>Forgot Password</Text>
                                 <Text style={styles.normalText}>Please enter your registered mobile number to reset password</Text>
-                                <FormInput
+                                <View style={{marginVertical:Scale(8)}}>
+                                    <PasswordInput
                                     placeholder="Mobile Number"
                                     autoCapitalize="none"
                                     keyboardType={'numeric'}
                                     maxLength={30}
-                                />
+                                    />
+                                </View>
+                              
                                 <CustomButton title="Submit" onSubmit={() => navigate('Otp')} isSecondary={true} />
                             </View>
                         </ImageBackground>
@@ -51,14 +61,16 @@ function ForgotPassword() {
 export default ForgotPassword;
 
 const styles = StyleSheet.create({
-    container: { height: screenHeight / 2, alignItems: 'center' },
+    container: { 
+        height: screenHeight/2, alignItems: 'center' 
+    },
     mainContainer: { justifyContent: 'space-between', paddingBottom: Scale(10) },
     normalText: {
         fontSize: Scale(16),
         fontFamily: Fonts.Medium,
         marginTop: Scale(5),
         textAlign: 'left',
-        width: '80%',
+        width: '90%',
         color: Colors.GRAY,
     },
     heading: {
@@ -79,6 +91,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.BLACK,
         fontFamily: Fonts.Light,
-        marginTop: Scale(15),
+        marginTop: Scale(22),
     },
 })

@@ -30,6 +30,22 @@
     "zipcode": "Zip/Postal code",
     "next": "Next"
   },
+  "SignupAlert" : {
+    "number" : "Please enter mobile number",
+    "email" : "Please enter email",
+    "first_name" : "Please enter first name",
+    "last_name" : "Please enter last name",
+    "emailValid" : "Please enter valid email",
+    "password" : "Please enter password",
+    "confirm_pass" : "Please enter confirm password",
+    "terms" : "Please accept terms and condition",
+    "register": "User register successfully",
+    "errorText" : "Something went wrong please try again",
+    "error" : "Error",
+    "success" : "Success",
+    "connectionError" : "No Internet Connection",
+    "updateDetail" : "User detail updated successfully"
+  },
   "account_details": {
     "sign_up": "SIGN UP",
     "account_details": "Account Details",

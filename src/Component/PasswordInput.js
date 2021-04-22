@@ -13,6 +13,7 @@ import {
 } from '../CommonConfig';
 import DropDown from './DropDown1';
 import Font from '../CommonConfig/Fonts';
+
 const PasswordInput = ({
     returnKeyType,
     keyboardType,
@@ -31,14 +32,14 @@ const PasswordInput = ({
       <View style={styles.textBoxContainer}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
           <Text style={{fontSize:Scale(16),color:'#000000'}}>+91</Text>
-          <Icon type='AntDesign' name="caretdown" style={{fontSize:Scale(16),marginLeft:Scale(2)}}/>
+          <Icon type='AntDesign' name="caretdown" 
+           style={{fontSize:Scale(16),marginLeft:Scale(2)}}/>
           </View>
         <TextInput
           underlineColorAndroid="transparent"
-          //secureTextEntry={hidePassword1}
           style={styles.textBox}
           placeholder={placeholder}          
-      keyboardType={keyboardType}
+          keyboardType={keyboardType}
           placeholderTextColor={'#909090'}
           maxLength={15}
         />
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     fontFamily:Font.Bold,
     fontWeight:'500',
     alignSelf: 'stretch',
+    left:15,
     height: Scale(45),
     paddingRight: Scale(45),
     paddingVertical: 0,
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   textStyle:{
     color:'#909090',
     fontSize:Scale(14),
-    marginBottom:Scale(10),
-    marginTop:Scale(10)
+    marginBottom:Scale(14),
+    marginTop:Scale(5)
   },
 });

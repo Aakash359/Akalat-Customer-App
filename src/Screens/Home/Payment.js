@@ -31,7 +31,7 @@ setCheck(!check);
                    <View style={[styles.cardStyle, {            
             height:Scale(320)
           }]}>
-             <Text style={[styles.primaryText,{color:'#AB8F8E'}]}>Fire & Grill</Text>             
+             <Text style={[styles.primaryText,{color:'#AB8F8E'}]}>Fire & Grill Bill</Text>             
             <View style={[styles.bottomContainer,{marginTop:Scale(20)}]}>              
                 <Text style={styles.itemText1}>Item Total</Text>
                 <Text style={styles.normatText1}>$32</Text>            
@@ -45,8 +45,8 @@ setCheck(!check);
                 <Text style={styles.normatText1}>$5</Text>            
             </View>
             <View style={styles.bottomContainer}>              
-                <Text style={styles.itemText1}>Dilivery charges</Text>
-                <Text style={styles.normatText1}>free</Text>            
+                <Text style={styles.itemText1}>Delivery Charges</Text>
+                <Text style={styles.normatText1}>Free</Text>            
             </View>
             <View style={{
               marginVertical:Scale(10),
@@ -81,7 +81,7 @@ setCheck(!check);
             />           
             </View>
             <View style={styles.bottomContainer}>                              
-            <Text style={styles.itemText1}>Online payment </Text>
+            <Text style={styles.itemText1}>Online Payment </Text>
             <Icon            
             onPress={checked}
             type="FontAwesome"

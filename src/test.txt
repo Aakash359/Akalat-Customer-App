@@ -1,0 +1,60 @@
+http://localhost:3327/api/v1/addUser
+SigUp APi
+
+first_name:Manisha
+last_name:Kumari
+phone:9874563210
+email:manisha@gmail.com
+password:123456
+country_code:91
+//role_for_user:customer
+
+Login
+
+http://localhost:3327/api/v1/login
+
+phone:9874563210
+//email:manisha@gmail.com
+password:123456
+
+logout
+http://localhost:3327/api/v1/logout
+_id:6062f7e6fc29943ec00c5952
+
+
+Send OTP Screen 
+http://localhost:3327/api/v1/sendOtp
+
+phone:9874563211
+country_code:91
+role:customer
+
+Verify OTP
+http://localhost:3327/api/v1/verifyOtp
+
+otp:8029
+phone:9874563211
+country_code:91
+role:customer
+verification_status:true
+
+Add User Address
+http://localhost:3327/api/v1/addUserAddresss
+
+lng:20.25261
+lat:21.02022
+//_id:60655a1a2346a61cd41dbfe3
+house_name_and_no:plot 657
+area_name:udyog vihar
+address_type:HOME
+created_by:6062f7e6fc29943ec00c5952
+nearby: temple
+
+
+Delete User Address
+_id:60655c2f3989fa1b9429acea
+
+list user address 
+http://localhost:3327/api/v1/listUserAddress
+created_by:6062f7e6fc29943ec00c5952
+offset:2

@@ -1,15 +1,18 @@
 const ImagesPath = {
   bg: require('../Assets/Images/back1.png'), //my
   check2x: require('../Assets/Images/check3x.png'), //my
+  check: require('../Assets/Images/check.png'), //my
   logo: require('../Assets/Images/splash_logo.png'), //my
   background: require('../Assets/Images/app_bg.png'),
   veg: require('../Assets/Images/veg.png'),
+  bug: require('../Assets/Images/bg3.png'),
   non_veg: require('../Assets/Images/non_veg.png'),  
   checkmark: require('../Assets/Images/checkmark.png'),
   check1: require('../Assets/Images/check1.png'),
   uncheck: require('../Assets/Images/uncheck.png'),
+  uncheck1: require('../Assets/Images/uncheck1.png'),
   white_back2: require('../Assets/Images/white_back2.png'),
-  arabic: require('../Assets/Images/arabic1.png'),
+  arabic: require('../Assets/Images/Image.png'),
   icici: require('../Assets/Images/icici.png'),
   refer: require('../Assets/Images/refer.png'),
   copy: require('../Assets/Images/copy.png'),
@@ -32,7 +35,7 @@ const ImagesPath = {
   historyDrawer: require('../Assets/Images/history.png'),
   helpDrawer: require('../Assets/Images/help.png'),
   logoutDrawer: require('../Assets/Images/logout.png'),
-  otp: require('../Assets/Images/otp.png'),
+  otp: require('../Assets/Images/otp1.png'),
   hungry: require('../Assets/Images/hungry.png'),
   user: require('../Assets/Images/user.png'),
   search: require('../Assets/Images/search.png'),

@@ -7,7 +7,7 @@ function HungryNow() {
         <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
                 <Text style={styles.headingText}>NeelGiri Restaurant</Text>
-                <Text style={styles.headingText}>1.5km</Text>
+                <Text style={styles.headingText}>1.5 km</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
                 <Image source={ImagesPath.reset} style={styles.backgroundStyle} />

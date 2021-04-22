@@ -45,15 +45,17 @@ export const AuthStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: Scale(50),
-    marginTop: Scale(25),
+    marginTop: Scale(35),
   },
   languageText: {
     fontSize: Scale(18),
+    marginLeft:Scale(6),
     color: Colors.BLACK,
     fontFamily: Fonts.Medium,
     paddingHorizontal: Scale(10),
   },
   buttonText: {
+    fontWeight:'bold',
     fontSize: Scale(16),
     color: Colors.WHITE,
     fontFamily: Fonts.Medium,

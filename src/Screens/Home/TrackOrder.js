@@ -66,7 +66,7 @@ const mapScreen = props => {
                                          />
                             </View>
                             <View style={styles.bottomContainer}>
-                                <Text style={styles.normalText}>Order Pick up</Text>
+                                <Text style={styles.normalText}>Order Picked up</Text>
                                
                             </View>
                             <View style={styles.bottomContainer,styles.removeBorder}>

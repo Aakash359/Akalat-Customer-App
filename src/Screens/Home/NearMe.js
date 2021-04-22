@@ -25,26 +25,32 @@ const redirectToSortBy = () => {
       <TouchableOpacity onPress={redirectToHomeMaker}>
       <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-          <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10) }}>
+          <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), }}>
             <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
+           
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={[styles.iconStyle, { color: Colors.WHITE }]} />
+            
+      
             <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5km</Text>
+              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5 km</Text>
             </View>
           </View>
         </View>
       </ImageBackground>
-      <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{fontSize:Scale(16),fontWeight:'bold'}}>Fire & Orill <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal'}}>(11:00am - 10:00pm)</Text>
-        <Text style={{fontSize:Scale(12),fontWeight:'normal'}}>{'\n'}Cafe,Europoan,Contrental, Bearage</Text> </Text>
+      <View style={{ flexDirection: 'row', paddingVertical: Scale(12), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
+        <Text style={{fontSize:Scale(16),fontWeight:'bold',}}>Fire & Orill 
+        <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal'}}>   (11:00 am - 10:00 pm)</Text>
+        <Text style={{fontSize:Scale(12),fontWeight:'normal',}}>{'\n'}Cafe, European, Contrental, Bearage</Text> 
+        </Text>
         <Icon name="heart" type="FontAwesome" style={{ color:"#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
 
       </View>
       </TouchableOpacity>
+      
     </View>
   );
   const renderItem = ({ item, index }) => (
@@ -60,7 +66,7 @@ const redirectToSortBy = () => {
       <ImageBackground source={ImagesPath.reset} style={[styles.backgroundStyle,{borderRadius:Scale(10)}]}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{  paddingBottom: Scale(10), alignItems: 'flex-start', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>$9.0 </Text>
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>$9.00 </Text>
             <Text style={{ fontSize: Scale(18), color: Colors.WHITE, marginLeft: Scale(7),  paddingVertical: Scale(5),}}>Spicy Mozzorella{'\n'}Italian Pizza
             </Text>
           </View>
@@ -72,13 +78,10 @@ const redirectToSortBy = () => {
   const renderItem1 = ({ item, index }) => (
     <View style={{width:Scale(180),
       height: Scale(55),      
-      backgroundColor: '#ffffff',
-      borderWidth:2,
-      borderColor:"#E0E0E0",
       marginVertical: Scale(15),
       marginHorizontal:Scale(10),
       alignSelf: 'center',
-      borderRadius: Scale(10)}}>
+      }}>
         
     <TouchableOpacity onPress={() => navigate('Coupon')}>
       <ImageBackground source={ImagesPath.coupon} style={{
@@ -89,10 +92,10 @@ const redirectToSortBy = () => {
          borderTopRightRadius: Scale(30),
       }}>
          <View style={{  paddingBottom: Scale(10), alignItems: 'flex-start', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(12), color: 'grey',   paddingTop: Scale(5),}}>
+            <Text style={{ fontSize: Scale(12), color: 'grey', fontWeight:'bold',  paddingTop: Scale(5),}}>
             COUPON
             </Text>
-            <Text style={{ fontSize: Scale(14), color: Colors.WHITE,marginTop:Scale(3)  }}>
+            <Text style={{ fontSize: Scale(14), color: Colors.WHITE,marginTop:Scale(3),fontWeight:'bold'  }}>
              40% off <Text style={{ fontSize: Scale(12), color: 'grey', marginLeft:Scale(30) }}>  All Items</Text>
             </Text>
           </View>
@@ -110,16 +113,8 @@ const redirectToSortBy = () => {
         backgroundColor={Colors.APPCOLOR}   
         barStyle="light-content"
       />
-      {/* <View style={styles.headerContainer}>
-        <Image source={ImagesPath.location} style={styles.location} />
-        <Text style={{color:Colors.WHITE}}>NH 28,C block DLF Phase 3...</Text>
-        <View style={styles.bottomHeader}>
-          <TouchableOpacity  onPress={redirectToNotification}>
-          <Image source={ImagesPath.notification} style={styles.notificationStyle} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
-      <View style={{ paddingVertical:Scale(20),paddingHorizontal: Scale(20), alignItems: 'center',backgroundColor:Colors.APPCOLOR }}>
+  
+      <View style={{ paddingVertical:Scale(12),paddingHorizontal: Scale(20), alignItems: 'center',backgroundColor:Colors.APPCOLOR }}>
                 <Searchbar
                     style={styles.searchView}
                     onIconPress={clearImmediate}
@@ -146,12 +141,12 @@ const redirectToSortBy = () => {
       <TouchableOpacity       
          style={styles.leftContainer} onPress={redirectToSortBy}>
           <Text style={styles.normalText}>Sort By</Text>
-          <Image source={ImagesPath.up} />
+          <Image source={ImagesPath.up} style={styles.UP} />
        
         </TouchableOpacity>
           <TouchableOpacity style={styles.leftContainer} onPress={redirectToFilter}>
           <Text style={styles.normalText}>Filters</Text>
-          <Image source={ImagesPath.filter} />
+          <Image source={ImagesPath.filter} style={styles.Filter}  />
           </TouchableOpacity>
         
       </View>
@@ -176,8 +171,20 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     width: '100%',
     fontSize: 12,
+    marginTop:-10,
     backgroundColor: Colors.WHITE,
+    
 },
+  UP:{
+    height:Scale(25),
+    width:Scale(25),
+    
+  },
+  Filter:{
+    height:Scale(25),
+    width:Scale(25),
+    
+  },
   backgroundStyle: {
     width: '100%',
     height: Scale(150),
@@ -188,7 +195,8 @@ const styles = StyleSheet.create({
   },
   normalText:{
     fontSize:Scale(14),
-    color:Colors.BORDERCOLOR
+    color:Colors.BORDERCOLOR,
+    fontWeight:'bold'
   },  
   filterContainer: {
     flexDirection: 'row',
@@ -248,6 +256,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     color: "#FFBB00",
     fontSize: Scale(15),
-    marginHorizontal: Scale(3)
+    marginLeft:Scale(8),
+    
   },
 });

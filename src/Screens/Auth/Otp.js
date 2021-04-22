@@ -6,9 +6,11 @@ import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { CustomButton,} from '../../Component';
+
 function Otp() {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
+
     return (
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
@@ -21,7 +23,8 @@ function Otp() {
                         keyboardShouldPersistTaps={'handled'}
                         showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
-                            <Image source={ImagesPath.loginBg} style={{ width: screenWidth, flex: 1 }} />
+                            <Image source={ImagesPath.otp} 
+                            style={{ width: screenWidth, flex: 1 }} />
                         </View>
                         <ImageBackground source={ImagesPath.background} style={AuthStyle.loginInputCont}>
                             <View style={{ paddingHorizontal: Scale(25), }}>
@@ -38,8 +41,7 @@ function Otp() {
                                         style={styles.otpContainer}
                                         pinCount={4}
                                         keyboardType="number-pad"
-                                        // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-                                        // onCodeChanged = {code => { this.setState({code})}}
+                                        
                                         autoFocusOnLoad
                                         codeInputFieldStyle={{
                                             backgroundColor: Colors.WHITE,
@@ -88,11 +90,10 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Medium,
         marginTop: Scale(5),
         textAlign: 'center',
-       // width: '80%',
         color: Colors.BLACK,
     },
     otpContainer: {
-        width: '78%',
+        width: '70%',
         height: Scale(60),
         alignSelf: 'center',
     },
@@ -114,6 +115,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.BLACK,
         fontFamily: Fonts.Light,
-        marginTop: Scale(15),
+        marginTop: Scale(20),
     },
 })

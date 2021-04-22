@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
-import userReducer from './UserReducer';
-import {DESTROY_SESSION} from '../actions/ActionTypes';
+import AuthReducer from './AuthReducer';
+import {DESTROY_SESSION} from '../Types/type';
 
 const appReducer = combineReducers({
-  user: userReducer,
+  Auth: AuthReducer,
  
 });
 const rootReducer = (state, action) => {

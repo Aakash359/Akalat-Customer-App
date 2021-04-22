@@ -71,7 +71,7 @@ function Order(props) {
              <Icon onPress={increment} type="AntDesign" name="plussquareo" style={styles.iconStyles} />
            </View>
          </View>
-         <View style={{ height: Scale(2), backgroundColor: '#E0E0E0' }} />
+         <View style={{ height: Scale(1), backgroundColor: '#E0E0E0' }} />
          <View style={styles.itemContainer}>
            <Text style={styles.itemText}>Sahi Paneer</Text>
            <View style={styles.rightContainer}>
@@ -85,7 +85,7 @@ function Order(props) {
        <FormArea
          placeholder="Any Instructions..."
          autoCapitalize="none"
-       // maxLength={30}
+         
 
        />
        </View>
@@ -134,7 +134,7 @@ function Order(props) {
        <View style={[styles.cardStyle, {
          height: Scale(330)
        }]}>
-         <Text style={styles.primaryText}>Fire & Grill</Text>
+         <Text style={[styles.primaryText, {color:"#AB8F8E"}]}>Fire & Grill Bill</Text>
          <View style={[styles.bottomContainer, { marginTop: Scale(20) }]}>
            <Text style={styles.itemText1}>Item Total</Text>
            <Text style={styles.normatText1}>$32</Text>
@@ -148,8 +148,8 @@ function Order(props) {
            <Text style={styles.normatText1}>$5</Text>
          </View>
          <View style={styles.bottomContainer}>
-           <Text style={styles.itemText1}>Dilivery charges</Text>
-           <Text style={styles.normatText1}>free</Text>
+           <Text style={styles.itemText1}>Delivery Charges</Text>
+           <Text style={styles.normatText1}>Free</Text>
          </View>
          <View style={{
            marginVertical: Scale(10),
@@ -158,7 +158,7 @@ function Order(props) {
            borderRadius: 1,
          }} />
          <View style={styles.bottomContainer}>
-           <Text style={styles.primaryText}>Total Amount</Text>
+           <Text style={[styles.primaryText]}>Total Amount</Text>
            <Text style={[styles.normatText1, { color: Colors.BLACK }]}>$35</Text>
          </View>
          <View style={{
@@ -173,8 +173,8 @@ function Order(props) {
          justifyContent: 'center',
        }]}>
          <View style={styles.bottomContainer}>
-           <Text style={styles.itemText1}>Delivery Address </Text>
-           <Text style={styles.countText}>charges</Text>
+           <Text style={[styles.itemText1,{color:"#AB8F8E"},{fontWeight:'bold'}]}>Delivery Address </Text>
+           <Text style={[styles.countText,{fontWeight:'bold'}]}>Change</Text>
          </View>
          <Text style={styles.itemText1}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
        </View>
@@ -235,7 +235,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
       },
       bottomContainer: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: Scale(5), alignItems: 'center' },
-      itemText1: { color: Colors.GRAY, fontSize: Scale(18), },
+      itemText1: 
+      { 
+        color: Colors.GRAY, 
+        fontSize: Scale(18), 
+      },
       normatText1: { color: Colors.GRAY, fontSize: Scale(18), },
       itemContainer: { flexDirection: 'row', justifyContent: 'space-between' },
       rightContainer: { flexDirection: 'row', alignItems: 'center' },
@@ -252,7 +256,10 @@ const styles = StyleSheet.create({
         marginRight: Scale(10)
       },
       normatText: { color: Colors.BLACK, fontSize: Scale(16), marginTop: Scale(7) },
-      iconStyles: { fontSize: Scale(22), color: Colors.APPCOLOR },
+      iconStyles: { 
+        fontSize: Scale(20), 
+        color: Colors.APPCOLOR 
+      },
       notificationStyle: {
         width: Scale(25),
         height: Scale(25),

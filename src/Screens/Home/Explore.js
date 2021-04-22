@@ -26,14 +26,14 @@ function Explore() {
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={[styles.iconStyle, { color: Colors.WHITE }]} />
             <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5km</Text>
+              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5 km</Text>
             </View>
           </View>
         </View>
       </ImageBackground>
       <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{ fontSize: Scale(16), fontWeight: 'bold' }}>Fire & Orill <Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>(11:00am - 10:00pm)</Text>
-          <Text style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}Cafe,Europoan,Contrental, Bearage</Text> </Text>
+        <Text style={{ fontSize: Scale(16), fontWeight: 'bold' }}>Fire & Orill <Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>(11:00 am - 10:00 pm)</Text>
+          <Text style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}Cafe,European,Contrental, Bearage</Text> </Text>
         <Icon name="heart" type="FontAwesome" style={{ color: "#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
 
       </View>
@@ -211,6 +211,6 @@ const styles = StyleSheet.create({
   iconStyle: {
     color: '#FFBB00',
     fontSize: Scale(15),
-    marginHorizontal: Scale(3)
+    marginLeft:Scale(8),
   },
 });

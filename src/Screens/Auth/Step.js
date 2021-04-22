@@ -10,6 +10,7 @@ import {
     FlatList,
     StyleSheet,
     ImageBackground,
+    StatusBar
 } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import {
@@ -34,7 +35,7 @@ export class Step extends Component {
     renderItem = ({ item, index }) => {
         return (
             <View style={{ alignItems: 'center' }}>
-                <Image source={item.image} style={{ width: screenWidth, flex: 1 }} />
+                <Image source={item.image} style={{ width: screenWidth, flex: 1  }} resizeMode='cover' />
             </View>
         );
     };
@@ -52,6 +53,7 @@ export class Step extends Component {
     render() {
         return (
             <SafeAreaInsetsContext.Consumer>
+                
                 {(insets) => (
                     <KeyboardAvoidingView
                         style={AuthStyle.keyboardAware}
@@ -62,6 +64,7 @@ export class Step extends Component {
                             keyboardShouldPersistTaps={'handled'}
                             showsVerticalScrollIndicator={false}>
                             <View style={styles.container}>
+                            <StatusBar translucent backgroundColor="transparent" />
                                 <FlatList
                                     data={this.state.data}
                                     horizontal={true}

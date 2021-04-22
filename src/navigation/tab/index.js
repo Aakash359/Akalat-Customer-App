@@ -22,6 +22,7 @@ function index() {
     <Tab.Navigator
       initialRouteName="HomeScreen"
       tabBarOptions={{
+        
         inactiveTintColor: Colors.BORDERCOLOR,
         activeTintColor: Colors.DARK_RED,
         labelStyle: {fontSize:Scale(14), textTransform: 'capitalize',marginBottom:5},
@@ -29,8 +30,7 @@ function index() {
           height: 65,
           paddingTop: 10,
           paddingBottom: 10,
-        //  borderTopLeftRadius: 12,
-          //borderTopRightRadius: 12,
+        
         },
         
       }}>
@@ -40,23 +40,32 @@ function index() {
         options={{
           ...getOptions({
             tabBarLabel: 'Near Me',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
             icon: ImagesPath.location,
+            
           }),
         }}
       />
       <Tab.Screen
         name="Explore"
         component={Explore}
+        
         options={{
+          
           ...getOptions({
             tabBarLabel: 'Explore',
             icon: ImagesPath.search,
+            
+            
           }),
         }}
       />
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
+      
         options={{
           ...getOptions({
             tabBarLabel: 'Hungry Now',

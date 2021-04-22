@@ -17,10 +17,7 @@ export default class Location extends React.Component {
         try {
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            // {
-            //   title: 'Location Access Required',
-            //   message: 'This App needs to Access your location',
-            // },
+           
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             that.callLocation(that);

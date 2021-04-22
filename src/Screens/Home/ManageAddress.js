@@ -23,11 +23,11 @@ function ManageAddress() {
         <View style={styles.cardStyle}>
             <View style={styles.cardHeader}>
                 <View>
-                    <Text style={[styles.placeText,{fontWeight:'bold'}]}>{item.place}</Text>
+                    <Text style={styles.placeText}>{item.place}</Text>
                 </View>
                 <View style={{flexDirection:'row',}}>
-                    <Text onPress={() => setDeleteAdd(true)} style={[styles.placeText,{fontWeight:'bold',color:Colors.APPCOLOR}]}>Delete  </Text>
-                    <Text onPress={EditAddress} style={[styles.placeText,{fontWeight:'bold',color:Colors.APPCOLOR,marginLeft:Scale(10)}]}>Edit</Text>
+                    <Text onPress={() => setDeleteAdd(true)} style={[styles.placeText,{color:Colors.APPCOLOR,fontWeight:'bold'}]}>Delete  </Text>
+                    <Text onPress={EditAddress} style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10),fontWeight:'bold'}]}>Edit</Text>
                 </View>
             </View>
             <Text style={styles.placeText}>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     placeText:{
         fontSize:Scale(16),
         fontFamily:Fonts.Bold,
-        color:Colors.BLACK
+        color:Colors.BLACK,
     },
     cardStyle: {
         width: '100%',
@@ -147,8 +147,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: Scale(20),
-        //marginHorizontal: Scale(25),
-        //marginBottom: Scale(25),
+        fontWeight:'bold',
         color: Colors.WHITE
     },
     notificationStyle: {
