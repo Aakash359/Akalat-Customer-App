@@ -26,7 +26,7 @@ function Favorites() {
       <View style={styles.ratingContainer}>
         <View style={styles.buttonStyle1}>
           <Text style={styles.textStyle1}>4.7</Text>
-          <Text style={styles.normalText}>Rating</Text>
+          <Text style={styles.normalText}>Ratings</Text>
         </View>
         <View style={styles.buttonStyle1}>
           <Text style={styles.textStyle1}>25 Min</Text>
@@ -88,7 +88,11 @@ const styles = StyleSheet.create({
     borderRadius: Scale(20),
     marginRight: Scale(10)
   },
-  primaryText: { color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'bold' },
+  primaryText: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(18), 
+    fontWeight: 'bold' 
+  },
   ratingContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -96,15 +100,22 @@ const styles = StyleSheet.create({
   },
   buttonStyle1: {
     height: Scale(50),
-    width: Scale(100),
+    width: '31%',
     borderColor: Colors.LIGHTGREY,
     borderRadius: 5,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  textStyle1: { color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold' },
-  normalText: { color: 'grey', fontSize: Scale(12) },
+  textStyle1: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(16), 
+    fontWeight: 'bold' 
+  },
+  normalText: { 
+    color: 'grey', 
+    fontSize: Scale(12) 
+  },
   cardStyle: {
     width: '90%',
     backgroundColor: '#ffffff',
@@ -116,7 +127,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: Scale(10)
   },
-  normatText: { color: Colors.BLACK, fontSize: Scale(16), marginTop: Scale(7) },
+  normatText: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(16), 
+    marginTop: Scale(7) 
+  },
   buttonStyle: {
     borderRadius: Scale(20),
     height: Scale(40),

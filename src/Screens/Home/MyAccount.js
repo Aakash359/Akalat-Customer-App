@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   loginInputCont: {
     top: Scale(-50),
     paddingVertical: Scale(20),
-    // paddingBottom: Scale(50),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,

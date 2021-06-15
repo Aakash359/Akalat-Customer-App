@@ -1,18 +1,43 @@
 import React, { useState } from 'react';
-import {View,Text,TouchableOpacity,Image,KeyboardAvoidingView,ScrollView,Platform,StyleSheet,ImageBackground,} from 'react-native';
+import {View,Text,TouchableOpacity,
+Image,KeyboardAvoidingView,ScrollView,Platform,StyleSheet,ImageBackground,StatusBar} from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
-import {screenWidth,screenHeight,ImagesPath, Colors,Scale,Fonts,} from '../../CommonConfig';
+import {screenWidth,screenHeight,ImagesPath,COUNTRY, Colors,Scale,Fonts,} from '../../CommonConfig';
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
-import {useSelector} from 'react-redux'
-import { CustomButton, FormInput , PasswordInput} from '../../Component';
+import {useSelector,useDispatch} from 'react-redux'
+import { CustomButton, NumberInput ,FormInput, PasswordInput} from '../../Component';
+import { OTPRequest } from '../../redux/actions'
 
 function ForgotPassword() {
-    const user = useSelector((state) => state.Auth);
-    console.log('================================user data',user);
-    
+    const otpResponse = useSelector((state) => state.Auth);
+
+    // console.log('================================OTP data',otpResponse);
+    const [phone, setphone] = useState('');
     const { navigate } = useNavigation();
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const  onSubmit = () =>{
+      if(phone == '') {
+
+        alert("Please enter phone number")
+        }
+        else
+        {
+            const data = { 
+                'phone': phone,
+                // 'phone': parseInt(phone),
+                'role' : 'customer',
+                'country_code' : COUNTRY == "IN" ? '971' : '91'
+     
+                }
+                console.log("Data",data)
+              navigate('Otp', data)
+              dispatch(OTPRequest(data));
+        }
+      }
+
     return (
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
@@ -24,12 +49,13 @@ function ForgotPassword() {
                         bounces={false}
                         keyboardShouldPersistTaps={'handled'}
                         showsVerticalScrollIndicator={false}>
+                    <StatusBar translucent backgroundColor="transparent" />
                         <View style={styles.container}>
                             <Image source={ImagesPath.bug} 
                             style={{ width: screenWidth, flex: 1 }} 
                             />
                         </View>
-                        <ImageBackground source={ImagesPath.background} style={AuthStyle.loginInputCont}>
+                        <ImageBackground source={ImagesPath.background} style={[AuthStyle.loginInputCont,{top:-20}]}>
                             <View style={{ paddingHorizontal: Scale(25), }}>
                                 <TouchableOpacity
                                     onPress={() => navigation.goBack()}>
@@ -40,15 +66,17 @@ function ForgotPassword() {
                                 <Text style={styles.primaryText}>Forgot Password</Text>
                                 <Text style={styles.normalText}>Please enter your registered mobile number to reset password</Text>
                                 <View style={{marginVertical:Scale(8)}}>
-                                    <PasswordInput
+                                  <FormInput
                                     placeholder="Mobile Number"
                                     autoCapitalize="none"
                                     keyboardType={'numeric'}
                                     maxLength={30}
+                                    value={parseInt(phone)}
+                                    onChangeText={(text) => setphone(text )}
                                     />
                                 </View>
                               
-                                <CustomButton title="Submit" onSubmit={() => navigate('Otp')} isSecondary={true} />
+                                <CustomButton title="Submit" onSubmit={onSubmit} isSecondary={true} />
                             </View>
                         </ImageBackground>
                     </ScrollView>

@@ -1,14 +1,50 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, StyleSheet, ImageBackground, } from 'react-native';
+import { View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, StyleSheet, ImageBackground, Alert, } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { screenWidth, screenHeight, ImagesPath, Colors, Scale, Fonts, } from '../../CommonConfig';
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
 import { CustomButton, FormInput } from '../../Component';
+import { connect } from 'react-redux';
+import { API_BASE } from '../../apiServices/ApiService';
+import axios from 'axios';
 
-function ResetPassword() {
+function ResetPassword(props) {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
+    const [form, setForm] = React.useState({password: '', confirm_password: ''})
+
+    const onReset = async () => {
+        const {password, confirm_password} = form
+        if(!password || password?.length < 8) {
+          return  Alert.alert('', 'Please enter 8 characters password')
+        }
+        if(!confirm_password || confirm_password?.length < 8) {
+            return  Alert.alert('', 'Please enter 8 characters password')
+          }
+          const url = `${API_BASE}/resetPassword`
+          const payload = {
+              password,
+              confirm_password,
+              phone: props?.route?.params?.phone,
+              _id: props?.user?._id
+          }
+          try {
+              const res = await axios.post(url, payload)
+              if(res?.data?.error) {
+                  Alert.alert('', res?.data?.message)
+              }
+              else {
+                  props.navigation.navigate('Login')
+              }
+
+          } catch (error) {
+              Alert.alert('', error.message)
+          }
+    }
+
+    console.log(props);
+
     return (
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
@@ -39,6 +75,7 @@ function ResetPassword() {
                                         autoCapitalize="none"
                                         secureTextEntry={true}
                                         maxLength={30}
+                                        onChangeText={password => setForm({...form, password})}
                                     />
                                 </View>
                                
@@ -47,8 +84,9 @@ function ResetPassword() {
                                     autoCapitalize="none"
                                     secureTextEntry={true}
                                     maxLength={30}
+                                    onChangeText={confirm_password => setForm({...form, confirm_password})}
                                 />
-                                <CustomButton title="Submit" onSubmit={() => navigate('Login')} isSecondary={true} />
+                                <CustomButton title="Submit" onSubmit={onReset} isSecondary={true} />
                             </View>
                         </ImageBackground>
                     </ScrollView>
@@ -58,7 +96,17 @@ function ResetPassword() {
     );
 }
 
-export default ResetPassword;
+const mapStateToProps = ({Auth: {otpVerifyResponse}}) => {
+    return {
+        user: otpVerifyResponse?.data
+    }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
 
 const styles = StyleSheet.create({
     container: {

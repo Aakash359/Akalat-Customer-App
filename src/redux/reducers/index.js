@@ -1,14 +1,24 @@
 import {combineReducers} from 'redux';
 import AuthReducer from './AuthReducer';
-import {DESTROY_SESSION} from '../Types/type';
+import SettingReducer from './SettingReducer';
+import HomeReducer from './HomeReducer';
+import CartReducer from './CartReducer'
+import {DESTROY_SESSION,LOGOUT_REQUEST} from '../Types/type';
 
 const appReducer = combineReducers({
   Auth: AuthReducer,
- 
+  Setting: SettingReducer,
+  Home: HomeReducer,
+  Cart: CartReducer
 });
 const rootReducer = (state, action) => {
-  // Clear all data in redux store to initial.
-  if (action.type === DESTROY_SESSION) {
+  
+  
+  // if (action.type === DESTROY_SESSION) {
+  //   state = undefined;
+  // }
+  if (action.type === LOGOUT_REQUEST) 
+  {
     state = undefined;
   }
 

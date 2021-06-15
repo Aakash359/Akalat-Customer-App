@@ -24,7 +24,7 @@ setCheck(!check);
       <View style={styles.headerContainer}>
       <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle}/>              
        </View>
-       <Text style={{fontSize:Scale(20),marginHorizontal:Scale(25),marginBottom:Scale(25),color:Colors.WHITE}}>Payment</Text>
+       <Text style={{fontSize:Scale(20),fontWeight:'bold', marginHorizontal:Scale(25),marginBottom:Scale(25),color:Colors.WHITE}}>Payment</Text>
       
         <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
         <ScrollView>

@@ -23,7 +23,7 @@ _id:6062f7e6fc29943ec00c5952
 
 
 Send OTP Screen 
-http://localhost:3327/api/v1/sendOtp
+http://3.7.147.28:3328/api/v1/sendOtp
 
 phone:9874563211
 country_code:91

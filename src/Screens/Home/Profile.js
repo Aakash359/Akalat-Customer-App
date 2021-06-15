@@ -4,13 +4,22 @@ import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { CustomButton } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
-function Profile() {
+import { connect } from 'react-redux';
+import { getUserDetails } from '../../redux/actions/AuthActions';
+function Profile(props) {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
   const redirectToEditProfile = () => {
-    navigate('Share');
+    navigate('EditProfile');
   };
 
+  React.useEffect(() => {
+    props.navigation.addListener('focus', () => {
+      props.getUserDetails({_id: props?.user?._id})
+    })
+  })
+
+  const {user} = props
   return (
     <View style={styles.container}>
       <StatusBar
@@ -24,11 +33,11 @@ function Profile() {
       <Text style={styles.headerText}>My Profile </Text>
       <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
         <Text style={styles.textStyle}>Name</Text>
-        <Text style={styles.inputStyle}>Jmaes jon</Text>
+        <Text style={styles.inputStyle}>{`${user?.first_name} ${user?.last_name}`}</Text>
         <Text style={styles.textStyle}>Mobile Number</Text>
-        <Text style={styles.inputStyle}>+91 7839445015</Text>
+        <Text style={styles.inputStyle}>{`+${user?.country_code} ${user?.phone}`}</Text>
         <Text style={styles.textStyle}>Email Address</Text>
-        <Text style={styles.inputStyle}>james@gmail.com</Text>
+        <Text style={styles.inputStyle}>{user?.email}</Text>
         <View style={{ justifyContent: 'flex-end', flex: 1 }}>
           <CustomButton title="Edit Profile" isSecondary={true} onSubmit={redirectToEditProfile} />
         </View>
@@ -37,7 +46,18 @@ function Profile() {
     </View>
   );
 }
-export default Profile;
+
+const mapStateToProps = ({Auth: {user}}) => {
+  return {
+    user
+  }
+}
+
+const mapDispatchToProps = {
+  getUserDetails: getUserDetails
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
 const styles = StyleSheet.create({
   container: {
     flex: 1,

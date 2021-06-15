@@ -1,14 +1,54 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, FlatList,StatusBar, ScrollView,TouchableOpacity, Image, ImageBackground } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { Text, View, StyleSheet, FlatList,StatusBar, ScrollView,TouchableOpacity, Image, ImageBackground, Alert } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-function NearMe() {
+import { useSelector, useDispatch, connect } from 'react-redux';
+import { offercardRequest,restroListRequest } from '../../redux/actions';
+import { API_BASE } from '../../apiServices/ApiService';
+import axios from 'axios';
+
+function NearMe(props) {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
-  const redirectToHomeMaker = () => {
-      navigate('HomeMaker');
+  const offercardResponse = useSelector((state) => state.Home.offercardResponse); 
+  const [offercard, setofferCard] = React.useState(offercardResponse?.data || []);
+  const restroResponse = useSelector((state) => state.Home.restroResponse);
+  const [restroItems, setrestroItems] = React.useState(restroResponse?.data || []);
+  
+  const [data, setdata] = React.useState({
+    restroList:[],
+    isLoading: true
+ })
+ const [search, setSearch] = React.useState("")
+  
+ const onSearch = async () => {
+  setdata({...data,  isLoading: true})
+  const url = `${API_BASE}/restro/search`
+  const payload = {
+    searchKey: search
+  }
+  try {
+    const res = await axios.post(url, payload)
+    console.log('restro data ', res);
+    setdata({...data, restroList: res?.data?.data?.restro, isLoading: false})
+  } catch (error) {
+    console.log(error);
+  }
+}
+ React.useEffect(() => {
+   onSearch()
+ }, [])
+
+ React.useEffect(() => {
+  onSearch()
+}, [search])
+
+
+
+  const redirectToHomeMaker = (item) => {
+      navigate('HomeMaker', {restroId: item?._id ,restroDetails: item});
   };
   const redirectToFilter = () => {
     navigate('Filter');
@@ -19,14 +59,35 @@ const redirectToSortBy = () => {
   const redirectToNotification = () => {
     navigate('Notification');
 };
+
+const dispatch = useDispatch();
+
+
+useEffect(() => {
+
+  setTimeout(() => {
+
+    dispatch(offercardRequest());
+    dispatch(restroListRequest());
+
+  }, 1000);
+
+ },
+ 
+ []); 
+
+
+
+
   
   const renderItems = ({ item, index }) => (
     <View style={styles.cardStyle}>
-      <TouchableOpacity onPress={redirectToHomeMaker}>
-      <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
+      <TouchableOpacity onPress={() =>redirectToHomeMaker(item)}>
+      <ImageBackground source={{uri: item?.image }}style={styles.backgroundStyle}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), }}>
-            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
+            
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>{item?.rating_from_user}</Text>
            
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
             <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
@@ -41,20 +102,27 @@ const redirectToSortBy = () => {
           </View>
         </View>
       </ImageBackground>
-      <View style={{ flexDirection: 'row', paddingVertical: Scale(12), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{fontSize:Scale(16),fontWeight:'bold',}}>Fire & Orill 
-        <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal'}}>   (11:00 am - 10:00 pm)</Text>
-        <Text style={{fontSize:Scale(12),fontWeight:'normal',}}>{'\n'}Cafe, European, Contrental, Bearage</Text> 
-        </Text>
-        <Icon name="heart" type="FontAwesome" style={{ color:"#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
+      <View>
+      <View style={{ flexDirection: 'row',paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
+        <Text numberOfLines={1} style={{fontSize:Scale(16), width:'45%',fontWeight:'bold',}}>{item?.restro_name}</Text>
+        <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal',marginRight:Scale(15),}}>(11:00 am - 10:00 pm)</Text>
+        <Icon name="heart" type="FontAwesome" style={{ color:"#AB8F8E", fontSize: Scale(15),  }} />
 
+        </View>
+        <View style={{flexDirection:"column",flex:1,marginBottom:Scale(15) }}>
+        <Text numberOfLines={1} style={{fontSize:Scale(15),fontWeight:'normal',marginLeft:Scale(10),}}>{item?.street_name}, {item?.area_name}, {item?.region}, {item?.state}...</Text>   
+        </View>
+        
+        
+      
       </View>
       </TouchableOpacity>
       
     </View>
   );
   const renderItem = ({ item, index }) => (
-    <View style={{width:Scale(330),
+    <View style={{
+      width:Scale(300),
       height: Scale(150),      
       backgroundColor: '#ffffff',
       borderWidth:2,
@@ -63,11 +131,13 @@ const redirectToSortBy = () => {
       marginHorizontal:Scale(10),
       alignSelf: 'center',
       borderRadius: Scale(10)}}>
-      <ImageBackground source={ImagesPath.reset} style={[styles.backgroundStyle,{borderRadius:Scale(10)}]}>
+      <ImageBackground source={{uri: item.image}} style={[styles.backgroundStyle,{borderRadius:Scale(10)}]}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{  paddingBottom: Scale(10), alignItems: 'flex-start', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>$9.00 </Text>
-            <Text style={{ fontSize: Scale(18), color: Colors.WHITE, marginLeft: Scale(7),  paddingVertical: Scale(5),}}>Spicy Mozzorella{'\n'}Italian Pizza
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>Price</Text>
+            <Text style={{ textShadowColor: 'rgb(255,255,255)',
+    textShadowOffset: {width: 0.1, height: 0.1},
+    textShadowRadius: 5, fontSize: Scale(18), color: Colors.WHITE, marginLeft: Scale(7),  paddingVertical: Scale(5),}}>Spicy Mozzorella{'\n'}Italian Pizza
             </Text>
           </View>
         </View>
@@ -76,12 +146,12 @@ const redirectToSortBy = () => {
     </View>
   );
   const renderItem1 = ({ item, index }) => (
-    <View style={{width:Scale(180),
-      height: Scale(55),      
+    <View style={{
+      width:Scale(150),
+      height: Scale(55),
+      marginHorizontal:Scale(5),    
       marginVertical: Scale(15),
-      marginHorizontal:Scale(10),
-      alignSelf: 'center',
-      }}>
+     }}>
         
     <TouchableOpacity onPress={() => navigate('Coupon')}>
       <ImageBackground source={ImagesPath.coupon} style={{
@@ -96,7 +166,7 @@ const redirectToSortBy = () => {
             COUPON
             </Text>
             <Text style={{ fontSize: Scale(14), color: Colors.WHITE,marginTop:Scale(3),fontWeight:'bold'  }}>
-             40% off <Text style={{ fontSize: Scale(12), color: 'grey', marginLeft:Scale(30) }}>  All Items</Text>
+             40% OFF <Text style={{ fontSize: Scale(12), color: 'grey', marginLeft:Scale(30) }}>  All Items</Text>
             </Text>
           </View>
       
@@ -114,12 +184,15 @@ const redirectToSortBy = () => {
         barStyle="light-content"
       />
   
-      <View style={{ paddingVertical:Scale(12),paddingHorizontal: Scale(20), alignItems: 'center',backgroundColor:Colors.APPCOLOR }}>
+      <View style={{ paddingVertical:Scale(12),paddingHorizontal: Scale(25), alignItems: 'center',backgroundColor:Colors.APPCOLOR }}>
                 <Searchbar
+                    numberOfLines ={1}
                     style={styles.searchView}
                     onIconPress={clearImmediate}
                     inputStyle={{ fontSize: Scale(14),marginLeft:Scale(-15) }}        
                     placeholder="Search restaurant, dishes(or food) here..."
+                    onChangeText={text => setSearch(text)}
+                    value = {search}
                 />
             </View>
       <ScrollView>
@@ -134,7 +207,7 @@ const redirectToSortBy = () => {
        showsHorizontalScrollIndicator={false}                 
       horizontal
       style={{marginHorizontal:Scale(12)}}
-        data={[0,1,2,3,4]}
+      data={offercard}
         renderItem={renderItem}
       />
       <View style={styles.filterContainer}>
@@ -146,19 +219,35 @@ const redirectToSortBy = () => {
         </TouchableOpacity>
           <TouchableOpacity style={styles.leftContainer} onPress={redirectToFilter}>
           <Text style={styles.normalText}>Filters</Text>
-          <Image source={ImagesPath.filter} style={styles.Filter}  />
+          <Image source={ImagesPath.filter} style={styles.Filter} />
           </TouchableOpacity>
         
       </View>
       <FlatList
-        data={[0, 1, 2, 3]}
+        data={data?.restroList}
         renderItem={renderItems}
+        keyExtractor={(item, i) => `${i}`}
+        ListEmptyComponent={() => {
+         return <Text>No data found</Text>
+        }}
       />
       </ScrollView>
     </View>
   );
 }
-export default NearMe;
+
+const mapStateToProps = ({Auth: {user}}) => {
+  return {
+    user
+  }
+}
+
+const mapDispatchToProps = {
+  
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(NearMe);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -171,7 +260,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     width: '100%',
     fontSize: 12,
-    marginTop:-10,
+    marginTop:-12,
     backgroundColor: Colors.WHITE,
     
 },

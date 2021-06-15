@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StatusBar, Alert, Clipboard} from 'react-native';
+import {Text, View, StatusBar, Alert, Clipboard, LogBox} from 'react-native';
 import {Colors} from './CommonConfig';
 // import messaging from '@react-native-firebase/messaging';
 //yarn remove "@react-native-firebase/app"
@@ -10,6 +10,9 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 import RootStack from './navigation';
 import AsyncStorage from '@react-native-community/async-storage';
+
+LogBox.ignoreAllLogs()
+
 export class App extends Component {
   componentDidMount() {
     NetInfo.addEventListener((state) => {

@@ -67,7 +67,7 @@ function SavedCard() {
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                     enabled>
-                    <ScrollView indicatorStyle={Colors.WHITE}>
+                    <ScrollView indicatorStyle='white'>
                         <FlatList
                             data={items}
                             renderItem={renderItems}
@@ -98,15 +98,16 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
-        marginBottom:Scale(10)
+        marginBottom:Scale(10),
+        fontWeight:'bold'
     },
     bottomStyle:{
         flexDirection:'row',
         justifyContent:'space-between',
-    borderColor:'#00000029',
-    marginTop:Scale(15),
-    paddingTop:Scale(10),
-    borderTopWidth:Scale(1.5)
+        borderColor:'#00000029',
+        marginTop:Scale(15),
+        paddingTop:Scale(10),
+        borderTopWidth:Scale(1.1)
 },
     nameText:{
         fontSize:Scale(16),
@@ -118,14 +119,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderWidth: Scale(2),
         borderColor: Colors.LIGHTGREY,
-        marginVertical: Scale(15),
+        marginVertical: Scale(10),
         paddingHorizontal: Scale(15),
         paddingVertical: Scale(15),
         alignSelf: 'center',
         borderRadius: Scale(10)
       },
     buttonContainer: {
-        // flexDirection: 'row',
+       
         alignItems: 'center',
         borderWidth: Scale(1),
         borderColor: Colors.WHITE,

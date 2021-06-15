@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     height:Scale(45),
     alignSelf: 'center'
   },
-  secondaryText: {
-    //textTransform: 'uppercase',        
+  secondaryText: {      
     fontSize: Scale(18),
     fontWeight:'bold',
     color: Colors.WHITE,

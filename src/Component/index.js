@@ -6,5 +6,15 @@ import LocationInput from './LocationInput';
 import FormArea from './FormArea';
 import MapScreen from './MapScreen';
 import PasswordInput from './PasswordInput';
+import NumberInput from './NumberInput';
 
-export {CustomButton,DropDown,FormInput,LocationInput,FormArea,FormInput1,MapScreen,PasswordInput};
+export {CustomButton,
+    DropDown,
+    FormInput,
+    LocationInput,
+    FormArea,
+    FormInput1,
+    MapScreen,
+    PasswordInput,
+    NumberInput,
+};

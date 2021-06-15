@@ -37,6 +37,8 @@ import {headerLeftStyle,} from '../Helper';
 
 import LogoTitle from '../../containers/LogoTitle';
 const Stack = createStackNavigator();
+
+
 function HomeStack(navigation) {
 
   return (
@@ -47,7 +49,7 @@ function HomeStack(navigation) {
           options={{
             headerTitle: props => <LogoTitle {...props} />,
             ...headerLeftStyle(),
-            headerLeft: () => <HamburgerButton  navigation={navigation}/>,
+            headerLeft: () =>  <HamburgerButton  navigation={navigation}/>,
             headerRight: () => <RightButton navigation={navigation} />
           }}
          
@@ -232,7 +234,7 @@ function HomeStack(navigation) {
           options={{ headerShown: false}}
          
       />
-          </Stack.Navigator>
+    </Stack.Navigator>
   );
 }
 export default HomeStack;

@@ -1,22 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-function Explore() {
+import { searchRequest,} from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+
+function Explore() 
+ {
   const [check, setChecked] = useState(false);
+  const  searchResponse = useSelector((state) => state.Home.searchResponse);
+  const [items, setItems] = React.useState(searchResponse?.data?.restro || []);
   const { navigate } = useNavigation();
   const navigation = useNavigation();
-  const redirectToNotification = () => {
-    navigate('Notification');
-  };
+  const dispatch = useDispatch();
+ 
+
+  const redirectToHomeMaker = () => {
+    navigate();
+};
+  const [searchtext, setSearchText] = useState('');
+
   const redirectTocheck = () => {
     setChecked(!check);
   };
-  const renderItems = ({ item, index }) => (
+  
+  const  onSerach = text =>{
+  
+    setSearchText(text);
+
+    const data = { 
+      'searchKey': text,
+      
+       }
+
+    dispatch(searchRequest(data));
+
+   }
+
+    useEffect(() => {
+
+      const data = { 
+        'searchKey': searchtext,
+        
+         }
+
+      dispatch(searchRequest(data));
+
+    }, [searchtext]); 
+ 
+
+  const renderItems = ({ item,}) => (
     <View style={styles.cardStyle}>
-      <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
+      <ImageBackground source={{uri: item.image}} style={styles.backgroundStyle}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10) }}>
             <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
@@ -32,8 +69,8 @@ function Explore() {
         </View>
       </ImageBackground>
       <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{ fontSize: Scale(16), fontWeight: 'bold' }}>Fire & Orill <Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>(11:00 am - 10:00 pm)</Text>
-          <Text style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}Cafe,European,Contrental, Bearage</Text> </Text>
+        <Text style={{ fontSize: Scale(16), fontWeight: 'bold' }}>{item.restro_name}<Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>    (11:00 am - 10:00 pm)</Text>
+          <Text style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}{item.area_name}, {item.street_name}, {item.region}, {item.state}</Text> </Text>
         <Icon name="heart" type="FontAwesome" style={{ color: "#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
 
       </View>
@@ -47,19 +84,12 @@ function Explore() {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      {/* <View style={styles.headerContainer}>
-        <Image source={ImagesPath.location} style={styles.location} />
-        <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
-        <View style={styles.bottomHeader}>
-          <TouchableOpacity onPress={redirectToNotification}>
-            <Image source={ImagesPath.notification} style={styles.notificationStyle} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
-      <View style={{ paddingBottom: Scale(15), paddingHorizontal: Scale(20), alignItems: 'center', backgroundColor: Colors.APPCOLOR }}>
+      <View style={{ paddingBottom: Scale(10), paddingHorizontal: Scale(20), alignItems: 'center', backgroundColor: Colors.APPCOLOR }}>
         <Searchbar
           style={styles.searchView}
           onIconPress={clearImmediate}
+          onChangeText={(text) => onSerach(text )}
+          value={searchtext}
           inputStyle={{ fontSize: Scale(14), marginLeft: Scale(-15) }}
           placeholder="Search here..."
         />
@@ -82,12 +112,16 @@ function Explore() {
        
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Scale(25), paddingTop: Scale(10) }}>
             <Text style={{ color: '#AB8F8E', fontSize: Scale(16) }}>Near By</Text>
+            <TouchableOpacity onPress={redirectToHomeMaker}>
             <Text style={{ color: Colors.DARK_RED, fontSize: Scale(16) }}>View All</Text>
+            </TouchableOpacity>
           </View>
           <FlatList
-          style={{paddingBottom:Scale(100)}}
-            data={[0, 1, 2, 3]}
+            style={{paddingBottom:Scale(100)}}
+            data={items}
+            extraData={items}
             renderItem={renderItems}
+            keyExtractor={(item, index) => index.toString()}
           />
            </ScrollView>
        
@@ -118,6 +152,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     width: '100%',
     fontSize: 12,
+    marginTop:-12,
     backgroundColor: Colors.WHITE,
   },
   backgroundStyle: {
@@ -130,11 +165,13 @@ const styles = StyleSheet.create({
   },
   normalText: {
     fontSize: Scale(12),
-    color: Colors.WHITE
+    color: Colors.WHITE,
+    fontWeight:'bold',
   },
   normalText1: {
     fontSize: Scale(12),
-    color: Colors.APPCOLOR
+    color: Colors.APPCOLOR,
+    fontWeight:'bold',
   },
   filterContainer: {
     flexDirection: 'row',

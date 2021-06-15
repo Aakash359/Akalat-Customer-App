@@ -35,7 +35,7 @@ function SortBy() {
                     <View style={{ marginTop:Scale(25),justifyContent:'center',paddingVertical:Scale(15),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),alignItems:'center'}}>
                         <Text>Relevance</Text>
-                        <Icon type="FontAwesome" style={value == 0 ? {color:Colors.DARK_RED} : {color:Colors.LIGHT_GRAY}} name={ value == 0 ? "dot-circle-o" : "circle-o"} onPress={() => setActiveTab(0)}/>
+                        <Icon type="FontAwesome"  style={value == 0 ? {color:Colors.DARK_RED} : {color:Colors.LIGHT_GRAY}} name={ value == 0 ? "dot-circle-o" : "circle-o"} onPress={() => setActiveTab(0)}/>
                         </View>                       
                     </View>
                     <View style={{ marginTop:Scale(25),justifyContent:'center',paddingVertical:Scale(15),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>

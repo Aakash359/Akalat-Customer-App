@@ -1,10 +1,31 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, ScrollView,ImageBackground, } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { TermsRequest } from '../../redux/actions'
+
+
+
 function TermCondition() {
-    const navigation = useNavigation();    
+    const navigation = useNavigation();  
+    const { navigate } = useNavigation();
+    const dispatch = useDispatch();
+    const termsResponse = useSelector((state) => state.Setting.termsResponse);  
+
+    // console.log("Aakash===>",termsResponse?.data?.customer_terms_and_condition)
+    const data = termsResponse
+    console.log("PriVcyy===>",(data))
+    
+
+
+   
+    useEffect(() => {
+        dispatch(TermsRequest());
+       },[]);   
+    
+    
     return (
         <View style={styles.container}>
             <StatusBar
@@ -18,24 +39,7 @@ function TermCondition() {
             <Text style={styles.headerText}>Terms & Conditions </Text>
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <ScrollView style={styles.mainContainer}>
-                    <Text style={styles.textStyle}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                    aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                    duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                    sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                    consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                    accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-                    no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                    aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                    duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                    sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                    consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                    invidunt ut labore et dolore magna aliquyam erat,
-                    sed diam voluptua. At vero eos et accusam et justo duo
-                    dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                    <Text style={styles.textStyle}>{termsResponse?.data?.customer_terms_and_condition}
                    </Text>
                 </ScrollView>
             </ImageBackground>

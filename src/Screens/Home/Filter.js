@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: Scale(20),
+        fontWeight:'bold',
         marginHorizontal: Scale(25),
         marginBottom: Scale(25),
         color: Colors.WHITE

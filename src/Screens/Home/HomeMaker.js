@@ -1,19 +1,76 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Modal,Switch, StatusBar,TouchableOpacity, ScrollView, Image, ImageBackground } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { Text, View, StyleSheet, Modal,Switch, StatusBar,TouchableOpacity, ScrollView, Image, ImageBackground, Alert } from 'react-native';
 import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { Colors, Scale, ImagesPath ,Fonts} from '../../CommonConfig';
 import { FlatGrid } from 'react-native-super-grid';
-function HomeMaker() {
+import { restroListRequest  } from '../../redux/actions'
+import { useSelector, useDispatch, connect } from 'react-redux';
+import axios from 'axios';
+import { API_BASE } from '../../apiServices/ApiService';
+import { addToCart, subToCart } from '../../redux/actions/CartActions';
+
+function HomeMaker(props) {
   const { navigate } = useNavigation();
-  const [check , setCheck] = useState(false);
   const navigation = useNavigation(); 
+  const restroResponse = useSelector((state) => state.Home.restroResponse); 
+  const [restroItems, setrestroItems] = React.useState(restroResponse?.data || []);
+  const [check , setCheck] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const[addItem, SetAddItem] = useState(0);
   const [customizeModal ,setCustomizeModal] = useState(false);
   const toggleSwitch = () => setIsEnabled(!isEnabled);
-const addItemCount = () => {SetAddItem( addItem + 1);}
-const decrement = () => {
+  const addItemCount = () => {SetAddItem( addItem + 1);}
+  const dispatch = useDispatch();
+  const [list, setList] = React.useState({
+    restroDetails: {},
+    productList: [],
+    isLoading: true,
+    error: ''
+   })
+
+ const getRestoDetails = async () => {
+   
+  setList({...list,  isLoading: true})
+  const url = `${API_BASE}/restro/restaurantDetailWithProducts`
+  const payload = {
+    _id : props?.route.params?.restroId,
+  }
+  try {
+    const res = await axios.post(url, payload)
+    console.log('homeMaker ',res);
+
+    if(res?.status === 200) {
+      setList({...list, restroDetails: res?.data?.data?.restro_detail, productList: res?.data?.data?.product_list, isLoading: false})
+    }
+    else {
+      setList({...list, isLoading: false, error: res?.data?.message})
+    }
+    
+  } catch (error) {
+    setList({...list, isLoading: false, error: error?.message})
+  }
+}
+ React.useEffect(()  => { 
+  getRestoDetails()
+ }, [])
+
+
+
+   
+
+  useEffect(() => {
+
+    setTimeout(() => {
+
+      dispatch(restroListRequest());
+  
+    }, 1000);
+    
+   
+   },[]); 
+
+  const decrement = () => {
   if (addItem < 1)
   {
     SetAddItem(addItem);
@@ -23,6 +80,9 @@ const decrement = () => {
 const checked = () =>{
   setCheck(!check);
 }
+
+
+
 const renderCustomizeModal = () =>  {
   return (
       <Modal visible={customizeModal} style={{backgroundColor:'red'}} transparent>
@@ -94,6 +154,29 @@ const increment = () => {
   else{SetAddItem(addItem + 1);}
   
 };
+
+
+const addToCart = (item) => {
+  const {cartRestroDetails, addToCart} = props
+  const {restroDetails = {}} = props.route?.params || {}
+  if(cartRestroDetails && cartRestroDetails?._id !== restroDetails?._id ) {
+    return Alert.alert('You have another other in your cart')
+  }
+  else {
+      addToCart({restroDetails, product: item})
+  }
+}
+
+const subToCart = (item) => {
+  const {subToCart} = props
+  subToCart(item)
+}
+
+  const {restroDetails ={}} = props.route.params || {}
+  const {restroDetails: resDet} = list
+  const {cartProducts} = props
+  const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -101,19 +184,19 @@ const increment = () => {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle}>
+      <ImageBackground source={{uri: resDet?.image}} style={styles.backgroundStyle}>
         <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
-        <Text style={styles.headingText}>Fire & Grill</Text>
-          <Text style={styles.bottomText}>Sector 29, Cyber hub, Gurgoan</Text>
+        <Text style={styles.headingText}>{restroDetails?.restro_name}</Text>
+          <Text style={styles.bottomText}>{restroDetails?.street_name}, {restroDetails?.area_name}, {restroDetails?.region}, {restroDetails?.state}</Text>
           <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
            <ScrollView>
             <View style={styles.ratingContainer}>
               <View style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>4.7</Text>
+                <Text style={styles.textStyle}>{resDet?.rating_from_user}</Text>
                 <Text style={styles.normalText}>Rating</Text>
               </View>
               <View style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>25 Min</Text>
+                <Text style={styles.textStyle}>{resDet?.restro_cooking_time} Min</Text>
                 <Text style={styles.normalText}>Delivery Time</Text>
               </View>
               <View style={styles.buttonStyle}>
@@ -131,7 +214,7 @@ const increment = () => {
               marginTop: Scale(20),
               borderColor: 'grey'
             }}>
-              <Text style={[styles.normalText, { fontSize: Scale(17) }]}>Veg Only</Text>
+              <Text style={[styles.normalText, { fontSize: Scale(17),color: Colors.BLACK }]}>Veg Only</Text>
               <Switch
                 trackColor={{ false: Colors.GRAY, true: Colors.RED }}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
@@ -144,49 +227,53 @@ const increment = () => {
             </View>
             <FlatGrid
               itemDimension={130}
-              data={[0,1,2,3]}
+              data={list?.productList}
               style={styles.gridView}
-              // staticDimension={300}
-              // fixed
               spacing={Scale(12)}
-              renderItem={({ item }) => (
-                <View style={styles.itemContainer}>
-                  <Image source={ImagesPath.reset} style={{resizeMode:'stretch',height:Scale(100),width:'100%',borderRadius:Scale(10),}}/>
-                <View style={{flexDirection:'row',marginVertical:Scale(5),alignItems:'center'}}>
-                <Image source={ImagesPath.veg}/>
-                <Text style={{fontSize:Scale(16),color:Colors.BLACK}}> Burger</Text>
-                </View>
-                <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
-                <Text onPress={increment} style={styles.textStyle}>$10.00{'\n'}<Text style={styles.normalText}>$15.00</Text></Text>
-                
-                {addItem> 0?
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <Icon onPress={decrement} type="AntDesign" name="minussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
-                  <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}> {addItem} </Text>
-                  <Icon onPress={increment} type="AntDesign" name="plussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
+              renderItem={({ item }) => {
+                let inCart = cartProducts?.find(i => i?._id === item?._id)
+                return (
+                  <View style={styles.itemContainer}>
+                    <Image source={{uri:item?.image}} style={{resizeMode:'stretch',height:Scale(100),width:'100%',borderRadius:Scale(10),}}/>
+                  <View style={{flexDirection:'row',marginVertical:Scale(5),alignItems:'center'}}>
+                  <Image source={ImagesPath.veg}/>
+                  <Text style={{fontSize:Scale(16),color:Colors.BLACK,marginLeft:Scale(5)}}>{item.name}</Text>
+                  </View>
+                  <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
+                  <Text onPress={increment} style={styles.textStyle}>${item.final_price}{'\n'}<Text style={[styles.normalText,{textDecorationLine: 'line-through', 
+                        textDecorationStyle: 'solid' }]}>${item?.price}</Text></Text>
                   
-                </View> 
-                
-             :  <View style={styles.addButton}>
-                <Text onPress={addItemCount} style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
-              </View>}
-                </View>                
-                </View>
-              )}
+                  {inCart ?
+                  <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon onPress={() => subToCart(item)} type="AntDesign" name="minussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
+                    <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}> {inCart?.qty} </Text>
+                    <Icon onPress={() => addToCart(item)} type="AntDesign" name="plussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
+                    
+                  </View> 
+                  
+               :  <View style={styles.addButton}>
+                  <Text onPress={() =>addToCart(item)} style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
+                </View>}
+                  </View>                
+                  </View>
+                )
+
+              }}
             />
             {renderCustomizeModal()}
             </ScrollView>
-            {addItem> 0?
+            {cartProducts?.length ?
                          <View style = {{height:'15%',paddingHorizontal:'5%',flexDirection:'row',padding:10, justifyContent:'space-between', maxHeight:'15%',backgroundColor: Colors.APPCOLOR}}>
                             <View style ={{alignItems:'flex-start'}}>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Bold }}>{'$ 10'}</Text>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Bold }}>{addItem +' items in cart'}</Text>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Bold }}>{`$ ${totalCartAmt}`}</Text>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Bold }}>{cartProducts?.length +' items in cart'}</Text>
                             </View>
-                             <TouchableOpacity onPress={() => setCustomizeModal(true)}
+                             <TouchableOpacity onPress={() => props.navigation.navigate('Card')}
                               
-                               style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(25) }}>
+                               style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(5) }}>
                                 <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go To Cart'}</Text>
                             </TouchableOpacity>
+
                         </View>
                         :null}
           </ImageBackground>
@@ -195,7 +282,22 @@ const increment = () => {
     </View>
   );
 }
-export default HomeMaker;
+
+ const mapStateToProps = ({Cart: {restroDetails, products}}) => {
+  return {
+  cartRestroDetails: restroDetails,
+  cartProducts: products
+  }
+}
+
+ const mapDispatchToProps = {
+    addToCart: addToCart,
+    subToCart: subToCart
+ }
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeMaker);
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -204,7 +306,8 @@ const styles = StyleSheet.create({
     flex:1,
     width: "100%",
     height: "100%",
-    paddingTop: Scale(70)
+    paddingTop: Scale(70),
+    backgroundColor: '#ccc'
   },
   headingText: {
     color: Colors.WHITE,
@@ -218,7 +321,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 0.1, height: 0.1},
     textShadowRadius: 1,
     color: Colors.WHITE,
-    fontSize: Scale(22),
+    fontSize: Scale(16),
     marginHorizontal: Scale(25),
     marginTop: Scale(3),
     marginBottom: Scale(30)
@@ -246,10 +349,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center'
-                },
- 
-  textStyle: { color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold' },
-  normalText: { color: 'grey', fontSize: Scale(12) },
+  },
+  textStyle: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(16), 
+    fontWeight: 'bold' 
+  },
+  normalText: { 
+    color: '#AB8F8E', 
+    fontSize: Scale(12),
+    
+  },
   logoStyle: {
     marginHorizontal: Scale(20),
     fontSize: Scale(25),
@@ -257,8 +367,7 @@ const styles = StyleSheet.create({
   },
   loginInputCont: {
     flex:1,
-    // top: Scale(-20),
-     paddingTop: Scale(10),
+    paddingTop: Scale(10),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,

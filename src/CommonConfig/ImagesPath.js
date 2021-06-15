@@ -1,5 +1,6 @@
 const ImagesPath = {
   bg: require('../Assets/Images/back1.png'), //my
+  offer_setting: require('../Assets/Images/offer_setting.png'), //my
   check2x: require('../Assets/Images/check3x.png'), //my
   check: require('../Assets/Images/check.png'), //my
   logo: require('../Assets/Images/splash_logo.png'), //my
@@ -18,8 +19,8 @@ const ImagesPath = {
   copy: require('../Assets/Images/copy.png'),
   right_new: require('../Assets/Images/right_new.png'),
   us: require('../Assets/Images/uk1.png'),
-  loginBg: require('../Assets/Images/Group_3350.png'),
-  loginBg1: require('../Assets/Images/Slide1.png'),
+  loginBg: require('../Assets/Images/Group_3350.jpg'),
+  loginBg1: require('../Assets/Images/Slide1.jpg'),
   loginBg2: require('../Assets/Images/slide2.png'),
   imagePlaceholder: require('../Assets/Images/Untitled-19.png'),
   drawerPlaceholder: require('../Assets/Images/drawerPlaceholder.png'),

@@ -1,25 +1,25 @@
 import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground,KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
-import { FormInput, CustomButton, PasswordInput } from '../../Component';
+import { FormInput, CustomButton, PasswordInput, NumberInput } from '../../Component';
 import { Icon } from 'native-base';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import { loginRequest } from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+import { loginRequest, loaderRequest, } from '../../redux/actions'
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
 function Login(props) {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.Auth && state.Auth.user && state.Auth.user.data  );
-    console.log('================================user data',user);
-    
-    const handleOnLogin = async() => {      
-            const data = {"_id" :"600955262b911c6e4d15aaae"}
-             dispatch(loginRequest(data));
-      };
+    const  user = useSelector((state) => state.Auth);
+    const  {isLoading} = useSelector((state) => state.Auth);
+    const [phone, setphone] = useState('');
+    const [password, setpassword] = useState('');
 
-      const redirectToHome = () => {
+
+      if(user.loginStatus==true)
+      {
         navigation.dispatch(
             CommonActions.reset({
                 index: 0,
@@ -30,8 +30,36 @@ function Login(props) {
                     },
                 ],
             }))
+      }
 
-    };
+    const  onSubmit = () =>{
+        if(phone == '') {
+        alert("Please enter Mobile Number")
+        }
+        else if(password == '') {
+          alert("Please enter Password")
+        }
+        else
+        {
+            const data = { 
+                'phone': parseInt(phone),
+                'password':password,
+         }
+        dispatch(loaderRequest(true))
+
+        setTimeout(() => {
+
+            dispatch(loginRequest(data));
+
+                }, 1000);
+        
+        
+             
+        }
+        
+      }
+
+    
     const redirectToForgotPassword = () => {
         navigate('ForgotPassword');
     };
@@ -41,60 +69,72 @@ function Login(props) {
         setHidePasswordl(!hidePassword);
     };
 
-    let data = [{
-        value: 'India +91',
-        id: '+91'
-    }, {
-        value: 'United States +1',
-        id: '+1'
-    }, {
-        value: 'Canada +234',
-        id: '+234'
-    }];
+   
+
+    console.log('ISLOADING: ', isLoading);
 
     return (
         <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
             <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                 enabled>
-                <ScrollView indicatorStyle={Colors.WHITE}>
+
+             <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
+                <ScrollView indicatorStyle='white'>
+                  
                     <View style={styles.container}>
-                        <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
+                    
                         <Text style={styles.primaryText}>Hello !</Text>
 
                         <Text style={styles.normalText}>Welcome back</Text>
 
-                        <PasswordInput
+                        <FormInput
                             placeholder="Mobile Number"
                             autoCapitalize="none"
                             keyboardType={'numeric'}
-                            maxLength={30}
+                            maxLength={10}
+                            value={phone}
+                            onChangeText={(text) => setphone(text )}
                         />
                         <FormInput
                             placeholder="Password"
                             autoCapitalize="none"
                             secureTextEntry={true}
                             maxLength={30}
+                            value={password}
+                            onChangeText={(text) => setpassword(text)}
                         />
                         <Text onPress={redirectToForgotPassword} style={styles.forgotButton}>Forgot Password?</Text>
                         <View style={{ marginVertical: '60%' }}>
-                            <CustomButton title="Login" onSubmit={handleOnLogin} isSecondary={true} />
+
+                        <CustomButton title="Login" isSecondary={true} onSubmit={onSubmit}  />
 
                         </View>
                     </View>
                 </ScrollView>
+                <LoadWheel visible={isLoading} />
             </KeyboardAvoidingView>
 
         </ImageBackground>
 
     );
 }
+
+// Login.propTypes = {
+//     loginSuccess: func.isRequired,
+//     navigation: shape({
+//         dispatch: func.isRequired,
+//         goBack: func.isRequired,
+//     }).isRequired,
+//     t: func.isRequired,
+//   }
+
 export default Login;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: Scale(25),
-        paddingTop: Scale(50),
+        paddingTop: Scale(10),
     },
     imageBachgroundStyle: {
         height: '100%',
@@ -103,7 +143,6 @@ const styles = StyleSheet.create({
     forgotButton: {
         alignSelf: 'center',
         fontSize: Scale(15),
-
         textAlign: 'center',
         marginTop: Scale(15),
         color: Colors.DARK_RED,
@@ -111,6 +150,8 @@ const styles = StyleSheet.create({
     logoStyle: {
         fontSize: Scale(25),
         color: Colors.DARK_RED,
+        marginTop:Scale(40),
+        marginLeft:Scale(25),
     },
     primaryText: {
         marginTop: Scale(30),
@@ -122,6 +163,7 @@ const styles = StyleSheet.create({
         fontSize: Scale(16),
         color: Colors.BLACK,
         textAlign: "left",
+        marginTop:Scale(5),
         marginBottom: Scale(25)
     },
 });

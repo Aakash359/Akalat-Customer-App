@@ -1,15 +1,65 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { CustomButton, FormInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { EditProfileResquest,loaderRequest } from '../../redux/actions';
+
 function Profile() {
+    const [edit_id, setEdit_Id] = useState(0);
+    const dispatch = useDispatch();
+    const [first_name, setfirst_name] = useState('');
+    const [last_name, setlast_name] = useState('');
+    const [phone, setphone] = useState('');
+    const [email, setemail] = useState('');
     const { navigate } = useNavigation();
     const navigation = useNavigation();
-    const redirectToMyAccount = () => {
-        navigate('Favorites');
-    };
+    const user = useSelector((state) => state.Auth.user);
+    // const redirectToMyAccount = () => {
+    //     navigate('Favorites');
+    
+    console.log('================================user data',user?._id);
+    const onSave = async() =>{
+       
+        let reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(first_name == '') {
+          alert("Please enter First Name")
+         }
+        else if(last_name == '') {
+          alert("Please enter Last Name")
+        }
+        else if(phone == '') {
+          alert("Please enter your Mobile Number")
+        }
+        else if(email == '') {
+          alert("Please enter your Email")
+        }
+        else if (reg.test(email) == false) {
+          alert("Please enter valid email")
+        }
+        else {
+          const data = { 
+            'first_name': first_name,
+            'last_name':last_name,
+            'phone': phone,
+            'email': email,
+            '_id':  user != undefined ? user?._id : 0
+            }
+
+          dispatch(loaderRequest(true))
+          alert("User Edited Succesfully !")
+          navigate('Favorites');
+          setTimeout(() => {
+
+            dispatch(EditProfileResquest(data));
+
+                }, 1000);
+         
+        }
+      }
+    
     return (
         <View style={styles.container}>
             <StatusBar
@@ -24,32 +74,44 @@ function Profile() {
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                     enabled>
-                    <ScrollView indicatorStyle={Colors.WHITE}>
+                    <ScrollView indicatorStyle='white'>
 
                         <FormInput
                             placeholder="First Name"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={first_name}
+                            // editable={edit_id == 0 ? false : true}
+                            onChangeText={(text) => setfirst_name(text)}
                         />
                         <FormInput
                             placeholder="Last Name"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={last_name}
+                            // editable={edit_id == 0 ? false : true}
+                            onChangeText={(text) => setlast_name(text)}
                         />
                         <FormInput
                             placeholder="Mobile Number"
                             autoCapitalize="none"
                             keyboardType={'numeric'}
                             maxLength={30}
+                            value={phone}
+                            // editable={edit_id == 0 ? false : true}
+                            onChangeText={(text) => setphone(text)}
                         />
                         <FormInput
                             placeholder="Email Address"
                             keyboardType="email-address"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={email}
+                            // editable={edit_id == 0 ? false : true}
+                            onChangeText={(text) => setemail( text)}
                         />
                         <View style={{marginTop:Scale(20)}}>
-                        <CustomButton title="Save" isSecondary={true} onSubmit={redirectToMyAccount} />
+                        <CustomButton title="Save" isSecondary={true} onSubmit={onSave} />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>

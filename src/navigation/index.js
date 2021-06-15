@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import React, { useState,useEffect } from 'react';
+import {NavigationContainer,useNavigation} from '@react-navigation/native';
+import {createStackNavigator,} from '@react-navigation/stack';
 import Login from '../Screens/Auth/Login';
 import SignUp from '../Screens/Auth/SignUp';
 import SelectLanguage from '../Screens/Auth/SelectLanguage';
@@ -14,27 +14,51 @@ import Address from '../Screens/Auth/Address';
 import HomeStack from './stack/HomeStack';
 import Otp from '../Screens/Auth/Otp';
 import 'react-native-gesture-handler'
+import AsyncStorage from '@react-native-community/async-storage';
+import { useSelector, useDispatch } from 'react-redux';
+
+
 const Stack = createStackNavigator();
 function index() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SelectLanguage">
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
+
+  const Home = () => {
+    return (
+      <Stack.Navigator>
         <Stack.Screen
           name="HomeStack"
           component={HomeStack}
           options={{headerShown: false}}
-        />
+         />
+      </Stack.Navigator>
+    )
+  }
+
+
+
+const user = useSelector((state) => state.Auth.user);
+
+const UserID =  user?._id
+
+ return (
+    <NavigationContainer>
+      {UserID ? <Home/> : 
+      <Stack.Navigator initialRouteName="SelectLanguage">
+     
         <Stack.Screen
-          name="SelectLanguage"
-          component={SelectLanguage}
-          options={{headerShown: false}}
-        />
+          name="Login"
+          component={Login}
+          options={{headerShown:false
+          }}
+         /> 
+           
+         
         <Stack.Screen
+        name="SelectLanguage"
+        component={SelectLanguage}
+        options={{headerShown: false}}
+        />
+        
+         <Stack.Screen
           name="SelectLoginSignup"
           component={SelectLoginSignup}
           options={{headerShown: false}}
@@ -42,7 +66,8 @@ function index() {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{headerShown:false}}
+          options={{headerShown:false }}
+          
          />
           <Stack.Screen
           name="ForgotPassword"
@@ -81,8 +106,10 @@ function index() {
          />
        
       </Stack.Navigator>
+}
     </NavigationContainer>
   );
+ 
 }
 
 export default index;

@@ -1,17 +1,3 @@
-// import {createStore, applyMiddleware} from 'redux';
-
-// import logger from 'redux-logger'
-// import rootReducer from './reducers';
-
-
-// if (__DEV__) {
-//   middlewares.push(logger);
-// }
-
-// export default function configureStore() {
-//   return createStore(rootReducer, applyMiddleware(...middlewares));
-// }
-
 //LIBRARIES
 import { applyMiddleware, createStore, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -24,12 +10,11 @@ import rootReducer from './reducers'  // List of Reducers
 import { sagaMonitor } from './Config';
 
 const persistConfig = {
+  // blacklist: ['Auth'],
   key: 'root',
-  timeout: 0,
   storage: AsyncStorage,
 }
 const Reducers = persistReducer(persistConfig, rootReducer)
-//createSagaMiddleware creates Redux Middleware and connects saga to the redux 
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 const middlewares = [];
 const enhancers = [];
@@ -42,4 +27,6 @@ export const Store = createStore(
 )
 //persistStore contains all the data from store
 export const Persistor = persistStore(Store);
+
+
 sagaMiddleware.run(rootSaga);

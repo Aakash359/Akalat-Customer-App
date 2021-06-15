@@ -1,18 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, Image, FlatList, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
-function MyOrders() {
+import { myOrderListRequest } from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { API_BASE } from '../../apiServices/ApiService';
+
+function MyOrders(props) {
     const [checked, setChecked] = useState(false)
     const { navigate } = useNavigation();
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const  myOrderListResponse = useSelector((state) => state.Setting.myOrderListResponse);
+    const [orderList, setOrderList] = React.useState(myOrderListResponse?.data || []);
+    const [orderDetail, setOrderDetail] = React.useState({
+        orderDetailList:[],
+        isLoading: true
+     })
+
+     const onOrderDetails = async () => {
+        setOrderDetail({...orderDetail,  isLoading: true})
+        const url = `${API_BASE}/order/orderDetail`
+        const payload = {
+            _id : props?.user?._id
+        }
+        try {
+          const res = await axios.post(url, payload)
+          console.log(' Order Details data ', res);
+          setCreateOrder({...orderDetail, setOrderDetail: res?.data?.data, isLoading: false})
+        } catch (error) {
+          console.log(error);
+        }
+      }
+       React.useEffect(() => {
+         onOrderDetails()
+       }, [])
+
     const redirectToEditProfile = () => {
         navigate('EditProfile');
     };
     const onPressChecked = () => {
         setChecked(!checked);
     };
+
+  console.log("Aakash====>", orderList)
+
+    useEffect(() => {
+
+          const data = { 
+             "userid": '5fab6d5a0414c7042f745caa',
+             }
+       
+             setTimeout(() => {
+
+                dispatch(myOrderListRequest(data));
+
+              }, 5000);
+             
+        
+
+      }, 
+      []); 
     const renderItemsActive = ({ item, index }) => (
         <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', }}>
@@ -72,15 +123,31 @@ function MyOrders() {
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <FlatList
                     style={{ paddingHorizontal: Scale(20), }}
-                    data={[0, 1, 2, 3]}
+                    data={orderDetail.orderDetailList}
                     renderItem={checked ? renderItemPast : renderItemsActive}
                     keyExtractor={(item, index) => index.toString()}
+                    ListEmptyComponent={() => {
+                        return <Text style={{alignSelf:"center"}}>
+                          You don't have any orders
+                        </Text>
+                    }}
                 />
             </ImageBackground>
         </View>
     );
 }
-export default MyOrders;
+
+const mapStateToProps = ({Auth: {user}}) => {
+    return {
+        user
+    }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyOrders);
 const styles = StyleSheet.create({
     container: {
         flex: 1,

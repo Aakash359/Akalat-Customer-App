@@ -95,7 +95,7 @@ function AddNewCard() {
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                     enabled>
-                    <ScrollView indicatorStyle={Colors.WHITE}>
+                    <ScrollView indicatorStyle='white'>
 
                         <FormInput
                             placeholder="Name On Card"
@@ -115,13 +115,13 @@ function AddNewCard() {
                             maxLength={30}
                         />
                         <FormInput
-                            placeholder="Cvv Number"
+                            placeholder="CVV Number"
                             keyboardType={'numeric'}
                             autoCapitalize="none"
                             maxLength={30}
                         />
                         <View style={{marginTop:Scale(20)}}>
-                        <CustomButton title="Save" isSecondary={true} onSubmit={redirectToMyAccount} />
+                        <CustomButton title="Add Card" isSecondary={true} onSubmit={redirectToMyAccount} />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>

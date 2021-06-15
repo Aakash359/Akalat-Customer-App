@@ -7,44 +7,72 @@ import Location from "../../Component/Location";
 import { Icon } from 'native-base';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
+import { AddAddressRequest } from '../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+
+Geolocation.setRNConfiguration({ authorizationLevel : "whenInUse" });
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
 function Address() {
-    const { navigate } = useNavigation();    
+    const { navigate } = useNavigation();
+    const navigation = useNavigation();    
     const [logoutModal, setLogoutModal] = useState(false);
     const [activeTab,setActiveTab]=useState(0);
-    const navigation = useNavigation();
-    const [
-        currentAddress,
-        setAddress
-      ] = useState('');
+    const [nearby,setNearby] = useState('');
+    const [house_name_and_no ,setHouseName] = useState('');
+    const [area_name ,setAreaName] = useState('');
+    const [location, setLocation] = useState(null)
+    const [currentAddress,setAddress] = useState('');
+    const [addAddress, setaddAddress] = React.useState({
+      addUserAddress:[],
+      isLoading: true
+   })
+  
+   
+   
+    const dispatch = useDispatch();
 
     const redirectToMyAccount = () => {
         navigate('SavedCard');
     };
-    useEffect(() => {
-        const requestLocationPermission = async () => {
-          if (Platform.OS === 'ios') {
+
+
+    const requestLocationPermission = async () => {
+      
+      if (Platform.OS === 'ios') {
+        // Geolocation.requestAuthorization()
+        getOneTimeLocation();
+        // subscribeLocationLocation();
+      } else {
+       
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          );
+          
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          
             getOneTimeLocation();
-            subscribeLocationLocation();
-          } else {
-            try {
-              const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                  title: 'Location Access Required',
-                  message: 'This App needs to Access your location',
-                },
-              );
-              if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                //To Check, If Permission is granted
-                getOneTimeLocation();
-               } else {
-              }
-            } catch (err) {
-              console.warn(err);
-            }
+           } else {
+            
+             
+             console.log(granted);
+            
           }
-        };
+        } catch (err) {
+          
+          console.log(err);
+        }
+      }
+    };
+
+
+
+    useEffect(() => {
+        
         requestLocationPermission();
         return () => {
           Geolocation.clearWatch();
@@ -52,45 +80,94 @@ function Address() {
       }, []);
     
       const getOneTimeLocation = () => {
-        Geolocation.getCurrentPosition(
-          //Will give you the current location
-          (position) => {
-    
-            //getting the Longitude from the location json
-            const currentLongitude = 
-              JSON.stringify(position.coords.longitude);
-    
-            //getting the Latitude from the location json
-            const currentLatitude = 
-              JSON.stringify(position.coords.latitude);
-              Geocoder.from(position.coords.latitude, position.coords.longitude)
-              .then(json => {
-                      console.log("=============================================json data",json.results[1].formatted_address,"================================Flat no")
-                     // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name 
-                    let addressComponent= json.results[1].formatted_address; 
-                     console.log(addressComponent, 'addressComponent');
-                       setAddress(addressComponent)
-                      
-              }) 
-          },
-          (error) => {
-          },
-          {
-            enableHighAccuracy: false,
-            timeout: 30000,
-            maximumAge: 1000
-          },
-        );
+       
+        try {
+          Geolocation.getCurrentPosition(
+     
+            (position) => {
+              
+              setLocation(position.coords)
+        
+              
+                Geocoder.from(position.coords.latitude, position.coords.longitude)
+                .then(json => {
+                  
+                      let addressComponent= json.results[1].formatted_address; 
+                       console.log(addressComponent, 'addressComponent');
+                         setAddress(addressComponent)
+                        
+                }) 
+                
+            },
+            (error) => {
+              
+         
+              console.log(error);
+              
+            },
+            
+          );
+        } catch (error) {
+       
+          console.log( error);
+         
+        }
       };
     
     const redirectToHome = () => {
         navigate('HomeStack');
     };
+
+    const onSubmit = async() =>{
+       
+      
+      if(house_name_and_no == '') {
+        alert("Please enter House No")
+       }
+      else if(area_name == '') {
+        alert("Please enter area")
+      }
+      else if(nearby == '') {
+        alert("Please enter nearby")
+      }
+      else {
+         
+          let lat = '';
+          let lng = '';
+
+          await Geocoder.from(
+             [ {house_name_and_no} + ' ', {area_name} + '', {nearby} ]
+          )
+            .then((json) => {
+              var location = json.results[0].geometry.location;
+              lat = parseFloat(location.lat);
+              lng = parseFloat(location.lng);
+              console.log("lat Na log ", lat, lag);
+            })
+            .catch((error) => console.warn(error)); 
+         const data = { 
+          
+          "address_type": activeTab==0 ? 'HOME' : (activeTab==1)? 'WORK' : 'OTHER',  
+          'lng': location?.latitude,
+          "lat": location?.longitude,
+          'house_name_and_no': house_name_and_no,
+          'area_name':area_name,
+          'nearby': nearby,
+          'created_by' : "6093b6eb8db4690de06c5c21"
+          }
+          console.log("Data--",data)
+        dispatch(AddAddressRequest(data));
+        navigate('HomeScreen');
+       
+        
+      }
+    }
+ 
     return (
         <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
             <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                 enabled>
-                <ScrollView indicatorStyle={Colors.WHITE}>
+                <ScrollView indicatorStyle='white'>
                     <View style={styles.container}>
                         <Icon name="arrowleft" type="AntDesign" style={styles.logoStyle} onPress={() => navigation.goBack()} />
                         <Text style={styles.primaryText}>Address</Text>
@@ -98,7 +175,7 @@ function Address() {
                             placeholder="Current Location"
                             autoCapitalize="none"                            
                             value={currentAddress}
-                       onChangeText={(val) => setAddress(val)}
+                            onChangeText={(val) => setAddress(val)}
                             maxLength={30} />
                             <Text style={{fontSize:Scale(16),textAlign:'center',color:Colors.BORDERCOLOR,marginVertical:Scale(10)}}>or</Text>
                         <FormInput1
@@ -106,16 +183,22 @@ function Address() {
                             lable="EX- HN 256"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={house_name_and_no}
+                            onChangeText={(text) => setHouseName(text)}
                         />
                         <FormInput
                             placeholder="Area"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={area_name}
+                            onChangeText={(text) => setAreaName(text)}
                         />
                         <FormInput
                             placeholder="Nearby"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={nearby}
+                            onChangeText={(text) => setNearby(text)}
                         />
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10)}}>
                         <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
@@ -124,7 +207,7 @@ function Address() {
                        
                         </View>
                         <View style={{ marginTop: Scale(10) }}>
-                            <CustomButton title="Save & Continue" onSubmit={redirectToHome} isSecondary={true} />
+                            <CustomButton title="Save & Continue" onSubmit={onSubmit}isSecondary={true} />
                         </View>
                         <LocationAlert
                 visible={logoutModal}

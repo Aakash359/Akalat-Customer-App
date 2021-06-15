@@ -49,7 +49,7 @@ function Rating() {
                         
                     
                         <View style={{marginTop:Scale(30),}}>
-                        <CustomButton title="Submit" isSecondary={true} onSubmit={redirectToMyAccount} />
+                        <CustomButton title="Submit" isSecondary={true} onSubmit={redirectToMyAccount}/>
                         </View>
 
                  </View>  

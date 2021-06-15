@@ -6,9 +6,8 @@ i18next.use(initReactI18next).init({
     cleanCode: true,
     fallbackLng: 'en',
     interpolation: {escapeValue: false},
-    // lng: 'dut',
     react: {useSuspense: false},
-    whitelist: ['en', 'dt'],
+    whitelist: ['en', 'at'],
     resources: {
         at: {translation: ar},
         en: {translation: en},

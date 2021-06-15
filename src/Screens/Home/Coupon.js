@@ -4,6 +4,8 @@ import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+
+
 function Coupon() {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
@@ -58,15 +60,6 @@ const redirectToSortBy = () => {
         barStyle="light-content"
       />
       <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle1}>
-      {/* <View style={styles.headerContainer}>
-        <Image source={ImagesPath.location} style={styles.location} />
-        <Text style={{color:Colors.WHITE}}>NH 28,C block DLF Phase 3...</Text>
-        <View style={styles.bottomHeader}>
-          <TouchableOpacity  onPress={redirectToNotification}>
-          <Image source={ImagesPath.notification} style={styles.notificationStyle} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
       <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
         <Text style={styles.headingText}>45% OFF</Text>
           <Text style={styles.bottomText}>T&C applicable for minimum order value</Text>

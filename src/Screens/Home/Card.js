@@ -5,8 +5,21 @@ import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { FormArea, CustomButton } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import { scale } from '../../CommonConfig/HelperFunctions/functions';
-function Card() {
+import { connect } from 'react-redux';
+import { addToCart, subToCart } from '../../redux/actions/CartActions';
+import axios from 'axios';
+import { API_BASE } from '../../apiServices/ApiService';
+
+
+function Card(props) {
   const [count, setIsPopupVisible] = useState(1);
+  const [det, setDet] = useState({
+    dis: 0,
+    tax: 0,
+    dc: 0
+  })
+  
+
   const increment = () => {
     setIsPopupVisible(count + 1);
   };
@@ -21,6 +34,29 @@ function Card() {
   const redirectToPayment = () => {
     navigate('Payment');
   };
+
+
+  const addToCart = (item) => {
+    const {cartRestroDetails, addToCart} = props
+    addToCart({restroDetails: cartRestroDetails, product: item})
+  }
+
+  const subToCart = (item) => {
+    const { subToCart} = props
+    subToCart(item)
+  }
+
+  const {cartRestroDetails, cartProducts} = props
+  const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
+
+  if(!cartProducts?.length) {
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text>Don't have anything in your cart</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -38,31 +74,32 @@ function Card() {
             <View style={{ flexDirection: 'row', }}>
               <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
               <View >
-                <Text style={styles.primaryText}>Fire & Grill</Text>
-                <Text style={styles.normatText}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
+                <Text style={styles.primaryText}>{cartRestroDetails?.restro_name}</Text>
+                <Text style={styles.normatText}>{cartRestroDetails?.street_name}, {cartRestroDetails?.area_name}, {cartRestroDetails?.region}, {'\n'} {cartRestroDetails?.state}</Text>
               </View>
             </View>
           </View>
           <View style={[styles.cardStyle, {
             justifyContent: 'space-between',
           }]}>
-            <View style={styles.itemContainer}>
-              <Text style={styles.itemText}>Burger</Text>
+            {cartProducts?.map((item, i) => {
+             return(
+               <>
+              <View style={styles.itemContainer} key={`${i}`} >
+              <Text style={styles.itemText}>{item?.name}</Text>
               <View style={styles.rightContainer}>
-                <Icon onPress={decrement} type="AntDesign" name="minussquareo" style={styles.iconStyles} />
-                <Text style={styles.countText}>{count}</Text>
-                <Icon onPress={increment} type="AntDesign" name="plussquareo" style={styles.iconStyles} />
+                <Icon onPress={() => subToCart(item)} type="AntDesign" name="minussquareo" style={styles.iconStyles} />
+                <Text style={styles.countText}>{item?.qty}</Text>
+                <Icon onPress={() => addToCart(item)} type="AntDesign" name="plussquareo" style={styles.iconStyles} />
               </View>
             </View>
-            <View style={{ height: Scale(2), backgroundColor: '#E0E0E0' }} />
-            <View style={styles.itemContainer}>
-              <Text style={styles.itemText}>Sahi Paneer</Text>
-              <View style={styles.rightContainer}>
-                <Icon onPress={decrement} type="AntDesign" name="minussquareo" style={styles.iconStyles} />
-                <Text style={styles.countText}>{count}</Text>
-                <Icon onPress={increment} type="AntDesign" name="plussquareo" style={styles.iconStyles} />
-              </View>
-            </View>
+                 {i < cartProducts?.length -1 && <View style={{ height: Scale(2), backgroundColor: '#E0E0E0' }} />}
+               </>
+             )
+            })}
+            
+            
+            
           </View>
          <View style={{marginHorizontal:scale(30)}}>
           <FormArea
@@ -95,18 +132,18 @@ function Card() {
           <View style={[styles.cardStyle, {
             height: Scale(330)
           }]}>
-            <Text style={styles.primaryText}>Fire & Grill</Text>
+            <Text style={styles.primaryText}>{cartRestroDetails?.restro_name}</Text>
             <View style={[styles.bottomContainer, { marginTop: Scale(20) }]}>
               <Text style={styles.itemText1}>Item Total</Text>
-              <Text style={styles.normatText1}>$32</Text>
+              <Text style={styles.normatText1}>${totalCartAmt}</Text>
             </View>
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Total Discount</Text>
-              <Text style={styles.normatText1}>$2</Text>
+              <Text style={styles.normatText1}>${det?.dis}</Text>
             </View>
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Tax</Text>
-              <Text style={styles.normatText1}>$5</Text>
+              <Text style={styles.normatText1}>${det?.tax}</Text>
             </View>
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Dilivery charges</Text>
@@ -120,27 +157,33 @@ function Card() {
             }} />
             <View style={styles.bottomContainer}>
               <Text style={styles.primaryText}>Total Amount</Text>
-              <Text style={[styles.normatText1, { color: Colors.BLACK }]}>$35</Text>
+              <Text style={[styles.normatText1, { color: Colors.BLACK }]}>${(totalCartAmt - det?.dis ) + det?.tax}</Text>
             </View>
             <View style={{
               marginVertical: Scale(10),
               borderStyle: 'dotted',
               borderWidth: 1,
               borderRadius: 1,
-            }} />
+            }}/>
             <Text style={[styles.itemText, { color: "green" }]}>You have saved $5 on this order</Text>
           </View>
-          <View style={[styles.cardStyle, {
-            justifyContent: 'center',
-          }]}>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Delivery Address </Text>
-              <Text style={styles.countText}>charges</Text>
+          {
+            props?.addressList && props?.addressList?.length?
+            <View style={[styles.cardStyle, {
+              justifyContent: 'center',
+            }]}>
+              <View style={styles.bottomContainer}>
+                <Text style={styles.itemText1}>Delivery Address</Text>
+                <Text style={styles.countText}>charges</Text>
+              </View>
+
+              <Text style={styles.itemText1}>{props.addressList}{'\n'}</Text>
             </View>
-            <Text style={styles.itemText1}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
-          </View>
+            :
+          <View style={{}}></View>
+          }
           <View style={{ paddingHorizontal: '5%' }}>
-            <CustomButton title="Proceed to pay" isSecondary={true} onSubmit={redirectToPayment} />
+            <CustomButton title="Proceed to pay" isSecondary={true} onSubmit={redirectToPayment}/>
           </View>
           </ScrollView>
         </ImageBackground>
@@ -148,7 +191,21 @@ function Card() {
     </View>
   );
 }
-export default Card;
+
+const mapStateToProps = ({Cart: {restroDetails, products}, Setting: {addressListResponse: {data: {addressList}}}}) => {
+  return {
+  cartRestroDetails: restroDetails,
+  cartProducts: products,
+  addressList
+  }
+}
+
+ const mapDispatchToProps = {
+    addToCart: addToCart,
+    subToCart: subToCart
+ }
+export default connect(mapStateToProps, mapDispatchToProps)(Card)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -219,7 +276,6 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE
   },
   cardStyle: {
-    height: Scale(120),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),

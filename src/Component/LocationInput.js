@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   textBox: {
     fontSize: 16,
     color:Colors.BLACK,
-    //alignSelf: 'stretch',
+    fontWeight:'bold',
     height: Scale(45),
     paddingRight: Scale(5),
     paddingHorizontal: Scale(8),    
