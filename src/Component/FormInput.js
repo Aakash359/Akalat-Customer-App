@@ -34,7 +34,7 @@ export default FormInput;
 
 const styles = StyleSheet.create({
   textInputContainer: {
-  marginVertical: Scale(10),
+    marginVertical: Scale(8),
     height: Scale(50),
     fontSize: Scale(16),
     color: Colors.BLACK, 

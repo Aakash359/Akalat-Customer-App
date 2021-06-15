@@ -3,16 +3,25 @@ import { Text, View, StyleSheet, StatusBar, Switch,ScrollView,Image,TouchableOpa
 import { Icon, } from 'native-base';
 import { Colors, Scale, ImagesPath,LogoutAlert } from '../../CommonConfig';
 import { CustomButton } from '../../Component';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions} from '@react-navigation/native';
+import { logOutRequest,loaderRequest } from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
+
 function Settings() {
-  const { navigate } = useNavigation();  
+  const { navigate } = useNavigation(); 
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const signupResponse = useSelector((state) => state.Auth);
   const [logoutModal, setLogoutModal] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
-  const navigation = useNavigation();
-  const redirectToLogin = () => {
-    navigate('Login');
-    setLogoutModal(false);
-  };
+  const  {isLoading} = useSelector((state) => state.Auth);
+  
+  
+  const Userid = signupResponse?.user?._id
+
+  console.log("LogOutUserID", Userid)
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   };
@@ -22,6 +31,31 @@ function Settings() {
     { name: 'Saved Cards', screenName: 'SavedCard' },    
   ]);
 
+  const redirectToLogin = async() => {
+
+
+          
+          dispatch(loaderRequest(true))
+          let keys = ['token'];
+            await AsyncStorage.clear();
+            setTimeout(() => {
+
+              dispatch(logOutRequest(data));
+              navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        {
+                            name: 'SelectLoginSignup',
+                            params: { user: 'jane' }
+                        },
+                    ],
+                }))
+                  }, 500);
+            
+            
+            setLogoutModal(false)
+  };
   const renderItems = ({ item, index }) => (
     <TouchableOpacity onPress={() => navigate(item.screenName)}>      
     <View  style={styles.cardStyle}>
@@ -32,6 +66,7 @@ function Settings() {
   );
  
   return (
+        
     <View style={styles.container}>
       <StatusBar
         translucent={true}
@@ -73,10 +108,10 @@ function Settings() {
           alertTitle={'Are you sure you want to\nlogout ? '}
           rightButtonText={'Yes'}
           leftButtonText={'No'}
-          //  onPressLeftButton={() => this.setState({ logoutModal: false })}
           onPressLeftButton={() => setLogoutModal(false)}
           onPressRightButton={redirectToLogin}
         />
+        <LoadWheel visible={isLoading} />
     </View>
   );
 }

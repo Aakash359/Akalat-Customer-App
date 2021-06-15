@@ -1,15 +1,66 @@
 import React, { useState } from 'react';
 import {View,Text,TouchableOpacity,Image,KeyboardAvoidingView,ScrollView,Platform,StyleSheet,ImageBackground,} from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
-import {screenWidth,screenHeight,ImagesPath, Colors,Scale,Fonts,} from '../../CommonConfig';
+import {screenWidth,screenHeight,ImagesPath,COUNTRY, Colors,Scale,Fonts,} from '../../CommonConfig';
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {useSelector,useDispatch} from 'react-redux'
 import { CustomButton,} from '../../Component';
+import { OTPVerifyRequest,OTPRequest } from '../../redux/actions'
 
-function Otp() {
+function Otp(props) {
+
     const { navigate } = useNavigation();
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const [otp, setotp] = useState('');
+    const [phone, setphone] = useState(props.route.params.phone);
+    const [email, setemail] = useState(props.route.params.email);
+    const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
+    // const {data = {}} = props
+
+    console.log('Aakash====>',email);
+    // console.log('Aakash====>',ro);
+    const  onSubmit = () =>{
+
+        if(otp == '') {
+        alert("Please enter otp")
+        }
+    
+        else
+        {
+            const data = { 
+                
+                'otp':    otp,
+                'role' : 'cutomer',
+                'phone' :  phone,
+                'country_code' : "91" ,
+                 }
+                 if(email){
+                    navigate('Address')
+                 }
+                 else{
+                     navigate('ResetPassword', data)
+                 }
+          
+           
+              dispatch(OTPVerifyRequest(data));
+        }
+      }
+
+      const  resendOTP = () =>{
+
+        const data = { 
+            'phone': phone,
+            'role' : 'customer',
+            'country_code' : COUNTRY == "IN" ? '971' : '91'
+ 
+            }
+            console.log("Data",data)
+          navigate('Otp', data)
+          dispatch(OTPRequest(data));
+        }
 
     return (
         <SafeAreaInsetsContext.Consumer>
@@ -26,7 +77,7 @@ function Otp() {
                             <Image source={ImagesPath.otp} 
                             style={{ width: screenWidth, flex: 1 }} />
                         </View>
-                        <ImageBackground source={ImagesPath.background} style={AuthStyle.loginInputCont}>
+                        <ImageBackground source={ImagesPath.background} style={[AuthStyle.loginInputCont,{top:-20}]}>
                             <View style={{ paddingHorizontal: Scale(25), }}>
                                 <TouchableOpacity
                                     onPress={() => navigation.goBack()}>
@@ -35,34 +86,35 @@ function Otp() {
                                         style={styles.arrowStyle} />
                                 </TouchableOpacity>
                                 <Text style={styles.primaryText}>OTP Verification</Text>
-                                <Text style={styles.normalText}>Enter the verification code send to 9876785670</Text>
+                                <Text style={styles.normalText}>Enter the verification code send to {phone}, otp: {otpData?.data?.otp}</Text>
                                 <View style={{ justifyContent: 'space-between', paddingTop: Scale(15) }}>                                
                                 <OTPInputView
                                         style={styles.otpContainer}
                                         pinCount={4}
                                         keyboardType="number-pad"
-                                        
                                         autoFocusOnLoad
                                         codeInputFieldStyle={{
                                             backgroundColor: Colors.WHITE,
                                             borderWidth: 1,
                                             borderColor:Colors.BORDERCOLOR,
                                             borderRadius: Scale(5),
+                                            color: Colors.BLACK,
                                         }}
                                         editable={true}
-                                       // code={this.state.otp}
                                         codeInputHighlightStyle={{
                                             color: Colors.BLACK,
                                             fontSize: Scale(16),
                                         }}
-                                        onCodeFilled={(code) => {
-                                           // this.setState({ otp: code })
-                                            console.log(`Code is ${code}, you are good to go!`);
-                                        }}
+                                        value={otp}
+                                        onCodeFilled={(text) => setotp( text)}
                                     />
                                     </View>
-                                <CustomButton title="Submit" onSubmit={() => navigate('ResetPassword')} isSecondary={true} />
-                           <Text style={styles.normalText1}>Didn't get the code?<Text style={{color:Colors.DARK_RED}}> Resend OTP</Text></Text>
+                                <CustomButton title="Submit" onSubmit={onSubmit} isSecondary={true} />
+                                <TouchableOpacity onSubmit={resendOTP} >
+                           <Text style={styles.normalText1}>Didn't get the code?
+                           
+                           <Text style={{color:Colors.DARK_RED}}> Resend OTP</Text></Text>
+                           </TouchableOpacity>
                             </View>
                         </ImageBackground>
                     </ScrollView>

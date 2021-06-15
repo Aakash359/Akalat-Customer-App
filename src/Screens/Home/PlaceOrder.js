@@ -1,43 +1,61 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Image,} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Scale, Colors, ImagesPath } from '../../CommonConfig';
-import { CustomButton } from '../../Component';
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, ImageBackground, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { Scale, Colors, ImagesPath } from '../../CommonConfig'
+import { CustomButton } from '../../Component'
 
 function PlaceOrder() {
-    const { navigate } = useNavigation();
-    const navigation = useNavigation();
+    const { navigate } = useNavigation()
+    const navigation = useNavigation()
     const redirectToHome = () => {
-        navigate('HomeScreen');
-    };
+        navigate('HomeScreen')
+    }
     const redirectToTrackOrder = () => {
-        navigate('TrackOrder');
-    };
+        navigate('TrackOrder')
+    }
     return (
-        <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
-             <View style={styles.container}>
-                        <Image source={ImagesPath.checkmark} style={{alignSelf:'center'}}/>
-                        <Text style={styles.primaryText}>Order Placed Succusfully</Text> 
-                        <View style={{ marginTop: Scale(40) }}>
-                        <CustomButton title="Track Order" onSubmit={redirectToTrackOrder} isSecondary={true} />
-                        </View>
-                        <CustomButton title="Place New Order" onSubmit={redirectToHome} isSecondary={true} />
-                    </View>
-
+        <ImageBackground
+            source={ImagesPath.background}
+            style={styles.imageBachgroundStyle}
+        >
+            <View style={styles.container}>
+                <Image
+                    source={ImagesPath.checkmark}
+                    style={{ alignSelf: 'center' }}
+                />
+                <Text style={styles.primaryText}>Order Placed Succusfully</Text>
+                <View style={{ marginTop: Scale(40) }}>
+                    <CustomButton
+                        title="Track Order"
+                        onSubmit={redirectToTrackOrder}
+                        isSecondary={true}
+                        btnStyle={{
+                            width: '90%',
+                            paddingVertical: 10,
+                            marginVertical: 0,
+                        }}
+                    />
+                </View>
+                <CustomButton
+                    title="Place New Order"
+                    onSubmit={redirectToHome}
+                    isSecondary={true}
+                    btnStyle={{ width: '90%', paddingVertical: 10 }}
+                />
+            </View>
         </ImageBackground>
-
-    );
+    )
 }
-export default PlaceOrder;
+export default PlaceOrder
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent:'center',
-        paddingHorizontal: Scale(25),        
+        justifyContent: 'center',
+        paddingHorizontal: Scale(25),
     },
     imageBachgroundStyle: {
         height: '100%',
-        width: '100%'
+        width: '100%',
     },
     logoStyle: {
         fontSize: Scale(25),
@@ -53,6 +71,6 @@ const styles = StyleSheet.create({
     normalText: {
         fontSize: Scale(16),
         color: Colors.BLACK,
-        textAlign: "left",
+        textAlign: 'left',
     },
-});
+})

@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, ImageBackground, Image,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
 import { CustomButton } from '../../Component';
+import { useDispatch } from 'react-redux';
+import { setSignupStatus } from '../../redux/actions';
+
+
+
 
 function SelectLoginSignup() {
+   const dispatch = useDispatch()
     const { navigate } = useNavigation();    
     const redirectToLogin = () => {
         navigate('Login');
@@ -12,6 +18,12 @@ function SelectLoginSignup() {
     const redirectToSignUp = () => {
         navigate('SignUp');
     };
+
+
+    useEffect(() => {
+        dispatch(setSignupStatus(false))
+      }, [])
+    
     return (
         <ImageBackground source={ImagesPath.bg} style={styles.imageBachgroundStyle}>            
              <View style={styles.container}>

@@ -7,6 +7,7 @@ import MyAccount from '../../Screens/Home/MyAccount';
 import Card from '../../Screens/Home/Card';
 import ImageIcon from '../../containers/ImageIcon';
 import { Scale, Colors, ImagesPath,LocationAlert } from '../../CommonConfig';
+
 const getOptions = ({tabBarLabel, icon}) => {
   return {
     tabBarIcon: ({color}) => <ImageIcon src={icon} tintColor={color} />,

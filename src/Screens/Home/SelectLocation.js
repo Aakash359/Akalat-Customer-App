@@ -116,7 +116,7 @@ function SelectLocation() {
             </View>
             <Text style={styles.headerText}>Select Location </Text>
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
-                <ScrollView indicatorStyle={Colors.WHITE}>
+                <ScrollView indicatorStyle='white'>
                     <View style={styles.locationHeader}>
                         <Icon
                             name='my-location'

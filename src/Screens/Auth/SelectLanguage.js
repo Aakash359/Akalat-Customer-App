@@ -24,6 +24,7 @@ import {
 import { AuthStyle } from './AuthStyle';
 import RNRestart from 'react-native-restart';
 import { localize } from '../../Utils/Localization';
+import { scale } from '../../CommonConfig/HelperFunctions/functions';
 
 class SelectLanguage extends Component {
     constructor() {
@@ -64,7 +65,7 @@ class SelectLanguage extends Component {
         ]);
         this.props.navigation.navigate('SelectLoginSignup');
 
-        // Set first launch false for fetching countries when language code changed >>>>>
+        
     }
 
     render() {
@@ -93,9 +94,9 @@ class SelectLanguage extends Component {
                                         },
                                     ]}
                                     onPress={() => this.setState({ languageCode: '1002' })}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <View style={{ flexDirection: 'row',marginLeft:Scale(6) }}>
                                         <Image source={ImagesPath.arabic}
-                                        style={{height:Scale(23),width:Scale(33) ,resizeMode:'stretch'}} 
+                                        style={{height:Scale(23),width:Scale(33),marginRight:Scale(-5),resizeMode:'stretch'}} 
                                            />
                                         <Text style={AuthStyle.languageText}>Arabic</Text>
                                     </View>
@@ -124,9 +125,9 @@ class SelectLanguage extends Component {
                                         },
                                     ]}
                                     onPress={() => this.setState({ languageCode: '1001' })}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' ,marginLeft:Scale(6) }}>
                                         <Image source={ImagesPath.us}
-                                         style={{height:Scale(33),width:Scale(32) ,resizeMode:'stretch'}} />
+                                         style={{height:Scale(33),width:Scale(32) ,marginRight:Scale(-5),resizeMode:'stretch'}} />
                                         <Text style={AuthStyle.languageText}>English</Text>
                                     </View>
 

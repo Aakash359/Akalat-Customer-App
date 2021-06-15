@@ -1,15 +1,48 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { CustomButton, FormInput,FormArea } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
-function HelpSupport() {
+import { useSelector, useDispatch } from 'react-redux';
+import { HelpRequest } from '../../redux/actions'
+
+function HelpSupport(props) {
+    
+    const navigation = useNavigation();  
     const { navigate } = useNavigation();
-    const navigation = useNavigation();
-    const redirectToMyAccount = () => {
-        navigate('MyAccount');
-    };
+    const dispatch = useDispatch();
+    const helpResponse = useSelector((state) => state.Setting);
+    const [sub, setSub] = useState('');
+    const [des, setdes] = useState('');
+    const [loader,] = useState(false);
+
+    // const redirectToMyAccount = () => {
+    //     navigate('MyAccount');
+    // };
+
+    const  onSubmit = () =>{
+        if(sub == '') {
+        alert("Please enter subject")
+        }
+        else if(des == '') {
+          alert("please enter discription")
+        }
+        else
+        {
+            const data = { 
+                'subject_for_support': sub,
+                'description_for_support':des,
+                // 'userid': "6087afd2e1c90c56e8020d31"
+                    }
+                    console.log("MyData====>",data)
+                    navigate('MyAccount')
+              dispatch(HelpRequest(data));
+              alert("Submitted Sucessfully")
+              
+        }
+      }
+
     return (
         <View style={styles.container}>
             <StatusBar
@@ -22,24 +55,28 @@ function HelpSupport() {
             </View>
             <Text style={styles.headerText}>Help & Support </Text>
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
-            <ScrollView indicatorStyle={Colors.WHITE} style={{ paddingHorizontal: Scale(30)}}>
+            <ScrollView indicatorStyle='white' style={{ paddingHorizontal: Scale(30)}}>
                 <KeyboardAvoidingView behavior={Platform.OS == 'android' ? '' : 'padding'}
                     enabled>
                         <FormInput
                             placeholder="Subject"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={sub}
+                            onChangeText={(text) => setSub(text )}
                         />
                        <FormArea
                             placeholder="Please tell us in detail..."
                             label="Description"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={des}
+                            onChangeText={(text) => setdes(text )}
                         />
                         
                     
                         <View style={{marginTop:Scale(30),}}>
-                        <CustomButton title="Submit" isSecondary={true} onSubmit={redirectToMyAccount} />
+                        <CustomButton title="Submit" isSecondary={true} onSubmit={onSubmit}  />
                         </View>
                 </KeyboardAvoidingView>
                 

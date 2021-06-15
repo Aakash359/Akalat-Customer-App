@@ -24,7 +24,7 @@ function ChangePassword() {
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                     enabled>
-                    <ScrollView indicatorStyle={Colors.WHITE}>
+                    <ScrollView indicatorStyle='white'>
                         <FormInput
                             placeholder="Old Password"
                             autoCapitalize="none"

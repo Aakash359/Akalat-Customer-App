@@ -1,10 +1,30 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, ScrollView,ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { PrivacyRequest } from '../../redux/actions'
+
+
+
 function PrivacyPolicy() {
-    const navigation = useNavigation();    
+    const navigation = useNavigation();  
+    const { navigate } = useNavigation();
+    const dispatch = useDispatch();
+    const privacyResponse = useSelector((state) => state.Setting.privacyResponse);  
+
+
+    
+    // console.log("Aakash===>",privacyResponse?.data?.customer_privacy_policy)
+    const data = privacyResponse
+    console.log("PriVcyy===>",(data))
+   
+    useEffect(() => {
+        dispatch(PrivacyRequest());
+       },[]); 
+
+  
     return (
         <View style={styles.container}>
             <StatusBar
@@ -18,24 +38,7 @@ function PrivacyPolicy() {
             <Text style={styles.headerText}>Privacy Policy </Text>
             <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                 <ScrollView style={styles.mainContainer}>
-                    <Text style={styles.textStyle}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                    aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                    duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                    sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                    consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                    accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-                    no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                    aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                    duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                    sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                    consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                    invidunt ut labore et dolore magna aliquyam erat,
-                    sed diam voluptua. At vero eos et accusam et justo duo
-                    dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                    <Text style={styles.textStyle}>{privacyResponse?.data?.customer_privacy_policy}
                    </Text>
                 </ScrollView>
             </ImageBackground>

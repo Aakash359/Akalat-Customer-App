@@ -137,7 +137,7 @@ function Order(props) {
          <Text style={[styles.primaryText, {color:"#AB8F8E"}]}>Fire & Grill Bill</Text>
          <View style={[styles.bottomContainer, { marginTop: Scale(20) }]}>
            <Text style={styles.itemText1}>Item Total</Text>
-           <Text style={styles.normatText1}>$32</Text>
+           <Text style={[styles.normatText1]}>$32</Text>
          </View>
          <View style={styles.bottomContainer}>
            <Text style={styles.itemText1}>Total Discount</Text>
