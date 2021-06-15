@@ -9,6 +9,7 @@ import {
     Image,
     TextInput,
     ImageBackground,
+    Alert,
 } from 'react-native'
 import { Icon } from 'native-base'
 import { Colors, Scale, ImagesPath } from '../../CommonConfig'
@@ -41,7 +42,7 @@ function Card(props) {
     })
 
     React.useEffect(() => {
-        props?.AddressListResquest()
+        props?.AddressListResquest({ created_by: props?.user?._id })
     }, [])
 
     const increment = () => {
@@ -69,7 +70,11 @@ function Card(props) {
             det,
         }
 
-        navigate('Payment', data)
+        if (props?.addressList?.length) {
+            navigate('Payment', data)
+        } else {
+            Alert.alert('', 'Please add an address')
+        }
     }
 
     const addToCart = (item) => {
@@ -301,9 +306,11 @@ function Card(props) {
                                 borderRadius: 1,
                             }}
                         />
-                        <Text style={[styles.itemText, { color: 'green' }]}>
-                            You have saved $5 on this order
-                        </Text>
+                        {det?.dis ? (
+                            <Text style={[styles.itemText, { color: 'green' }]}>
+                                You have saved $5 on this order
+                            </Text>
+                        ) : null}
                     </View>
                     {props?.addressList && props?.addressList?.length ? (
                         <View
@@ -318,7 +325,7 @@ function Card(props) {
                                 <Text style={styles.itemText1}>
                                     Delivery Address
                                 </Text>
-                                <Text style={styles.countText}>charges</Text>
+                                <Text style={styles.countText}>change</Text>
                             </View>
 
                             <Text style={styles.itemText1}>
@@ -363,6 +370,7 @@ function Card(props) {
 const mapStateToProps = ({
     Cart: { restroDetails, products, instruction, selectedAddress },
     Setting: { addressListResponse },
+    Auth: { user },
 }) => {
     return {
         cartRestroDetails: restroDetails,
@@ -370,6 +378,7 @@ const mapStateToProps = ({
         addressList: addressListResponse?.data?.addressList || [],
         instruction,
         selectedAddress,
+        user,
     }
 }
 
