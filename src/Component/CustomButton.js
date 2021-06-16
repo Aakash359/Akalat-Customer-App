@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   secondaryText: {
-    //textTransform: 'uppercase',
     fontSize: Scale(14),
     fontWeight: 'bold',
     color: Colors.WHITE,

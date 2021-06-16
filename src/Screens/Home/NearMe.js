@@ -113,7 +113,7 @@ function NearMe(props) {
                                     backgroundColor: 'green',
                                 }}
                             >
-                                4.0
+                              {item?.rating_from_user}
                             </Text>
 
                             <Icon
@@ -172,7 +172,8 @@ function NearMe(props) {
                         }}
                     >
                         <Text
-                            style={{ fontSize: Scale(15), fontWeight: 'bold' }}
+                        numberOfLines={1}
+                            style={{ fontSize: Scale(15), fontWeight: 'bold',width:'40%', }}
                         >
                             {item?.restro_name}
                         </Text>
@@ -181,7 +182,7 @@ function NearMe(props) {
                                 color: '#AB8F8E',
                                 fontSize: Scale(12),
                                 fontWeight: 'normal',
-                                marginRight: 70,
+                                marginRight: Scale(25),
                             }}
                         >
                             {' '}
@@ -193,7 +194,7 @@ function NearMe(props) {
                             style={{
                                 color: '#AB8F8E',
                                 fontSize: Scale(16),
-                                marginHorizontal: Scale(-4),
+                                
                             }}
                         />
                     </View>
@@ -224,7 +225,7 @@ function NearMe(props) {
     const renderItem = ({ item, index }) => (
         <View
             style={{
-                width: Scale(330),
+                width: Scale(310),
                 height: Scale(150),
                 backgroundColor: '#ffffff',
                 borderWidth: 2,
@@ -257,7 +258,7 @@ function NearMe(props) {
                                 backgroundColor: 'green',
                             }}
                         >
-                            {item.createdAt}
+                            Price
                         </Text>
                         <Text
                             style={{
@@ -280,10 +281,9 @@ function NearMe(props) {
     const renderItem1 = ({ item, index }) => (
         <View
             style={{
-                width: Scale(180),
+                width: Scale(170),
                 height: Scale(55),
                 marginVertical: Scale(15),
-                marginHorizontal: Scale(-5),
                 alignSelf: 'center',
             }}
         >
@@ -293,7 +293,7 @@ function NearMe(props) {
                     style={{
                         width: '95%',
                         height: Scale(55),
-                        resizeMode: 'stretch',
+                        resizeMode: 'cover',
                         borderTopLeftRadius: Scale(30),
                         borderTopRightRadius: Scale(30),
                     }}
@@ -340,7 +340,7 @@ function NearMe(props) {
             </TouchableOpacity>
         </View>
     )
-
+//jhdfjhjfhdjhfjfhj
     return (
         <View style={styles.container}>
             <StatusBar

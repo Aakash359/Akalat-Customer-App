@@ -68,10 +68,11 @@ function Explore()
           </View>
         </View>
       </ImageBackground>
-      <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text style={{ fontSize: Scale(16), fontWeight: 'bold' }}>{item.restro_name}<Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}></Text>
-          <Text style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}{item.area_name}, {item.street_name}, {item.region}, {item.state}</Text> </Text>
-        <Icon name="heart" type="FontAwesome" style={{ color: "#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
+
+      <View style={{ flexDirection: 'row',paddingTop: Scale(15), paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
+        <Text  style={{ fontSize: Scale(16), fontWeight: 'bold', }}>{item.restro_name}<Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>{' '}(11:00 am - 10:00 pm)</Text>
+          <Text numberOfLines={1} style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}{item.area_name}, {item.street_name}, {item.region}, {item.state}</Text> </Text>
+        <Icon name="heart" type="FontAwesome" style={{ color: "#AB8F8E", fontSize: Scale(16), marginHorizontal: Scale(2),marginBottom:Scale(15)}} />
 
       </View>
     </View>

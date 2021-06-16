@@ -33,9 +33,6 @@ const [offercard, setofferCard] = React.useState(offercardResponse?.data || []);
 const [restroItems, setrestroItems] = React.useState(restroResponse?.data || []);
 const [cartList, setcartList] = useState([]);
 
-// const itemss = cartList.slice(0,1).map((item) => (item.restro_id));
-// console.log("Aakash===>",restroResponse?.data?.[0]?.address)
-
 useEffect(() => {
 
   setTimeout(() => {
@@ -72,18 +69,19 @@ useEffect(() => {
           </View>
         </View>
       </ImageBackground>
-      <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row',paddingTop: Scale(15),paddingVertical: Scale(10),alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
         <Text style={{fontSize:Scale(16),fontWeight:'bold'}}>{item.name}
-        <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal'}}>    (11:00 am - 10:00 pm)</Text>
+        <Text style={{color:'#AB8F8E',fontSize:Scale(12),fontWeight:'normal'}}>{' '}(11:00 am - 10:00 pm)</Text>
         <Text style={{fontSize:Scale(12),fontWeight:'normal'}}>{'\n'}{item.address}</Text> </Text>
-        <Icon name="heart" type="FontAwesome" style={{ color:"#AB8F8E", fontSize: Scale(20), marginHorizontal: Scale(2), }} />
+        <Icon name="heart" type="FontAwesome" style={{ color:"#AB8F8E", fontSize: Scale(16),  marginBottom:Scale(25)}} />
 
       </View>
       </TouchableOpacity>
     </View>
   );
   const renderItem = ({ item, index }) => (
-    <View style={{width:Scale(330),
+    <View style={{
+      width: Scale(310),
       height: Scale(150),      
       backgroundColor: '#ffffff',
       borderWidth:2,
@@ -95,10 +93,8 @@ useEffect(() => {
       <ImageBackground source={{uri: item.image }} style={[styles.backgroundStyle,{borderRadius:Scale(10)}]}>
         <View style={{ justifyContent: 'flex-end', flex: 1, }}>
           <View style={{  paddingBottom: Scale(10), alignItems: 'flex-start', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>{item.createdAt}</Text>
-            <Text style={{textShadowColor: 'rgb(255,255,255)',
-    textShadowOffset: {width: 0.1, height: 0.1},
-    textShadowRadius: 5,  fontSize: Scale(18), color: Colors.WHITE, marginLeft: Scale(7),  paddingVertical: Scale(5),}}>Spicy Mozzorella{'\n'}Italian Pizza
+            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>Price</Text>
+            <Text style={{textShadowColor: 'rgb(255,255,255)', textShadowOffset: {width: 0.1, height: 0.1}, textShadowRadius: 5, fontSize: Scale(18), color: Colors.WHITE, marginLeft: Scale(7),  paddingVertical: Scale(5),}}>Spicy Mozzorella{'\n'}Italian Pizza
             </Text>
           </View>
         </View>
@@ -107,16 +103,15 @@ useEffect(() => {
     </View>
   );
   const renderItem1 = ({ item, index }) => (
-    <View style={{width:Scale(180),
+    <View style={{width:Scale(170),
       height: Scale(55),      
       marginVertical: Scale(15),
-      marginHorizontal:Scale(10),
       alignSelf: 'center',
       }}>
         
     <TouchableOpacity onPress={() => navigate('Coupon')}>
       <ImageBackground source={ImagesPath.coupon} style={{
-         width: '100%',
+         width: '95%',
          height: Scale(55),
          resizeMode: 'stretch',
          borderTopLeftRadius: Scale(30),
@@ -127,7 +122,7 @@ useEffect(() => {
             COUPON
             </Text>
             <Text style={{ fontSize: Scale(14), color: Colors.WHITE,marginTop:Scale(3)  }}>
-             40% OFF <Text style={{ fontSize: Scale(12), color: 'grey', marginLeft:Scale(30) }}>  All Items</Text>
+             40% OFF <Text style={{ fontSize: Scale(12), color: 'grey', marginLeft:Scale(30) }}>All Items</Text>
             </Text>
           </View>
       
