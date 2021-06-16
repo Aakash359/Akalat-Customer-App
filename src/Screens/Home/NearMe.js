@@ -65,7 +65,7 @@ function NearMe(props) {
     React.useEffect(() => {
         onSearch()
     }, [search])
-    
+
 
    const  onPress = async () =>{
 
@@ -539,3 +539,4 @@ const styles = StyleSheet.create({
         marginLeft: Scale(8),
     },
 })
+//jsdkdkdsjk
