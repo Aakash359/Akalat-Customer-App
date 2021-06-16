@@ -61,7 +61,7 @@ function MyOrders(props) {
         setChecked(!checked)
     }
 
-    console.log('Aakash====>', orderList)
+  
 
     useEffect(() => {
         const data = {

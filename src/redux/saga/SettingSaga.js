@@ -403,7 +403,7 @@ export const favouriteList = function* favouriteList({params}) {
   yield put(favouriteListLoader(true));
   try {
       const response = yield call(Request, {
-          url: '/listFavouritedRestro',
+          url: 'http://3.7.147.28:3328/api/v1/restro/listFavouritedRestro',
           method: 'POST',
           data,
         })
@@ -419,6 +419,7 @@ export const favouriteList = function* favouriteList({params}) {
         }
      else{ 
          yield put({ type: FAVOURITE_LIST_SUCCESS, payload: response });
+       
          yield put(favouriteListLoader(false));
      
       }
