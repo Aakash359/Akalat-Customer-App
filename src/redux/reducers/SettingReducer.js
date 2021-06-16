@@ -32,11 +32,16 @@ import {
     DELETE_ADDRESS_REQUEST,
     DELETE_ADDRESS_SUCCESS,
     DELETE_ADDRESS_FAILED,
+    FAVOURITE_LIST_REQUEST,
+    FAVOURITE_LIST_SUCCESS,
+    FAVOURITE_LIST_FAILED,
+    SET_FAVOURITE_LIST_LOADER
     
   
     } from '../Types/type';
     
     const initialState = {
+     isLoading: false, 
      aboutUsResponse : {},
      privacyResponse : {},
      termsResponse : {},
@@ -59,7 +64,9 @@ import {
      myOrderListStatus: false,
      error: "",
      delAddSucRes: null,
-     delAddFailRes: null
+     delAddFailRes: null,
+     favouriteListResponse:{},
+     favouriteListStatus:false,
      
      };
     
@@ -161,6 +168,17 @@ import {
         case MYORDER_LIST_FAILED:
           return {...state, myOrderListStatus:false, myOrderListResponse: action.payload,         
         };
+        case FAVOURITE_LIST_REQUEST:
+          return {...state,  favouriteListStatus:false,favouriteListResponse: action.payload, 
+        };
+        case FAVOURITE_LIST_SUCCESS:
+          return {...state,  favouriteListStatus:true, favouriteListResponse: action.payload,
+        };
+        case FAVOURITE_LIST_FAILED:
+          return {...state, favouriteListStatus:false, favouriteListResponse: action.payload,         
+        };
+        case SET_FAVOURITE_LIST_LOADER:
+          return {...state, isLoading: action.payload}
            
   
         default:

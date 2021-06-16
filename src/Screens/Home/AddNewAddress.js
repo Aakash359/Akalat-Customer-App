@@ -21,8 +21,6 @@ function AddNewAddress(props) {
     const [currentAddress,setAddress] = useState('');
     const [house_name_and_no ,setHouseName] = useState('');
     const [area_name ,setAreaName] = useState('');
-    const [currentLongitude,setCurrentLongitude] = useState('unknown');
-    const [currentLatitude,setCurrentLatitude] = useState('unknown');
     const [id , setid] =useState(props);
     const [nearby,setNearby] = useState('');
     const addAddressResponse = useSelector((state) => state.Setting);

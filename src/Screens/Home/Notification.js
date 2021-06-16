@@ -4,6 +4,7 @@ import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import Accordion from '../../Component/Accordion';
 import { useNavigation } from '@react-navigation/native';
+
 function Notification() {
   const { navigate } = useNavigation();
     const navigation = useNavigation();

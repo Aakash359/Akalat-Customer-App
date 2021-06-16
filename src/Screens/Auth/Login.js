@@ -52,9 +52,6 @@ function Login(props) {
             dispatch(loginRequest(data));
 
                 }, 1000);
-        
-        
-             
         }
         
       }

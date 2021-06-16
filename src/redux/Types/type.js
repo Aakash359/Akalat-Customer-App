@@ -1,3 +1,6 @@
+// =======>>   LOADER ACTIONS <<<<<<<=======
+export const LOADER_REQUEST =  'LOADER_REQUEST';
+
 // =======>>   LOGIN ACTIONS <<<<<<<=======
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -111,16 +114,17 @@ export const EDIT_PROFILE_REQUEST = 'EDIT_PROFILE_REQUEST';
 export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
 export const EDIT_PROFILE_FAILED =  'EDIT_PROFILE_FAILED';
 
+// =======>>  ADD FAVOURITE ACTIONS <<<<<<<=======
+export const ADD_FAVOURITE_REQUEST = 'ADD_FAVOURITE_REQUEST';
+export const ADD_FAVOURITE_SUCCESS = 'ADD_FAVOURITE_SUCCESS';
+export const ADD_FAVOURITE_FAILED =  'ADD_FAVOURITE_FAILED';
+export const SET_FAVOURITE_LOADER =  'SET_FAVOURITE_LOADER'
+
+
 // =======>>   OTP-UP ACTIONS <<<<<<<=======
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILED =  'LOGOUT_FAILED';
-
-
-// =======>>   LOADER ACTIONS <<<<<<<=======
-export const LOADER_REQUEST =  'LOADER_REQUEST';
-
-
 
 // =======>>   PROFILE ACTIONS <<<<<<<=======
 export const GET_USER_DETAILS =  'GET_USER_DETAILS';

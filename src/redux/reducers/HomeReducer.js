@@ -14,10 +14,15 @@ import {
     RESTRO_ITEM_REQUEST,
     RESTRO_ITEM_SUCCESS,
     RESTRO_ITEM_FAILED,
+    ADD_FAVOURITE_REQUEST,
+    ADD_FAVOURITE_SUCCESS,
+    ADD_FAVOURITE_FAILED,
+    SET_FAVOURITE_LOADER,
   
     } from '../Types/type';
 
     const initialState = {
+        isLoading: false,
         offercardResponse : {},
         error: "",
         verification_status:false,
@@ -30,6 +35,8 @@ import {
         restroStatus: false,
         restroItemResponse: {},
         restroItemStatus: false,
+        addFavouriteResponse:{},
+        addFavouriteStatus:false,
        };
        
        export default function HomeReducer(state = initialState, action) {
@@ -70,7 +77,7 @@ import {
            case RESTRO_LIST_FAILED:
               return {...state, restroStatus:false, restroResponse: action.payload,         
             };
-            case RESTRO_ITEM_REQUEST:
+           case RESTRO_ITEM_REQUEST:
               return {...state, restroItemStatus:false, restroItemResponse: action.payload, 
             };
            case RESTRO_ITEM_SUCCESS:
@@ -79,6 +86,17 @@ import {
            case RESTRO_ITEM_FAILED:
               return {...state, restroItemStatus:false, restroItemResponse: action.payload,         
             };
+            case ADD_FAVOURITE_REQUEST:
+              return {...state, addFavouriteStatus:false, addFavouriteResponse: action.payload, 
+            };
+           case ADD_FAVOURITE_SUCCESS:
+              return {...state, addFavouriteStatus:true,  addFavouriteResponse: action.payload,  
+            };
+           case ADD_FAVOURITE_FAILED:
+              return {...state, addFavouriteStatus:false, addFavouriteResponse: action.payload,         
+            };
+           case SET_FAVOURITE_LOADER:
+              return {...state, isLoading: action.payload};
            default:
              return state;
          }
