@@ -340,7 +340,7 @@ function NearMe(props) {
             </TouchableOpacity>
         </View>
     )
-
+//jhdfjhjfhdjhfjfhj
     return (
         <View style={styles.container}>
             <StatusBar
