@@ -106,7 +106,7 @@ function Login(props) {
                         <Text onPress={redirectToForgotPassword} style={styles.forgotButton}>Forgot Password?</Text>
                         <View style={{ marginVertical: '60%' }}>
 
-                        <CustomButton title="Login" isSecondary={true} onSubmit={onSubmit}  />
+                        <CustomButton title="Login" onSubmit={onSubmit}  />
 
                         </View>
                     </View>

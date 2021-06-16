@@ -214,7 +214,7 @@ const subToCart = (item) => {
               marginTop: Scale(20),
               borderColor: 'grey'
             }}>
-              <Text style={[styles.normalText, { fontSize: Scale(17),color: Colors.BLACK }]}>Veg Only</Text>
+              <Text style={[styles.normalText, { fontSize: Scale(17) }]}>Veg Only</Text>
               <Switch
                 trackColor={{ false: Colors.GRAY, true: Colors.RED }}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
@@ -237,7 +237,7 @@ const subToCart = (item) => {
                     <Image source={{uri:item?.image}} style={{resizeMode:'stretch',height:Scale(100),width:'100%',borderRadius:Scale(10),}}/>
                   <View style={{flexDirection:'row',marginVertical:Scale(5),alignItems:'center'}}>
                   <Image source={ImagesPath.veg}/>
-                  <Text style={{fontSize:Scale(16),color:Colors.BLACK,marginLeft:Scale(5)}}>{item.name}</Text>
+                  <Text style={{fontSize:Scale(16),color:Colors.BLACK}}>{item.name}</Text>
                   </View>
                   <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
                   <Text onPress={increment} style={styles.textStyle}>${item.final_price}{'\n'}<Text style={[styles.normalText,{textDecorationLine: 'line-through', 
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold' 
   },
   normalText: { 
-    color: '#AB8F8E', 
+    color: 'grey', 
     fontSize: Scale(12),
     
   },

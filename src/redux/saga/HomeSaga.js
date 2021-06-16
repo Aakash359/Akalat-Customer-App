@@ -23,7 +23,7 @@ import Request from '../../apiServices/Request';
 //====================== Sign-Up POST =======================
 export const HomeSaga = function* HomeSaga({params}) {
     let data = params
-    // 
+    // console.log("SingInParams=========>", data)
     try {
         const response = yield call(Request, {
             url: '/banner/bannerList',
@@ -44,7 +44,7 @@ export const HomeSaga = function* HomeSaga({params}) {
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: OFFER_CARD_FAILED, payload: e });
     }
 }
@@ -53,7 +53,7 @@ export const HomeSaga = function* HomeSaga({params}) {
 
 export const CouponSaga = function* CouponSaga({params}) {
     let data = params
-    // 
+    // console.log("SingInParams=========>", data)
     try {
         const response = yield call(Request, {
             url: 'coupon/addCouponCode',
@@ -74,7 +74,7 @@ export const CouponSaga = function* CouponSaga({params}) {
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: COUPON_FAILED, payload: e });
     }
 }
@@ -83,7 +83,7 @@ export const CouponSaga = function* CouponSaga({params}) {
 
 export const RestroListSaga = function* RestroListSaga({params}) {
     let data = params
-    // 
+    // console.log("SingInParams=========>", data)
     try {
         const response = yield call(Request, {
             url: 'http://3.7.147.28:3327/api/v1/restro/listRestro',
@@ -104,7 +104,7 @@ export const RestroListSaga = function* RestroListSaga({params}) {
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: RESTRO_LIST_FAILED, payload: e });
     }
 }
@@ -130,12 +130,12 @@ export const RestroItemSaga = function* RestroItemSaga({params}) {
           }
        else{ 
            yield put({ type: RESTRO_LIST_SUCCESS, payload: response });
-        //    
+        //    console.log("Restro==>", response)
         }
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: RESTRO_ITEM_FAILED, payload: e });
     }
 }
@@ -143,7 +143,7 @@ export const RestroItemSaga = function* RestroItemSaga({params}) {
 
 export const SearchSaga = function* SearchSaga({params}) {
     let data = params
-    // 
+    // console.log("SingInParams=========>", data)
     try {
         const response = yield call(Request, {
             url: 'restro/search',
@@ -164,7 +164,7 @@ export const SearchSaga = function* SearchSaga({params}) {
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: SEARCH_FAILED, payload: e });
     }
 }

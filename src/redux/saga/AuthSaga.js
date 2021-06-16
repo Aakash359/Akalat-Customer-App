@@ -27,7 +27,7 @@ import { OTPRequest } from '../actions';
 // ====================== Sign-Up POST ======================
 export const SignUpSaga = function* SignUpSaga({params}) {
     let data = params
-    // 
+    // console.log("SingInParams=========>", data)
     try {
         const response = yield call(Request, {
             url: '/addUser',
@@ -51,7 +51,7 @@ export const SignUpSaga = function* SignUpSaga({params}) {
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: SIGNUP_FAILED, payload: e });
         yield put({ type: LOADER_REQUEST, payload: false  });
     }
@@ -60,14 +60,14 @@ export const SignUpSaga = function* SignUpSaga({params}) {
 // ====================== login Post ======================
 export const loginSaga = function* loginSaga({data} ) {
    
-    
+    console.log("Params=========>", data)
     try {
         const response = yield call(Request, {
             url: '/login',
             method: 'POST',
             data,
           })
-          
+          console.log("Error=========>", response?.data?.profile)
           if (response?.error == true){
             yield put({ type: LOGIN_FAILURE, payload: response  });
             yield put({ type: LOADER_REQUEST, payload: false  });
@@ -79,12 +79,15 @@ export const loginSaga = function* loginSaga({data} ) {
           }
        else{ 
            yield put({ type: LOGIN_SUCCESS, payload: response?.data?.profile });
+           console.log("Params=========>", response?.data?.token)
+      
            yield put({ type: LOADER_REQUEST, payload: false  });
         }
        
         
     }
     catch (e) {
+        console.log(e, 'error');
         yield put({ type: LOGIN_FAILURE, payload: e });
         yield put({ type: LOADER_REQUEST, payload: false  });
     }
@@ -98,7 +101,7 @@ function* getUserDetails({data} ) {
           method: 'POST',
           data,
         })
-        
+        console.log("Error=========>", response)
         if (response?.error){
           
           global.dropDownAlertRef.alertWithType(
@@ -109,29 +112,28 @@ function* getUserDetails({data} ) {
         }
      else{ 
          yield put({ type: UPDATE_USER_DETAILS, payload: response?.data });
-         
+         console.log("Params=========>", response?.data?.token)
     
       }
      
       
   }
   catch (e) {
-      
+      console.log(e, 'error');
   }
 }
 
 // ====================== OTP Send Post ======================
-
 export const OtpSaga = function* OtpSaga({data} ) {
    
-    // 
+    // console.log("OTP Params=========>", data)
     try {
         const response = yield call(Request, {
             url: '/sendOtp',
             method: 'POST',
             data,
           })
-          // 
+          // console.log("Error=========>", response)
           if (response?.error == true){
             yield put({ type: OTP_FAILED, payload: response  });
             global.dropDownAlertRef.alertWithType(
@@ -146,13 +148,12 @@ export const OtpSaga = function* OtpSaga({data} ) {
         
     }
     catch (e) {
-        
+        console.log(e, 'error');
         yield put({ type: OTP_FAILED, payload: e });
     }
 }
 
 // ====================== OTP Verify Post ======================
-
 export const OtpVerifySaga = function* OtpVerifySaga({data} ) {
    
   
@@ -177,21 +178,20 @@ export const OtpVerifySaga = function* OtpVerifySaga({data} ) {
       
   }
   catch (e) {
-      
+      console.log(e, 'error');
       yield put({ type: OTP_VERIFY_FAILED, payload: e });
   }
 }
 
 // ====================== Log-Out Post ======================
-
 export const logoutSaga = function* logoutSaga({data} ) {
    
-  
+  console.log("Logout Params=========>", data)
   try {
     yield put({ type: LOGOUT_SUCCESS });
       }
   catch (e) {
-      
+      console.log(e, 'error');
       yield put({ type: LOGOUT_FAILED, payload: e });
   }
 }

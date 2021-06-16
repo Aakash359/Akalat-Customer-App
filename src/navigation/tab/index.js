@@ -12,6 +12,7 @@ const getOptions = ({tabBarLabel, icon}) => {
   return {
     tabBarIcon: ({color}) => <ImageIcon src={icon} tintColor={color} />,
     tabBarLabel,
+    //headerBackTitle: null,
     headerBackTitle: ' ',
   };
 };
@@ -20,7 +21,7 @@ const Tab =  createBottomTabNavigator();
 function index() {
   return (
     <Tab.Navigator
-      initialRouteName="NearMe"
+      initialRouteName="HomeScreen"
       tabBarOptions={{
         
         inactiveTintColor: Colors.BORDERCOLOR,

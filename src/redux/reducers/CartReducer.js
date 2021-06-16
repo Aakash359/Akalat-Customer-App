@@ -1,8 +1,13 @@
-import { ADD_TO_CART, SUB_TO_CART } from "../Types/CartActionTypes"
+import { ADD_TO_CART, CREATE_ORDER_SUCCESS, SET_ADDRESS_ID, SET_CREATE_ORDER_ERROR, SET_CREATE_ORDER_LOADER, SET_INSTRUCTION, SET_SELECTED_ADDRESS, SUB_TO_CART } from "../Types/CartActionTypes"
 
 const initalState = {
     restroDetails: null,
-    products: []
+    products: [],
+    instruction: '',
+    addressId: null,
+    selectedAddress: 0,
+    isLoading: false,
+    error: '',
 }
 
 export default function Cart(state = initalState, {type, payload}) {
@@ -37,10 +42,27 @@ export default function Cart(state = initalState, {type, payload}) {
             }
             else {
                  newP = [...state.products]
-                 newP.splice(indexPro, 1)
+                newP.splice(indexPro, 1)
             }
             return {...state, products: newP, restroDetails: newP?.length ? state.restroDetails: null}
  
+        case SET_INSTRUCTION:
+            return {...state, instruction: payload}
+
+        case SET_ADDRESS_ID: 
+            return {...state, addressId: payload}
+
+        case SET_SELECTED_ADDRESS:
+            return {...state, selectedAddress: payload}
+        
+        case SET_CREATE_ORDER_LOADER:
+            return {...state, isLoading: payload}
+        
+        case SET_CREATE_ORDER_ERROR:
+            return {...state, error: payload}
+
+        case CREATE_ORDER_SUCCESS: 
+            return {...state, restroDetails: null, products: [], instruction: ''}
         default:
             return state
     }

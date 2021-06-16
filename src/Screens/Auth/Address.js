@@ -58,9 +58,9 @@ function Address() {
             getOneTimeLocation();
            } else {
             
-             
+             console.log('====================================');
              console.log(granted);
-            
+             console.log('====================================');
           }
         } catch (err) {
           
@@ -86,12 +86,16 @@ function Address() {
      
             (position) => {
               
+              console.log('====================================');
+              console.log(position);
+              console.log('====================================');
               setLocation(position.coords)
         
               
                 Geocoder.from(position.coords.latitude, position.coords.longitude)
                 .then(json => {
                   
+                        console.log("=============================================json data",json.results[1].formatted_address,"================================Flat no")
                       let addressComponent= json.results[1].formatted_address; 
                        console.log(addressComponent, 'addressComponent');
                          setAddress(addressComponent)
@@ -101,16 +105,16 @@ function Address() {
             },
             (error) => {
               
-         
+              console.log('====================================');
               console.log(error);
-              
+              console.log('====================================');
             },
             
           );
         } catch (error) {
-       
+          console.log('====================================');
           console.log( error);
-         
+          console.log('====================================');
         }
       };
     

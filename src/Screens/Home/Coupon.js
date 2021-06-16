@@ -4,8 +4,6 @@ import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-
-
 function Coupon() {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
