@@ -17,10 +17,6 @@ function HelpSupport(props) {
     const [des, setdes] = useState('');
     const [loader,] = useState(false);
 
-    // const redirectToMyAccount = () => {
-    //     navigate('MyAccount');
-    // };
-
     const  onSubmit = () =>{
         if(sub == '') {
         alert("Please enter subject")

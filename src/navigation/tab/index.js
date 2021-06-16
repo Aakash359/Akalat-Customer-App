@@ -12,7 +12,6 @@ const getOptions = ({tabBarLabel, icon}) => {
   return {
     tabBarIcon: ({color}) => <ImageIcon src={icon} tintColor={color} />,
     tabBarLabel,
-    //headerBackTitle: null,
     headerBackTitle: ' ',
   };
 };
@@ -42,7 +41,7 @@ function index() {
           ...getOptions({
             tabBarLabel: 'Near Me',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+          <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
             icon: ImagesPath.location,
             

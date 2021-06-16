@@ -30,10 +30,16 @@ import {
     MYORDER_LIST_SUCCESS,
     MYORDER_LIST_FAILED,
     DELETE_ADDRESS_REQUEST,
+    FAVOURITE_LIST_REQUEST,
+    FAVOURITE_LIST_SUCCESS,
+    FAVOURITE_LIST_FAILED,
 
     } from '../Types/type';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Request from '../../apiServices/Request'; 
+import {
+  favouriteListLoader,
+} from '../actions/SettingActions';
 import { deleteAddressFailed, deleteAddressSuccess, signUpLogin } from '../actions';
 
 
@@ -57,12 +63,12 @@ export const AboutUsSaga = function* AboutUsSaga({data}) {
           }
        else{ 
            yield put({ type: ABOUTUS_SUCCESS, payload: response?.data });
-        //    console.log("Sucesss=========>", response?.data?.customer_about_us)
+         
         }
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: ABOUTUS_FAILED, payload: e });
     }
 }
@@ -71,7 +77,7 @@ export const AboutUsSaga = function* AboutUsSaga({data}) {
 // ====================== Privacy GET ======================
 export const PrivacySaga = function* PrivacySaga({params}) {
     let data = params
-    // console.log("AboutUsParams=========>", data)
+    // 
     try {
         const response = yield call(Request, {
             url: '/customer/privacyPolicy',
@@ -89,12 +95,12 @@ export const PrivacySaga = function* PrivacySaga({params}) {
           }
        else{ 
            yield put({ type: PRIVACY_SUCCESS, payload: response });
-        //    console.log("Sucesss=========>", response?.data)
+        
         }
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: PRIVACY_FAILED, payload: e });
     }
 }
@@ -102,7 +108,7 @@ export const PrivacySaga = function* PrivacySaga({params}) {
 // ====================== Terms And Conditions GET ======================
 export const TermSaga = function* TermSaga({params}) {
     let data = params
-    // console.log("AboutUsParams=========>", data)
+    // 
     try {
         const response = yield call(Request, {
             url: '/customer/termsAndCondition',
@@ -120,12 +126,12 @@ export const TermSaga = function* TermSaga({params}) {
           }
        else{ 
            yield put({ type: TERMS_SUCCESS, payload: response });
-        //    console.log("Sucesss=========>", response?.data)
+        //    
         }
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: TERMS_FAILED, payload: e });
     }
 }
@@ -152,13 +158,13 @@ export const FaqSaga = function* FaqSaga({data}) {
           }
        else{ 
            yield put({ type: FAQ_SUCCESS, payload: response });
-           console.log("Response====>",response)
+           
         
         }
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: FAQ_FAILED, payload: e });
     }
 }
@@ -166,7 +172,7 @@ export const FaqSaga = function* FaqSaga({data}) {
 // ====================== Help and Support POST ======================
 export const HelpSaga = function* HelpSaga({data}) {
    
-    // console.log("HELP=========>", data)
+    // 
     try {
         const response = yield call(Request, {
             url: '/addHelpAndsupport',
@@ -190,7 +196,7 @@ export const HelpSaga = function* HelpSaga({data}) {
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: HELP_FAILED, payload: e });
     }
 }
@@ -198,7 +204,7 @@ export const HelpSaga = function* HelpSaga({data}) {
 // ====================== Add Address  POST ======================
 export const AddAddressSaga = function* AddAddressSaga({data}) {
    
-    // console.log("HELP=========>", data)
+    // 
     try {
         const response = yield call(Request, {
             url: '/addUserAddress',
@@ -223,7 +229,7 @@ export const AddAddressSaga = function* AddAddressSaga({data}) {
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: ADDADDRESS_FAILED, payload: e });
     }
 }
@@ -231,7 +237,7 @@ export const AddAddressSaga = function* AddAddressSaga({data}) {
 // ====================== Address List  POST ======================
 export const AddressListSaga = function* AddressListSaga({data}) {
    
-    // console.log("HELP=========>", data)
+    // 
     try {
         const response = yield call(Request, {
             url: '/listUserAddress',
@@ -255,7 +261,7 @@ export const AddressListSaga = function* AddressListSaga({data}) {
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: ADDRESSLIST_FAILED, payload: e });
     }
 }
@@ -264,7 +270,7 @@ export const AddressListSaga = function* AddressListSaga({data}) {
 
 export const EditProfileSaga = function* EditProfileSaga({data}) {
    
-    console.log("Profile=========>", data)
+    
     try {
         const response = yield call(Request, {
             url: '/editUser',
@@ -288,7 +294,7 @@ export const EditProfileSaga = function* EditProfileSaga({data}) {
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: EDIT_PROFILE_FAILED, payload: e });
     }
 }
@@ -296,7 +302,7 @@ export const EditProfileSaga = function* EditProfileSaga({data}) {
 // ====================== Edit Profie POST ======================
 export const ProfileInfoSaga = function* ProfileInfoSaga({data}) {
    
-    // console.log("HELP=========>", data)
+    // 
     try {
         const response = yield call(Request, {
             url: '/editUser',
@@ -320,7 +326,7 @@ export const ProfileInfoSaga = function* ProfileInfoSaga({data}) {
         
     }
     catch (e) {
-        console.log(e, 'error');
+        
         yield put({ type: PROFILE_INFO_FAILED, payload: e });
     }
 }
@@ -353,7 +359,7 @@ export const MyOrderListSaga = function* MyOrderListSaga({data}) {
         
       }
         catch (e) {
-            console.log(e, 'error');
+            
             yield put({ type: MYORDER_LIST_FAILED, payload: e });
         }
 }
@@ -386,9 +392,42 @@ export const MyOrderListSaga = function* MyOrderListSaga({data}) {
       
     }
       catch (e) {
-          console.log(e, 'error');
+          
           yield put(deleteAddressFailed(e));
       }
+}
+
+// ====================== Terms And Conditions GET ======================
+export const favouriteList = function* favouriteList({params}) {
+  let data = params
+  yield put(favouriteListLoader(true));
+  try {
+      const response = yield call(Request, {
+          url: '/listFavouritedRestro',
+          method: 'POST',
+          data,
+        })
+        
+        if (response?.data?.error == true){
+          yield put({ type: FAVOURITE_LIST_FAILED, payload: response?.data  });
+          yield put(favouriteListLoader(false));
+          global.dropDownAlertRef.alertWithType(
+            'error',
+            'Error',
+             response?.data?.message,
+          );
+        }
+     else{ 
+         yield put({ type: FAVOURITE_LIST_SUCCESS, payload: response });
+         yield put(favouriteListLoader(false));
+     
+      }
+      
+  }
+  catch (e) {
+      yield put(favouriteListLoader(false));
+      yield put({ type: FAVOURITE_LIST_FAILED, payload: e });
+  }
 }
 
 export function* settingSaga() {
@@ -403,6 +442,7 @@ export function* settingSaga() {
     yield takeEvery(PROFILE_INFO_REQUEST, ProfileInfoSaga);
     yield takeEvery(MYORDER_LIST_REQUEST, MyOrderListSaga);
     yield takeEvery(DELETE_ADDRESS_REQUEST, deleteAddress);
+    yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList);
 
 }
 export default settingSaga;

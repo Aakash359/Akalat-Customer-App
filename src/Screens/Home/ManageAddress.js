@@ -28,8 +28,6 @@ function ManageAddress() {
 
      useEffect(() => {
 
-        
-
         const data = { 
              "created_by": user?._id
              }

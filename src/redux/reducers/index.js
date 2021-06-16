@@ -13,11 +13,7 @@ const appReducer = combineReducers({
 });
 const rootReducer = (state, action) => {
   
-  
-  // if (action.type === DESTROY_SESSION) {
-  //   state = undefined;
-  // }
-  if (action.type === LOGOUT_REQUEST) 
+if (action.type === LOGOUT_REQUEST) 
   {
     state = undefined;
   }

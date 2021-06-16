@@ -11,6 +11,7 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
+
 function HamburgerButton({}) {
   const navigation = useNavigation();
   const [
@@ -33,7 +34,7 @@ useEffect(() => {
             },
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
+         
             getOneTimeLocation();
            } else {
           }
@@ -81,7 +82,7 @@ useEffect(() => {
   };
   const { navigate } = useNavigation()  
   const redirectToNotification = () => {
-    console.log('=====================demo')
+  
     navigate('SelectLocation');
 };
   return (
@@ -102,8 +103,8 @@ const styles = StyleSheet.create({
   },
   location: {
     marginLeft: Scale(25),
-    width: Scale(25),
-    height: Scale(25),    
+    width: Scale(20),
+    height: Scale(20),    
     resizeMode: 'contain',
     tintColor: Colors.WHITE
   },  

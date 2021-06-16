@@ -16,24 +16,22 @@ import { Colors, Scale, ImagesPath } from '../../CommonConfig'
 import { Searchbar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { offercardRequest, restroListRequest } from '../../redux/actions'
+import { offercardRequest, restroListRequest, addfavouriteRequest } from '../../redux/actions'
 import { API_BASE } from '../../apiServices/ApiService'
 import axios from 'axios'
 
 function NearMe(props) {
+
     const { navigate } = useNavigation()
     const navigation = useNavigation()
     const offercardResponse = useSelector(
         (state) => state.Home.offercardResponse
     )
+    const  user = useSelector((state) => state.Auth.user);
     const [offercard, setofferCard] = React.useState(
         offercardResponse?.data || []
     )
-    const restroResponse = useSelector((state) => state.Home.restroResponse)
-    const [restroItems, setrestroItems] = React.useState(
-        restroResponse?.data || []
-    )
-    const [data, setdata] = React.useState({
+   const [data, setdata] = React.useState({
         restroList: [],
         isLoading: true,
     })
@@ -47,14 +45,15 @@ function NearMe(props) {
         }
         try {
             const res = await axios.post(url, payload)
-            console.log('restro data ', res)
+           
             setdata({
                 ...data,
                 restroList: res?.data?.data?.restro,
                 isLoading: false,
             })
+           
         } catch (error) {
-            console.log(error)
+            
         }
     }
     React.useEffect(() => {
@@ -65,9 +64,35 @@ function NearMe(props) {
         onSearch()
     }, [search])
 
+ 
+
+   
+
+    const  onPress = async () =>{
+      
+        
+        const data = { 
+            'userid'  : user?._id,
+            'is_favourited_restro': true,
+            'restro_id' : '6092ade38db4690de06c5c1d'
+             
+         }
+     
+
+        setTimeout(() => {
+
+            dispatch(addfavouriteRequest(data));
+            alert("Address added succesfully")
+
+            }, 1000);
+        
+        
+      }
+      
     const redirectToHomeMaker = (item) => {
         navigate('HomeMaker', { restroId: item?._id, restroDetails: item })
     }
+    
     const redirectToFilter = () => {
         navigate('Filter')
     }
@@ -188,7 +213,8 @@ function NearMe(props) {
                             {' '}
                             (11:00 am - 10:00 pm)
                         </Text>
-                        <Icon
+                        <TouchableOpacity  onPress = {onPress} >
+                            <Icon
                             name="heart"
                             type="FontAwesome"
                             style={{
@@ -197,6 +223,8 @@ function NearMe(props) {
                                 
                             }}
                         />
+                        </TouchableOpacity>
+                       
                     </View>
                     <View
                         style={{
@@ -340,7 +368,7 @@ function NearMe(props) {
             </TouchableOpacity>
         </View>
     )
-//jhdfjhjfhdjhfjfhj
+
     return (
         <View style={styles.container}>
             <StatusBar

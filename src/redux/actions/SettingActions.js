@@ -126,3 +126,8 @@ export const deleteAddressFailed = (data) => {
         data
     };
 }
+
+// ================= Favourite-List Request =================
+
+export const favouriteListRequest = (data) => {return {type: FAVOURITE_LIST_REQUEST,data,}}
+export const favouriteListLoader  = (data) => {return {type: SET_FAVOURITE_LIST_LOADER,data,}}
