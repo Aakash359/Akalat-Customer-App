@@ -45,12 +45,14 @@ function NearMe(props) {
         }
         try {
             const res = await axios.post(url, payload)
+            
            
             setdata({
                 ...data,
                 restroList: res?.data?.data?.restro,
                 isLoading: false,
             })
+            
            
         } catch (error) {
             
@@ -64,30 +66,17 @@ function NearMe(props) {
         onSearch()
     }, [search])
 
- 
 
-   
+   const  onPress = async () =>{
 
-    const  onPress = async () =>{
-      
-        
-        const data = { 
+      const data = { 
             'userid'  : user?._id,
             'is_favourited_restro': true,
-            'restro_id' : '6092ade38db4690de06c5c1d'
+            'restro_id' : '6082ada9e1c90c56e8020cbf'
              
          }
-     
-
-        setTimeout(() => {
-
-            dispatch(addfavouriteRequest(data));
-            alert("Address added succesfully")
-
-            }, 1000);
-        
-        
-      }
+         dispatch(addfavouriteRequest(data));
+        }
       
     const redirectToHomeMaker = (item) => {
         navigate('HomeMaker', { restroId: item?._id, restroDetails: item })
@@ -213,7 +202,7 @@ function NearMe(props) {
                             {' '}
                             (11:00 am - 10:00 pm)
                         </Text>
-                        <TouchableOpacity  onPress = {onPress} >
+                        <TouchableOpacity  onPress = {()=>onPress(item)} >
                             <Icon
                             name="heart"
                             type="FontAwesome"
@@ -550,3 +539,4 @@ const styles = StyleSheet.create({
         marginLeft: Scale(8),
     },
 })
+//jsdkdkdsjk

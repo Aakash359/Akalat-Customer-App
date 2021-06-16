@@ -1,31 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, StatusBar, Image, FlatList, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
+import { favouriteListRequest, } from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+
 function Favorites() {
   const [checked, setChecked] = useState(false)
   const { navigate } = useNavigation();
   const navigation = useNavigation();  
+  const dispatch = useDispatch();
+  const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
+  console.log("Aakash====>",favouriteListResponse)
+  const  favouriteList = favouriteListResponse?.data?.favouriteList || []
+  const  user = useSelector((state) => state.Auth.user);
+
   const onPressChecked = () => {
     setChecked(!checked);
   };
+
+  useEffect(() => {
+
+    const data = { 
+         "userid": user?._id
+         }
+   
+         setTimeout(() => {
+
+            dispatch(favouriteListRequest(data));
+
+        }, 5000);
+         
+    
+
+  }, 
+  []); 
   const renderItems = ({ item, index }) => (
     <View style={styles.cardStyle}>
       <View style={styles.imageContainer}>
-        <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+        <Image  source={{ uri: item?.image }} style={styles.backgroundStyle1} />
         <View style={styles.heading}>
           <View style={styles.textContainer}>
-            <Text style={styles.primaryText}>Fire & Grill</Text>
+            <Text style={styles.primaryText}>{item?.restro_name}</Text>
             <Icon onPress={onPressChecked} type="FontAwesome" name={checked ? "heart" : 'heart-o'}
               style={styles.heartIconStyle} />
           </View>
-          <Text style={styles.normatText}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
+          <Text style={styles.normatText}>{item?.street_name}, {item?.area_name},{' '}
+                            {item?.region}, {item?.state}...</Text>
         </View>
       </View>
       <View style={styles.ratingContainer}>
         <View style={styles.buttonStyle1}>
-          <Text style={styles.textStyle1}>4.7</Text>
+          <Text style={styles.textStyle1}>{item?.rating_from_user}</Text>
           <Text style={styles.normalText}>Ratings</Text>
         </View>
         <View style={styles.buttonStyle1}>
@@ -59,8 +86,16 @@ function Favorites() {
       </View>
       <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
         <FlatList
-          data={[0, 1, 2, 3]}
+          data={[0,1,2,3]}
           renderItem={renderItems}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={() => {
+            return (
+                <Text style={{ alignSelf: 'center' }}>
+                    You don't have any favourite list
+                </Text>
+            )
+        }}
         />
       </ImageBackground>
     </View>

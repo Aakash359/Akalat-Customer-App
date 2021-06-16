@@ -78,7 +78,7 @@ function index() {
         component={Card}
         options={{
           ...getOptions({
-            tabBarLabel: 'Card',
+            tabBarLabel: 'Cart',
             icon: ImagesPath.card,
           }),
         }}

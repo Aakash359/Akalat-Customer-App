@@ -11,6 +11,8 @@ import {
     MYORDER_LIST_REQUEST,
     DELETE_ADDRESS_FAILED,
     DELETE_ADDRESS_SUCCESS,
+    FAVOURITE_LIST_REQUEST,
+    SET_FAVOURITE_LIST_LOADER
     } from '../Types/type';
 
 // =================About Us GET REQUEST =================
