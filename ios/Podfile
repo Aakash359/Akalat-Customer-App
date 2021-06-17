@@ -19,11 +19,7 @@ target 'ResturantCustomer' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-<<<<<<< HEAD
-  # use_flipper!({ 'Flipper' => '0.74.0' })
-=======
   # use_flipper!
->>>>>>> 449fcfcba2ca2dadfc56fc5323eb957ff8167c08
   # post_install do |installer|
   #   flipper_post_install(installer)
   # end
