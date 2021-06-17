@@ -1,16 +1,17 @@
-import React, {Component} from 'react';
-import {Text, View, StatusBar, Alert, Clipboard, LogBox} from 'react-native';
-import {Colors} from './CommonConfig';
+import React, {Component} from 'react'
+import {Text, View, StatusBar, Alert, Clipboard, LogBox} from 'react-native'
+import {Colors} from './CommonConfig'
 // import messaging from '@react-native-firebase/messaging';
 //yarn remove "@react-native-firebase/app"
-import NetInfo from '@react-native-community/netinfo';
-import DropdownAlert from 'react-native-dropdownalert';
-import { Store, Persistor } from './redux/Store';
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react';
-import RootStack from './navigation';
-import AsyncStorage from '@react-native-community/async-storage';
+import NetInfo from '@react-native-community/netinfo'
+import DropdownAlert from 'react-native-dropdownalert'
+import {Store, Persistor} from './redux/Store'
+import {Provider} from 'react-redux'
+import {PersistGate} from 'redux-persist/integration/react'
+import RootStack from './navigation'
+import AsyncStorage from '@react-native-community/async-storage'
 
+LogBox.ignoreLogs(['Warning: ...'])
 LogBox.ignoreAllLogs()
 
 export class App extends Component {
@@ -22,10 +23,10 @@ export class App extends Component {
             'error',
             'Error',
             'No Internet Connection',
-          );
+          )
       }
-      global.isNetConnected = state.isConnected;
-    });
+      global.isNetConnected = state.isConnected
+    })
   }
 
   // async getToken() {
@@ -98,25 +99,25 @@ export class App extends Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: Colors.WHITE}}>
-         <Provider store={Store}>
+        <Provider store={Store}>
           <PersistGate persistor={Persistor}>
-          <StatusBar
+            <StatusBar
               translucent={true}
               backgroundColor="#ffffff"
               barStyle="light-content"
             />
-            <RootStack />            
+            <RootStack />
             <DropdownAlert
               ref={(ref) => (global.dropDownAlertRef = ref)}
               inactiveStatusBarStyle="light-content"
               translucent={true}
               inactiveStatusBarBackgroundColor="transparent"
             />
-             </PersistGate>
+          </PersistGate>
         </Provider>
       </View>
-    );
+    )
   }
 }
 
-export default App;
+export default App
