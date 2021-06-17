@@ -45,7 +45,8 @@ function NearMe(props) {
         }
         try {
             const res = await axios.post(url, payload)
-            console.log("Data",res)
+            
+           
             setdata({
                 ...data,
                 restroList: res?.data?.data?.restro,

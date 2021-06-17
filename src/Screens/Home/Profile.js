@@ -6,7 +6,6 @@ import { CustomButton } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { getUserDetails } from '../../redux/actions/AuthActions';
-
 function Profile(props) {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
