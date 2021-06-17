@@ -56,12 +56,11 @@ export const HomeSaga = function* HomeSaga({params}) {
 
 //====================== Coupon POST ======================
 
-export const CouponSaga = function* CouponSaga({params}) {
-    let data = params
-    // 
+export const CouponSaga = function* CouponSaga({data}) {
+ 
     try {
         const response = yield call(Request, {
-            url: 'coupon/addCouponCode',
+            url: 'globalCouponCodesForUser',
             method: 'POST',
             data,
           })
