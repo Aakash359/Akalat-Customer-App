@@ -13,12 +13,8 @@ function PrivacyPolicy() {
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const privacyResponse = useSelector((state) => state.Setting.privacyResponse);  
-
-
-    
-    // console.log("Aakash===>",privacyResponse?.data?.customer_privacy_policy)
     const data = privacyResponse
-    console.log("PriVcyy===>",(data))
+    
    
     useEffect(() => {
         dispatch(PrivacyRequest());

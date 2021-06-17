@@ -32,7 +32,7 @@ export const LogoutAlert = ({
           <Text
             style={{
               fontSize: Scale(20),
-              fontFamily: Fonts.Bold,
+              fontFamily: Fonts.Regular,
               color: Colors.BUTTON_COLOR,
               width: '80%',
               textAlign: 'center',

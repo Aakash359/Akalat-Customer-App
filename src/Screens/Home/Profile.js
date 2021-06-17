@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import {
   Text,
   View,
@@ -7,25 +7,25 @@ import {
   ScrollView,
   FlatList,
   ImageBackground,
-} from 'react-native';
-import {Icon} from 'native-base';
-import {Colors, Scale, ImagesPath} from '../../CommonConfig';
-import {CustomButton} from '../../Component';
-import {useNavigation} from '@react-navigation/native';
-import {connect} from 'react-redux';
-import {getUserDetails} from '../../redux/actions/AuthActions';
+} from 'react-native'
+import {Icon} from 'native-base'
+import {Colors, Scale, ImagesPath} from '../../CommonConfig'
+import {CustomButton} from '../../Component'
+import {useNavigation} from '@react-navigation/native'
+import {connect} from 'react-redux'
+import {getUserDetails} from '../../redux/actions/AuthActions'
 function Profile(props) {
-  const {navigate} = useNavigation();
-  const navigation = useNavigation();
+  const {navigate} = useNavigation()
+  const navigation = useNavigation()
   const redirectToEditProfile = () => {
-    navigate('EditProfile');
-  };
+    navigate('EditProfile')
+  }
 
   React.useEffect(() => {
-    props.getUserDetails({_id: props?.user?._id});
-  }, []);
+    props.getUserDetails({_id: props?.user?._id})
+  }, [])
 
-  const {user} = props;
+  const {user} = props
   return (
     <View style={styles.container}>
       <StatusBar
@@ -66,20 +66,20 @@ function Profile(props) {
         </View>
       </ImageBackground>
     </View>
-  );
+  )
 }
 
 const mapStateToProps = ({Auth: {user}}) => {
   return {
     user,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = {
   getUserDetails: getUserDetails,
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
     fontSize: Scale(25),
     color: Colors.WHITE,
   },
-});
+})

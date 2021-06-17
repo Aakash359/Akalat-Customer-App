@@ -9,7 +9,6 @@ import {
     TouchableOpacity,
     Image,
     ImageBackground,
-    Alert,
 } from 'react-native'
 import { Icon } from 'native-base'
 import { Colors, Scale, ImagesPath } from '../../CommonConfig'
@@ -19,7 +18,7 @@ import { useSelector, useDispatch, connect } from 'react-redux'
 import { offercardRequest, restroListRequest, addfavouriteRequest } from '../../redux/actions'
 import { API_BASE } from '../../apiServices/ApiService'
 import axios from 'axios'
-
+//dshjhdjh
 function NearMe(props) {
 
     const { navigate } = useNavigation()
@@ -35,6 +34,7 @@ function NearMe(props) {
         restroList: [],
         isLoading: true,
     })
+    
     const [search, setSearch] = React.useState('')
 
     const onSearch = async () => {
@@ -66,20 +66,21 @@ function NearMe(props) {
         onSearch()
     }, [search])
 
-
-   const  onPress = async () =>{
-
-      const data = { 
-            'userid'  : user?._id,
-            'is_favourited_restro': true,
-            'restro_id' : '6082ada9e1c90c56e8020cbf'
-             
-         }
-         dispatch(addfavouriteRequest(data));
-        }
-      
     const redirectToHomeMaker = (item) => {
         navigate('HomeMaker', { restroId: item?._id, restroDetails: item })
+    }
+
+    const onFavorite = (item) => {
+      
+           const data = { 
+            'userid'  : user?._id,
+            'restro_id' : item?._id,
+            'is_favourited_restro':true
+             
+         }
+      
+         dispatch(addfavouriteRequest(data));
+         alert("Added to favourite list succesfully")
     }
     
     const redirectToFilter = () => {
@@ -101,7 +102,9 @@ function NearMe(props) {
         }, 1000)
     }, [])
 
-    const renderItems = ({ item, index }) => (
+    const renderItems = ({ item, is_favourited_restro }) => (
+     
+       
         <View style={styles.cardStyle}>
             <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
                 <ImageBackground
@@ -202,7 +205,9 @@ function NearMe(props) {
                             {' '}
                             (11:00 am - 10:00 pm)
                         </Text>
-                        <TouchableOpacity  onPress = {()=>onPress(item)} >
+                          {
+                            is_favourited_restro!=true? 
+                            <TouchableOpacity  onPress = {()=>onFavorite(item)} >
                             <Icon
                             name="heart"
                             type="FontAwesome"
@@ -211,8 +216,23 @@ function NearMe(props) {
                                 fontSize: Scale(16),
                                 
                             }}
-                        />
+                          />
+                          
+                        </TouchableOpacity>: <TouchableOpacity  onPress = {()=>onFavorite(item)} >
+                            <Icon
+                            name="heart"
+                            type="FontAwesome"
+                            style={{
+                                color: Colors.DARK_RED,
+                                fontSize: Scale(16),
+                                
+                            }}
+                          />
+                          
                         </TouchableOpacity>
+                        }
+                       
+
                        
                     </View>
                     <View
@@ -539,4 +559,3 @@ const styles = StyleSheet.create({
         marginLeft: Scale(8),
     },
 })
-//jsdkdkdsjk

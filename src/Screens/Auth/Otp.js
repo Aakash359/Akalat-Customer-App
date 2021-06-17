@@ -18,10 +18,7 @@ function Otp(props) {
     const [phone, setphone] = useState(props.route.params.phone);
     const [email, setemail] = useState(props.route.params.email);
     const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
-    // const {data = {}} = props
-
-    console.log('Aakash====>',email);
-    // console.log('Aakash====>',ro);
+    
     const  onSubmit = () =>{
 
         if(otp == '') {
@@ -57,7 +54,7 @@ function Otp(props) {
             'country_code' : COUNTRY == "IN" ? '971' : '91'
  
             }
-            console.log("Data",data)
+            
           navigate('Otp', data)
           dispatch(OTPRequest(data));
         }

@@ -171,8 +171,7 @@ export const FaqSaga = function* FaqSaga({data}) {
 
 // ====================== Help and Support POST ======================
 export const HelpSaga = function* HelpSaga({data}) {
-   
-    // 
+ 
     try {
         const response = yield call(Request, {
             url: '/addHelpAndsupport',
@@ -397,13 +396,14 @@ export const MyOrderListSaga = function* MyOrderListSaga({data}) {
       }
 }
 
-// ====================== Terms And Conditions GET ======================
-export const favouriteList = function* favouriteList({params}) {
-  let data = params
+// ====================== Favourite List POST ======================
+
+export const favouriteList = function* favouriteList({data}) {
+  console.log("Data",data)
   yield put(favouriteListLoader(true));
   try {
       const response = yield call(Request, {
-          url: 'http://3.7.147.28:3328/api/v1/restro/listFavouritedRestro',
+          url: 'restro/listFavouritedRestro',
           method: 'POST',
           data,
         })

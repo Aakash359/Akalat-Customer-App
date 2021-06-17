@@ -17,7 +17,7 @@ function FAQs() {
     const [items, setItems] = useState(faqResponse?.data?.faq || []);
 
     
-    console.log("Aakash===>",faqResponse?.data?.faq)
+    
     
    
    

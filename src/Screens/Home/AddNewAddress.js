@@ -25,9 +25,6 @@ function AddNewAddress(props) {
     const [nearby,setNearby] = useState('');
     const addAddressResponse = useSelector((state) => state.Setting);
     const  user = useSelector((state) => state.Auth.user);
-
-    console.log("Aakash====>", user?._id )
-    
     const dispatch = useDispatch();
     const [location, setLocation] = useState(null)
 
@@ -62,8 +59,6 @@ function AddNewAddress(props) {
         };
     }, []);
 
-    
-
     const getOneTimeLocation = () => {
         Geolocation.getCurrentPosition(
             
@@ -72,9 +67,7 @@ function AddNewAddress(props) {
                 Geocoder.from(position.coords.latitude, position.coords.longitude)
 
                     .then(json => {
-                        console.log("=============================================json data", json.results[1].formatted_address, "================================Flat no")
                         var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name 
-                        console.log(addressComponent, 'addressComponent');
                         setAddress(addressComponent)
 
                     })
