@@ -100,7 +100,7 @@ function NearMe(props) {
             dispatch(restroListRequest())
         }, 1000)
     }, [])
-
+///Aakasgjdjdjhjkhj
     const renderItems = ({ item, is_favourited_restro }) => (
      
        
