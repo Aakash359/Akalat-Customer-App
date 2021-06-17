@@ -39,7 +39,7 @@ function Profile(props) {
         <Text style={styles.textStyle}>Email Address</Text>
         <Text style={styles.inputStyle}>{user?.email}</Text>
         <View style={{ justifyContent: 'flex-end', flex: 1 }}>
-          <CustomButton title="Edit Profile" isSecondary={true} onSubmit={redirectToEditProfile} />
+      <CustomButton title="Edit Profile" isSecondary={true} onSubmit={redirectToEditProfile} />
         </View>
       </ImageBackground>
 

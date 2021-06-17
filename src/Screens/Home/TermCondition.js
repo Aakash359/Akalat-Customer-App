@@ -13,14 +13,8 @@ function TermCondition() {
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const termsResponse = useSelector((state) => state.Setting.termsResponse);  
-
-    // console.log("Aakash===>",termsResponse?.data?.customer_terms_and_condition)
     const data = termsResponse
-    console.log("PriVcyy===>",(data))
     
-
-
-   
     useEffect(() => {
         dispatch(TermsRequest());
        },[]);   

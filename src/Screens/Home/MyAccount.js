@@ -42,15 +42,7 @@ function Explore() {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      {/* <View style={styles.headerContainer}>
-        <Image source={ImagesPath.location} style={styles.location} />
-        <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
-        <View style={styles.bottomHeader}>
-          <TouchableOpacity onPress={redirectToNotification}>
-            <Image source={ImagesPath.notification} style={styles.notificationStyle} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
+      
       <View style={styles.filterContainer} />
       <ImageBackground source={ImagesPath.background} style={[styles.loginInputCont, { flex: 1, marginBottom: Scale(-50) }]}>
         <FlatList

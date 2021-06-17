@@ -175,8 +175,8 @@ export const SearchSaga = function* SearchSaga({params}) {
 
 //====================== Add favourite POST ======================
 
-export const AddFavouriteSaga = function* AddFavouriteSaga({params}) {
-    let data = params
+export const AddFavouriteSaga = function* AddFavouriteSaga({data}) {
+ 
     yield put(setFavouriteLoader(true));
     try {
         const response = yield call(Request, {
@@ -186,6 +186,7 @@ export const AddFavouriteSaga = function* AddFavouriteSaga({params}) {
           })
           if (response?.data?.error == true){
             yield put({ type: ADD_FAVOURITE_FAILED, payload: response?.data  });
+            
             yield put(setFavouriteLoader(false));
             global.dropDownAlertRef.alertWithType(
               'error',

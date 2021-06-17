@@ -12,8 +12,8 @@ function Favorites() {
   const navigation = useNavigation();  
   const dispatch = useDispatch();
   const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
-  console.log("Aakash====>",favouriteListResponse)
-  const  favouriteList = favouriteListResponse?.data?.favouriteList || []
+  const  favouriteList = favouriteListResponse?.data?.restroList || []
+  console.log("Aakash====>",favouriteList)
   const  user = useSelector((state) => state.Auth.user);
 
   const onPressChecked = () => {
@@ -86,7 +86,7 @@ function Favorites() {
       </View>
       <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
         <FlatList
-          data={[0,1,2,3]}
+          data={favouriteList}
           renderItem={renderItems}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => {

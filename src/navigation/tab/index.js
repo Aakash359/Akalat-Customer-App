@@ -20,7 +20,7 @@ const Tab =  createBottomTabNavigator();
 function index() {
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="Near Me"
       tabBarOptions={{
         
         inactiveTintColor: Colors.BORDERCOLOR,
