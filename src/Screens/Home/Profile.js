@@ -1,24 +1,29 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, StatusBar, ScrollView, FlatList, ImageBackground } from 'react-native';
-import { Icon } from 'native-base';
-import { Colors, Scale, ImagesPath } from '../../CommonConfig';
-import { CustomButton } from '../../Component';
-import { useNavigation } from '@react-navigation/native';
-import { connect } from 'react-redux';
-import { getUserDetails } from '../../redux/actions/AuthActions';
-
+import * as React from 'react'
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  ScrollView,
+  FlatList,
+  ImageBackground,
+} from 'react-native'
+import {Icon} from 'native-base'
+import {Colors, Scale, ImagesPath} from '../../CommonConfig'
+import {CustomButton} from '../../Component'
+import {useNavigation} from '@react-navigation/native'
+import {connect} from 'react-redux'
+import {getUserDetails} from '../../redux/actions/AuthActions'
 function Profile(props) {
-  const { navigate } = useNavigation();
-  const navigation = useNavigation();
+  const {navigate} = useNavigation()
+  const navigation = useNavigation()
   const redirectToEditProfile = () => {
-    navigate('EditProfile');
-  };
+    navigate('EditProfile')
+  }
 
   React.useEffect(() => {
-    props.navigation.addListener('focus', () => {
-      props.getUserDetails({_id: props?.user?._id})
-    })
-  })
+    props.getUserDetails({_id: props?.user?._id})
+  }, [])
 
   const {user} = props
   return (
@@ -29,51 +34,67 @@ function Profile(props) {
         barStyle="light-content"
       />
       <View style={styles.headerContainer}>
-        <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
+        <Icon
+          onPress={() => navigation.goBack()}
+          name="arrowleft"
+          type="AntDesign"
+          style={styles.logoStyle}
+        />
       </View>
       <Text style={styles.headerText}>My Profile </Text>
-      <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
+      <ImageBackground
+        source={ImagesPath.background}
+        style={styles.loginInputCont}>
         <Text style={styles.textStyle}>Name</Text>
-        <Text style={styles.inputStyle}>{`${user?.first_name} ${user?.last_name}`}</Text>
+        <Text
+          style={
+            styles.inputStyle
+          }>{`${user?.first_name} ${user?.last_name}`}</Text>
         <Text style={styles.textStyle}>Mobile Number</Text>
-        <Text style={styles.inputStyle}>{`+${user?.country_code} ${user?.phone}`}</Text>
+        <Text
+          style={
+            styles.inputStyle
+          }>{`+${user?.country_code} ${user?.phone}`}</Text>
         <Text style={styles.textStyle}>Email Address</Text>
         <Text style={styles.inputStyle}>{user?.email}</Text>
-        <View style={{ justifyContent: 'flex-end', flex: 1 }}>
-      <CustomButton title="Edit Profile" isSecondary={true} onSubmit={redirectToEditProfile} />
+        <View style={{justifyContent: 'flex-end', flex: 1}}>
+          <CustomButton
+            title="Edit Profile"
+            isSecondary={true}
+            onSubmit={redirectToEditProfile}
+          />
         </View>
       </ImageBackground>
-
     </View>
-  );
+  )
 }
 
 const mapStateToProps = ({Auth: {user}}) => {
   return {
-    user
+    user,
   }
 }
 
 const mapDispatchToProps = {
-  getUserDetails: getUserDetails
+  getUserDetails: getUserDetails,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.APPCOLOR
+    backgroundColor: Colors.APPCOLOR,
   },
   textStyle: {
     color: Colors.BORDERCOLOR,
     fontSize: Scale(14),
-    marginTop: Scale(10)
+    marginTop: Scale(10),
   },
   inputStyle: {
     color: Colors.BLACK,
     fontSize: Scale(16),
     marginBottom: Scale(15),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   loginInputCont: {
     flex: 1,
@@ -88,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: Scale(20),
     marginHorizontal: Scale(25),
     marginBottom: Scale(25),
-    color: Colors.WHITE
+    color: Colors.WHITE,
   },
   notificationStyle: {
     width: Scale(25),
@@ -97,8 +118,8 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE,
     alignSelf: 'flex-end',
   },
-  headerContainer: {    
-    paddingTop:Scale(20),
+  headerContainer: {
+    paddingTop: Scale(20),
     height: Scale(80),
     alignItems: 'center',
     flexDirection: 'row',
@@ -110,4 +131,4 @@ const styles = StyleSheet.create({
     fontSize: Scale(25),
     color: Colors.WHITE,
   },
-});
+})

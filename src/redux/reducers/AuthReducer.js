@@ -17,84 +17,97 @@ import {
   LOADER_REQUEST,
   UPDATE_USER_DETAILS,
   SET_SIGNUP_STATUS,
-  SIGNUP_LOGIN
-  } from '../Types/type';
-  
-  const initialState = {
-   user : {},
-   error: "",
-   isLoading: false,
-   verification_status:false,
-   loginStatus: false,
-   SignStatus: false,
-   OTPStatus: false,
-   logoutStatus: false,
-   OTPVerifyStatus: false,
-   signupResponse: {},
-   otpResponse: {},
-   otpVerifyResponse: {},
-   logoutResponse: {},
-   };
-  
-  export default function AuthReducer(state = initialState, action) {
-    switch (action.type) {
-      case LOGIN_REQUEST:
-        return {...state, loginStatus:false, user: action.payload, 
-        };
-      case LOGIN_SUCCESS:
-        return {...state, user: action.payload, loginStatus:true, };
-      case LOGIN_FAILURE:
-        return {...state, loginStatus:false, user: action.payload,         
-        };
-      case SIGNUP_LOGIN:
-          return {...state, loginStatus:true, SignStatus: false, user: {...state.user, ...state.signupResponse?.data}, signupResponse: null         
-          };
-      case SIGNUP_REQUEST:
-        return { ...state, SignStatus: false, signupResponse: action.payload };
+  SIGNUP_LOGIN,
+} from '../Types/type'
 
-      case SIGNUP_SUCCESS:
-        return { ...state, SignStatus: true, signupResponse: action.payload };
+const initialState = {
+  user: {},
+  error: '',
+  isLoading: false,
+  verification_status: false,
+  loginStatus: false,
+  SignStatus: false,
+  OTPStatus: false,
+  logoutStatus: false,
+  OTPVerifyStatus: false,
+  signupResponse: {},
+  otpResponse: {},
+  otpVerifyResponse: {},
+  logoutResponse: {},
+}
 
-      case SET_SIGNUP_STATUS:
-        return { ...state, SignStatus: action.data };
+export default function AuthReducer(state = initialState, action) {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return {...state, loginStatus: false, user: action.payload}
+    case LOGIN_SUCCESS:
+      return {...state, user: action.payload, loginStatus: true}
+    case LOGIN_FAILURE:
+      return {...state, loginStatus: false, user: action.payload}
+    case SIGNUP_LOGIN:
+      return {
+        ...state,
+        loginStatus: true,
+        SignStatus: false,
+        user: {...state.user, ...state.signupResponse?.data},
+        signupResponse: null,
+      }
+    case SIGNUP_REQUEST:
+      return {...state, SignStatus: false, signupResponse: action.payload}
 
-      case SIGNUP_FAILED:
-        return { ...state, SignStatus: false, signupResponse: action.payload };
+    case SIGNUP_SUCCESS:
+      return {...state, SignStatus: true, signupResponse: action.payload}
 
-      case OTP_REQUEST:
-        return { ...state, OTPStatus: false, otpResponse: action.payload };
+    case SET_SIGNUP_STATUS:
+      return {...state, SignStatus: action.data}
 
-      case OTP_SUCCESS:
-        return { ...state, OTPStatus: true, otpResponse: action.payload };
+    case SIGNUP_FAILED:
+      return {...state, SignStatus: false, signupResponse: action.payload}
 
-      case OTP_FAILED:
-        return { ...state, OTPStatus: false, otpResponse: action.payload };
+    case OTP_REQUEST:
+      return {...state, OTPStatus: false, otpResponse: action.payload}
 
-      case OTP_VERIFY_REQUEST:
-          return { ...state, OTPVerifyStatus: false, otpVerifyResponse: action.payload };
-  
-      case OTP_VERIFY_SUCCESS:
-          return { ...state, OTPVerifyStatus: true, otpVerifyResponse: action.payload };
-  
-      case OTP_VERIFY_FAILED:
-          return { ...state, OTPVerifyStatus: false, otpVerifyResponse: action.payload };
+    case OTP_SUCCESS:
+      return {...state, OTPStatus: true, otpResponse: action.payload}
 
-      case LOGOUT_REQUEST:
-            return { ...state, logoutStatus: false, logoutResponse: action.payload };
-    
-      case LOGOUT_SUCCESS:
-            return { ...state, logoutStatus: true, logoutResponse: action.payload };
-    
-      case LOGOUT_FAILED:
-            return { ...state, logoutStatus: false, logoutResponse: action.payload };   
-            
-      case LOADER_REQUEST:
-        return { ...state, isLoading: action.payload };   
-        case UPDATE_USER_DETAILS:
-          return {...state, user: {...state.user, ...action.payload}}
-      default:
-        return state;
-    }
-   
+    case OTP_FAILED:
+      return {...state, OTPStatus: false, otpResponse: action.payload}
+
+    case OTP_VERIFY_REQUEST:
+      return {
+        ...state,
+        OTPVerifyStatus: false,
+        otpVerifyResponse: action.payload,
+      }
+
+    case OTP_VERIFY_SUCCESS:
+      return {
+        ...state,
+        OTPVerifyStatus: true,
+        otpVerifyResponse: action.payload,
+      }
+
+    case OTP_VERIFY_FAILED:
+      return {
+        ...state,
+        OTPVerifyStatus: false,
+        otpVerifyResponse: action.payload,
+      }
+
+    case LOGOUT_REQUEST:
+      return {...state, logoutStatus: false, logoutResponse: action.payload}
+
+    case LOGOUT_SUCCESS:
+      return {...state, logoutStatus: true, logoutResponse: action.payload}
+
+    case LOGOUT_FAILED:
+      return {...state, logoutStatus: false, logoutResponse: action.payload}
+
+    case LOADER_REQUEST:
+      return {...state, isLoading: action.payload}
+    case UPDATE_USER_DETAILS:
+      return {...state, user: {...state.user, ...action.payload}}
+    default:
+      return state
   }
-  
+}
