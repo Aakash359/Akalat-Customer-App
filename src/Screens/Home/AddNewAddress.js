@@ -6,16 +6,30 @@ import { CustomButton, FormInput,LocationInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
+import { AddAddressRequest } from '../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
+import {withTranslation,useTranslation} from 'react-i18next'
+
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
-function AddNewAddress() {
+
+function AddNewAddress(props) {
     const [activeTab, setActiveTab] = useState(0);
     const [value, setValue]=useState(false);
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const [currentAddress,setAddress] = useState('');
-    const redirectToMyAccount = () => {
-        navigate('ManageAddress');
-    };
+    const [house_name_and_no ,setHouseName] = useState('');
+    const [area_name ,setAreaName] = useState('');
+    const [id , setid] =useState(props);
+    const [nearby,setNearby] = useState('');
+    const addAddressResponse = useSelector((state) => state.Setting);
+    const  user = useSelector((state) => state.Auth.user);
+    const dispatch = useDispatch();
+    const [location, setLocation] = useState(null)
+
+    
+
     useEffect(() => {
         const requestLocationPermission = async () => {
             if (Platform.OS === 'ios') {
@@ -31,7 +45,6 @@ function AddNewAddress() {
                         },
                     );
                     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                        //To Check, If Permission is granted
                         getOneTimeLocation();
                     } else {
                     }
@@ -48,38 +61,75 @@ function AddNewAddress() {
 
     const getOneTimeLocation = () => {
         Geolocation.getCurrentPosition(
-            //Will give you the current location
+            
             (position) => {
-
-                //getting the Longitude from the location json
-                const currentLongitude =
-                    JSON.stringify(position.coords.longitude);
-
-                //getting the Latitude from the location json
-                const currentLatitude =
-                    JSON.stringify(position.coords.latitude);
+                setLocation(position.coords)
                 Geocoder.from(position.coords.latitude, position.coords.longitude)
+
                     .then(json => {
-                        console.log("=============================================json data", json.results[1].formatted_address, "================================Flat no")
-                        // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name 
-                        let addressComponent = json.results[1].formatted_address;
-                        console.log(addressComponent, 'addressComponent');
+                        var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name 
                         setAddress(addressComponent)
 
                     })
-            },
+               },
             (error) => {
             },
             {
-                enableHighAccuracy: false,
                 timeout: 30000,
                 maximumAge: 1000
             },
+            
         );
     };
     const checked = () => (
         setValue(!value)
     )
+
+    const onSubmit = async() =>{
+       
+      
+        if(house_name_and_no == '') {
+          alert("Please enter House No")
+         }
+        else if(area_name == '') {
+          alert("Please enter area")
+        }
+        else if(nearby == '') {
+          alert("Please enter nearby")
+        }
+        else {
+           
+            let lat = '';
+            let lng = '';
+
+            await Geocoder.from(
+               [ {house_name_and_no} + ' ', {area_name} + '', {nearby} ]
+            )
+              .then((json) => {
+                var location = json.results[0].geometry.location;
+                lat = parseFloat(location.lat);
+                lng = parseFloat(location.lng);
+                console.log("lat Na log ", lat, lag);
+              })
+              .catch((error) => console.warn(error)); 
+           const data = { 
+            
+            "address_type": activeTab==0 ? 'HOME' : (activeTab==1)? 'WORK' : 'OTHER',  
+            'lng': location?.latitude,
+            "lat": location?.longitude,
+            'house_name_and_no': house_name_and_no,
+            'area_name':area_name,
+            'nearby': nearby,
+            'created_by' : user?._id
+            }
+            console.log("Data--",data)
+          dispatch(AddAddressRequest(data));
+          navigate('ManageAddress');
+         
+          alert("Address added succesfully")
+          
+        }
+      }
    
     return (
         <View style={styles.container}>
@@ -96,7 +146,7 @@ function AddNewAddress() {
             <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                 enabled>
            
-                <ScrollView indicatorStyle={Colors.WHITE} >
+                <ScrollView indicatorStyle='white' >
                 <Icon name="arrowleft" type="AntDesign" style={styles.logoStyle} onPress={() => navigation.goBack()} />
                         <LocationInput
                             placeholder="Current Location"
@@ -109,16 +159,22 @@ function AddNewAddress() {
                             placeholder="House No/Flat No"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={house_name_and_no}
+                            onChangeText={(text) => setHouseName(text)}
                         />
                         <FormInput
                             placeholder="Area"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={area_name}
+                            onChangeText={(text) => setAreaName(text)}
                         />
                         <FormInput
                             placeholder="Nearby"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={nearby}
+                            onChangeText={(text) => setNearby(text)}
                         />
                         <View style={{  flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10) }}>
                             <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
@@ -126,9 +182,10 @@ function AddNewAddress() {
                             <Text  onPress={() => setActiveTab(2)} style={activeTab == 2 ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
                         </View>
                     <View style={{ marginTop: Scale(20) }}>
-                        <CustomButton title="Save" isSecondary={true} onSubmit={redirectToMyAccount} />
+                        <CustomButton title="Save" isSecondary={true} onSubmit={onSubmit} />
                     </View>
                 </ScrollView>
+                {/* <LoadWheel visible={loader} /> */}
                 </KeyboardAvoidingView>
             </ImageBackground>
 
@@ -148,8 +205,8 @@ const styles = StyleSheet.create({
     },
     forgotButton: {
        
-        paddingHorizontal: Scale(25),
-        paddingVertical: Scale(15),
+        paddingHorizontal: Scale(23),
+        paddingVertical: Scale(14),
         borderRadius: Scale(30),
         fontSize: Scale(16),
         borderWidth: 1,
@@ -159,8 +216,8 @@ const styles = StyleSheet.create({
     forgotButton1: {
         
         backgroundColor: Colors.DARK_RED,
-        paddingHorizontal: Scale(24),
-        paddingVertical: Scale(15),
+        paddingHorizontal: Scale(23),
+        paddingVertical: Scale(14),
         borderRadius: Scale(30),
         fontSize: Scale(16),
         color: Colors.WHITE,

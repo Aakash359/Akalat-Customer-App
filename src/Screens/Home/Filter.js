@@ -1,25 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, Text, View, StyleSheet, PermissionsAndroid, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
-import { Icon } from 'native-base';
-import { Colors, Scale, ImagesPath, iOSMapAPIKey, androidMapAPIKey } from '../../CommonConfig';
-import { CustomButton, FormInput } from '../../Component';
-import { useNavigation } from '@react-navigation/native';
-import Slider from '@react-native-community/slider';
+import React, { useState, useEffect } from 'react'
+import {
+    Switch,
+    Text,
+    View,
+    StyleSheet,
+    PermissionsAndroid,
+    StatusBar,
+    ScrollView,
+    KeyboardAvoidingView,
+    ImageBackground,
+} from 'react-native'
+import { Icon } from 'native-base'
+import {
+    Colors,
+    Scale,
+    ImagesPath,
+    iOSMapAPIKey,
+    androidMapAPIKey,
+} from '../../CommonConfig'
+import { CustomButton, FormInput } from '../../Component'
+import { useNavigation } from '@react-navigation/native'
+import Slider from '@react-native-community/slider'
 function Filter() {
     const [value, setValue] = useState(4.1)
     const [value1, setValue1] = useState(8)
-   
-    const { navigate } = useNavigation();
-    const navigation = useNavigation();
-    const redirectToHome = () => {
-        navigate('Home');
-    };
-    const [isEnabled, setIsEnabled] = useState(true);
-    
-    const setCheckedSwitch = () => {
-      setIsEnabled(!isEnabled)
-    };
 
+    const { navigate } = useNavigation()
+    const navigation = useNavigation()
+    const redirectToHome = () => {
+        navigate('Home')
+    }
+    const [isEnabled, setIsEnabled] = useState(true)
+
+    const setCheckedSwitch = () => {
+        setIsEnabled(!isEnabled)
+    }
 
     return (
         <View style={styles.container}>
@@ -29,88 +44,174 @@ function Filter() {
                 barStyle="light-content"
             />
             <View style={styles.headerContainer}>
-                <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
+                <Icon
+                    onPress={() => navigation.goBack()}
+                    name="arrowleft"
+                    type="AntDesign"
+                    style={styles.logoStyle}
+                />
             </View>
             <Text style={styles.headerText}>Filters </Text>
-            <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
-                
-                    <View style={{ marginTop:Scale(20),justifyContent:'center',height:Scale(100),paddingVertical:Scale(20),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
-                        <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
+            <ImageBackground
+                source={ImagesPath.background}
+                style={styles.loginInputCont}
+            >
+                <View
+                    style={{
+                        marginTop: Scale(20),
+                        justifyContent: 'center',
+                        height: Scale(100),
+                        paddingVertical: Scale(20),
+                        borderRadius: 10,
+                        borderWidth: Scale(2),
+                        width: '100%',
+                        borderColor: Colors.LIGHT_GRAY,
+                    }}
+                >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginHorizontal: Scale(15),
+                        }}
+                    >
                         <Text>Distance</Text>
-                        <Text style={{fontSize:Scale(14),color:Colors.DARK_RED}}>{value1 + ' Miles'}</Text>
-                        </View>
-                        <Slider
-                            style={{ marginTop:Scale(20)  }}
-                            minimumValue={0}
-                            maximumValue={10}
-                            value={value1}
-                            onValueChange={(value) => setValue1(value)}                                                           
-                            thumbTintColor={Colors.APPCOLOR}                       
-                            minimumTrackTintColor={Colors.APPCOLOR}
-                            maximumTrackTintColor="#000000"
-                        />
+                        <Text
+                            style={{
+                                fontSize: Scale(14),
+                                color: Colors.DARK_RED,
+                            }}
+                        >
+                            {value1 + ' Miles'}
+                        </Text>
                     </View>
-                    <View style={{ marginTop:Scale(25),justifyContent:'center',height:Scale(100),paddingVertical:Scale(20),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
-                        <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
+                    <Slider
+                        style={{ marginTop: Scale(20) }}
+                        minimumValue={0}
+                        maximumValue={10}
+                        value={value1}
+                        onValueChange={(value) => setValue1(value)}
+                        thumbTintColor={Colors.APPCOLOR}
+                        minimumTrackTintColor={Colors.APPCOLOR}
+                        maximumTrackTintColor="#000000"
+                    />
+                </View>
+                <View
+                    style={{
+                        marginTop: Scale(25),
+                        justifyContent: 'center',
+                        height: Scale(100),
+                        paddingVertical: Scale(20),
+                        borderRadius: 10,
+                        borderWidth: Scale(2),
+                        width: '100%',
+                        borderColor: Colors.LIGHT_GRAY,
+                    }}
+                >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginHorizontal: Scale(15),
+                        }}
+                    >
                         <Text>Rating</Text>
-                        <Text style={{fontSize:Scale(14),color:Colors.DARK_RED}}>{value}</Text>
-                        </View>
-                        <Slider
-                            style={{ marginTop:Scale(20)  }}
-                            minimumValue={0}
-                            maximumValue={10}
-                            value={value}                             
-                            onValueChange={(value) => setValue(value)} 
-                            thumbTintColor={Colors.APPCOLOR}                                                  
-                            minimumTrackTintColor={Colors.APPCOLOR}
-                            maximumTrackTintColor="#000000"
-                        />
+                        <Text
+                            style={{
+                                fontSize: Scale(14),
+                                color: Colors.DARK_RED,
+                            }}
+                        >
+                            {value}
+                        </Text>
                     </View>
-                    <View style={{ marginTop:Scale(25),justifyContent:'center',paddingVertical:Scale(15),borderRadius:10 ,borderWidth:Scale(2),width:'100%',borderColor:Colors.LIGHT_GRAY}}>
-                        <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:Scale(15),}}>
+                    <Slider
+                        style={{ marginTop: Scale(20) }}
+                        minimumValue={0}
+                        maximumValue={10}
+                        value={value}
+                        onValueChange={(value) => setValue(value)}
+                        thumbTintColor={Colors.APPCOLOR}
+                        minimumTrackTintColor={Colors.APPCOLOR}
+                        maximumTrackTintColor="#000000"
+                    />
+                </View>
+                <View
+                    style={{
+                        marginTop: Scale(25),
+                        justifyContent: 'center',
+                        paddingVertical: Scale(15),
+                        borderRadius: 10,
+                        borderWidth: Scale(2),
+                        width: '100%',
+                        borderColor: Colors.LIGHT_GRAY,
+                    }}
+                >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginHorizontal: Scale(15),
+                        }}
+                    >
                         <Text>Veg only</Text>
                         <Switch
-              trackColor={{ false: Colors.GRAY, true: Colors.RED }}
-              style={{transform: [{scaleX: 1.1}, {scaleY: 1.1}]}}
-              thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
-              ios_backgroundColor={Colors.GREEN}
-              onValueChange={setCheckedSwitch}
-              value={isEnabled}
-            />
-                        </View>
-                       
+                            trackColor={{
+                                false: Colors.GRAY,
+                                true: Colors.RED,
+                            }}
+                            style={{
+                                transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }],
+                            }}
+                            thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
+                            ios_backgroundColor={Colors.GREEN}
+                            onValueChange={setCheckedSwitch}
+                            value={isEnabled}
+                        />
                     </View>
-                    <View style={{justifyContent:'flex-end',flex:1}}>
-                    <View style={{marginTop:Scale(50),flexDirection:'row'}}>
-                        <View style={{flex:1,marginRight:Scale(15),}}>
-                        <CustomButton title="Reset All"   />
+                </View>
+                <View
+                    style={{
+                        justifyContent: 'flex-end',
+                        flex: 1,
+                        marginVertical: 30,
+                    }}
+                >
+                    <View
+                        style={{ marginTop: Scale(50), flexDirection: 'row' }}
+                    >
+                        <View style={{ flex: 1, marginRight: Scale(15) }}>
+                            <CustomButton title="Reset All" />
                         </View>
-                        <View style={{flex:1}}>
-                        <CustomButton title="Apply" isSecondary={true} onSubmit={redirectToHome} />
+                        <View style={{ flex: 1 }}>
+                            <CustomButton
+                                title="Apply"
+                                isSecondary={true}
+                                onSubmit={redirectToHome}
+                            />
                         </View>
-                        </View>
-                        </View>
+                    </View>
+                </View>
             </ImageBackground>
-
         </View>
-    );
+    )
 }
-export default Filter;
+export default Filter
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.APPCOLOR
+        backgroundColor: Colors.APPCOLOR,
     },
     textStyle: {
         color: Colors.BORDERCOLOR,
         fontSize: Scale(14),
-        marginTop: Scale(10)
+        marginTop: Scale(10),
     },
     inputStyle: {
         color: Colors.BLACK,
         fontSize: Scale(16),
         marginBottom: Scale(15),
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     loginInputCont: {
         flex: 1,
@@ -123,9 +224,10 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: Scale(20),
+        fontWeight: 'bold',
         marginHorizontal: Scale(25),
         marginBottom: Scale(25),
-        color: Colors.WHITE
+        color: Colors.WHITE,
     },
     notificationStyle: {
         width: Scale(25),
@@ -134,8 +236,8 @@ const styles = StyleSheet.create({
         tintColor: Colors.WHITE,
         alignSelf: 'flex-end',
     },
-    headerContainer: {        
-        paddingTop:Scale(20),
+    headerContainer: {
+        paddingTop: Scale(20),
         height: Scale(80),
         alignItems: 'center',
         flexDirection: 'row',
@@ -148,4 +250,4 @@ const styles = StyleSheet.create({
         fontSize: Scale(25),
         color: Colors.WHITE,
     },
-});
+})

@@ -4,6 +4,7 @@ import { Icon, Left } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { CustomButton, FormInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
+
 function ShareScreen() {
     const { navigate } = useNavigation();
     const navigation = useNavigation();

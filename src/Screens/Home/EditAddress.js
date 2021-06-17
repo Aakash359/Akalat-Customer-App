@@ -6,6 +6,7 @@ import { CustomButton, FormInput,LocationInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
+``
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
 function EditAddress() {
     const [activeTab, setActiveTab] = useState(0);
@@ -99,13 +100,13 @@ function EditAddress() {
             <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                 enabled>
            
-                <ScrollView indicatorStyle={Colors.WHITE} >
+                <ScrollView indicatorStyle='white' >
                 <Icon name="arrowleft" type="AntDesign" style={styles.logoStyle} onPress={() => navigation.goBack()} />
                         <LocationInput
                             placeholder="Current Location"
                             autoCapitalize="none"                            
                             value={currentAddress}
-                       onChangeText={(val) => setAddress(val)}
+                            onChangeText={(val) => setAddress(val)}
                             maxLength={30} />
                             <Text style={{fontSize:Scale(16),textAlign:'center',color:Colors.BORDERCOLOR,marginVertical:Scale(10)}}>or</Text>
                         <FormInput
@@ -151,8 +152,8 @@ const styles = StyleSheet.create({
     },
     forgotButton: {
         // backgroundColor:Colors.DARK_RED,
-        paddingHorizontal: Scale(25),
-        paddingVertical: Scale(15),
+        paddingHorizontal: Scale(23),
+        paddingVertical: Scale(14),
         borderRadius: Scale(30),
         fontSize: Scale(16),
         borderWidth: 1,
@@ -161,8 +162,8 @@ const styles = StyleSheet.create({
     },
     forgotButton1: {
         backgroundColor: Colors.DARK_RED,
-        paddingHorizontal: Scale(24),
-        paddingVertical: Scale(15),
+        paddingHorizontal: Scale(23),
+        paddingVertical: Scale(14),
         borderRadius: Scale(30),
         fontSize: Scale(16),
         color: Colors.WHITE,

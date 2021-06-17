@@ -5,6 +5,7 @@ import HomeScreen from '../../Screens/Home/HomeScreen';
 import HungryNow from '../../Screens/Home/HungryNow';
 import {headerLeftStyle} from '../Helper';
 import RightButton from '../../containers/RightButton';
+
 const Stack = createStackNavigator();
 
 function HungryStack(navigation) {
@@ -22,7 +23,7 @@ function HungryStack(navigation) {
           options={{ headerShown: false}}
          
       />
-          </Stack.Navigator>
+    </Stack.Navigator>
   );
 }
 export default HungryStack;

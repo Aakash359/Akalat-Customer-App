@@ -44,8 +44,8 @@ export const AuthStyle = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: Scale(50),
-    marginTop: Scale(35),
+    height: Scale(46),
+    marginTop: Scale(20),
   },
   languageText: {
     fontSize: Scale(18),

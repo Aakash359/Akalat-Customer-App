@@ -1,15 +1,85 @@
 import {
-    LOGIN_REQUEST,
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE
+    SIGNUP_REQUEST,LOGIN_REQUEST,OTP_REQUEST,OTP_VERIFY_REQUEST,LOGOUT_REQUEST,LOADER_REQUEST, GET_USER_DETAILS, UPDATE_USER_DETAILS, SET_SIGNUP_STATUS, SIGNUP_LOGIN, 
     } from '../Types/type';
 
-// ================= LOGIN_REQUEST =================
-export const loginRequest = (params) => {
+//================= SIGNUP POST REQUEST =================
+    export const SignUpRequest = (params) => {
+    
+        return {
+            type: SIGNUP_REQUEST,
+            params
+        };
+    }    
+// ================= LOGIN POST REQUEST =================
+export const loginRequest = (data) => {
     
     return {
         type: LOGIN_REQUEST,
-        params
+        data
     };
 }
 
+// ================= Send OTP POST REQUEST =================
+export const OTPRequest = (data) => {
+    
+    return {
+        type: OTP_REQUEST,
+        data
+    };
+}
+
+// =================OTP-Verify POST REQUEST =================
+export const OTPVerifyRequest = (data) => {
+    
+    return {
+        type: OTP_VERIFY_REQUEST,
+        data
+    };
+}
+
+
+// ================= REQUEST =================
+export const loaderRequest = (data) => {
+    
+    return {
+        type: LOADER_REQUEST,
+        payload: data,
+       
+    };
+}
+
+// ================= Log-Out REQUEST =================
+export const logOutRequest = (data) => {
+    
+    return {
+        type: LOGOUT_REQUEST,
+        data,
+       
+    };
+}
+
+export const getUserDetails = (data) => {
+    return {
+        type: GET_USER_DETAILS,
+        data
+    }
+}
+
+export const updateUserDetails = (data) => {
+    return {
+        type: UPDATE_USER_DETAILS,
+        data
+    }
+}
+
+export const setSignupStatus = (data) => {
+    return {
+        type: SET_SIGNUP_STATUS,
+        data
+    }
+}
+export const signUpLogin = () => {
+    return {
+        type: SIGNUP_LOGIN,
+    }
+}

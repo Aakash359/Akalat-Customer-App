@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import {View, TouchableOpacity, Text, FlatList, StyleSheet} from 'react-native';
 import {Icon} from 'native-base';
 import { Colors, Scale, Fonts } from '../CommonConfig';
+
 const Accordion = ({item}) => {
   const [expanded, setExpanded] = useState(false);
   const {title, data} = item;
+
+  
   const handleExpanded = () => {
     setExpanded(!expanded);
   };
   return (
     <View>
-      <TouchableOpacity style={[styles.row,{borderBottomColor:expanded ? "#fff" : "#E0E0E0"}]} onPress={handleExpanded}>
+      <TouchableOpacity style={[styles.row,{borderBottomColor:expanded ? "#fff" : "#E0E0E0"}]} 
+      onPress={handleExpanded}>
         <View style={styles.LeftContainer}>
           <Text style={styles.title} numberOfLines={1}>{title}</Text>
         </View>
@@ -24,7 +28,9 @@ const Accordion = ({item}) => {
           />
         </View>
       </TouchableOpacity>
-      {expanded && data.length > 0 && (
+      { 
+      expanded && data.length > 0 && (
+
         <FlatList
           data={data}
           renderItem={({item, index}) => (
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
     paddingBottom: Scale(10),
     fontSize: Scale(16),
     color:"#202020",
-   // paddingHorizontal:Scale(10),
+  
   },
   row: {
     flexDirection: 'row',

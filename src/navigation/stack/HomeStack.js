@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import HamburgerButton from '../../containers/HamburgerButton';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../tab/index';
@@ -25,214 +25,183 @@ import FAQs from '../../Screens/Home/FAQs';
 import Filter from '../../Screens/Home/Filter';
 import Rating from '../../Screens/Home/Rating';
 import SortBy from '../../Screens/Home/SortBy';
-import ManageAddress  from "../../Screens/Home/ManageAddress";
-import AddNewCard  from "../../Screens/Home/AddNewCard";
+import ManageAddress from '../../Screens/Home/ManageAddress';
+import AddNewCard from '../../Screens/Home/AddNewCard';
 import EditCard from '../../Screens/Home/EditCard';
 import SelectLocation from '../../Screens/Home/SelectLocation';
 import AddNewAddress from '../../Screens/Home/AddNewAddress';
 import Coupon from '../../Screens/Home/Coupon';
 import EditAddress from '../../Screens/Home/EditAddress';
 import RightButton from '../../containers/RightButton';
-import {headerLeftStyle,} from '../Helper';
+import {headerLeftStyle} from '../Helper';
 
 import LogoTitle from '../../containers/LogoTitle';
 const Stack = createStackNavigator();
-function HomeStack(navigation) {
 
+function HomeStack(navigation) {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
-        component={Home}       
-          options={{
-            headerTitle: props => <LogoTitle {...props} />,
-            ...headerLeftStyle(),
-            headerLeft: () => <HamburgerButton  navigation={navigation}/>,
-            headerRight: () => <RightButton navigation={navigation} />
-          }}
-         
+        component={Home}
+        options={{
+          headerTitle: (props) => <LogoTitle {...props} />,
+          ...headerLeftStyle(),
+          headerLeft: () => <HamburgerButton navigation={navigation} />,
+          headerRight: () => <RightButton navigation={navigation} />,
+        }}
       />
       <Stack.Screen
         name="HomeMaker"
-        component={HomeMaker}       
-          options={{ headerShown: false}}
-         
+        component={HomeMaker}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Payment"
-        component={Payment}       
-          options={{ headerShown: false}}
-         
+        component={Payment}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PlaceOrder"
-        component={PlaceOrder}       
-          options={{ headerShown: false}}
-         
+        component={PlaceOrder}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="TrackOrder"
-        component={TrackOrder}       
-          options={{ headerShown: false}}
-         
+        component={TrackOrder}
+        options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="Notification"
-        component={Notification}       
-          options={{ headerShown: false}}
-         
+        component={Notification}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Profile"
-        component={Profile}       
-          options={{ headerShown: false}}
-         
+        component={Profile}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="EditProfile"
-        component={EditProfile}       
-          options={{ headerShown: false}}
-         
+        component={EditProfile}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Offers"
-        component={Offers}       
-          options={{ headerShown: false}}
-         
+        component={Offers}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Favorites"
-        component={Favorites}       
-          options={{ headerShown: false}}
-         
+        component={Favorites}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="MyOrders"
-        component={MyOrders}       
-          options={{ headerShown: false}}
-         
+        component={MyOrders}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Share"
-        component={Share}       
-          options={{ headerShown: false}}
-         
+        component={Share}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Settings"
-        component={Settings}       
-          options={{ headerShown: false}}
-         
+        component={Settings}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="ChangePassword"
-        component={ChangePassword}       
-          options={{ headerShown: false}}
-         
+        component={ChangePassword}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="ManageAddress"
-        component={ManageAddress}       
-          options={{ headerShown: false}}
-         
+        component={ManageAddress}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="SavedCard"
-        component={SavedCard}       
-          options={{ headerShown: false}}
-         
+        component={SavedCard}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HelpSupport"
-        component={HelpSupport}       
-          options={{ headerShown: false}}
-         
+        component={HelpSupport}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="AboutUs"
-        component={AboutUs}       
-          options={{ headerShown: false}}
-         
+        component={AboutUs}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PrivacyPolicy"
-        component={PrivacyPolicy}       
-          options={{ headerShown: false}}
-         
+        component={PrivacyPolicy}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="TermCondition"
-        component={TermCondition}       
-          options={{ headerShown: false}}
-         
+        component={TermCondition}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="FAQs"
-        component={FAQs}       
-          options={{ headerShown: false}}
-         
+        component={FAQs}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="AddNewCard"
-        component={AddNewCard}       
-          options={{ headerShown: false}}
-         
+        component={AddNewCard}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Filter"
-        component={Filter}       
-          options={{ headerShown: false}}
-         
+        component={Filter}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Rating"
-        component={Rating}       
-          options={{ headerShown: false}}
-         
+        component={Rating}
+        options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="SortBy"
-        component={SortBy}       
-          options={{ headerShown: false}}
-         
+        component={SortBy}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="SelectLocation"
-        component={SelectLocation}       
-          options={{ headerShown: false}}
-         
+        component={SelectLocation}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddNewAddress"
-        component={AddNewAddress}       
-          options={{ headerShown: false}}
-         
+        component={AddNewAddress}
+        options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="EditCard"
-        component={EditCard}       
-          options={{ headerShown: false}}
-         
+        component={EditCard}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="EditAddress"
-        component={EditAddress}       
-          options={{ headerShown: false}}
-         
+        component={EditAddress}
+        options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Order"
-        component={Order}       
-          options={{ headerShown: false}}
-         
+        component={Order}
+        options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="Coupon"
-        component={Coupon}       
-          options={{ headerShown: false}}
-         
+        component={Coupon}
+        options={{headerShown: false}}
       />
-          </Stack.Navigator>
+    </Stack.Navigator>
   );
 }
 export default HomeStack;

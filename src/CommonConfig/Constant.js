@@ -18,4 +18,4 @@ export const androidMapAPIKey = 'AIzaSyD_M3o2HoMtSV1NyrDgaPMHbaKBUt_TxIA'
 export const MERCHANT_ID = 'sJkreejJIX8mt5TEkmebrtJ51etCbEnEnI5CWpmFmu2PzWuTiJ5JdPPe4iRfWeUkXZWUojzLNBBnx5hQPmA2bphfI8vFnqZkpWeO';
 export const MERCHANT_EMAIL = 'ibrahim@lavenacafe.com';
 
-export const COUNTRY = 'UAE';
+export const COUNTRY = 'IN';

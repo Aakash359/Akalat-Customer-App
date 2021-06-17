@@ -57,9 +57,9 @@ const mapScreen = props => {
                                          style={styles.imageStyle}
                                          />
                             </View>
-                            <Text style={styles.seconderyText}>We are waiting for the restaurant to confirm your order</Text>
+                            <Text style={[styles.seconderyText,{marginTop:8}]}>We are waiting for the restaurant to confirm your order</Text>
                             <View style={styles.bottomContainer}>
-                                <Text style={styles.normalText}>Order Confirmed</Text>
+                                <Text style={[styles.normalText,{marginTop:8}]}>Order Confirmed</Text>
                                 <Image
                                             source={ImagesPath.check2x}
                                          style={styles.imageStyle}
@@ -70,7 +70,7 @@ const mapScreen = props => {
                                
                             </View>
                             <View style={styles.bottomContainer,styles.removeBorder}>
-                                <Text style={styles.normalText}>Order Delivered</Text>                                
+                                <Text style={[styles.normalText,{marginTop:8}]}>Order Delivered</Text>                                
                             </View>
                         </View>
                     </ImageBackground>
@@ -120,15 +120,36 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: Scale(5)
     },
-    removeBorder:{paddingBottom:Scale(15), 
-        borderBottomColor:Colors.GRAY,borderBottomWidth:0,},
-    normalText: { color:Colors.BLACK, fontSize: Scale(17),  },
-    seconderyText: { color: Colors.GRAY, fontSize: Scale(14),
+    removeBorder:{
+        paddingBottom:Scale(15), 
+        borderBottomColor:Colors.GRAY,
+        borderBottomWidth:0,
+    },
+    normalText: { 
+        color:Colors.BLACK, 
+        fontSize: Scale(17),  
+    },
+    seconderyText: { 
+        
+        color: Colors.GRAY, 
+        fontSize: Scale(12),
         paddingBottom:Scale(5), 
-        borderBottomColor:"#E0E0E0",borderBottomWidth:2,  },
-    primaryText: { color: "#AB8F8E", fontSize: Scale(18), fontWeight: 'bold' },
+        borderBottomColor:"#E0E0E0",
+        borderBottomWidth:2,  
+    },
+    primaryText: { 
+        color: "#AB8F8E", 
+        fontSize: Scale(18), 
+        fontWeight: 'bold' 
+    },
     bottomContainer: {
         paddingBottom:Scale(15), 
-        borderBottomColor:"#E0E0E0",borderBottomWidth:2,flexDirection: 'row', justifyContent: 'space-between', marginVertical: Scale(5), alignItems: 'center' },
+        borderBottomColor:"#E0E0E0",
+        borderBottomWidth:2,
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginVertical: Scale(5), 
+        alignItems: 'center' 
+    },
 
 })

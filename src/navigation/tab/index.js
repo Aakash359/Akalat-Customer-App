@@ -7,11 +7,11 @@ import MyAccount from '../../Screens/Home/MyAccount';
 import Card from '../../Screens/Home/Card';
 import ImageIcon from '../../containers/ImageIcon';
 import { Scale, Colors, ImagesPath,LocationAlert } from '../../CommonConfig';
+
 const getOptions = ({tabBarLabel, icon}) => {
   return {
     tabBarIcon: ({color}) => <ImageIcon src={icon} tintColor={color} />,
     tabBarLabel,
-    //headerBackTitle: null,
     headerBackTitle: ' ',
   };
 };
@@ -20,7 +20,7 @@ const Tab =  createBottomTabNavigator();
 function index() {
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="Near Me"
       tabBarOptions={{
         
         inactiveTintColor: Colors.BORDERCOLOR,
@@ -41,7 +41,7 @@ function index() {
           ...getOptions({
             tabBarLabel: 'Near Me',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+          <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
             icon: ImagesPath.location,
             
@@ -78,7 +78,7 @@ function index() {
         component={Card}
         options={{
           ...getOptions({
-            tabBarLabel: 'Card',
+            tabBarLabel: 'Cart',
             icon: ImagesPath.card,
           }),
         }}

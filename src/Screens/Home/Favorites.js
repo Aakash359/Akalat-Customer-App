@@ -1,32 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, StatusBar, Image, FlatList, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
+import { favouriteListRequest, } from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+
 function Favorites() {
   const [checked, setChecked] = useState(false)
   const { navigate } = useNavigation();
   const navigation = useNavigation();  
+  const dispatch = useDispatch();
+  const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
+  const  favouriteList = favouriteListResponse?.data?.restroList || []
+  console.log("Aakash====>",favouriteList)
+  const  user = useSelector((state) => state.Auth.user);
+
   const onPressChecked = () => {
     setChecked(!checked);
   };
+
+  useEffect(() => {
+
+    const data = { 
+         "userid": user?._id
+         }
+   
+         setTimeout(() => {
+
+            dispatch(favouriteListRequest(data));
+
+        }, 5000);
+         
+    
+
+  }, 
+  []); 
   const renderItems = ({ item, index }) => (
     <View style={styles.cardStyle}>
       <View style={styles.imageContainer}>
-        <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+        <Image  source={{ uri: item?.image }} style={styles.backgroundStyle1} />
         <View style={styles.heading}>
           <View style={styles.textContainer}>
-            <Text style={styles.primaryText}>Fire & Grill</Text>
+            <Text style={styles.primaryText}>{item?.restro_name}</Text>
             <Icon onPress={onPressChecked} type="FontAwesome" name={checked ? "heart" : 'heart-o'}
               style={styles.heartIconStyle} />
           </View>
-          <Text style={styles.normatText}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
+          <Text style={styles.normatText}>{item?.street_name}, {item?.area_name},{' '}
+                            {item?.region}, {item?.state}...</Text>
         </View>
       </View>
       <View style={styles.ratingContainer}>
         <View style={styles.buttonStyle1}>
-          <Text style={styles.textStyle1}>4.7</Text>
-          <Text style={styles.normalText}>Rating</Text>
+          <Text style={styles.textStyle1}>{item?.rating_from_user}</Text>
+          <Text style={styles.normalText}>Ratings</Text>
         </View>
         <View style={styles.buttonStyle1}>
           <Text style={styles.textStyle1}>25 Min</Text>
@@ -59,8 +86,16 @@ function Favorites() {
       </View>
       <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
         <FlatList
-          data={[0, 1, 2, 3]}
+          data={favouriteList}
           renderItem={renderItems}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={() => {
+            return (
+                <Text style={{ alignSelf: 'center' }}>
+                    You don't have any favourite list
+                </Text>
+            )
+        }}
         />
       </ImageBackground>
     </View>
@@ -88,7 +123,11 @@ const styles = StyleSheet.create({
     borderRadius: Scale(20),
     marginRight: Scale(10)
   },
-  primaryText: { color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'bold' },
+  primaryText: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(18), 
+    fontWeight: 'bold' 
+  },
   ratingContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -96,15 +135,22 @@ const styles = StyleSheet.create({
   },
   buttonStyle1: {
     height: Scale(50),
-    width: Scale(100),
+    width: '31%',
     borderColor: Colors.LIGHTGREY,
     borderRadius: 5,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  textStyle1: { color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold' },
-  normalText: { color: 'grey', fontSize: Scale(12) },
+  textStyle1: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(16), 
+    fontWeight: 'bold' 
+  },
+  normalText: { 
+    color: 'grey', 
+    fontSize: Scale(12) 
+  },
   cardStyle: {
     width: '90%',
     backgroundColor: '#ffffff',
@@ -116,7 +162,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: Scale(10)
   },
-  normatText: { color: Colors.BLACK, fontSize: Scale(16), marginTop: Scale(7) },
+  normatText: { 
+    color: Colors.BLACK, 
+    fontSize: Scale(16), 
+    marginTop: Scale(7) 
+  },
   buttonStyle: {
     borderRadius: Scale(20),
     height: Scale(40),

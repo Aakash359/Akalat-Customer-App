@@ -1,176 +1,113 @@
 {
-    "login": {
-      "mobile_number": "عنوان الجوال / البريد الإلكتروني",
-      "mobile_number_placeholder": "أدخل رقم الهاتف المحمول",
-      "login": "تسجيل الدخول",
-      "dont_have_account": "لا تملك حسابا حتى الآن؟",
-      "sign_up": "سجل",
-      "password": "كلمه السر"
+  "login": {
+    "mobile_number": "رقم الهاتف المحمول",
+    "mobile_number_placeholder": "رقم الهاتف المحمول",
+    "password_placeholder": "كلمه السر",
+    "login": "تسجيل الدخول",
+    "forgot_password": "نسيت كلمة المرور",
+    "sign_up": "اشتراك",
+    "password": "Password"
+  },
+  "login_alert": {
+
+    "mobile_no" : "الرجاء إدخال رقم الهاتف المحمول",
+    "password" : "الرجاء إدخال كلمة المرور"
+
+  },
+  "forgot_password" :{
+    "forgt_paas" : "هل نسيت كلمة السر",
+    "forgt_text" : "الرجاء إدخال رقم هاتفك المحمول المسجل لإعادة تعيين كلمة المرور",
+    "mobile_number": "رقم الهاتف المحمول",
+    "mobile_number_placeholder": "رقم الهاتف المحمول",
+    "submit": "إرسال"
+  },
+  "forgot_password_alert":{
+    "mobile_no" : "الرجاء إدخال رقم الهاتف المحمول"
+  },
+
+  "otp_verification": {
+    "Otp_verif": "التحقق من OTP",
+    "otp_text": "أدخل رمز التحقق الرملي إلى 9876785670",
+    "get_code":"ألم تحصل على الرمز؟",
+    "submit": "إرسال",
+    "resend": "Resend OTP"
+  },
+  "otp_alert" :{
+    "fill_otp":"إعادة إرسال OTP"
+  },
+
+  "sign_up": {
+    "sign_up": "اشتراك",
+    "first_name": " الاسم الأول",
+    "first_name_placeholder": "الاسم الأول",
+    "last_name" : "الكنية",
+    "last_name_placeholder": "الكنية",
+    "mobile_number": "رقم الهاتف المحمول",
+    "email": "عنوان البريد الإلكتروني",
+    "email_placeholder": "عنوان البريد الإلكتروني",
+    "confirm_password": "تأكيد كلمة المرور",
+    "confirm_password_placeholder": "تأكيد كلمة المرور",
+    "i_accept" : "أنا أتفق",
+    "terms_condition": "البنود و الظروف"
+   },
+  "signup_alert":{
+    "first_name" : "الرجاء إدخال الاسم الأول",
+    "last_name" :  "الرجاء إدخال الاسم الأخير",
+    "number" : "الرجاء إدخال رقم الهاتف المحمول",
+    "email" : "الرجاء إدخال معرف البريد الإلكتروني",
+    "valid_email" : "أدخل معرف بريد إلكتروني صالح",
+    "password" : "الرجاء إدخال كلمة المرور",
+    "conf_password" : "الرجاء إدخال تأكيد كلمة المرور",
+    "terms" : "الرجاء قبول الشروط والأحكام",
+    "register": "تسجيل المستخدم بنجاح",
+    "errorText" : "حدث خطأ ما. أعد المحاولة من فضلك",
+    "error" : "خطأ",
+    "success" : "نجاح",
+    "connectionError" : "لا يوجد اتصال بالإنترنت"
+  },
+  "add_address":{
+    "add_address_text" : "اضف عنوان",
+    "current_lcat": "الموقع الحالي",
+    "House_no_flat": "رقم المنزل / رقم الشقة",
+    "House_no_flat_placeholder": "رقم المنزل / رقم الشقة",
+    "near_by" : "مجاور",
+    "home": "منزل، بيت",
+    "work" : "عمل",
+    "other" : "آخر",
+    "save" : "يحفظ",
+    "or" : "أو"
+   },
+   "logout":{
+     "logout_text": "تسجيل خروج",
+     "logout_line": " هل أنت متأكد أنك تريد تسجيل الخروج? ",
+     "yes" : "نعم",
+     "no" : "لا"
     },
-    "otp": {
-      "enter_otp": "أدخل الرمز المكون من 4 أرقام الذي يتم إرساله عبر الرسائل القصيرة SMS على",
-      "submit": "إرسال",
-      "resend": "OTPإعادة إرسال "
-    },
-    "sign_up": {
-      "sign_up": "سجل",
-      "name": "اسم",
-      "email": "عنوان البريد الالكترونى",
-      "phone": "هاتف",
-      "contact": "رقم الطوارئ",
-      "blood_group": "فصيلة الدم",
-      "select_country": "حدد الدولة",
-      "select_state": "اختر ولايه",
-      "select_city": "اختر مدينة",
-      "select_region": "اختر المنطقة",
-      "address": "العنوان الأول",
-      "zipcode": "الرمز البريدي / الرمز البريدي",
-      "next": "التالى"
-    },
-    "account_details": {
-      "sign_up": "سجل",
-      "account_details": "تفاصيل الحساب",
-      "account_holder_name": "اسم صاحب الحساب",
-      "bank_name": "اسم البنك",
-      "account_number": "رقم حساب",
-      "code": "كود IFSC",
-      "next": "التالى"
-    },
-    "upload_documents": {
-      "sign_up": "سجل",
-      "upload_doc": "تحميل المستندات",
-      "licence_no": "رقم الترخيص",
-      "expire_date": "تاريخ انتهاء الصلاحية",
-      "upload_licence": "تحميل صورة الترخيص",
-      "upload": "رفع",
-      "iqama_id": "رقم بطاقة الإقامة",
-      "iqama_id_img": "صورة هوية الإقامة",
-      "pan_no": "عموم رقم",
-      "upload_pan": "تحميل صورة PAN",
-      "vehicle_no": "عدد المركبات",
-      "upload_rc": "تحميل صورة RC",
-      "upload_vehicle_pci": "تحميل صورة شهادة تلوث المركبات",
-      "submit": "إرسال"
-    },
-    "drawer": {
-      "duty_status": "حالة الواجب",
-      "home": "الصفحة الرئيسية",
-      "earning": "كسب",
-      "floating_cash": "النقد العائم",
-      "live_task": "مهمة مباشرة",
-      "new_task": "مهمة جديدة",
-      "past_delivery": "التسليم الماضي",
-      "login_history": "سجل الدخول",
-      "help": "مساعدة",
-      "logout": "تسجيل خروج"
-    },
-    "home": {
-      "home": "الصفحة الرئيسية",
-      "welcome": "مرحبًا بك في تطبيق شريك التسليم",
-      "last_week": "الاسبوع الماضي",
-      "so_far_this_week": "حتى الآن هذا الأسبوع",
-      "complete_more_task": "أكملت المزيد من المهام وكسب المزيد!",
-      "start_duty": "ابدأ المهمة",
-      "lavena_food": "توصيل طعام لافينا",
-      "on_duty": "في الخدمة",
-      "searching_for_orders": "البحث عن الطلبات",
-      "get_set_go": "احصل ، تعيين ، اذهب",
-      "modal_msg1": "ستبدأ في تلقي الطلبات قريبًا ،",
-      "modal_msg2": "لذا حافظ على شحن هاتفك. وقت ل",
-      "modal_msg3": "تقديم بابتسامة!",
-      "ok_gotit": "حسنًا ، فهمت"
-    },
-    "earning": {
-      "earning": "كسب",
-      "total_balance": "إجمالي الرصيد",
-      "earning_history": "كسب التاريخ",
-      "cash_on_delivery": "الدفع عند الاستلام"
-    },
-    "floating_cash": {
-      "floating_cash": "النقد العائم",
-      "transfer": "نقل",
-      "available_balance": "الرصيد المتوفر",
-      "transactions": "المعاملات"
-    },
-    "live_task": {
-      "live_task": "مهمة مباشرة",
-      "welcome_to_delivery": "مرحبا بكم في تطبيق شريك التسليم",
-      "searching_for_orders": "البحث عن أوامر",
-      "today_so_far": "اليوم حتى الآن",
-      "orders": "الطلب #٪ s",
-      "deliver": "ايصال",
-      "order": "طلب",
-      "drop_location": "أفلت الموقع",
-      "more": "أكثر"
-    },
-    "new_task": {
-      "new_task": "مهمة جديدة",
-      "welcome_to_delivery": "مرحبا بكم في تطبيق شريك التسليم",
-      "searching_for_orders": "البحث عن أوامر",
-      "today_so_far": "اليوم حتى الآن",
-      "no_task": "لا توجد مهام جديدة حتى الآن!"
-    },
-    "past_delivery": {
-      "past_delivery": "التسليم الماضي",
-      "order": "طلب",
-      "deliver": "ايصال",
-      "drop_location": "أفلت الموقع",
-      "cod": "الدفع عند الاستلام",
-      "complete": "اكتمال",
-      "cancel": "إلغاء"
-    },
-    "login_history": {
-      "login_history": "سجل الدخول"
-    },
-    "help": {
-      "help": "مساعدة",
-      "title_issue": "عنوان مشكلتك",
-      "type_issue_title": "اكتب عنوان مشكلتك",
-      "reason_of_your_issue": "سبب مشكلتك",
-      "type_reason": "اكتب سببك",
-      "write_issue": "اكتب مشكلتك أدناه",
-      "type_issue": "اكتب مشكلتك",
-      "submit": "إرسال"
-    },
-    "notification": {
-      "notification": "تنبيه",
-      "notifications": "إشعارات"
-    },
-    "pick_up": {
-      "pick_up": "امسك",
-      "phone": "هاتف",
-      "landmark": "معلم معروف",
-      "btn_text": "تم الوصول إلى موقع الالتقاط"
-    },
-    "pick_up_complete": {
-      "pick_up": "امسك",
-      "pickup_items": "عناصر الالتقاط",
-      "confirm_items": "تأكيد العناصر",
-      "cod": "الدفع عند الاستلام",
-      "payment_mode": "طريقة الدفع",
-      "items_collected": "العناصر التي تم جمعها من قبل صبي التسليم",
-      "pickup_complete": "اكتمال الاستلام"
-    },
-    "deliver": {
-      "deliver": "ايصال",
-      "delivery_location": "موقع التسليم",
-      "landmark": "معلم معروف",
-      "phone": "هاتف",
-      "btn_text": "وصلت إلى مكان التسليم",
-      "collect_cash": "جمع النقدية من العملاء",
-      "collect_now": "اجمع الآن",
-      "collected": "النقدية التي تم جمعها من قبل الصبي التسليم",
-      "delivery_completed": "اكتمل التسليم"
-    },
-    "map": {
-      "OrderAcccept": "قبول الطلب",
-      "Pickup": "امسك",
-      "Drop": "قطرة",
-      "BillDetails": "تفاصيل الفاتورة",
-      "Offerdiscount": "خصم العرض",
-      "Cashondelivery": "الدفع عند الاستلام",
-      "VatInclude": "تشمل ضريبة القيمة المضافة",
-      "Total": "مجموع"
-    }
-  }
-  
+   "manage_address":{
+    "manage_address": "إدارة العنوان",
+    "add_new_address" : "أضف عنوان جديد"
+   },
+   "help_support":{
+     "help_text": "مساعدة و دعم",
+     "subject": "موضوع",
+     "subject_password": "موضوع",
+     "description": "وصف",
+     "description_placeholder": "من فضلك اخبرنا بالتفصيل ...",
+     "submit": "إرسال"
+
+   },
+
+   "about_us":{
+    "aboutus_text": "معلومات عنا"
+   },
+   "privacy_policy":{
+    "privacy_policy": "سياسة الخصوصية"
+   },
+   "terms_condition" : {
+     "terms_cond" : "الأحكام والشروط"
+   },
+   "faq":{
+     "faq": "أسئلة وأجوبة"
+   }
+
+}
