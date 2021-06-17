@@ -103,7 +103,7 @@ function Login(props) {
                         <Text onPress={redirectToForgotPassword} style={styles.forgotButton}>Forgot Password?</Text>
                         <View style={{ marginVertical: '60%' }}>
 
-                        <CustomButton title="Login" onSubmit={onSubmit}  />
+                        <CustomButton isSecondary={true}  title="Login" onSubmit={onSubmit}  />
 
                         </View>
                     </View>
@@ -116,14 +116,7 @@ function Login(props) {
     );
 }
 
-// Login.propTypes = {
-//     loginSuccess: func.isRequired,
-//     navigation: shape({
-//         dispatch: func.isRequired,
-//         goBack: func.isRequired,
-//     }).isRequired,
-//     t: func.isRequired,
-//   }
+
 
 export default Login;
 
