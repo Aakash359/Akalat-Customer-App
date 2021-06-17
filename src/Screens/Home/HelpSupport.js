@@ -29,10 +29,9 @@ function HelpSupport(props) {
             const data = { 
                 'subject_for_support': sub,
                 'description_for_support':des,
-                // 'userid': "6087afd2e1c90c56e8020d31"
-                    }
-                    console.log("MyData====>",data)
-                    navigate('MyAccount')
+                }
+                   
+              navigate('MyAccount')
               dispatch(HelpRequest(data));
               alert("Submitted Sucessfully")
               

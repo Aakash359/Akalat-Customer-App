@@ -35,6 +35,9 @@ import {
     FAVOURITE_LIST_REQUEST,
     FAVOURITE_LIST_SUCCESS,
     FAVOURITE_LIST_FAILED,
+    CHANGE_PASSWORD_REQUEST,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAILED,
     SET_FAVOURITE_LIST_LOADER
     
   
@@ -67,6 +70,8 @@ import {
      delAddFailRes: null,
      favouriteListResponse:{},
      favouriteListStatus:false,
+     changePasswordResponse:{},
+     changePasswordStatus:false,
      
      };
     
@@ -178,7 +183,17 @@ import {
           return {...state, favouriteListStatus:false, favouriteListResponse: action.payload,         
         };
         case SET_FAVOURITE_LIST_LOADER:
-          return {...state, isLoading: action.payload}
+          return {...state, isLoading: action.payload
+        };
+        case CHANGE_PASSWORD_REQUEST:
+          return {...state,  changePasswordStatus:false, changePasswordResponse: action.payload, 
+        };
+        case CHANGE_PASSWORD_SUCCESS:
+          return {...state,  changePasswordStatus:true,  changePasswordResponse: action.payload,
+        };
+        case CHANGE_PASSWORD_FAILED:
+          return {...state,  changePasswordStatus:false, changePasswordResponse: action.payload,         
+        };
            
   
         default:

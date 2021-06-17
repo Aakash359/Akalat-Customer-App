@@ -12,6 +12,7 @@ import {
     DELETE_ADDRESS_FAILED,
     DELETE_ADDRESS_SUCCESS,
     FAVOURITE_LIST_REQUEST,
+    CHANGE_PASSWORD_REQUEST,
     SET_FAVOURITE_LIST_LOADER
     } from '../Types/type';
 
@@ -129,6 +130,13 @@ export const deleteAddressFailed = (data) => {
     };
 }
 
+// =================Delete Address =================
+export const changePasswordRequest = (data) => {
+    return {
+        type: CHANGE_PASSWORD_REQUEST ,
+        data
+    };
+}
 // ================= Favourite-List Request =================
 
 export const favouriteListRequest = (data) => {return {type: FAVOURITE_LIST_REQUEST,data,}}
