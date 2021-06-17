@@ -19,10 +19,11 @@ import {
   offercardRequest,
   restroListRequest,
   addfavouriteRequest,
+  couponRequest,
 } from '../../redux/actions'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
-//dshjhdjh
+
 function NearMe(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
@@ -31,6 +32,8 @@ function NearMe(props) {
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
+  const couponResponse = useSelector((state) => state.Home.couponResponse)
+
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
@@ -46,6 +49,7 @@ function NearMe(props) {
     }
     try {
       const res = await axios.post(url, payload)
+      console.log('Aakash==>', res)
 
       setdata({
         ...data,
@@ -54,6 +58,7 @@ function NearMe(props) {
       })
     } catch (error) {}
   }
+
   React.useEffect(() => {
     onSearch()
   }, [])
@@ -61,6 +66,12 @@ function NearMe(props) {
   React.useEffect(() => {
     onSearch()
   }, [search])
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(couponRequest())
+    }, 5000)
+  }, [])
 
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
@@ -100,7 +111,7 @@ function NearMe(props) {
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
-          source={{uri: item?.image}}
+          source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
             <View
@@ -292,12 +303,12 @@ function NearMe(props) {
             }}>
             <Text
               style={{
-                fontSize: Scale(12),
+                fontSize: Scale(15),
                 color: 'grey',
                 fontWeight: 'bold',
                 paddingTop: Scale(5),
               }}>
-              COUPON
+              {item?.title}
             </Text>
             <Text
               style={{
@@ -306,7 +317,7 @@ function NearMe(props) {
                 marginTop: Scale(3),
                 fontWeight: 'bold',
               }}>
-              40% OFF{' '}
+              {item?.coupon_discount_in_percentage} OFF{' '}
               <Text
                 style={{
                   fontSize: Scale(12),
@@ -356,7 +367,8 @@ function NearMe(props) {
             marginHorizontal: Scale(10),
             paddingHorizontal: Scale(10),
           }}
-          data={[0, 1, 2, 3, 4]}
+          data={couponResponse?.data}
+          keyExtractor={(item, i) => `${i}`}
           renderItem={renderItem1}
         />
         <FlatList

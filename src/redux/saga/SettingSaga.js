@@ -33,6 +33,9 @@ import {
     FAVOURITE_LIST_REQUEST,
     FAVOURITE_LIST_SUCCESS,
     FAVOURITE_LIST_FAILED,
+    CHANGE_PASSWORD_REQUEST,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAILED,
 
     } from '../Types/type';
 import { put, call, takeEvery } from 'redux-saga/effects';
@@ -431,6 +434,35 @@ export const favouriteList = function* favouriteList({data}) {
   }
 }
 
+// ====================== Change Password POST ======================
+
+export const changePassword = function* changePassword({data}) {
+  console.log("Data",data)
+  try {
+      const response = yield call(Request, {
+          url: 'changePassword',
+          method: 'POST',
+          data,
+        })
+        
+        if (response?.data?.error == true){
+          yield put({ type: CHANGE_PASSWORD_FAILED, payload: response?.data  });
+          global.dropDownAlertRef.alertWithType(
+            'error',
+            'Error',
+             response?.data?.message,
+          );
+        }
+     else{ 
+         yield put({ type: CHANGE_PASSWORD_SUCCESS, payload: response });
+       }
+      
+  }
+  catch (e) {
+      yield put({ type: CHANGE_PASSWORD_FAILED, payload: e });
+  }
+}
+
 export function* settingSaga() {
     yield takeEvery(ABOUTUS_REQUEST, AboutUsSaga);
     yield takeEvery(PRIVACY_REQUEST, PrivacySaga);
@@ -444,6 +476,7 @@ export function* settingSaga() {
     yield takeEvery(MYORDER_LIST_REQUEST, MyOrderListSaga);
     yield takeEvery(DELETE_ADDRESS_REQUEST, deleteAddress);
     yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList);
+    yield takeEvery(CHANGE_PASSWORD_REQUEST, changePassword);
 
 }
 export default settingSaga;
