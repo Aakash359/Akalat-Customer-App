@@ -41,6 +41,9 @@ function NearMe(props) {
 
   const [search, setSearch] = React.useState('')
 
+ 
+
+ 
   const onSearch = async () => {
     setdata({...data, isLoading: true})
     const url = `${API_BASE}/restro/search`
@@ -49,7 +52,7 @@ function NearMe(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      console.log('Aakash==>', res)
+      
 
       setdata({
         ...data,
@@ -87,9 +90,12 @@ function NearMe(props) {
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list succesfully')
   }
-
+  const onBack = data => {
+    alert("Adta",data)
+  };
   const redirectToFilter = () => {
-    navigate('Filter')
+    // navigate('Filter')
+    navigate("Filter", { onBack: (data) => onBack(data)});
   }
   const redirectToSortBy = () => {
     navigate('SortBy')
@@ -258,7 +264,7 @@ function NearMe(props) {
                 paddingVertical: Scale(5),
                 backgroundColor: 'green',
               }}>
-              Price
+               {item?.price}
             </Text>
             <Text
               style={{
@@ -270,7 +276,7 @@ function NearMe(props) {
                 marginLeft: Scale(7),
                 paddingVertical: Scale(5),
               }}>
-              Spicy Mozzorella{'\n'}Italian Pizza
+              {item?.baneer_title}
             </Text>
           </View>
         </View>
@@ -285,7 +291,7 @@ function NearMe(props) {
         marginVertical: Scale(15),
         alignSelf: 'center',
       }}>
-      <TouchableOpacity onPress={() => navigate('Coupon')}>
+      <TouchableOpacity onPress={() => navigate('Coupon', {couponId: item?._id, couponDetails: item}) }>
         <ImageBackground
           source={ImagesPath.coupon}
           style={{
@@ -317,7 +323,7 @@ function NearMe(props) {
                 marginTop: Scale(3),
                 fontWeight: 'bold',
               }}>
-              {item?.coupon_discount_in_percentage} OFF{' '}
+              {item?.coupon_discount_in_percentage} % OFF{' '}
               <Text
                 style={{
                   fontSize: Scale(12),

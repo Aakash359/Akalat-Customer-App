@@ -19,6 +19,7 @@ import {
   offercardRequest,
   restroListRequest,
   addfavouriteRequest,
+  couponRequest
 } from '../../redux/actions'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
@@ -27,9 +28,7 @@ function HomeScreen(props) {
   const user = useSelector((state) => state.Auth.user)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  // const redirectToHomeMaker = () => {
-  //   navigate('HomeMaker')
-  // }
+  const couponResponse = useSelector((state) => state.Home.couponResponse)
   const redirectToFilter = () => {
     navigate('Filter')
   }
@@ -109,7 +108,7 @@ function HomeScreen(props) {
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
-          source={{uri: item?.image}}
+          source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
             <View
@@ -252,7 +251,7 @@ function HomeScreen(props) {
                 paddingVertical: Scale(5),
                 backgroundColor: 'green',
               }}>
-              Price
+              {item?.price}
             </Text>
             <Text
               style={{
@@ -264,7 +263,7 @@ function HomeScreen(props) {
                 marginLeft: Scale(7),
                 paddingVertical: Scale(5),
               }}>
-              Spicy Mozzorella{'\n'}Italian Pizza
+              {item?.baneer_title}
             </Text>
           </View>
         </View>
@@ -278,14 +277,15 @@ function HomeScreen(props) {
         height: Scale(55),
         marginVertical: Scale(15),
         alignSelf: 'center',
+        marginLeft:Scale(9)
       }}>
-      <TouchableOpacity onPress={() => navigate('Coupon')}>
+      <TouchableOpacity onPress={() => navigate('Coupon', {couponId: item?._id, couponDetails: item})}>
         <ImageBackground
           source={ImagesPath.coupon}
           style={{
             width: '95%',
             height: Scale(55),
-            resizeMode: 'stretch',
+            resizeMode: 'cover',
             borderTopLeftRadius: Scale(30),
             borderTopRightRadius: Scale(30),
           }}>
@@ -297,19 +297,21 @@ function HomeScreen(props) {
             }}>
             <Text
               style={{
-                fontSize: Scale(12),
+                fontSize: Scale(15),
                 color: 'grey',
+                fontWeight: 'bold',
                 paddingTop: Scale(5),
               }}>
-              COUPON
+              {item?.title}
             </Text>
             <Text
               style={{
                 fontSize: Scale(14),
                 color: Colors.WHITE,
                 marginTop: Scale(3),
+                fontWeight: 'bold',
               }}>
-              40% OFF{' '}
+             {item?.coupon_discount_in_percentage} % OFF{' '}
               <Text
                 style={{
                   fontSize: Scale(12),
@@ -355,7 +357,7 @@ function HomeScreen(props) {
           showsHorizontalScrollIndicator={false}
           horizontal
           style={{marginHorizontal: Scale(12)}}
-          data={[0, 1, 2, 3, 4]}
+          data={couponResponse?.data}
           renderItem={renderItem1}
         />
         <FlatList
