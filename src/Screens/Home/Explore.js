@@ -1,82 +1,192 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
+import {useSelector, useDispatch,} from 'react-redux'
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { searchRequest,} from '../../redux/actions'
-import { useSelector, useDispatch } from 'react-redux';
+import {API_BASE} from '../../apiServices/ApiService'
+import {addfavouriteRequest} from '../../redux/actions'
+import axios from 'axios'
 
 function Explore() 
  {
   const [check, setChecked] = useState(false);
-  const  searchResponse = useSelector((state) => state.Home.searchResponse);
-  const [items, setItems] = React.useState(searchResponse?.data?.restro || []);
+  const [search, setSearch] = React.useState('')
+  const user = useSelector((state) => state.Auth.user)
   const { navigate } = useNavigation();
   const navigation = useNavigation();
-  const dispatch = useDispatch();
- 
-
-  const redirectToHomeMaker = () => {
-    navigate();
-};
-  const [searchtext, setSearchText] = useState('');
-
+  const dispatch = useDispatch()
+  const [data, setdata] = React.useState({
+    restroList: [],
+    isLoading: true,
+  })
   const redirectTocheck = () => {
     setChecked(!check);
   };
-  
-  const  onSerach = text =>{
-  
-    setSearchText(text);
+  const redirectToHomeMaker = (item) => {
+    navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
+  }
+  const onFavorite = (item) => {
+    const data = {
+      userid: user?._id,
+      restro_id: item?._id,
+      is_favourited_restro: true,
+    }
 
-    const data = { 
-      'searchKey': text,
-      
-       }
-
-    dispatch(searchRequest(data));
-
-   }
-
-    useEffect(() => {
-
-      const data = { 
-        'searchKey': searchtext,
-        
-         }
-
-      dispatch(searchRequest(data));
-
-    }, [searchtext]); 
+    dispatch(addfavouriteRequest(data))
+    alert('Added to favourite list succesfully')
+  }
  
 
-  const renderItems = ({ item,}) => (
+  
+
+  const onSearch = async () => {
+    setdata({...data, isLoading: true})
+    const url = `${API_BASE}/restro/search`
+    const payload = {
+      searchKey: search,
+    }
+    try {
+      const res = await axios.post(url, payload)
+      console.log('Aakash==>', res)
+
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restro,
+        isLoading: false,
+      })
+    } catch (error) {}
+  }
+
+  React.useEffect(() => {
+    onSearch()
+  }, [])
+
+  React.useEffect(() => {
+    onSearch()
+  }, [search])
+ 
+
+  const renderItems = ({item, is_favourited_restro}) => (
     <View style={styles.cardStyle}>
-      <ImageBackground source={{uri: item.image}} style={styles.backgroundStyle}>
-        <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-          <View style={{ flexDirection: 'row', paddingBottom: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10) }}>
-            <Text style={{ fontSize: Scale(12), color: Colors.WHITE, marginLeft: Scale(7), paddingHorizontal: Scale(7), paddingVertical: Scale(5), backgroundColor: 'green', }}>4.0</Text>
-            <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-            <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-            <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-            <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-            <Icon name="star" type="FontAwesome" style={[styles.iconStyle, { color: Colors.WHITE }]} />
-            <View style={{ justifyContent: 'flex-end', flex: 1, }}>
-              <Text style={{ color: '#fff', textAlign: 'right',fontSize:Scale(16) }}>1.5 km</Text>
+      <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
+        <ImageBackground
+          source={{uri: item?.building_front_img}}
+          style={styles.backgroundStyle}>
+          <View style={{justifyContent: 'flex-end', flex: 1}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingBottom: Scale(10),
+                alignItems: 'center',
+                paddingHorizontal: Scale(10),
+              }}>
+              <Text
+                style={{
+                  fontSize: Scale(12),
+                  color: Colors.WHITE,
+                  marginLeft: Scale(7),
+                  paddingHorizontal: Scale(7),
+                  paddingVertical: Scale(5),
+                  backgroundColor: 'green',
+                }}>
+                {item?.rating_from_user}
+              </Text>
+
+              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+              <Icon
+                name="star"
+                type="FontAwesome"
+                style={[styles.iconStyle, {color: Colors.WHITE}]}
+              />
+
+              <View style={{justifyContent: 'flex-end', flex: 1}}>
+                <Text
+                  style={{
+                    color: '#fff',
+                    textAlign: 'right',
+                    fontSize: Scale(16),
+                  }}>
+                  1.5 km
+                </Text>
+              </View>
             </View>
           </View>
+        </ImageBackground>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingTop: Scale(15),
+              alignItems: 'center',
+              paddingHorizontal: Scale(10),
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              numberOfLines={1}
+              style={{fontSize: Scale(15), fontWeight: 'bold', width: '40%'}}>
+              {item?.restro_name}
+            </Text>
+            <Text
+              style={{
+                color: '#AB8F8E',
+                fontSize: Scale(12),
+                fontWeight: 'normal',
+                marginRight: Scale(25),
+              }}>
+              {' '}
+              (11:00 am - 10:00 pm)
+            </Text>
+            {is_favourited_restro != true ? (
+              <TouchableOpacity onPress={() => onFavorite(item)}>
+                <Icon
+                  name="heart"
+                  type="FontAwesome"
+                  style={{
+                    color: '#AB8F8E',
+                    fontSize: Scale(16),
+                  }}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => onFavorite(item)}>
+                <Icon
+                  name="heart"
+                  type="FontAwesome"
+                  style={{
+                    color: Colors.DARK_RED,
+                    fontSize: Scale(16),
+                  }}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              flex: 1,
+              marginTop: 5,
+            }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: Scale(12.5),
+                fontWeight: 'normal',
+                paddingBottom: 20,
+                paddingLeft: 12,
+              }}>
+              {item?.street_name}, {item?.area_name}, {item?.region},{' '}
+              {item?.state}...
+            </Text>
+          </View>
         </View>
-      </ImageBackground>
-
-      <View style={{ flexDirection: 'row',paddingTop: Scale(15), paddingVertical: Scale(10), alignItems: 'center', paddingHorizontal: Scale(10), justifyContent: 'space-between' }}>
-        <Text  style={{ fontSize: Scale(16), fontWeight: 'bold', }}>{item.restro_name}<Text style={{ color: '#AB8F8E', fontSize: Scale(12), fontWeight: 'normal' }}>{' '}(11:00 am - 10:00 pm)</Text>
-          <Text numberOfLines={1} style={{ fontSize: Scale(12), fontWeight: 'normal' }}>{'\n'}{item.area_name}, {item.street_name}, {item.region}, {item.state}</Text> </Text>
-        <Icon name="heart" type="FontAwesome" style={{ color: "#AB8F8E", fontSize: Scale(16), marginHorizontal: Scale(2),marginBottom:Scale(15)}} />
-
-      </View>
+      </TouchableOpacity>
     </View>
-  );
+  )
 
   return (
     <View style={styles.container}>
@@ -89,8 +199,8 @@ function Explore()
         <Searchbar
           style={styles.searchView}
           onIconPress={clearImmediate}
-          onChangeText={(text) => onSerach(text )}
-          value={searchtext}
+          onChangeText={(text) => setSearch(text)}
+          value={search}
           inputStyle={{ fontSize: Scale(14), marginLeft: Scale(-15) }}
           placeholder="Search here..."
         />
@@ -118,12 +228,13 @@ function Explore()
             </TouchableOpacity>
           </View>
           <FlatList
-            style={{paddingBottom:Scale(100)}}
-            data={items}
-            extraData={items}
-            renderItem={renderItems}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          data={data?.restroList}
+          renderItem={renderItems}
+          keyExtractor={(item, i) => `${i}`}
+          ListEmptyComponent={() => {
+            return <Text>No data found</Text>
+          }}
+        />
            </ScrollView>
        
         </ImageBackground>
@@ -131,7 +242,8 @@ function Explore()
     </View>
   );
 }
-export default Explore;
+
+export default Explore
 const styles = StyleSheet.create({
   container: {
     flex: 1,    

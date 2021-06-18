@@ -14,7 +14,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1CF5FBE0793F67964483B333 /* libPods-ResturantCustomer-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71120EBCC98F7FF34DA63182 /* libPods-ResturantCustomer-tvOS.a */; };
 		22046C5807C24927A1762A10 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E7158519FBE4A72AB89FD9F /* MaterialCommunityIcons.ttf */; };
-		281EB2D65FBD11816ED74DB7 /* libPods-ResturantCustomer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D107CB6F69FE980509F569 /* libPods-ResturantCustomer.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -31,7 +30,6 @@
 		A67CE6F53BF8403681C0D2DC /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F8B10A9240F4D0BB8152B7A /* AntDesign.ttf */; };
 		AFCD02B5D0494B9E87B67760 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D8E2321A3B746D8A8FA6CF2 /* Octicons.ttf */; };
 		B1866CDC06E84A159E19288B /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C973206159A64A61856924B0 /* MaterialIcons.ttf */; };
-		B84F6E504D79037A25612CF9 /* libPods-ResturantCustomer-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 362F7EE57B44BF9A6CDEAB50 /* libPods-ResturantCustomer-tvOS.a */; };
 		BA760D6C033640ECAED8E8EA /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870C9F37D7B942FFB8679606 /* FontAwesome5_Regular.ttf */; };
 		BB63CA536DAC41EC92364088 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37F4AE108C45492693D29AF0 /* Zocial.ttf */; };
 		BE416AF294DE429388E4CCCC /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13F77F73A22F4DC98DDC26A8 /* Roboto_medium.ttf */; };
@@ -216,22 +214,6 @@
 			path = "";
 			sourceTree = "<group>";
 		};
-		7C1F8E72479781E95C6A0262 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8BA6487C62A2778A19EEF819 /* Pods-ResturantCustomer.debug.xcconfig */,
-				68180DEADE7D78E2AD989034 /* Pods-ResturantCustomer.release.xcconfig */,
-				2EE14D0B5BB5F0A2EA34D0B9 /* Pods-ResturantCustomer-ResturantCustomerTests.debug.xcconfig */,
-				8CCD255FF00C43DD02C7A659 /* Pods-ResturantCustomer-ResturantCustomerTests.release.xcconfig */,
-				D3EF59D8CBFA1C90F5C8F8A6 /* Pods-ResturantCustomer-tvOS.debug.xcconfig */,
-				E78DB9F0D9B7B4FA5AA2C9E5 /* Pods-ResturantCustomer-tvOS.release.xcconfig */,
-				448E81C5D18F9A9711F44940 /* Pods-ResturantCustomer-tvOSTests.debug.xcconfig */,
-				DBD280788D6F084E5139E5DE /* Pods-ResturantCustomer-tvOSTests.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,7 +332,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "ResturantCustomer-tvOSTests" */;
 			buildPhases = (
-				D384A13B9106FB4058801162 /* [CP] Check Pods Manifest.lock */,
+				9A69FD0B143E297E8ED9C760 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -556,7 +538,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A1733869607D1A85FB78FEA8 /* [CP] Check Pods Manifest.lock */ = {
+		9A69FD0B143E297E8ED9C760 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -578,6 +560,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A1733869607D1A85FB78FEA8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ResturantCustomer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B619487BA973A2090466C41E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -590,24 +594,6 @@
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ResturantCustomer/Pods-ResturantCustomer-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D384A13B9106FB4058801162 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ResturantCustomer/Pods-ResturantCustomer-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ResturantCustomer-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
