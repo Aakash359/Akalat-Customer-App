@@ -4,7 +4,8 @@ import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { Searchbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-function Coupon() {
+
+function Coupon(props) {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
   const redirectToHomeMaker = () => {
@@ -19,6 +20,8 @@ const redirectToSortBy = () => {
   const redirectToNotification = () => {
     navigate('Notification');
 };
+
+
   
   const renderItems = ({ item, index }) => (
     <View style={styles.cardStyle}>
@@ -47,7 +50,9 @@ const redirectToSortBy = () => {
       </TouchableOpacity>
     </View>
   );
- 
+  const {couponDetails ={}} = props.route.params || {}
+  console.log("couponDetails",couponDetails)
+  // const {restroDetails: couDet} = list
   return (
     <View style={styles.container}>
         
@@ -57,10 +62,10 @@ const redirectToSortBy = () => {
         backgroundColor={Colors.APPCOLOR}   
         barStyle="light-content"
       />
-      <ImageBackground source={ImagesPath.reset} style={styles.backgroundStyle1}>
+      <ImageBackground source={{uri: couponDetails?.offer_image}} style={styles.backgroundStyle1}>
       <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
-        <Text style={styles.headingText}>45% OFF</Text>
-          <Text style={styles.bottomText}>T&C applicable for minimum order value</Text>
+        <Text style={styles.headingText}>{couponDetails?.coupon_discount_in_percentage} % OFF{' '}</Text>
+          <Text style={styles.bottomText}>{couponDetails?.coupon_detail}</Text>
           <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
            <ScrollView>
           

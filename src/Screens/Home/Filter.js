@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState,} from 'react'
 import {
     Switch,
     Text,
     View,
     StyleSheet,
-    PermissionsAndroid,
     StatusBar,
-    ScrollView,
-    KeyboardAvoidingView,
     ImageBackground,
 } from 'react-native'
 import { Icon } from 'native-base'
@@ -15,19 +12,23 @@ import {
     Colors,
     Scale,
     ImagesPath,
-    iOSMapAPIKey,
-    androidMapAPIKey,
 } from '../../CommonConfig'
 import { CustomButton, FormInput } from '../../Component'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation , useRoute} from '@react-navigation/native'
 import Slider from '@react-native-community/slider'
-function Filter() {
-    const [value, setValue] = useState(4.1)
-    const [value1, setValue1] = useState(8)
+import {API_BASE} from '../../apiServices/ApiService'
+import axios from 'axios'
+
+function Filter({na}) {
+    const [value, setValue] = useState()
+    const [value1, setValue1] = useState()
 
     const { navigate } = useNavigation()
     const navigation = useNavigation()
+    const route = useRoute(); 
+
     const redirectToHome = () => {
+        route.params.onBack('rahul');
         navigate('Home')
     }
     const [isEnabled, setIsEnabled] = useState(true)
@@ -35,6 +36,28 @@ function Filter() {
     const setCheckedSwitch = () => {
         setIsEnabled(!isEnabled)
     }
+
+   
+
+    const onFilter = async () => {
+       
+        const url = `${API_BASE}/restro/filter`
+        const payload = {
+            'distance': value1,
+            'rating_from_user': value,
+            'restaurent_type': 'isEnabled'
+          }
+        try 
+          {
+          const res = await axios.post(url, payload)
+          
+          console.log('Aakash====>',res);
+        
+        } 
+        catch (error) {}
+      }
+    
+     
 
     return (
         <View style={styles.container}>
@@ -187,7 +210,7 @@ function Filter() {
                             <CustomButton
                                 title="Apply"
                                 isSecondary={true}
-                                onSubmit={redirectToHome}
+                                onSubmit={onFilter}
                             />
                         </View>
                     </View>
