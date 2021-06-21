@@ -5,7 +5,7 @@ import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
 import { favouriteListRequest, } from '../../redux/actions'
 import { useSelector, useDispatch } from 'react-redux';
-
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
 function Favorites() {
   const [checked, setChecked] = useState(false)
   const { navigate } = useNavigation();
@@ -13,9 +13,9 @@ function Favorites() {
   const dispatch = useDispatch();
   const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
   const  favouriteList = favouriteListResponse?.data?.restroList || []
-  console.log("Aakash====>",favouriteList)
+ 
   const  user = useSelector((state) => state.Auth.user);
-
+  const  {isLoading} = useSelector((state) => state.Auth);
   const onPressChecked = () => {
     setChecked(!checked);
   };
@@ -25,16 +25,9 @@ function Favorites() {
     const data = { 
          "userid": user?._id
          }
-   
-         setTimeout(() => {
-
-            dispatch(favouriteListRequest(data));
-
-        }, 5000);
-         
-    
-
-  }, 
+        
+        dispatch(favouriteListRequest(data));
+     }, 
   []); 
   const renderItems = ({ item, index }) => (
     <View style={styles.cardStyle}>
@@ -63,6 +56,7 @@ function Favorites() {
           <Text style={styles.textStyle1}>2.7 km</Text>
           <Text style={styles.normalText}>Distance</Text>
         </View>
+        <LoadWheel visible={isLoading} />
       </View>
     </View>
   );

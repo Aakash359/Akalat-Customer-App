@@ -71,6 +71,7 @@ function NearMe(props) {
   }, [search])
 
   useEffect(() => {
+    
     setTimeout(() => {
       dispatch(couponRequest())
     }, 5000)
@@ -90,8 +91,9 @@ function NearMe(props) {
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list succesfully')
   }
-  const onBack = data => {
-    alert("Adta",data)
+  const onBack = res => {
+    console.log("Aakash======>",res)
+    
   };
   const redirectToFilter = () => {
     // navigate('Filter')
@@ -107,10 +109,10 @@ function NearMe(props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setTimeout(() => {
+   
       dispatch(offercardRequest())
-      dispatch(restroListRequest())
-    }, 1000)
+     
+  
   }, [])
 
   const renderItems = ({item, is_favourited_restro}) => (
