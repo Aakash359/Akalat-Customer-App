@@ -1,29 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { Icon } from 'native-base';
-import {useSelector, useDispatch,} from 'react-redux'
-import { Colors, Scale, ImagesPath } from '../../CommonConfig';
-import { Searchbar } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react'
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  StatusBar,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+} from 'react-native'
+import {Icon} from 'native-base'
+import {useSelector, useDispatch} from 'react-redux'
+import {Colors, Scale, ImagesPath} from '../../CommonConfig'
+import {Searchbar} from 'react-native-paper'
+import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import {addfavouriteRequest} from '../../redux/actions'
 import axios from 'axios'
 
-function Explore() 
- {
-  const [check, setChecked] = useState(false);
+function Explore() {
+  const [check, setChecked] = useState(false)
   const [search, setSearch] = React.useState('')
   const user = useSelector((state) => state.Auth.user)
-  const { navigate } = useNavigation();
-  const navigation = useNavigation();
+  const {navigate} = useNavigation()
+  const navigation = useNavigation()
   const dispatch = useDispatch()
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
   })
   const redirectTocheck = () => {
-    setChecked(!check);
-  };
+    setChecked(!check)
+  }
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
@@ -37,9 +46,6 @@ function Explore()
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list succesfully')
   }
- 
-
-  
 
   const onSearch = async () => {
     setdata({...data, isLoading: true})
@@ -49,7 +55,6 @@ function Explore()
     }
     try {
       const res = await axios.post(url, payload)
-   
 
       setdata({
         ...data,
@@ -66,7 +71,6 @@ function Explore()
   React.useEffect(() => {
     onSearch()
   }, [search])
- 
 
   const renderItems = ({item, is_favourited_restro}) => (
     <View style={styles.cardStyle}>
@@ -195,60 +199,83 @@ function Explore()
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <View style={{ paddingBottom: Scale(10), paddingHorizontal: Scale(20), alignItems: 'center', backgroundColor: Colors.APPCOLOR }}>
+      <View
+        style={{
+          paddingBottom: Scale(10),
+          paddingHorizontal: Scale(20),
+          alignItems: 'center',
+          backgroundColor: Colors.APPCOLOR,
+        }}>
         <Searchbar
           style={styles.searchView}
           onIconPress={clearImmediate}
           onChangeText={(text) => setSearch(text)}
           value={search}
-          inputStyle={{ fontSize: Scale(14), marginLeft: Scale(-15) }}
+          inputStyle={{fontSize: Scale(14), marginLeft: Scale(-15)}}
           placeholder="Search here..."
         />
       </View>
       <View style={styles.filterContainer}>
-          <View style={check ? styles.leftContainer : styles.leftContainer1}>
-            <TouchableOpacity onPress={redirectTocheck}>
-              <Text style={check ? styles.normalText : styles.normalText1}>Restaurant</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={check ? styles.leftContainer1 : styles.leftContainer}>
-
-            <TouchableOpacity onPress={redirectTocheck}>
-              <Text style={check ? styles.normalText1 : styles.normalText}>Dishes</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={check ? styles.leftContainer : styles.leftContainer1}>
+          <TouchableOpacity onPress={redirectTocheck}>
+            <Text style={check ? styles.normalText : styles.normalText1}>
+              Restaurant
+            </Text>
+          </TouchableOpacity>
         </View>
-        <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
+        <View style={check ? styles.leftContainer1 : styles.leftContainer}>
+          <TouchableOpacity onPress={redirectTocheck}>
+            <Text style={check ? styles.normalText1 : styles.normalText}>
+              Dishes
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ImageBackground
+        source={ImagesPath.background}
+        style={styles.loginInputCont}>
         <ScrollView>
-       
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Scale(25), paddingTop: Scale(10) }}>
-            <Text style={{ color: '#AB8F8E', fontSize: Scale(16) }}>Near By</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: Scale(25),
+              paddingTop: Scale(10),
+            }}>
+            <Text
+              style={{
+                color: '#AB8F8E',
+                fontSize: Scale(16),
+                fontWeight: '700',
+              }}>
+              Near By
+            </Text>
             <TouchableOpacity onPress={redirectToHomeMaker}>
-            <Text style={{ color: Colors.DARK_RED, fontSize: Scale(16) }}>View All</Text>
+              <Text style={{color: Colors.DARK_RED, fontSize: Scale(16)}}>
+                View All
+              </Text>
             </TouchableOpacity>
           </View>
           <FlatList
-          data={data?.restroList}
-          renderItem={renderItems}
-          keyExtractor={(item, i) => `${i}`}
-          ListEmptyComponent={() => {
-            return <Text>No data found</Text>
-          }}
-        />
-           </ScrollView>
-       
-        </ImageBackground>
-      
+            data={data?.restroList}
+            renderItem={renderItems}
+            keyExtractor={(item, i) => `${i}`}
+            ListEmptyComponent={() => {
+              return <Text>No data found</Text>
+            }}
+          />
+        </ScrollView>
+      </ImageBackground>
     </View>
-  );
+  )
 }
 
 export default Explore
 const styles = StyleSheet.create({
   container: {
-    flex: 1,    
+    flex: 1,
     backgroundColor: Colors.APPCOLOR,
-    paddingTop:Scale(20)
+    paddingTop: Scale(20),
   },
   loginInputCont: {
     top: Scale(-20),
@@ -265,7 +292,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     width: '100%',
     fontSize: 12,
-    marginTop:-12,
+    marginTop: -12,
     backgroundColor: Colors.WHITE,
   },
   backgroundStyle: {
@@ -274,17 +301,17 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     borderTopLeftRadius: Scale(10),
     borderTopRightRadius: Scale(10),
-    overflow:'hidden',    
+    overflow: 'hidden',
   },
   normalText: {
     fontSize: Scale(12),
     color: Colors.WHITE,
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   normalText1: {
     fontSize: Scale(12),
     color: Colors.APPCOLOR,
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   filterContainer: {
     flexDirection: 'row',
@@ -292,7 +319,7 @@ const styles = StyleSheet.create({
     paddingBottom: Scale(50),
     backgroundColor: Colors.APPCOLOR,
     width: '100%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   leftContainer: {
     paddingHorizontal: Scale(10),
@@ -305,7 +332,7 @@ const styles = StyleSheet.create({
     height: Scale(50),
     width: '35%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   leftContainer1: {
     paddingHorizontal: Scale(10),
@@ -319,7 +346,7 @@ const styles = StyleSheet.create({
     height: Scale(50),
     width: '35%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   notificationStyle: {
     width: Scale(25),
@@ -331,7 +358,7 @@ const styles = StyleSheet.create({
   bottomHeader: {
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
-    flex: 1
+    flex: 1,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -344,7 +371,7 @@ const styles = StyleSheet.create({
     width: Scale(25),
     height: Scale(25),
     resizeMode: 'contain',
-    tintColor: Colors.WHITE
+    tintColor: Colors.WHITE,
   },
   cardStyle: {
     elevation: 3,
@@ -353,14 +380,14 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: 2,
-    borderColor: "#E0E0E0",
+    borderColor: '#E0E0E0',
     marginVertical: Scale(15),
     alignSelf: 'center',
-    borderRadius: Scale(10)
+    borderRadius: Scale(10),
   },
   iconStyle: {
     color: '#FFBB00',
     fontSize: Scale(15),
-    marginLeft:Scale(8),
+    marginLeft: Scale(8),
   },
-});
+})
