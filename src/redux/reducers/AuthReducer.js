@@ -74,25 +74,13 @@ export default function AuthReducer(state = initialState, action) {
       return {...state, OTPStatus: false, otpResponse: action.payload}
 
     case OTP_VERIFY_REQUEST:
-      return {
-        ...state,
-        OTPVerifyStatus: false,
-        otpVerifyResponse: action.payload,
-      }
+      return {...state,OTPVerifyStatus: false,otpVerifyResponse: action.payload,}
 
     case OTP_VERIFY_SUCCESS:
-      return {
-        ...state,
-        OTPVerifyStatus: true,
-        otpVerifyResponse: action.payload,
-      }
+      return {...state,OTPVerifyStatus: true,otpVerifyResponse: action.payload,}
 
     case OTP_VERIFY_FAILED:
-      return {
-        ...state,
-        OTPVerifyStatus: false,
-        otpVerifyResponse: action.payload,
-      }
+      return {...state,OTPVerifyStatus: false,otpVerifyResponse: action.payload,}
 
     case LOGOUT_REQUEST:
       return {...state, logoutStatus: false, logoutResponse: action.payload}

@@ -13,7 +13,8 @@ function Favorites() {
   const dispatch = useDispatch();
   const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
   const  favouriteList = favouriteListResponse?.data?.restroList || []
- 
+  console.log("Aakash======>",favouriteList)
+  
   const  user = useSelector((state) => state.Auth.user);
   const  {isLoading} = useSelector((state) => state.Auth);
   const onPressChecked = () => {
@@ -32,7 +33,7 @@ function Favorites() {
   const renderItems = ({ item, index }) => (
     <View style={styles.cardStyle}>
       <View style={styles.imageContainer}>
-        <Image  source={{ uri: item?.image }} style={styles.backgroundStyle1} />
+        <Image  source={{ uri: item?.building_front_img }} style={styles.backgroundStyle1} />
         <View style={styles.heading}>
           <View style={styles.textContainer}>
             <Text style={styles.primaryText}>{item?.restro_name}</Text>

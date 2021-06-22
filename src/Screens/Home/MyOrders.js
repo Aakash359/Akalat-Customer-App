@@ -16,6 +16,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import {API_BASE} from '../../apiServices/ApiService'
 import {orderList} from '../../redux/actions/OrderAction'
+import moment from 'moment'
 
 function MyOrders(props) {
   const [checked, setChecked] = useState(false)
@@ -62,25 +63,37 @@ function MyOrders(props) {
     setChecked(!checked)
   }
 
+  const productRender = (productList) => {
+    return productList?.map((product) => {
+      return <Text>{`${product?.qty} x ${product?.product_detail?.name}`}</Text>
+    })
+  }
+
   const renderItemsActive = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>
         <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
         <View>
-          <Text style={styles.primaryText}>Fire & Grill</Text>
+          <Text style={styles.primaryText}>
+            {item?.restro_detail.restro_name}
+          </Text>
           <Text style={styles.normatText}>
-            Sector 29, Cyber hub{'\n'}Gurgoan
+            {item?.restro_detail.street_name}, {item?.restro_detail.area_name},
+            {'\n'}
+            {item?.restro_detail.region}, {item?.restro_detail.state}...
           </Text>
         </View>
       </View>
       <View style={styles.borderStyle} />
       <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>Items</Text>
-      <Text style={styles.itemText}>1 x Jambo Burger</Text>
-      <Text style={styles.itemText}>2 x Sahi Paneer</Text>
+      {productRender(item?.product_list)}
+      <Text style={styles.itemText}></Text>
       <Text style={styles.seconderyText}>Ordered on</Text>
-      <Text style={styles.itemText}>Apr 20. 8:10am</Text>
+      <Text style={styles.itemText}>
+        {moment(item?.order_date_placed).format('MMM D, LT')}
+      </Text>
       <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>$ 37</Text>
+      <Text style={styles.itemText}>{item?.total_price}</Text>
       <View style={styles.heading}>
         <Text style={styles.cancelButton}>Cancel Order</Text>
         <Text style={[styles.cancelButton, {backgroundColor: Colors.APPCOLOR}]}>
@@ -94,20 +107,25 @@ function MyOrders(props) {
       <View style={{flexDirection: 'row'}}>
         <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
         <View>
-          <Text style={styles.primaryText}>Fire & Grill</Text>
+          <Text style={styles.primaryText}>
+            {item?.restro_detail.restro_name}
+          </Text>
           <Text style={styles.normatText}>
-            Sector 29, Cyber hub{'\n'}Gurgoan
+            {item?.restro_detail.street_name}, {item?.restro_detail.area_name},
+            {'\n'}
+            {item?.restro_detail.region}, {item?.restro_detail.state}...
           </Text>
         </View>
       </View>
       <View style={styles.borderStyle} />
       <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>Items</Text>
-      <Text style={styles.itemText}>1 x Jambo Burger</Text>
-      <Text style={styles.itemText}>2 x Sahi Paneer</Text>
+      {productRender(item?.product_list)}
       <Text style={styles.seconderyText}>Ordered on</Text>
-      <Text style={styles.itemText}>Apr 20. 8:10am</Text>
+      <Text style={styles.itemText}>
+        {moment(item?.order_date_placed).format('MMM D, LT')}
+      </Text>
       <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>$ 37</Text>
+      <Text style={styles.itemText}>{item?.total_price}</Text>
       <View style={styles.heading}>
         <Text style={[styles.cancelButton, {backgroundColor: Colors.APPCOLOR}]}>
           Re-Order
@@ -115,6 +133,11 @@ function MyOrders(props) {
       </View>
     </View>
   )
+
+  let active = ['P', 'RPL', 'OPU', 'AD', 'RCH', 'PR', 'PRD']
+  let past = ['RC', 'OD']
+  let activeOrders = props?.orderList.filter((i) => active.includes(i.status))
+  let pastOrders = props?.orderList.filter((i) => past.includes(i.status))
 
   return (
     <View style={styles.container}>
@@ -128,7 +151,7 @@ function MyOrders(props) {
       </View>
       <View style={styles.buttonHeader}>
         <Text style={styles.headerText}>My Orders </Text>
-        <View style={styles.buttonContainer}>
+        <View style={[styles.buttonContainer, {alignItems: 'center'}]}>
           <Text
             onPress={onPressChecked}
             style={checked ? styles.inActiveStyle : styles.textStyle}>
@@ -146,7 +169,7 @@ function MyOrders(props) {
         style={styles.loginInputCont}>
         <FlatList
           style={{paddingHorizontal: Scale(20)}}
-          data={props?.orderList}
+          data={checked ? pastOrders : activeOrders}
           renderItem={checked ? renderItemPast : renderItemsActive}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => {
@@ -218,6 +241,7 @@ const styles = StyleSheet.create({
     borderWidth: Scale(1),
     borderColor: Colors.WHITE,
     borderRadius: Scale(26),
+    overflow: 'hidden',
   },
   cancelButton: {
     width: '45%',
@@ -228,6 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(20),
     fontSize: Scale(16),
     color: Colors.WHITE,
+    borderRadius: 20,
   },
   borderStyle: {
     height: Scale(2),
@@ -277,17 +302,18 @@ const styles = StyleSheet.create({
   textStyle: {
     backgroundColor: Colors.WHITE,
     borderRadius: Scale(20),
-    width: Scale(100),
-    height: Scale(40),
+    width: Scale(90),
+    paddingVertical: 10,
     textAlignVertical: 'center',
     textAlign: 'center',
     color: Colors.APPCOLOR,
     fontSize: Scale(15),
     fontWeight: 'bold',
+    zIndex: 1,
   },
   inActiveStyle: {
-    width: Scale(100),
-    height: Scale(40),
+    width: Scale(90),
+    paddingVertical: 10,
     borderRadius: Scale(20),
     textAlignVertical: 'center',
     textAlign: 'center',

@@ -27,7 +27,6 @@ function ForgotPassword() {
         {
             const data = { 
                 'phone': phone,
-                // 'phone': parseInt(phone),
                 'role' : 'customer',
                 'country_code' : COUNTRY == "IN" ? '971' : '91'
      

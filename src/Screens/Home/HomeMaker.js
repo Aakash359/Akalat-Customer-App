@@ -135,7 +135,7 @@ const renderCustomizeModal = () =>  {
                   <TouchableOpacity onPress={() => {
                     setCustomizeModal(false),
                     navigate('Order',{orderCount : addItem})}} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: Scale(45), backgroundColor: Colors.APPCOLOR, borderRadius: Scale(35), marginBottom:Scale(20),marginTop: Scale(35), marginHorizontal: Scale(20) }}>
-                      <Text style={{ color: Colors.WHITE, fontSize: Scale(15), fontFamily: Fonts.Bold }}>Add To Cart</Text>
+                      <Text style={{ color: Colors.WHITE, fontSize: Scale(15), fontFamily: Fonts.Regular }}>Add To Cart</Text>
                   </TouchableOpacity>
 
 
@@ -173,6 +173,7 @@ const subToCart = (item) => {
 }
 
   const {restroDetails ={}} = props.route.params || {}
+  
   const {restroDetails: resDet} = list
   const {cartProducts} = props
   const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
@@ -184,7 +185,7 @@ const subToCart = (item) => {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <ImageBackground source={{uri: resDet?.image}} style={styles.backgroundStyle}>
+      <ImageBackground resizeMode='cover'  source={{uri: restroDetails?.building_front_img}} style={styles.backgroundStyle}>
         <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
         <Text style={styles.headingText}>{restroDetails?.restro_name}</Text>
           <Text style={styles.bottomText}>{restroDetails?.street_name}, {restroDetails?.area_name}, {restroDetails?.region}, {restroDetails?.state}</Text>
@@ -265,8 +266,8 @@ const subToCart = (item) => {
             {cartProducts?.length ?
                          <View style = {{height:'15%',paddingHorizontal:'5%',flexDirection:'row',padding:10, justifyContent:'space-between', maxHeight:'15%',backgroundColor: Colors.APPCOLOR}}>
                             <View style ={{alignItems:'flex-start'}}>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Bold }}>{`$ ${totalCartAmt}`}</Text>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Bold }}>{cartProducts?.length +' items in cart'}</Text>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Regular }}>{`$ ${totalCartAmt}`}</Text>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Regular }}>{cartProducts?.length +' items in cart'}</Text>
                             </View>
                              <TouchableOpacity onPress={() => props.navigation.navigate('Card')}
                               

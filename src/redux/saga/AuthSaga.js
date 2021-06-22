@@ -134,6 +134,7 @@ export const OtpSaga = function* OtpSaga({data}) {
 
 // ====================== OTP Verify Post ======================
 export const OtpVerifySaga = function* OtpVerifySaga({data}) {
+ 
   try {
     const response = yield call(Request, {
       url: '/verifyOtp',
@@ -147,9 +148,12 @@ export const OtpVerifySaga = function* OtpVerifySaga({data}) {
         'error',
         'Error',
         response?.message,
+       
       );
     } else {
       yield put({type: OTP_VERIFY_SUCCESS, payload: response});
+      console.log("SucccessResponse=====>",response)
+      
     }
   } catch (e) {
     console.log(e, 'error');
