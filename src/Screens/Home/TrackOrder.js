@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     TouchableOpacity,
     Text,
@@ -17,11 +17,40 @@ import { homeStyle } from './homeStyles';
 import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { MapScreen } from "../../Component/MapScreen";
+import { orderDetailsRequest } from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+
 const mapScreen = props => {
+
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const [pickUpModal, setPickUpModal] = useState(false);
+    const  user = useSelector((state) => state.Auth.user);
+    const dispatch = useDispatch();
+
+    const  orderDetailsResponse = useSelector((state) => state.Home.orderDetailsResponse);
+
+    console.log("Aakash=======>",orderDetailsResponse?.data)
+
+    const orderDetails = orderDetailsResponse?.data
+
+    console.log("Aakash=======>",orderDetailsResponse?.data?.[0]?.status)
+
+    useEffect(() => {
+
+        const data = { 
+             "_id": '60d059680b0c40323d03227a'
+             }
+       
+             setTimeout(() => {
+
+                dispatch(orderDetailsRequest(data));
+
+              }, 5000);
+            }, 
+      []);
     return (
+
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
                 <View style={{ flex: 1 }}>
@@ -38,7 +67,8 @@ const mapScreen = props => {
                         <View style={[styles.bottomContainer, { alignItems: 'center'
                     ,paddingBottom:Scale(0), 
                     borderBottomColor:Colors.GRAY,borderBottomWidth:0, }]}>
-                                <Text style={styles.primaryText}>Order ID #123456785 </Text>
+                                <Text style={styles.primaryText}
+                                numberOfLines={1}>Order ID {orderDetails?.[0]?._id}</Text>
                                 <Icon
                                     type="FontAwesome"
                                     name='phone-square'
@@ -52,25 +82,59 @@ const mapScreen = props => {
                         paddingBottom:Scale(0), 
                         borderBottomColor:Colors.GRAY,borderBottomWidth:0,  }]}>
                                 <Text style={styles.normalText}>Order Received </Text>
-                                <Image
-                                            source={ImagesPath.check2x}
-                                         style={styles.imageStyle}
-                                         />
+
+                                {
+                                    orderDetailsResponse?.data?.[0]?.status=='P'? <Image
+                                    source={ImagesPath.check2x}
+                                 style={styles.imageStyle}
+                                 />:null
+                                }
+                                
+                                
                             </View>
                             <Text style={[styles.seconderyText,{marginTop:8}]}>We are waiting for the restaurant to confirm your order</Text>
-                            <View style={styles.bottomContainer}>
+                            <View style={[styles.bottomContainer]}>
                                 <Text style={[styles.normalText,{marginTop:8}]}>Order Confirmed</Text>
+                                
+                                {
+                                    orderDetailsResponse?.data?.[0]?.status=='PR'? <Image
+                                    source={ImagesPath.check2x}
+                                 style={styles.imageStyle}
+                                 />:null
+                                }
                                 <Image
                                             source={ImagesPath.check2x}
                                          style={styles.imageStyle}
                                          />
                             </View>
+                            
                             <View style={styles.bottomContainer}>
                                 <Text style={styles.normalText}>Order Picked up</Text>
+                                {
+                                    orderDetailsResponse?.data?.[0]?.status=='OPU'? <Image
+                                    source={ImagesPath.check2x}
+                                 style={styles.imageStyle}
+                                 />:null
+                                }
+                                <Image
+                                        source={ImagesPath.check2x}
+                                        style={styles.imageStyle}
+                                         />
                                
                             </View>
-                            <View style={styles.bottomContainer,styles.removeBorder}>
-                                <Text style={[styles.normalText,{marginTop:8}]}>Order Delivered</Text>                                
+                            <View style={styles.bottomContainer}>
+                                <Text style={[styles.normalText,{marginTop:8}]}>Order Delivered</Text>
+                                {
+                                    orderDetailsResponse?.data?.[0]?.status=='OD'? <Image
+                                    source={ImagesPath.check2x}
+                                 style={styles.imageStyle}
+                                 />:null
+                                }
+                                <Image
+                                    source={ImagesPath.check2x}
+                                    style={styles.imageStyle}
+                                  />
+                                                           
                             </View>
                         </View>
                     </ImageBackground>
@@ -140,7 +204,9 @@ const styles = StyleSheet.create({
     primaryText: { 
         color: "#AB8F8E", 
         fontSize: Scale(18), 
-        fontWeight: 'bold' 
+        fontWeight: 'bold',
+        width:Scale(250),
+        
     },
     bottomContainer: {
         paddingBottom:Scale(15), 
