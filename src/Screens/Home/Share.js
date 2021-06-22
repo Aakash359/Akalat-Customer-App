@@ -146,7 +146,7 @@ function ShareScreen() {
                 <Text>Instagram</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => shareApp(Share.Social.FACEBOOK)}
+                // onPress={() => shareApp(Share.Social.FACEBOOK)}
                 style={{
                   backgroundColor: 'red',
                   width: 70,

@@ -308,7 +308,7 @@ function Card(props) {
               ]}>
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText3}>Delivery Address</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('AddNewAddress') }>
                   <Text style={styles.countText}>change</Text>
                 </TouchableOpacity>
               </View>
@@ -325,7 +325,7 @@ function Card(props) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <TouchableOpacity onPress={() => navigate('AddNewAddress')}>
+              <TouchableOpacity onPress={() => navigate('EditAddress')}>
                 <Text>Add address</Text>
               </TouchableOpacity>
             </View>

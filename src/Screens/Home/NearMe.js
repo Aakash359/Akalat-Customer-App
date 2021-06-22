@@ -89,7 +89,7 @@ function NearMe(props) {
     }
 
     dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list succesfully')
+    alert('Added to favourite list successfully')
   }
   const onBack = res => {
     console.log("Aakash======>",res)

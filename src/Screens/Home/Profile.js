@@ -14,6 +14,7 @@ import {CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {connect} from 'react-redux'
 import {getUserDetails} from '../../redux/actions/AuthActions'
+
 function Profile(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
@@ -58,6 +59,7 @@ function Profile(props) {
         <Text style={styles.textStyle}>Email Address</Text>
         <Text style={styles.inputStyle}>{user?.email}</Text>
         <View style={{justifyContent: 'flex-end', flex: 1}}>
+
           <CustomButton
             title="Edit Profile"
             isSecondary={true}

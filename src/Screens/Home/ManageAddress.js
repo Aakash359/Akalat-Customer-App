@@ -103,7 +103,6 @@ function ManageAddress() {
                         <FlatList
                             data={addressList}
                             renderItem={renderItems}
-                            // extraData={data}
                             keyExtractor={(item, index) => index.toString()}
                         />
                       </ScrollView>
@@ -115,7 +114,6 @@ function ManageAddress() {
           alertTitle={'Are you sure you want to delete this address?'}
           rightButtonText={'Yes'}
           leftButtonText={'No'}
-          //  onPressLeftButton={() => this.setState({ logoutModal: false })}
           onPressLeftButton={delAdd}
           onPressRightButton={() => setDeleteAdd({...deleteAdd, show: false})}
         />
@@ -131,7 +129,7 @@ const styles = StyleSheet.create({
     textStyle: {
         color: Colors.BORDERCOLOR,
         fontSize: Scale(12),
-        //marginTop: Scale(10)
+       
     },
     cardHeader:{
         flexDirection:'row',
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     },
     placeText:{
         fontSize:Scale(16),
-        fontFamily:Fonts.Bold,
+        fontFamily:Fonts.Medium,
         color:Colors.BLACK,
     },
     cardStyle: {

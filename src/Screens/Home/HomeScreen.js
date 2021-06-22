@@ -73,6 +73,7 @@ function HomeScreen(props) {
     }
     try {
       const res = await axios.post(url, payload)
+      console.log("Aakash====>",res)
 
       setdata({
         ...data,

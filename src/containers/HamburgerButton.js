@@ -63,8 +63,6 @@ useEffect(() => {
           JSON.stringify(position.coords.latitude);
           Geocoder.from(position.coords.latitude, position.coords.longitude)
           .then(json => {
-                  console.log("=============================================json data",json.results[1].formatted_address,"================================Flat no")
-                 // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name 
                 let addressComponent= json.results[1].formatted_address; 
                  console.log(addressComponent, 'addressComponent');
                    setAddress(addressComponent)

@@ -18,6 +18,8 @@ function Otp(props) {
     const [phone, setphone] = useState(props.route.params.phone);
     const [email, setemail] = useState(props.route.params.email);
     const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
+
+    
     
     const  onSubmit = () =>{
 
@@ -30,7 +32,7 @@ function Otp(props) {
             const data = { 
                 
                 'otp':    otp,
-                'role' : 'cutomer',
+                'role' : 'customer',
                 'phone' :  phone,
                 'country_code' : "91" ,
                  }
@@ -41,12 +43,12 @@ function Otp(props) {
                      navigate('ResetPassword', data)
                  }
           
-           
+                //  console.log("Aakash====>",data)
               dispatch(OTPVerifyRequest(data));
         }
       }
 
-      const  resendOTP = () =>{
+      const  onPress = () =>{
 
         const data = { 
             'phone': phone,
@@ -57,6 +59,7 @@ function Otp(props) {
             
           navigate('Otp', data)
           dispatch(OTPRequest(data));
+          alert("Otp send successfully!")
         }
 
     return (
@@ -107,7 +110,7 @@ function Otp(props) {
                                     />
                                     </View>
                                 <CustomButton title="Submit" onSubmit={onSubmit} isSecondary={true} />
-                                <TouchableOpacity onSubmit={resendOTP} >
+                                <TouchableOpacity onPress={onPress} >
                            <Text style={styles.normalText1}>Didn't get the code?
                            
                            <Text style={{color:Colors.DARK_RED}}> Resend OTP</Text></Text>
