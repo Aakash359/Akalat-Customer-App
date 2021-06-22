@@ -4,12 +4,24 @@ import {
   View,
   Linking,
   Platform,
+  Image,
   PermissionsAndroid,
   ToastAndroid,
 } from 'react-native'
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import Geolocation from 'react-native-geolocation-service'
+import {bool, func} from 'prop-types'
 
+const markers = [
+  {
+    coordinate: {
+      latitude: 30.7335,
+      longitude: 76.7794,
+    },
+    image: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg',
+    title: '',
+  },
+]
 export class MapScreen extends Component {
   constructor() {
     super()
@@ -132,30 +144,53 @@ export class MapScreen extends Component {
   }
 
   render() {
-    console.log(this.state.location, 'this.state.location')
+    const {onMarkerPress} = this.props
     return (
       <View style={{flex: 1}}>
-        {/* <MapView
+        <MapView
           style={StyleSheet.absoluteFillObject}
           region={{
-            latitude: 21.192572,
-
-            // this.state.location != undefined
-            //   ? this.state.location.coords.latitude
-            //   : 21.192572, //21.192572
-            longitude: 72.799736,
-            // this.state.location != undefined
-            //   ? this.state.location.coords.longitude
-            //   : 72.799736,
+            latitude:
+              this.state.location != undefined
+                ? this.state.location.coords.latitude
+                : 21.192572,
+            longitude:
+              this.state.location != undefined
+                ? this.state.location.coords.longitude
+                : 72.799736,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}
+          loadingEnabled={true}
+          loadingIndicatorColor="#666666"
+          loadingBackgroundColor="#eeeeee"
+          moveOnMarkerPress={false}
+          showsUserLocation={true}
+          showsCompass={true}
           provider={PROVIDER_GOOGLE}
-          // ref={c => this.mapView = c}
-        /> */}
+          ref={(c) => (this.mapView = c)}
+        />
+        {markers.map((marker, index) => (
+          <Marker
+            key={`marker-${index}`}
+            coordinate={marker.coordinate}
+            title={marker.title}
+            description={marker.description}
+            onPress={onMarkerPress}>
+            <View style={{height: 50, width: 50}}>
+              <Image
+                source={{uri: marker.image}}
+                style={{height: 80, width: 80, justifyContent: 'center'}}
+              />
+            </View>
+          </Marker>
+        ))}
       </View>
     )
   }
 }
 
+MapScreen.propTypes = {
+  onMarkerPress: func.isRequired,
+}
 export default MapScreen

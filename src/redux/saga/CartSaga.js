@@ -19,7 +19,7 @@ function* createOrder({payload}) {
       data,
     });
     console.log('====================================');
-    console.log(response);
+    console.log("OrderResponse",response);
     console.log('====================================');
     if (response?.error) {
       yield put(setCreateOrderLoader(false));
