@@ -167,10 +167,10 @@ export class MapScreen extends Component {
                         title={marker.title}
                         description={marker.description}
                         onPress={onMarkerPress}>
-                        <View style={{height:50,width:50}}>
+                        <View style={{height:50,width:50,}}>
                         <Image
                             source={{uri: marker.image}}
-                            style={{height:50,width:50}}
+                            style={{height:80,width:80,justifyContent:'center'}}
                         />
                         </View>
                     </Marker>

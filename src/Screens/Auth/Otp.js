@@ -46,7 +46,7 @@ function Otp(props) {
         }
       }
 
-      const  resendOTP = () =>{
+      const  onPress = () =>{
 
         const data = { 
             'phone': phone,
@@ -57,6 +57,7 @@ function Otp(props) {
             
           navigate('Otp', data)
           dispatch(OTPRequest(data));
+          alert("Otp send successfully!")
         }
 
     return (
@@ -107,7 +108,7 @@ function Otp(props) {
                                     />
                                     </View>
                                 <CustomButton title="Submit" onSubmit={onSubmit} isSecondary={true} />
-                                <TouchableOpacity onSubmit={resendOTP} >
+                                <TouchableOpacity onPress={onPress} >
                            <Text style={styles.normalText1}>Didn't get the code?
                            
                            <Text style={{color:Colors.DARK_RED}}> Resend OTP</Text></Text>

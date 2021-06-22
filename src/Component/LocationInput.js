@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     height: Scale(45),
     paddingRight: Scale(5),
-    paddingHorizontal: Scale(8),    
+    paddingHorizontal: Scale(15),    
     paddingVertical: 0,
     borderRadius: Scale(5),
   },

@@ -81,7 +81,7 @@ export default function LogoTitle(props) {
         <TouchableOpacity onPress={redirectToNotification}>
             <Text onPress={redirectToNotification} numberOfLines={1} style={{
                 height: Scale(50), textAlignVertical: 'center', marginLeft: Scale(-15), color: '#fff',
-                fontSize: Scale(16), width: '100%'
+                fontSize: Scale(16), width: '120%'
             }}>{currentAddress}</Text>
         </TouchableOpacity>
     );
