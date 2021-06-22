@@ -17,6 +17,9 @@ import {
     ADD_FAVOURITE_REQUEST,
     ADD_FAVOURITE_SUCCESS,
     ADD_FAVOURITE_FAILED,
+    ORDER_DETAILS_REQUEST,
+    ORDER_DETAILS_SUCCESS,
+    ORDER_DETAILS_FAILED,
 
     } from '../Types/type';
 import {setFavouriteLoader,
@@ -205,6 +208,34 @@ export const AddFavouriteSaga = function* AddFavouriteSaga({data}) {
     }
 }
 
+//====================== Odder Details POST ======================
+
+export const OrderDetailsSaga = function* OrderDetailsSaga({data}) {
+ 
+    try {
+        const response = yield call(Request, {
+            url: 'order/orderDetail',
+            method: 'POST',
+            data,
+          })
+          if (response?.data?.error == true){
+            yield put({ type: ORDER_DETAILS_FAILED, payload: response?.data  });
+            global.dropDownAlertRef.alertWithType(
+              'error',
+              'Error',
+               response?.data?.message,
+            );
+          }
+       else{ 
+          yield put({ type: ORDER_DETAILS_SUCCESS, payload: response });
+        }
+        
+    }
+    catch (e) {
+      yield put({ type: ORDER_DETAILS_FAILED, payload: e });
+    }
+}
+
 
 
 export function* homeSaga() {
@@ -214,5 +245,6 @@ export function* homeSaga() {
     yield takeEvery(RESTRO_LIST_REQUEST, RestroListSaga);
     yield takeEvery(RESTRO_ITEM_REQUEST, RestroItemSaga);
     yield takeEvery(ADD_FAVOURITE_REQUEST, AddFavouriteSaga);
+    yield takeEvery(ORDER_DETAILS_REQUEST, OrderDetailsSaga);
 }
 export default homeSaga;

@@ -1,6 +1,6 @@
 
 import {
-        OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,
+        OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,ORDER_DETAILS_REQUEST,
         RESTRO_ITEM_REQUEST,ADD_FAVOURITE_REQUEST,SET_FAVOURITE_LOADER,COUPON_REQUEST
     } from '../Types/type';
 
@@ -52,6 +52,16 @@ export const offercardRequest = (data) => {
     
     return {
         type: OFFER_CARD_REQUEST,
+        data,
+       
+    };
+}
+
+// ================= Offer-Card REQUEST =================
+export const orderDetailsRequest = (data) => {
+    
+    return {
+        type: ORDER_DETAILS_REQUEST,
         data,
        
     };

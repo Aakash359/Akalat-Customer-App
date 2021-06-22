@@ -22,7 +22,7 @@ function Payment(props) {
     const { navigate } = useNavigation()
     const navigation = useNavigation()
     const redirectToPlaceOrder = () => {
-        navigate('PlaceOrder')
+        navigate('PlaceOrder',)
     }
     const checked = (method) => {
         setCheck(method)

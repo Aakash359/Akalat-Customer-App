@@ -3,8 +3,10 @@ import { Text, View, StyleSheet, ImageBackground, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Scale, Colors, ImagesPath } from '../../CommonConfig'
 import { CustomButton } from '../../Component'
+import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux'
 
-function PlaceOrder() {
+function PlaceOrder(props) {
     const { navigate } = useNavigation()
     const navigation = useNavigation()
     const redirectToHome = () => {
@@ -13,6 +15,19 @@ function PlaceOrder() {
     const redirectToTrackOrder = () => {
         navigate('TrackOrder')
     }
+
+    
+    console.log("Aakash--->",props?.restroDetails)
+
+    // useEffect(() => {
+
+    //     const data = { 
+    //          "userid": user?._id
+    //          }
+            
+    //         dispatch(favouriteListRequest(data));
+    //      }, 
+    //   []); 
     return (
         <ImageBackground
             source={ImagesPath.background}
@@ -46,7 +61,16 @@ function PlaceOrder() {
         </ImageBackground>
     )
 }
-export default PlaceOrder
+
+const mapStateToProps = ({
+    Cart: { restroDetails, },
+    Auth: { user },
+}) => ({
+    restroDetails,
+    
+})
+
+export default connect(mapStateToProps,null)(PlaceOrder)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
