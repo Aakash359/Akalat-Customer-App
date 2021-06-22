@@ -1,42 +1,42 @@
-import React, {useState, useEffect} from 'react';
-import HamburgerButton from '../../containers/HamburgerButton';
-import {createStackNavigator} from '@react-navigation/stack';
-import Home from '../tab/index';
-import HomeMaker from '../../Screens/Home/HomeMaker';
-import Payment from '../../Screens/Home/Payment';
-import Notification from '../../Screens/Home/Notification';
-import PlaceOrder from '../../Screens/Home/PlaceOrder';
-import TrackOrder from '../../Screens/Home/TrackOrder';
-import Profile from '../../Screens/Home/Profile';
-import Offers from '../../Screens/Home/Offers';
-import Share from '../../Screens/Home/Share';
-import EditProfile from '../../Screens/Home/EditProfile';
-import Favorites from '../../Screens/Home/Favorites';
-import MyOrders from '../../Screens/Home/MyOrders';
-import Settings from '../../Screens/Home/Settings';
-import ChangePassword from '../../Screens/Home/ChangePassword';
-import SavedCard from '../../Screens/Home/SavedCard';
-import HelpSupport from '../../Screens/Home/HelpSupport';
-import Order from '../../Screens/Home/Order';
-import AboutUs from '../../Screens/Home/AboutUs';
-import PrivacyPolicy from '../../Screens/Home/PrivacyPolicy';
-import TermCondition from '../../Screens/Home/TermCondition';
-import FAQs from '../../Screens/Home/FAQs';
-import Filter from '../../Screens/Home/Filter';
-import Rating from '../../Screens/Home/Rating';
-import SortBy from '../../Screens/Home/SortBy';
-import ManageAddress from '../../Screens/Home/ManageAddress';
-import AddNewCard from '../../Screens/Home/AddNewCard';
-import EditCard from '../../Screens/Home/EditCard';
-import SelectLocation from '../../Screens/Home/SelectLocation';
-import AddNewAddress from '../../Screens/Home/AddNewAddress';
-import Coupon from '../../Screens/Home/Coupon';
-import EditAddress from '../../Screens/Home/EditAddress';
-import RightButton from '../../containers/RightButton';
-import {headerLeftStyle} from '../Helper';
+import React, {useState, useEffect} from 'react'
+import HamburgerButton from '../../containers/HamburgerButton'
+import {createStackNavigator} from '@react-navigation/stack'
+import Home from '../tab/index'
+import HomeMaker from '../../Screens/Home/HomeMaker'
+import Payment from '../../Screens/Home/Payment'
+import Notification from '../../Screens/Home/Notification'
+import PlaceOrder from '../../Screens/Home/PlaceOrder'
+import TrackOrder from '../../Screens/Home/TrackOrder'
+import Profile from '../../Screens/Home/Profile'
+import Offers from '../../Screens/Home/Offers'
+import Share from '../../Screens/Home/Share'
+import EditProfile from '../../Screens/Home/EditProfile'
+import Favorites from '../../Screens/Home/Favorites'
+import MyOrders from '../../Screens/Home/MyOrders'
+import Settings from '../../Screens/Home/Settings'
+import ChangePassword from '../../Screens/Home/ChangePassword'
+import SavedCard from '../../Screens/Home/SavedCard'
+import HelpSupport from '../../Screens/Home/HelpSupport'
+import Order from '../../Screens/Home/Order'
+import AboutUs from '../../Screens/Home/AboutUs'
+import PrivacyPolicy from '../../Screens/Home/PrivacyPolicy'
+import TermCondition from '../../Screens/Home/TermCondition'
+import FAQs from '../../Screens/Home/FAQs'
+import Filter from '../../Screens/Home/Filter'
+import Rating from '../../Screens/Home/Rating'
+import SortBy from '../../Screens/Home/SortBy'
+import ManageAddress from '../../Screens/Home/ManageAddress'
+import AddNewCard from '../../Screens/Home/AddNewCard'
+import EditCard from '../../Screens/Home/EditCard'
+import SelectLocation from '../../Screens/Home/SelectLocation'
+import AddNewAddress from '../../Screens/Home/AddNewAddress'
+import Coupon from '../../Screens/Home/Coupon'
+import EditAddress from '../../Screens/Home/EditAddress'
+import RightButton from '../../containers/RightButton'
+import {headerLeftStyle} from '../Helper'
 
-import LogoTitle from '../../containers/LogoTitle';
-const Stack = createStackNavigator();
+import LogoTitle from '../../containers/LogoTitle'
+const Stack = createStackNavigator()
 
 function HomeStack(navigation) {
   return (
@@ -202,6 +202,6 @@ function HomeStack(navigation) {
         options={{headerShown: false}}
       />
     </Stack.Navigator>
-  );
+  )
 }
-export default HomeStack;
+export default HomeStack
