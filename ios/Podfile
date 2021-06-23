@@ -10,7 +10,7 @@ target 'ResturantCustomer' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
-  pod 'RNShare', :path => '../node_modules/react-native-share'
+
 
   target 'ResturantCustomerTests' do
     inherit! :complete

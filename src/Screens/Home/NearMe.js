@@ -23,6 +23,7 @@ import {
 } from '../../redux/actions'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
 function NearMe(props) {
   const {navigate} = useNavigation()
@@ -32,11 +33,12 @@ function NearMe(props) {
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
+  const [isLoading, setIsLoading] = useState(false);
   const couponResponse = useSelector((state) => state.Home.couponResponse)
 
   const [data, setdata] = React.useState({
     restroList: [],
-    isLoading: true,
+    
   })
 
   const [search, setSearch] = React.useState('')
@@ -111,6 +113,7 @@ function NearMe(props) {
   useEffect(() => {
    
       dispatch(offercardRequest())
+      
      
   
   }, [])
@@ -122,6 +125,7 @@ function NearMe(props) {
           source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
+          <LoadWheel visible={isLoading} />
             <View
               style={{
                 flexDirection: 'row',
@@ -400,12 +404,13 @@ function NearMe(props) {
             <Image source={ImagesPath.filter} style={styles.Filter} />
           </TouchableOpacity>
         </View>
+        
         <FlatList
           data={data?.restroList}
           renderItem={renderItems}
           keyExtractor={(item, i) => `${i}`}
           ListEmptyComponent={() => {
-            return <Text>No data found</Text>
+            return <Text style={{textAlign:'center'}}>No data found</Text>
           }}
         />
       </ScrollView>

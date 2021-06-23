@@ -70,6 +70,7 @@ import {
      delAddFailRes: null,
      favouriteListResponse:{},
      favouriteListStatus:false,
+     setFavouriteListLoader:false,
      changePasswordResponse:{},
      changePasswordStatus:false,
      
@@ -183,7 +184,7 @@ import {
           return {...state, favouriteListStatus:false, favouriteListResponse: action.payload,         
         };
         case SET_FAVOURITE_LIST_LOADER:
-          return {...state, isLoading: action.payload
+          return {...state, setFavouriteListLoader: action.payload
         };
         case CHANGE_PASSWORD_REQUEST:
           return {...state,  changePasswordStatus:false, changePasswordResponse: action.payload, 
