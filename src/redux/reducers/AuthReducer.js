@@ -34,6 +34,7 @@ const initialState = {
   otpResponse: {},
   otpVerifyResponse: {},
   logoutResponse: {},
+  
 }
 
 export default function AuthReducer(state = initialState, action) {

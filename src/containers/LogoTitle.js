@@ -80,10 +80,9 @@ export default function LogoTitle(props) {
         style={{
           height: Scale(20),
           textAlignVertical: 'center',
-          marginLeft: Scale(50),
           color: '#fff',
           fontSize: Scale(16),
-          width: '60%',
+         
         }}>
         {currentAddress}
       </Text>

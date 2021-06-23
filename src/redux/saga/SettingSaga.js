@@ -36,7 +36,7 @@ import {
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILED,
-
+    SET_FAVOURITE_LIST_LOADER
     } from '../Types/type';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Request from '../../apiServices/Request'; 
@@ -402,8 +402,8 @@ export const MyOrderListSaga = function* MyOrderListSaga({data}) {
 // ====================== Favourite List POST ======================
 
 export const favouriteList = function* favouriteList({data}) {
-  console.log("Data",data)
-  yield put(favouriteListLoader(true));
+  yield put({type: SET_FAVOURITE_LIST_LOADER, payload: true});
+
   try {
       const response = yield call(Request, {
           url: 'restro/listFavouritedRestro',
@@ -413,7 +413,7 @@ export const favouriteList = function* favouriteList({data}) {
         
         if (response?.data?.error == true){
           yield put({ type: FAVOURITE_LIST_FAILED, payload: response?.data  });
-          yield put(favouriteListLoader(false));
+          yield put({type: SET_FAVOURITE_LIST_LOADER, payload:false});
           global.dropDownAlertRef.alertWithType(
             'error',
             'Error',
@@ -422,14 +422,14 @@ export const favouriteList = function* favouriteList({data}) {
         }
      else{ 
          yield put({ type: FAVOURITE_LIST_SUCCESS, payload: response });
-       
-         yield put(favouriteListLoader(false));
+         yield put({type: SET_FAVOURITE_LIST_LOADER, payload:false});
+         
      
       }
       
   }
   catch (e) {
-      yield put(favouriteListLoader(false));
+    yield put({type: SET_FAVOURITE_LIST_LOADER, payload:false});
       yield put({ type: FAVOURITE_LIST_FAILED, payload: e });
   }
 }

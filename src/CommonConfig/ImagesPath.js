@@ -65,6 +65,11 @@ const ImagesPath = {
   cameraSignup: require('../Assets/Images/camra2.png'),
   gallery: require('../Assets/Images/gallery.png'),
   profile: require('../Assets/Images/profile.png'),
+  whatsapp: require('../Assets/Images/whatsapp.png'),
+  gmail: require('../Assets/Images/gmail.png'),
+  fb: require('../Assets/Images/fb.png'),
+  Insta: require('../Assets/Images/Insta.png'),
+  Sms: require('../Assets/Images/Sms.png'),
 };
 
 export default ImagesPath;
