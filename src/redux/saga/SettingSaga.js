@@ -23,9 +23,6 @@ import {
     EDIT_PROFILE_REQUEST,
     EDIT_PROFILE_SUCCESS,
     EDIT_PROFILE_FAILED,
-    PROFILE_INFO_REQUEST,
-    PROFILE_INFO_SUCCESS,
-    PROFILE_INFO_FAILED,
     MYORDER_LIST_REQUEST,
     MYORDER_LIST_SUCCESS,
     MYORDER_LIST_FAILED,
@@ -40,9 +37,6 @@ import {
     } from '../Types/type';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Request from '../../apiServices/Request'; 
-import {
-  favouriteListLoader,
-} from '../actions/SettingActions';
 import { deleteAddressFailed, deleteAddressSuccess, signUpLogin } from '../actions';
 
 
@@ -298,38 +292,6 @@ export const EditProfileSaga = function* EditProfileSaga({data}) {
     catch (e) {
         
         yield put({ type: EDIT_PROFILE_FAILED, payload: e });
-    }
-}
-
-// ====================== Edit Profie POST ======================
-export const ProfileInfoSaga = function* ProfileInfoSaga({data}) {
-   
-    // 
-    try {
-        const response = yield call(Request, {
-            url: '/editUser',
-            method: 'POST',
-            data,
-          })
-          
-          if (response?.data?.error == true){
-            yield put({ type: PROFILE_INFO_FAILED, payload: response });
-            global.dropDownAlertRef.alertWithType(
-              'error',
-              'Error',
-               response?.data?.message,
-            );
-           
-          }
-       else{ 
-           yield put({ type: PROFILE_INFO_SUCCESS, payload: response });
-             
-        }
-        
-    }
-    catch (e) {
-        
-        yield put({ type: PROFILE_INFO_FAILED, payload: e });
     }
 }
 

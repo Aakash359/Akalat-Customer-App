@@ -23,9 +23,9 @@ import {
     EDIT_PROFILE_REQUEST,
     EDIT_PROFILE_SUCCESS,
     EDIT_PROFILE_FAILED,
-    PROFILE_INFO_REQUEST,
-    PROFILE_INFO_SUCCESS,
-    PROFILE_INFO_FAILED,
+    // PROFILE_INFO_REQUEST,
+    // PROFILE_INFO_SUCCESS,
+    // PROFILE_INFO_FAILED,
     MYORDER_LIST_REQUEST,
     MYORDER_LIST_SUCCESS,
     MYORDER_LIST_FAILED,
@@ -61,8 +61,6 @@ import {
      addressListStatus: false,
      editProfileResponse: {},
      editProfileStatus: false,
-     profileInfoResponse: {},
-     profileInfoStatus: false,
      myOrderListResponse: {},
      myOrderListStatus: false,
      error: "",
@@ -155,15 +153,6 @@ import {
         };
         case EDIT_PROFILE_FAILED:
           return {...state, editProfileStatus:false, editProfileResponse: action.payload,         
-        };
-        case PROFILE_INFO_REQUEST:
-          return {...state,  profileInfoStatus:false, profileInfoResponse: action.payload, 
-        };
-        case PROFILE_INFO_SUCCESS:
-          return {...state,  profileInfoStatus:true, profileInfoResponse: action.payload,
-        };
-        case PROFILE_INFO_FAILED:
-          return {...state, profileInfoStatus:false, profileInfoResponse: action.payload,         
         };
         case MYORDER_LIST_REQUEST:
           return {...state,  myOrderListStatus:false, myOrderListResponse: action.payload, 
