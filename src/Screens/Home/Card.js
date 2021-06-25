@@ -27,11 +27,19 @@ import {
 import axios from 'axios'
 import {API_BASE} from '../../apiServices/ApiService'
 import {AddressListResquest} from '../../redux/actions/SettingActions'
+import {
+  applyCoupon,
+  removeCoupon,
+  setApplyCouponError,
+} from '../../redux/actions/CouponActions'
+import {useSelector, useDispatch} from 'react-redux'
 
 function Card(props) {
   const [count, setIsPopupVisible] = useState(1)
+  const [coupon, setCoupon] = useState(props?.couponCode || '')
+
   const [det, setDet] = useState({
-    dis: 0,
+    dis: props?.applyCoupon?.discount_amount || 0,
     tax: 0,
     dc: 0,
     delivery: 0,
@@ -40,6 +48,7 @@ function Card(props) {
     id: null,
     selectedId: props?.selectedAddress || 0,
   })
+  const dispatch = useDispatch()
 
   React.useEffect(() => {
     props?.AddressListResquest({created_by: props?.user?._id})
@@ -108,6 +117,34 @@ function Card(props) {
         </Text>
       </View>
     )
+  }
+
+  const apply = () => {
+    if (coupon) {
+      dispatch(
+        applyCoupon({coupon_code: coupon, total_price: `${totalCartAmt}`}),
+      )
+    } else {
+      global.dropDownAlertRef.alertWithType(
+        'error',
+        'Error',
+        'Enter coupon code',
+      )
+    }
+  }
+
+  React.useEffect(() => {
+    if (!props?.couponCode) {
+      setCoupon('')
+      setDet({...det, dis: 0})
+    } else {
+      setCoupon(props?.couponCode)
+      setDet({...det, dis: props?.applyCoupon?.discount_amount || 0})
+    }
+  }, [props.couponCode])
+
+  const remove = () => {
+    dispatch(removeCoupon())
   }
 
   return (
@@ -218,25 +255,26 @@ function Card(props) {
                 alignSelf: 'center',
               }}
               placeholder="Coupon code"
+              value={coupon}
+              onChangeText={(text) => setCoupon(text)}
             />
-            <View style={styles.addButton}>
-              <TouchableOpacity
-                onPress={() =>
-                  global.dropDownAlertRef.alertWithType(
-                    'error',
-                    'Error',
-                    'Enter coupon code',
-                  )
-                }>
+            <TouchableOpacity
+              onPress={() => (props.couponCode ? remove() : apply())}>
+              <View
+                style={[
+                  styles.addButton,
+                  props.couponCode && {backgroundColor: 'red'},
+                ]}>
                 <Text
                   style={{
                     fontSize: Scale(16),
                     color: Colors.WHITE,
+                    fontWeight: '600',
                   }}>
-                  Apply
+                  {props.couponCode ? 'Remove' : 'Apply'}
                 </Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
           <View
             style={[
@@ -254,7 +292,7 @@ function Card(props) {
             </View>
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Total Discount</Text>
-              <Text style={styles.normatText1}>${det?.dis}</Text>
+              <Text style={styles.normatText1}>-${det?.dis}</Text>
             </View>
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Tax</Text>
@@ -294,7 +332,7 @@ function Card(props) {
             />
             {det?.dis ? (
               <Text style={[styles.itemText, {color: 'green'}]}>
-                You have saved $5 on this order
+                You have saved ${det?.dis} on this order
               </Text>
             ) : null}
           </View>
@@ -347,6 +385,7 @@ const mapStateToProps = ({
   Cart: {restroDetails, products, instruction, selectedAddress},
   Setting: {addressListResponse},
   Auth: {user},
+  coupon: {applyCoupon, couponCode},
 }) => {
   return {
     cartRestroDetails: restroDetails,
@@ -355,6 +394,8 @@ const mapStateToProps = ({
     instruction,
     selectedAddress,
     user,
+    applyCoupon,
+    couponCode,
   }
 }
 
