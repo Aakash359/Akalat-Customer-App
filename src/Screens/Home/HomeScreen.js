@@ -373,13 +373,13 @@ function HomeScreen(props) {
             style={styles.leftContainer}
             onPress={redirectToSortBy}>
             <Text style={styles.normalText}>Sort By</Text>
-            <Image source={ImagesPath.up} />
+            <Image source={ImagesPath.up} style={styles.UP} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.leftContainer}
             onPress={redirectToFilter}>
             <Text style={styles.normalText}>Filters</Text>
-            <Image source={ImagesPath.filter} />
+            <Image source={ImagesPath.filter} style={styles.Filter}/>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -429,6 +429,7 @@ const styles = StyleSheet.create({
   normalText: {
     fontSize: Scale(14),
     color: Colors.BORDERCOLOR,
+    fontWeight: 'bold',
   },
   filterContainer: {
     flexDirection: 'row',
@@ -472,6 +473,14 @@ const styles = StyleSheet.create({
     height: Scale(25),
     resizeMode: 'contain',
     tintColor: Colors.WHITE,
+  },
+  UP: {
+    height: Scale(25),
+    width: Scale(25),
+  },
+  Filter: {
+    height: Scale(25),
+    width: Scale(25),
   },
   cardStyle: {
     elevation: 3,

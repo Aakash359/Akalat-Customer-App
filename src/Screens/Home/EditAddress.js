@@ -8,8 +8,9 @@ import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 ``
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
-function EditAddress() {
-    const [activeTab, setActiveTab] = useState(0);
+function EditAddress(props) {
+    const {address} = props.route.params;
+    const [activeTab, setActiveTab] = useState(address?.address_type);
     const [value, setValue]=useState(false);
     const { navigate } = useNavigation();
     const navigation = useNavigation();
@@ -113,21 +114,24 @@ function EditAddress() {
                             placeholder="House No/Flat No"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={address?.house_name_and_no}
                         />
                         <FormInput
                             placeholder="Area"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={address?.area_name}
                         />
                         <FormInput
                             placeholder="Nearby"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={address?.nearby}
                         />
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10) }}>
-                            <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
-                            <Text onPress={() => setActiveTab(1)} style={activeTab == 1 ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
-                            <Text  onPress={() => setActiveTab(2)} style={activeTab == 2 ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
+                            <Text onPress={() => setActiveTab('HOME')} style={activeTab == "HOME" ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
+                            <Text onPress={() => setActiveTab("WORK")} style={activeTab == "WORK" ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
+                            <Text  onPress={() => setActiveTab("OTHER")} style={activeTab == 'OTHER' ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
                         </View>
                     <View style={{ marginTop: Scale(20) }}>
                         <CustomButton title="Save" isSecondary={true} onSubmit={redirectToMyAccount} />

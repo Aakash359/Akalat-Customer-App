@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, StatusBar, LayoutAnimation,FlatList, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
-import { Icon } from 'native-base';
+import { Text, View, StyleSheet, StatusBar, LayoutAnimation,FlatList, ScrollView, KeyboardAvoidingView, ImageBackground, Touchable, TouchableOpacity } from 'react-native';
+import { Icon, Item } from 'native-base';
 import { Colors, Scale, ImagesPath, Fonts,LogoutAlert } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
 import { AddressListResquest, deleteAddressRequest } from '../../redux/actions'
@@ -22,25 +22,15 @@ function ManageAddress() {
     
     const  user = useSelector((state) => state.Auth.user);
 
-    
-
-
-
      useEffect(() => {
 
         const data = { 
              "created_by": user?._id
              }
-       
-             setTimeout(() => {
-
-                dispatch(AddressListResquest(data));
-
-              }, 5000);
-             
-        
-
-      }, 
+          setTimeout(() => {
+              dispatch(AddressListResquest(data));
+             }, 1500);
+         }, 
       []); 
 
     const delAdd = () => {
@@ -51,8 +41,11 @@ function ManageAddress() {
     const redirectToAddress = () => {
         navigate('AddNewAddress');
     };
-    const EditAddress = () => {
-        navigate('EditAddress');
+    const EditAddress = (item) => {
+        navigate('EditAddress',{
+            address: item
+        });
+       
     };
     const renderItems = ({ item }) => (
       
@@ -64,7 +57,9 @@ function ManageAddress() {
                 <View style={{flexDirection:'row'}}>
                 
                     <Text onPress={() => setDeleteAdd({...deleteAdd, show: true, id: item?._id})} style={[styles.placeText,{color:Colors.APPCOLOR,fontWeight:'bold'}]}>Delete  </Text>
-                    <Text onPress={EditAddress} style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10),fontWeight:'bold'}]}>Edit</Text>
+                    
+                    <Text onPress={() => EditAddress(item)} style={[styles.placeText,{color:Colors.APPCOLOR,marginLeft:Scale(10),fontWeight:'bold'}]}>Edit</Text>
+                    
                 </View>
             </View>
             <View style={{flexDirection:'row',}}>
@@ -154,7 +149,7 @@ const styles = StyleSheet.create({
         borderRadius: Scale(10)
       },
     buttonContainer: {
-        // flexDirection: 'row',
+        
         alignItems: 'center',
         borderWidth: Scale(1),
         borderColor: Colors.WHITE,

@@ -22,7 +22,7 @@ function HelpSupport(props) {
         alert("Please enter subject")
         }
         else if(des == '') {
-          alert("please enter discription")
+          alert("Please enter description")
         }
         else
         {

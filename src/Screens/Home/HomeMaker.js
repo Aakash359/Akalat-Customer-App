@@ -21,7 +21,9 @@ function HomeMaker(props) {
   const [customizeModal ,setCustomizeModal] = useState(false);
   const toggleSwitch = () => setIsEnabled(!isEnabled);
   const addItemCount = () => {SetAddItem( addItem + 1);}
+  
   const dispatch = useDispatch();
+  
   const [list, setList] = React.useState({
     restroDetails: {},
     productList: [],
@@ -38,10 +40,11 @@ function HomeMaker(props) {
   }
   try {
     const res = await axios.post(url, payload)
-    console.log('homeMaker ',res);
+    
 
     if(res?.status === 200) {
-      setList({...list, restroDetails: res?.data?.data?.restro_detail, productList: res?.data?.data?.product_list, isLoading: false})
+      setList({...list, restroDetails: res?.data?.data?.restro_detail, productList: res?.data?.data?.product_list, productCategory:res?.data?.data?.product_list?.product_categories, isLoading: false})
+      
     }
     else {
       setList({...list, isLoading: false, error: res?.data?.message})
@@ -171,7 +174,7 @@ const subToCart = (item) => {
   const {subToCart} = props
   subToCart(item)
 }
-
+  
   const {restroDetails ={}} = props.route.params || {}
   
   const {restroDetails: resDet} = list
@@ -226,6 +229,7 @@ const subToCart = (item) => {
 
 
             </View>
+            <Text style={styles.categoryText}>Recommended food</Text>
             <FlatGrid
               itemDimension={130}
               data={list?.productList}
@@ -233,8 +237,10 @@ const subToCart = (item) => {
               spacing={Scale(12)}
               renderItem={({ item }) => {
                 let inCart = cartProducts?.find(i => i?._id === item?._id)
+                console.log("Aakash=======>",list)
                 return (
                   <View style={styles.itemContainer}>
+                    
                     <Image source={{uri:item?.image}} style={{resizeMode:'stretch',height:Scale(100),width:'100%',borderRadius:Scale(10),}}/>
                   <View style={{flexDirection:'row',marginVertical:Scale(5),alignItems:'center'}}>
                   <Image source={ImagesPath.veg}/>
@@ -361,6 +367,12 @@ const styles = StyleSheet.create({
     fontSize: Scale(12),
     
   },
+  categoryText:{
+    color: '#AB8F8E', 
+    fontSize: Scale(18),
+    marginLeft:Scale(30),
+    marginTop:Scale(10)
+  },
   logoStyle: {
     marginHorizontal: Scale(20),
     fontSize: Scale(25),
@@ -374,7 +386,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   gridView: {
-    marginTop: Scale(10),
+    
     marginHorizontal:Scale(13),
     flex: 1,
   },
