@@ -23,9 +23,6 @@ import {
     EDIT_PROFILE_REQUEST,
     EDIT_PROFILE_SUCCESS,
     EDIT_PROFILE_FAILED,
-    PROFILE_INFO_REQUEST,
-    PROFILE_INFO_SUCCESS,
-    PROFILE_INFO_FAILED,
     MYORDER_LIST_REQUEST,
     MYORDER_LIST_SUCCESS,
     MYORDER_LIST_FAILED,
@@ -36,13 +33,10 @@ import {
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILED,
-
+    SET_FAVOURITE_LIST_LOADER
     } from '../Types/type';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Request from '../../apiServices/Request'; 
-import {
-  favouriteListLoader,
-} from '../actions/SettingActions';
 import { deleteAddressFailed, deleteAddressSuccess, signUpLogin } from '../actions';
 
 
@@ -173,6 +167,7 @@ export const FaqSaga = function* FaqSaga({data}) {
 }
 
 // ====================== Help and Support POST ======================
+
 export const HelpSaga = function* HelpSaga({data}) {
  
     try {
@@ -301,38 +296,6 @@ export const EditProfileSaga = function* EditProfileSaga({data}) {
     }
 }
 
-// ====================== Edit Profie POST ======================
-export const ProfileInfoSaga = function* ProfileInfoSaga({data}) {
-   
-    // 
-    try {
-        const response = yield call(Request, {
-            url: '/editUser',
-            method: 'POST',
-            data,
-          })
-          
-          if (response?.data?.error == true){
-            yield put({ type: PROFILE_INFO_FAILED, payload: response });
-            global.dropDownAlertRef.alertWithType(
-              'error',
-              'Error',
-               response?.data?.message,
-            );
-           
-          }
-       else{ 
-           yield put({ type: PROFILE_INFO_SUCCESS, payload: response });
-             
-        }
-        
-    }
-    catch (e) {
-        
-        yield put({ type: PROFILE_INFO_FAILED, payload: e });
-    }
-}
-
 // ====================== My Order List POST ======================
 export const MyOrderListSaga = function* MyOrderListSaga({data}) {
    
@@ -402,8 +365,8 @@ export const MyOrderListSaga = function* MyOrderListSaga({data}) {
 // ====================== Favourite List POST ======================
 
 export const favouriteList = function* favouriteList({data}) {
-  console.log("Data",data)
-  yield put(favouriteListLoader(true));
+  yield put({type: SET_FAVOURITE_LIST_LOADER, payload: true});
+
   try {
       const response = yield call(Request, {
           url: 'restro/listFavouritedRestro',
@@ -413,7 +376,7 @@ export const favouriteList = function* favouriteList({data}) {
         
         if (response?.data?.error == true){
           yield put({ type: FAVOURITE_LIST_FAILED, payload: response?.data  });
-          yield put(favouriteListLoader(false));
+          yield put({type: SET_FAVOURITE_LIST_LOADER, payload:false});
           global.dropDownAlertRef.alertWithType(
             'error',
             'Error',
@@ -422,14 +385,14 @@ export const favouriteList = function* favouriteList({data}) {
         }
      else{ 
          yield put({ type: FAVOURITE_LIST_SUCCESS, payload: response });
-       
-         yield put(favouriteListLoader(false));
+         yield put({type: SET_FAVOURITE_LIST_LOADER, payload:false});
+         
      
       }
       
   }
   catch (e) {
-      yield put(favouriteListLoader(false));
+    yield put({type: SET_FAVOURITE_LIST_LOADER, payload:false});
       yield put({ type: FAVOURITE_LIST_FAILED, payload: e });
   }
 }
@@ -472,7 +435,6 @@ export function* settingSaga() {
     yield takeEvery(ADDADDRESS_REQUEST, AddAddressSaga);
     yield takeEvery(ADDRESSLIST_REQUEST, AddressListSaga);
     yield takeEvery(EDIT_PROFILE_REQUEST, EditProfileSaga);
-    yield takeEvery(PROFILE_INFO_REQUEST, ProfileInfoSaga);
     yield takeEvery(MYORDER_LIST_REQUEST, MyOrderListSaga);
     yield takeEvery(DELETE_ADDRESS_REQUEST, deleteAddress);
     yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList);

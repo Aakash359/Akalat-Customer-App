@@ -139,8 +139,7 @@ const styles = StyleSheet.create({
     borderWidth: Scale(1),
     borderColor: Colors.WHITE,
     borderRadius: Scale(26),
-    // width:Scale(180),
-    // height:Scale(45)
+    overflow: 'hidden',
   },
   cancelButton: {
     width: '45%',
@@ -201,23 +200,24 @@ const styles = StyleSheet.create({
   textStyle: {
     backgroundColor: Colors.WHITE,
     borderRadius: Scale(20),
-    width: Scale(100),
-    height: Scale(40),
+    width: Scale(90),
+    paddingVertical: 10,
     textAlignVertical: 'center',
     textAlign: 'center',
     color: Colors.APPCOLOR,
-    fontSize: Scale(14),
-    fontWeight: 'bold'
+    fontSize: Scale(15),
+    fontWeight: 'bold',
+    zIndex: 1,
   },
   inActiveStyle: {
-    width: Scale(105),
-    height: Scale(40),
-    borderRadius: Scale(18),
+    width: Scale(90),
+    paddingVertical: 10,
+    borderRadius: Scale(20),
     textAlignVertical: 'center',
     textAlign: 'center',
     color: Colors.WHITE,
-    fontSize: Scale(14),
-    fontWeight: 'bold'
+    fontSize: Scale(15),
+    fontWeight: 'bold',
   },
   loginInputCont: {
     flex: 1,

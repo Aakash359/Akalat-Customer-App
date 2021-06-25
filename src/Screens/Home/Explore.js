@@ -261,7 +261,7 @@ function Explore() {
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
-              return <Text>No data found</Text>
+              return <Text style={{textAlign:'center'}}>No data found</Text>
             }}
           />
         </ScrollView>

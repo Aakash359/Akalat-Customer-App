@@ -16,12 +16,13 @@ function Address() {
     const { navigate } = useNavigation();
     const navigation = useNavigation();    
     const [logoutModal, setLogoutModal] = useState(false);
-    const [activeTab,setActiveTab]=useState(0);
+    const [activeTab,setActiveTab]=useState("HOME");
     const [nearby,setNearby] = useState('');
     const [house_name_and_no ,setHouseName] = useState('');
     const [area_name ,setAreaName] = useState('');
     const [location, setLocation] = useState(null)
     const [currentAddress,setAddress] = useState('');
+    
     const [addAddress, setaddAddress] = React.useState({
       addUserAddress:[],
       isLoading: true
@@ -151,7 +152,7 @@ function Address() {
             .catch((error) => console.warn(error)); 
          const data = { 
           
-          "address_type": activeTab==0 ? 'HOME' : (activeTab==1)? 'WORK' : 'OTHER',  
+          "address_type": activeTab,  
           'lng': location?.latitude,
           "lat": location?.longitude,
           'house_name_and_no': house_name_and_no,
@@ -205,9 +206,9 @@ function Address() {
                             onChangeText={(text) => setNearby(text)}
                         />
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Scale(10)}}>
-                        <Text onPress={() => setActiveTab(0)} style={activeTab == 0 ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
-                            <Text onPress={() => setActiveTab(1)} style={activeTab == 1 ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
-                            <Text  onPress={() => setActiveTab(2)} style={activeTab == 2 ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
+                        <Text onPress={() => setActiveTab('HOME')} style={activeTab == 'HOME' ? styles.forgotButton1 : styles.forgotButton}>Home</Text>
+                            <Text onPress={() => setActiveTab('WORK')} style={activeTab == "WORK" ? styles.forgotButton1 : styles.forgotButton}>Work</Text>
+                            <Text  onPress={() => setActiveTab('OTHER')} style={activeTab == "OTHER" ? styles.forgotButton1 : styles.forgotButton}>Other</Text>
                        
                         </View>
                         <View style={{ marginTop: Scale(10) }}>

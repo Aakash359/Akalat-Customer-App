@@ -3,9 +3,10 @@ import { Text, View, StyleSheet, StatusBar, Image, FlatList, ImageBackground } f
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import { useNavigation } from '@react-navigation/native';
-import { favouriteListRequest, } from '../../redux/actions'
+import { favouriteListRequest,favouriteListLoader } from '../../redux/actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
+
 function Favorites() {
   const [checked, setChecked] = useState(false)
   const { navigate } = useNavigation();
@@ -13,9 +14,11 @@ function Favorites() {
   const dispatch = useDispatch();
   const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
   const  favouriteList = favouriteListResponse?.data?.restroList || []
- 
+  
+  console.log("Aakash======>",favouriteList)
+  
   const  user = useSelector((state) => state.Auth.user);
-  const  {isLoading} = useSelector((state) => state.Auth);
+  const  {setFavouriteListLoader} = useSelector((state) => state.Setting);
   const onPressChecked = () => {
     setChecked(!checked);
   };
@@ -27,12 +30,16 @@ function Favorites() {
          }
         
         dispatch(favouriteListRequest(data));
+        dispatch(favouriteListLoader(true))
      }, 
   []); 
   const renderItems = ({ item, index }) => (
+    
     <View style={styles.cardStyle}>
+      
       <View style={styles.imageContainer}>
-        <Image  source={{ uri: item?.image }} style={styles.backgroundStyle1} />
+      
+        <Image  source={{ uri: item?.building_front_img }} style={styles.backgroundStyle1} />
         <View style={styles.heading}>
           <View style={styles.textContainer}>
             <Text style={styles.primaryText}>{item?.restro_name}</Text>
@@ -56,8 +63,9 @@ function Favorites() {
           <Text style={styles.textStyle1}>2.7 km</Text>
           <Text style={styles.normalText}>Distance</Text>
         </View>
-        <LoadWheel visible={isLoading} />
+        
       </View>
+      
     </View>
   );
 
@@ -79,19 +87,24 @@ function Favorites() {
         <Text style={styles.headerText}>Favorites </Text>
       </View>
       <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
+     
         <FlatList
           data={favouriteList}
           renderItem={renderItems}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => {
             return (
+                
                 <Text style={{ alignSelf: 'center' }}>
+                  <LoadWheel visible={setFavouriteListLoader} />
                     You don't have any favourite list
                 </Text>
             )
         }}
         />
+        
       </ImageBackground>
+      
     </View>
   );
 }

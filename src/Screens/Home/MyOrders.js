@@ -303,7 +303,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     borderRadius: Scale(20),
     width: Scale(90),
-    // height: Scale(40),
     paddingVertical: 10,
     textAlignVertical: 'center',
     textAlign: 'center',
@@ -314,7 +313,6 @@ const styles = StyleSheet.create({
   },
   inActiveStyle: {
     width: Scale(90),
-    // height: Scale(40),
     paddingVertical: 10,
     borderRadius: Scale(20),
     textAlignVertical: 'center',

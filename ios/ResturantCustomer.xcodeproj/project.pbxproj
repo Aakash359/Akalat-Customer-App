@@ -298,7 +298,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				B619487BA973A2090466C41E /* [CP] Copy Pods Resources */,
-				EE701901602EE4E8FF5CF12E /* [CP-User] [RNFB] Core Configuration */,
+				CCB685000284729D85E4AB70 /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -601,7 +601,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ResturantCustomer/Pods-ResturantCustomer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EE701901602EE4E8FF5CF12E /* [CP-User] [RNFB] Core Configuration */ = {
+		CCB685000284729D85E4AB70 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

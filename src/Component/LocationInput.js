@@ -75,23 +75,22 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     height: Scale(45),
     paddingRight: Scale(5),
-    paddingHorizontal: Scale(8),    
-    paddingVertical: 0,
+    paddingHorizontal: Scale(18),    
     borderRadius: Scale(5),
   },
   touachableButton: {
-      justifyContent:'center',
+    justifyContent:'center',
     right: Scale(3),
     height: Scale(45),
     paddingLeft:Scale(5),
-   // width: Scale(30),
+  
   },
   buttonImage: {
       textAlign:'center',
       textAlignVertical:'center',
       paddingLeft:Scale(5),
-    fontSize: Scale(20),
-    color: "#F7A00D",
+      fontSize: Scale(20),
+      color: "#F7A00D",
   },
   textStyle:{
     color:Colors.BORDERCOLOR,

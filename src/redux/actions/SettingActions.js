@@ -55,15 +55,6 @@ export const HelpRequest = (data) => {
     data,
   }
 }
-
-// =================Edit Profile REQUEST =================
-export const ProfileInfoResquest = (data) => {
-  return {
-    type: PROFILE_INFO_REQUEST,
-    data,
-  }
-}
-
 // =================Edit Profile REQUEST =================
 export const EditProfileResquest = (data) => {
   return {

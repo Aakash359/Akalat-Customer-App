@@ -138,32 +138,53 @@ function ShareScreen() {
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.INSTAGRAM)}
                 style={{
-                  backgroundColor: 'red',
+                  
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                <Text>Instagram</Text>
+                   <Image
+                    resizeMode="contain"
+                    style={{height:40,width:40,alignSelf:'center'}}
+                    source={ImagesPath.Insta} 
+                            />
+                <Text style={{
+                 marginTop: 10,textAlign:'center'
+               }}>Instagram</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.FACEBOOK)}
                 style={{
-                  backgroundColor: 'red',
+                  
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                <Text>Facebook</Text>
+                  <Image
+                    resizeMode="contain"
+                    style={{height:40,width:40,alignSelf:'center'}}
+                    source={ImagesPath.fb} 
+                  />
+                <Text style={{
+                 marginTop: 10,textAlign:'center'
+               }}>Facebook</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.WHATSAPP)}
                 style={{
-                  backgroundColor: 'red',
+                
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                <Text>Whatsapp</Text>
+                  <Image
+                    resizeMode="contain"
+                    style={{height:40,width:40,alignSelf:'center'}}
+                    source={ImagesPath.whatsapp} 
+                  />
+                <Text style={{
+                 marginTop: 10,textAlign:'center'
+               }}>Whatsapp</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -174,22 +195,36 @@ function ShareScreen() {
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.EMAIL)}
                 style={{
-                  backgroundColor: 'red',
+                 
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                <Text>Gmail</Text>
+                  <Image
+                    resizeMode="contain"
+                    style={{height:40,width:40,alignSelf:'center'}}
+                    source={ImagesPath.gmail} 
+                  />
+                <Text style={{
+                 marginTop: 10,textAlign:'center'
+               }}>Gmail</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.SMS)}
                 style={{
-                  backgroundColor: 'red',
+                  
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                <Text>Messages</Text>
+                   <Image
+                    resizeMode="contain"
+                    style={{height:40,width:40,alignSelf:'center'}}
+                    source={ImagesPath.Sms} 
+                  />
+                <Text style={{
+                 marginTop: 10,textAlign:'center'
+               }}>Messages</Text>
               </TouchableOpacity>
               <View
                 style={{

@@ -113,7 +113,7 @@ function Card(props) {
           flex: 1,
         }}>
         <Text style={{fontSize: 20, fontWeight: '500'}}>
-          Your cart is empty
+          Your cart is empty !
         </Text>
       </View>
     )
@@ -223,6 +223,7 @@ function Card(props) {
           </View>
           <View style={{marginHorizontal: scale(20), marginVertical: -20}}>
             <FormArea
+              
               placeholder="Any Instructions..."
               autoCapitalize="none"
               value={props?.instruction}
@@ -346,7 +347,7 @@ function Card(props) {
               ]}>
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText3}>Delivery Address</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('AddNewAddress') }>
                   <Text style={styles.countText}>change</Text>
                 </TouchableOpacity>
               </View>
@@ -363,7 +364,7 @@ function Card(props) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <TouchableOpacity onPress={() => navigate('AddNewAddress')}>
+              <TouchableOpacity onPress={() => navigate('EditAddress')}>
                 <Text>Add address</Text>
               </TouchableOpacity>
             </View>

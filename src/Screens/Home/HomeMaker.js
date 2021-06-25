@@ -21,7 +21,9 @@ function HomeMaker(props) {
   const [customizeModal ,setCustomizeModal] = useState(false);
   const toggleSwitch = () => setIsEnabled(!isEnabled);
   const addItemCount = () => {SetAddItem( addItem + 1);}
+  
   const dispatch = useDispatch();
+  
   const [list, setList] = React.useState({
     restroDetails: {},
     productList: [],
@@ -38,10 +40,11 @@ function HomeMaker(props) {
   }
   try {
     const res = await axios.post(url, payload)
-    console.log('homeMaker ',res);
+    
 
     if(res?.status === 200) {
-      setList({...list, restroDetails: res?.data?.data?.restro_detail, productList: res?.data?.data?.product_list, isLoading: false})
+      setList({...list, restroDetails: res?.data?.data?.restro_detail, productList: res?.data?.data?.product_list, productCategory:res?.data?.data?.product_list?.product_categories, isLoading: false})
+      
     }
     else {
       setList({...list, isLoading: false, error: res?.data?.message})
@@ -135,7 +138,7 @@ const renderCustomizeModal = () =>  {
                   <TouchableOpacity onPress={() => {
                     setCustomizeModal(false),
                     navigate('Order',{orderCount : addItem})}} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: Scale(45), backgroundColor: Colors.APPCOLOR, borderRadius: Scale(35), marginBottom:Scale(20),marginTop: Scale(35), marginHorizontal: Scale(20) }}>
-                      <Text style={{ color: Colors.WHITE, fontSize: Scale(15), fontFamily: Fonts.Bold }}>Add To Cart</Text>
+                      <Text style={{ color: Colors.WHITE, fontSize: Scale(15), fontFamily: Fonts.Regular }}>Add To Cart</Text>
                   </TouchableOpacity>
 
 
@@ -171,8 +174,9 @@ const subToCart = (item) => {
   const {subToCart} = props
   subToCart(item)
 }
-
+  
   const {restroDetails ={}} = props.route.params || {}
+  
   const {restroDetails: resDet} = list
   const {cartProducts} = props
   const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
@@ -184,7 +188,7 @@ const subToCart = (item) => {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-      <ImageBackground source={{uri: resDet?.image}} style={styles.backgroundStyle}>
+      <ImageBackground resizeMode='cover'  source={{uri: restroDetails?.building_front_img}} style={styles.backgroundStyle}>
         <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
         <Text style={styles.headingText}>{restroDetails?.restro_name}</Text>
           <Text style={styles.bottomText}>{restroDetails?.street_name}, {restroDetails?.area_name}, {restroDetails?.region}, {restroDetails?.state}</Text>
@@ -225,6 +229,7 @@ const subToCart = (item) => {
 
 
             </View>
+            <Text style={styles.categoryText}>Recommended food</Text>
             <FlatGrid
               itemDimension={130}
               data={list?.productList}
@@ -232,8 +237,10 @@ const subToCart = (item) => {
               spacing={Scale(12)}
               renderItem={({ item }) => {
                 let inCart = cartProducts?.find(i => i?._id === item?._id)
+                console.log("Aakash=======>",list)
                 return (
                   <View style={styles.itemContainer}>
+                    
                     <Image source={{uri:item?.image}} style={{resizeMode:'stretch',height:Scale(100),width:'100%',borderRadius:Scale(10),}}/>
                   <View style={{flexDirection:'row',marginVertical:Scale(5),alignItems:'center'}}>
                   <Image source={ImagesPath.veg}/>
@@ -265,8 +272,8 @@ const subToCart = (item) => {
             {cartProducts?.length ?
                          <View style = {{height:'15%',paddingHorizontal:'5%',flexDirection:'row',padding:10, justifyContent:'space-between', maxHeight:'15%',backgroundColor: Colors.APPCOLOR}}>
                             <View style ={{alignItems:'flex-start'}}>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Bold }}>{`$ ${totalCartAmt}`}</Text>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Bold }}>{cartProducts?.length +' items in cart'}</Text>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Regular }}>{`$ ${totalCartAmt}`}</Text>
+                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Regular }}>{cartProducts?.length +' items in cart'}</Text>
                             </View>
                              <TouchableOpacity onPress={() => props.navigation.navigate('Card')}
                               
@@ -360,6 +367,12 @@ const styles = StyleSheet.create({
     fontSize: Scale(12),
     
   },
+  categoryText:{
+    color: '#AB8F8E', 
+    fontSize: Scale(18),
+    marginLeft:Scale(30),
+    marginTop:Scale(10)
+  },
   logoStyle: {
     marginHorizontal: Scale(20),
     fontSize: Scale(25),
@@ -373,7 +386,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   gridView: {
-    marginTop: Scale(10),
+    
     marginHorizontal:Scale(13),
     flex: 1,
   },

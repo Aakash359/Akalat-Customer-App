@@ -1,11 +1,9 @@
-import * as React from 'react'
+import React, {useEffect } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   StatusBar,
-  ScrollView,
-  FlatList,
   ImageBackground,
 } from 'react-native'
 import {Icon} from 'native-base'
@@ -14,18 +12,39 @@ import {CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {connect} from 'react-redux'
 import {getUserDetails} from '../../redux/actions/AuthActions'
+import { useSelector, useDispatch } from 'react-redux';
+
 function Profile(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const redirectToEditProfile = () => {
-    navigate('EditProfile')
+  const dispatch = useDispatch();
+
+  const EditProfile = (user) => {
+
+    navigate('EditProfile',{
+       profileDetails: user
+  })
+    
   }
+  const  user = useSelector((state) => state.Auth.user);
 
-  React.useEffect(() => {
-    props.getUserDetails({_id: props?.user?._id})
-  }, [])
+ 
 
-  const {user} = props
+  useEffect(() => {
+
+    const data = { 
+         "_id": user?._id
+         }
+   
+         setTimeout(() => {
+
+            dispatch(getUserDetails(data));
+
+          }, 5000);
+        }, 
+  []); 
+
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -58,10 +77,11 @@ function Profile(props) {
         <Text style={styles.textStyle}>Email Address</Text>
         <Text style={styles.inputStyle}>{user?.email}</Text>
         <View style={{justifyContent: 'flex-end', flex: 1}}>
+
           <CustomButton
             title="Edit Profile"
             isSecondary={true}
-            onSubmit={redirectToEditProfile}
+            onPress={() => EditProfile(user)}
           />
         </View>
       </ImageBackground>
@@ -69,17 +89,9 @@ function Profile(props) {
   )
 }
 
-const mapStateToProps = ({Auth: {user}}) => {
-  return {
-    user,
-  }
-}
 
-const mapDispatchToProps = {
-  getUserDetails: getUserDetails,
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default Profile
 const styles = StyleSheet.create({
   container: {
     flex: 1,

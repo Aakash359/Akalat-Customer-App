@@ -7,21 +7,29 @@ import {
   Image,
   PermissionsAndroid,
   ToastAndroid,
+  Text
 } from 'react-native'
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'
+import {
+  androidMapAPIKey,} from '../CommonConfig';
+import MapView, {PROVIDER_GOOGLE, Marker,Callout,Polyline} from 'react-native-maps'
 import Geolocation from 'react-native-geolocation-service'
 import {bool, func} from 'prop-types'
+import MapViewDirections from 'react-native-maps-directions';
 
 const markers = [
   {
     coordinate: {
-      latitude: 30.7335,
+      latitude: 21.192572,
       longitude: 76.7794,
     },
     image: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg',
     title: '',
   },
 ]
+
+const LATITUDE = 70.5017317;
+const LONGITUDE =  77.083698;
+
 export class MapScreen extends Component {
   constructor() {
     super()
@@ -31,17 +39,25 @@ export class MapScreen extends Component {
       loading: false,
       showLocationDialog: true,
       location: undefined,
+      latitude: LATITUDE,
+      longitude: LONGITUDE,
+      routeCoordinates: [],
+
     }
   }
 
   async componentDidMount() {
+   
     const hasLocationPermission = await this.hasLocationPermission()
+    
+    
     if (!hasLocationPermission) {
       return
     } else {
       this.getLocation()
     }
   }
+
 
   hasLocationPermissionIOS = async () => {
     const openSetting = () => {
@@ -168,23 +184,81 @@ export class MapScreen extends Component {
           showsUserLocation={true}
           showsCompass={true}
           provider={PROVIDER_GOOGLE}
-          ref={(c) => (this.mapView = c)}
-        />
-        {markers.map((marker, index) => (
+          
+        >
+        
           <Marker
-            key={`marker-${index}`}
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={marker.description}
-            onPress={onMarkerPress}>
-            <View style={{height: 50, width: 50}}>
-              <Image
-                source={{uri: marker.image}}
-                style={{height: 80, width: 80, justifyContent: 'center'}}
-              />
-            </View>
-          </Marker>
-        ))}
+            
+            coordinate={{latitude:  26.4640454,
+              longitude: 80.3261518,}}
+
+              
+            
+              source={require('../Assets/Images/bell.png')}
+                style={{height: 180, width: 180, justifyContent: 'center'}}
+              >
+              <Callout tooltip>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}>Favourite Restaurant</Text>
+             
+                  <Image 
+                    style={styles.image}
+                    source={require('../Assets/Images/back.png')}
+                  />
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+              </View>
+            </Callout>
+           
+            </Marker>
+
+            <Marker
+            
+            coordinate={{latitude:  26.4640454,
+              longitude: 80.32,}}
+
+              
+            
+              source={require('../Assets/Images/bell.png')}
+                style={{height: 180, width: 180, justifyContent: 'center'}}
+              >
+              <Callout tooltip>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}>Favourite Restaurant</Text>
+             
+                  <Image 
+                    style={styles.image}
+                    source={require('../Assets/Images/back.png')}
+                  />
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+              </View>
+            </Callout>
+           
+            </Marker>
+            <Polyline
+          coordinates={[
+            {latitude:
+              this.state.location != undefined
+                ? this.state.location.coords.latitude
+                : 21.192572,
+            longitude:
+              this.state.location != undefined
+                ? this.state.location.coords.longitude
+                : 72.799736,},
+            { latitude: 26.4640454, longitude: 80.32 }]}
+          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColors={['#7F0000']}
+          strokeWidth={6}
+        />
+            
+         
+     
+        </MapView>
       </View>
     )
   }
@@ -194,3 +268,48 @@ MapScreen.propTypes = {
   onMarkerPress: func.isRequired,
 }
 export default MapScreen
+
+const styles = StyleSheet.create({
+  map: {
+    height: '100%'
+  },
+  // Callout bubble
+  bubble: {
+    flexDirection: 'column',
+    alignSelf: 'flex-start',
+    backgroundColor: '#fff',
+    borderRadius: 6,
+    borderColor: '#ccc',
+    borderWidth: 0.5,
+    padding: 15,
+    width: 150,
+  },
+  // Arrow below the bubble
+  arrow: {
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    borderTopColor: '#fff',
+    borderWidth: 16,
+    alignSelf: 'center',
+    marginTop: -32,
+  },
+  arrowBorder: {
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    borderTopColor: '#007a87',
+    borderWidth: 16,
+    alignSelf: 'center',
+    marginTop: -0.5,
+    // marginBottom: -15
+  },
+  // Character name
+  name: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  // Character image
+  image: {
+    width: "100%",
+    height: 100,
+  },
+});
