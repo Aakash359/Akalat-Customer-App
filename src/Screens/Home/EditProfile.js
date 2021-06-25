@@ -7,20 +7,17 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { EditProfileResquest,loaderRequest } from '../../redux/actions';
 
-function Profile() {
+function Profile(props) {
     const [edit_id, setEdit_Id] = useState(0);
     const dispatch = useDispatch();
     const [first_name, setfirst_name] = useState('');
     const [last_name, setlast_name] = useState('');
     const [phone, setphone] = useState('');
     const [email, setemail] = useState('');
+    const {profileDetails}= props.route.params
     const { navigate } = useNavigation();
     const navigation = useNavigation();
-    const user = useSelector((state) => state.Auth.user);
-    // const redirectToMyAccount = () => {
-    //     navigate('Favorites');
-    
-    console.log('================================user data',user?._id);
+    console.log('Aakash====>',profileDetails);
     const onSave = async() =>{
        
         let reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -41,11 +38,11 @@ function Profile() {
         }
         else {
           const data = { 
-            'first_name': first_name,
-            'last_name':last_name,
-            'phone': phone,
-            'email': email,
-            '_id':  user != undefined ? user?._id : 0
+            'first_name': profileDetails?.first_name,
+            'last_name':profileDetails?.last_name,
+            'phone': profileDetails?.phone,
+            'email': profileDetails?.email,
+            '_id':  profileDetails?._id != undefined ? profileDetails?._id : 0
             }
 
           dispatch(loaderRequest(true))
@@ -59,6 +56,7 @@ function Profile() {
          
         }
       }
+
     
     return (
         <View style={styles.container}>
@@ -67,6 +65,7 @@ function Profile() {
                 backgroundColor={Colors.APPCOLOR}
                 barStyle="light-content"
             />
+            
             <View style={styles.headerContainer}>
                 <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
             </View>
@@ -75,12 +74,12 @@ function Profile() {
                 <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                     enabled>
                     <ScrollView indicatorStyle='white'>
-
+                    
                         <FormInput
                             placeholder="First Name"
                             autoCapitalize="none"
                             maxLength={30}
-                            value={first_name}
+                            value={profileDetails?.first_name}
                             // editable={edit_id == 0 ? false : true}
                             onChangeText={(text) => setfirst_name(text)}
                         />
@@ -88,7 +87,7 @@ function Profile() {
                             placeholder="Last Name"
                             autoCapitalize="none"
                             maxLength={30}
-                            value={last_name}
+                            value={profileDetails?.last_name}
                             // editable={edit_id == 0 ? false : true}
                             onChangeText={(text) => setlast_name(text)}
                         />
@@ -97,7 +96,7 @@ function Profile() {
                             autoCapitalize="none"
                             keyboardType={'numeric'}
                             maxLength={30}
-                            value={phone}
+                            value={profileDetails?.phone}
                             // editable={edit_id == 0 ? false : true}
                             onChangeText={(text) => setphone(text)}
                         />
@@ -106,7 +105,7 @@ function Profile() {
                             keyboardType="email-address"
                             autoCapitalize="none"
                             maxLength={30}
-                            value={email}
+                            value={profileDetails?.email}
                             // editable={edit_id == 0 ? false : true}
                             onChangeText={(text) => setemail( text)}
                         />

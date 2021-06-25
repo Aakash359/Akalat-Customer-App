@@ -167,6 +167,7 @@ export const FaqSaga = function* FaqSaga({data}) {
 }
 
 // ====================== Help and Support POST ======================
+
 export const HelpSaga = function* HelpSaga({data}) {
  
     try {
@@ -434,7 +435,6 @@ export function* settingSaga() {
     yield takeEvery(ADDADDRESS_REQUEST, AddAddressSaga);
     yield takeEvery(ADDRESSLIST_REQUEST, AddressListSaga);
     yield takeEvery(EDIT_PROFILE_REQUEST, EditProfileSaga);
-    yield takeEvery(PROFILE_INFO_REQUEST, ProfileInfoSaga);
     yield takeEvery(MYORDER_LIST_REQUEST, MyOrderListSaga);
     yield takeEvery(DELETE_ADDRESS_REQUEST, deleteAddress);
     yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList);

@@ -18,6 +18,10 @@ import {
   UPDATE_USER_DETAILS,
   SET_SIGNUP_STATUS,
   SIGNUP_LOGIN,
+  GET_USER_DETAILS_REQUEST,
+  GET_USER_DETAILS_SUCCESS,
+  GET_USER_DETAILS_FAILED,
+
 } from '../Types/type'
 
 const initialState = {
@@ -34,6 +38,8 @@ const initialState = {
   otpResponse: {},
   otpVerifyResponse: {},
   logoutResponse: {},
+  getUserDetailsResponse:{},
+  getUserDetailsStatus:false
   
 }
 
@@ -92,10 +98,21 @@ export default function AuthReducer(state = initialState, action) {
     case LOGOUT_FAILED:
       return {...state, logoutStatus: false, logoutResponse: action.payload}
 
+    case GET_USER_DETAILS_REQUEST:
+      return {...state, getUserDetailsStatus: false, getUserDetailsResponse: action.payload}
+  
+    case GET_USER_DETAILS_SUCCESS:
+      return {...state, getUserDetailsStatus: true, getUserDetailsResponse: action.payload}
+  
+    case GET_USER_DETAILS_FAILED:
+      return {...state, getUserDetailsStatus: false, getUserDetailsResponse: action.payload}
+
     case LOADER_REQUEST:
       return {...state, isLoading: action.payload}
+
     case UPDATE_USER_DETAILS:
       return {...state, user: {...state.user, ...action.payload}}
+      
     default:
       return state
   }

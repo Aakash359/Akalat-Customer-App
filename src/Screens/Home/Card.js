@@ -104,7 +104,7 @@ function Card(props) {
           flex: 1,
         }}>
         <Text style={{fontSize: 20, fontWeight: '500'}}>
-          Your cart is empty
+          Your cart is empty !
         </Text>
       </View>
     )
@@ -186,6 +186,7 @@ function Card(props) {
           </View>
           <View style={{marginHorizontal: scale(20), marginVertical: -20}}>
             <FormArea
+              
               placeholder="Any Instructions..."
               autoCapitalize="none"
               value={props?.instruction}

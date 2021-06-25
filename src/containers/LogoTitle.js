@@ -81,6 +81,7 @@ export default function LogoTitle(props) {
           height: Scale(20),
           textAlignVertical: 'center',
           color: '#fff',
+          
           fontSize: Scale(16),
          
         }}>
