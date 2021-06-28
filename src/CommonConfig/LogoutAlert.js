@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, Modal, TouchableOpacity, Text} from 'react-native';
-import {Scale, Colors, Fonts} from './index';
+import React, {Component} from 'react'
+import {View, Modal, TouchableOpacity, Text} from 'react-native'
+import {Scale, Colors, Fonts} from './index'
 export const LogoutAlert = ({
   visible,
   alertTitle,
@@ -32,7 +32,7 @@ export const LogoutAlert = ({
           <Text
             style={{
               fontSize: Scale(20),
-              fontFamily: Fonts.Regular,
+              // fontFamily: Fonts.Regular,
               color: Colors.BUTTON_COLOR,
               width: '80%',
               textAlign: 'center',
@@ -43,7 +43,7 @@ export const LogoutAlert = ({
           <Text
             style={{
               fontSize: Scale(16),
-              fontFamily: Fonts.Medium,
+              // fontFamily: Fonts.Medium,
               color: 'rgb(100,100,100)',
               width: '80%',
               textAlign: 'center',
@@ -62,24 +62,24 @@ export const LogoutAlert = ({
               flexDirection: 'row',
               marginTop: Scale(25),
               alignSelf: 'center',
-              justifyContent : 'space-around',
-              marginBottom : Scale(20)
+              justifyContent: 'space-around',
+              marginBottom: Scale(20),
             }}>
-                <TouchableOpacity
+            <TouchableOpacity
               onPress={onPressRightButton}
               style={{
                 width: '45%',
                 height: '100%',
-                backgroundColor: "#909090",
+                backgroundColor: '#909090',
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius : Scale(30)
+                borderRadius: Scale(30),
               }}>
               <Text
                 style={{
                   color: Colors.WHITE,
                   fontSize: Scale(16),
-                  fontFamily: Fonts.Medium,
+                  //fontFamily: Fonts.Medium,
                 }}>
                 {rightButtonText}
               </Text>
@@ -92,22 +92,20 @@ export const LogoutAlert = ({
                 backgroundColor: Colors.APPCOLOR,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius : Scale(30)
+                borderRadius: Scale(30),
               }}>
               <Text
                 style={{
                   color: Colors.WHITE,
                   fontSize: Scale(16),
-                  fontFamily: Fonts.Medium,
+                  //fontFamily: Fonts.Medium,
                 }}>
                 {leftButtonText}
               </Text>
             </TouchableOpacity>
-
-            
           </View>
         </View>
       </View>
     </Modal>
-  );
-};
+  )
+}

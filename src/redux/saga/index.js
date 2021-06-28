@@ -4,8 +4,9 @@ import settingSaga from './SettingSaga'
 import homeSaga from './HomeSaga'
 import cartSaga from './CartSaga'
 import orderSaga from './OrderSaga'
+import couponSaga from './CouponSaga'
 
 const rootSaga = function* rootSaga() {
-  yield all([authSaga(), settingSaga(), homeSaga(), cartSaga(), orderSaga()])
+  yield all([authSaga(), settingSaga(), homeSaga(), cartSaga(), orderSaga(),couponSaga()])
 }
 export default rootSaga

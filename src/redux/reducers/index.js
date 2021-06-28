@@ -5,6 +5,7 @@ import HomeReducer from './HomeReducer'
 import CartReducer from './CartReducer'
 import {DESTROY_SESSION, LOGOUT_REQUEST} from '../Types/type'
 import OrderReducer from './OrderReducer'
+import couponReducer from './CouponReducer'
 
 const appReducer = combineReducers({
   Auth: AuthReducer,
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   Home: HomeReducer,
   Cart: CartReducer,
   order: OrderReducer,
+  coupon:couponReducer
 })
 const rootReducer = (state, action) => {
   if (action.type === LOGOUT_REQUEST) {

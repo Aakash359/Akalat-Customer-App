@@ -11,12 +11,14 @@ const FormArea = ({
   errorValue,
   onBlur,
   onChangeText,
+  height = 180,
+  style = {},
   ...props
 }) => (
   <>
     <Text style={styles.textStyle}> {label}</Text>
     <TextInput
-      style={styles.textInputContainer}
+      style={[styles.textInputContainer, style, {height: Scale(height)}]}
       name={name}
       label={placeholder}
       onChangeText={onChangeText}
