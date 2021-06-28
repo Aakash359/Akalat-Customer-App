@@ -17,12 +17,14 @@ import {Searchbar} from 'react-native-paper'
 import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import {addfavouriteRequest} from '../../redux/actions'
+
 import axios from 'axios'
 
 function Explore() {
   const [check, setChecked] = useState(false)
   const [search, setSearch] = React.useState('')
   const user = useSelector((state) => state.Auth.user)
+  const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -77,7 +79,7 @@ function Explore() {
     onSearch()
   }, [search])
 
-  const renderItems = ({item, is_favourited_restro}) => (
+  const renderItems = ({item, }) => (
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
@@ -150,13 +152,13 @@ function Explore() {
               {' '}
               (11:00 am - 10:00 pm)
             </Text>
-            {is_favourited_restro != true ? (
+            {addFavouriteStatus == true ? (
               <TouchableOpacity onPress={() => onFavorite(item)}>
                 <Icon
                   name="heart"
                   type="FontAwesome"
                   style={{
-                    color: '#AB8F8E',
+                    color: Colors.DARK_RED,
                     fontSize: Scale(16),
                   }}
                 />
@@ -167,7 +169,7 @@ function Explore() {
                   name="heart"
                   type="FontAwesome"
                   style={{
-                    color: Colors.DARK_RED,
+                    color: '#AB8F8E',
                     fontSize: Scale(16),
                   }}
                 />

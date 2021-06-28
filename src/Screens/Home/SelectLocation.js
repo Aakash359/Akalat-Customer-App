@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, FlatList,PermissionsAndroid, StyleSheet, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, Fonts,ImagesPath, iOSMapAPIKey, androidMapAPIKey } from '../../CommonConfig';
-import { CustomButton, FormInput } from '../../Component';
+import { CustomButton} from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';

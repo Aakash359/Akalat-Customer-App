@@ -30,7 +30,6 @@ function NearMe(props) {
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
   const user = useSelector((state) => state.Auth.user)
   const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
-  console.log("Aakash===>",addFavouriteStatus);
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
@@ -44,9 +43,6 @@ function NearMe(props) {
 
   const [search, setSearch] = React.useState('')
 
- 
-
- 
   const onSearch = async () => {
     setdata({...data, isLoading: true})
     const url = `${API_BASE}/restro/search`
@@ -55,13 +51,13 @@ function NearMe(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      
-
+      console.log("Aakash====>",res)
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
         isLoading: false,
       })
+      console.log("Verma===>",res?.data?.data?.restro)
     } catch (error) {}
   }
 
@@ -86,30 +82,26 @@ function NearMe(props) {
 
   const onFavorite = (item) => {
 
-    const Status = addFavouriteStatus
+    
     const data = {
       userid: user?._id,
       restro_id: item?._id,
      
     }
-     if(Status==true){
-      dispatch(addfavouriteRequest(data))
-     }
-     else{
-
-      return
-     
-     
-     }
-    
-    alert('Added to favourite list successfully')
+     dispatch(addfavouriteRequest(data))
+     alert('Added to favourite list successfully')
   }
   const onBack = res => {
-    console.log("Aakash======>",res)
+    
+   setdata({
+      ...data,
+      restroList: res.restro,
+    
+    })
     
   };
   const redirectToFilter = () => {
-    // navigate('Filter')
+    
     navigate("Filter", { onBack: (data) => onBack(data)});
   }
   const redirectToSortBy = () => {
@@ -340,7 +332,7 @@ function NearMe(props) {
                 marginTop: Scale(3),
                 fontWeight: 'bold',
               }}>
-              {item?.coupon_discount_in_percentage} % OFF{' '}
+              {item?.coupon_discount_in_percentage}% OFF{' '}
               <Text
                 style={{
                   fontSize: Scale(12),

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.APPCOLOR,
-    paddingTop:Scale(40)
+    paddingTop:Scale(20)
   },
   loginInputCont: {
     top: Scale(-50),

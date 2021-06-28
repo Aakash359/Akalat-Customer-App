@@ -11,6 +11,7 @@ function Order(props) {
     const[addItem, SetAddItem] = useState(orderCount);
     const[coupon, setCoupon] = useState('Cdlvnsvx');
     const[addCoupon, setAddCoupon] = useState(true);
+    
     const decrement = () => {
         if (addItem < 1)
         {

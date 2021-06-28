@@ -1,17 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Text, View, StyleSheet, PermissionsAndroid, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
+import { Switch, Text, View, StyleSheet, Image,StatusBar, TouchableOpacity, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
-import { Colors, Scale, ImagesPath, iOSMapAPIKey, androidMapAPIKey } from '../../CommonConfig';
-import { CustomButton, FormInput,FormArea } from '../../Component';
+import { Colors, Scale, ImagesPath,} from '../../CommonConfig';
+import { CustomButton,FormArea } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
-
+import {API_BASE} from '../../apiServices/ApiService'
+import axios from 'axios'
 function Rating() {
     const [value, setValue] = useState('0')
+    const [rating, setRating] = useState('');
+    const [defaultRating, setDefaultRating] = useState(2);
+    const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+
+    const starImageFilled =
+    'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';
+  // Empty Star. You can also give the path from local
+  const starImageCorner =
+    'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const redirectToMyAccount = () => {
         navigate('SavedCard');
     };
+
+    const CustomRatingBar = () => {
+        return (
+          <View style={styles.customRatingBarStyle}>
+            {maxRating.map((item, key) => {
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  key={item}
+                  onPress={() => setDefaultRating(item)}>
+                  <Image
+                    style={styles.starImageStyle}
+                    source={
+                      item <= defaultRating
+                        ? {uri: starImageFilled}
+                        : {uri: starImageCorner}
+                    }
+                  />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        );
+      };
     const [isEnabled, setIsEnabled] = useState(true);
     
     const setCheckedSwitch = () => {
@@ -22,16 +56,15 @@ function Rating() {
        
         const url = `${API_BASE}/order/rateReviewOrderFromUser`
         const payload = {
-            // 'distance': value1,
-            'rating_from_user': value+"",
-            'restaurent_type': 'veg_and_non_veg'
+            '_id': '60d962f26143c57f9f046eb0',
+            'review_restro': rating,
+            'rating_restro': maxRating+"",
+            
           }
         try 
           {
           const res = await axios.post(url, payload)
-          route.params.onBack();
-          navigate('Home')
-          console.log("Aakash======>",res)
+          alert("Order rated error from user successfully!")
         
         } 
         catch (error) 
@@ -56,17 +89,17 @@ function Rating() {
                 <View style={{marginTop:Scale(20)}}>
                     <Text style={{fontSize:Scale(16)}}>Rate</Text>
                 <View style={{flexDirection:'row',marginVertical:Scale(10)}}>
-                 <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/>                 
-                 <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/>
-                 <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/>
-                 <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/>
-                 <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/> 
+                 {/* <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/>                  */}
+
+                 <CustomRatingBar />
                  </View>
                  <FormArea
                             placeholder="Write your reviews..."
                             label="Reviews"
                             autoCapitalize="none"
                             maxLength={30}
+                            value={rating}
+                            onChangeText={(text) => setRating(text )}
                         />
                         
                     
@@ -112,6 +145,11 @@ const styles = StyleSheet.create({
         marginBottom: Scale(25),
         color: Colors.WHITE
     },
+    customRatingBarStyle: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+       
+      },
     notificationStyle: {
         width: Scale(25),
         height: Scale(25),
@@ -127,7 +165,11 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.APPCOLOR,
         paddingHorizontal: Scale(25),
     },
-
+    starImageStyle: {
+        width: 35,
+        height: 35,
+        resizeMode: 'cover',
+      },
     logoStyle: {
         marginTop: Scale(15),
         fontSize: Scale(25),

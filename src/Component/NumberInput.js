@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {Text, View, TouchableOpacity, TextInput, StyleSheet} from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale} from '../CommonConfig'
-import DropDown from './DropDown1'
 import Font from '../CommonConfig/Fonts'
+import DropDown from '../Component/DropDown'
 
 const NumberInput = ({
   returnKeyType,
@@ -21,13 +21,11 @@ const NumberInput = ({
   <View style={styles.container}>
     <Text style={styles.textStyle}> {placeholder}</Text>
     <View style={styles.textBoxContainer}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={{fontSize: Scale(16), color: '#000000'}}>+91</Text>
-        <Icon
-          type="AntDesign"
-          name="caretdown"
-          style={{fontSize: Scale(16), marginLeft: Scale(2)}}
-        />
+      <View style={{flexDirection: 'row' ,backgroundColor:'green'}}>
+      <DropDown
+       placeholder={'+91'}
+       
+       />      
       </View>
       <TextInput
         underlineColorAndroid="transparent"
@@ -48,22 +46,15 @@ const styles = StyleSheet.create({
     marginVertical: Scale(10),
   },
   textBoxContainer: {
-    //width:'100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: Scale(1),
-
     paddingHorizontal: Scale(10),
     borderColor: '#AB8F8E',
     borderRadius: Scale(5),
-    //position: 'relative',
-    //alignSelf: 'stretch',
-    // justifyContent: 'center',
   },
   textBox: {
-    //position:'absolute',
-    //width:'100%',
     flex: 1,
     fontSize: Scale(16),
     fontFamily: Font.Bold,

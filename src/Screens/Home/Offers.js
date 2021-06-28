@@ -19,15 +19,12 @@ function Offers() {
         <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
         <View>
           <Text style={styles.primaryText}>Fire & Grill</Text>
-          <Text style={styles.normatText}>Sector 29, Cyber hub,{'\n'}Gurgoan</Text>
+          <Text style={styles.normatText}>Sector 29, Cyber hub{'\n'}Gurgoan</Text>
         </View>
       </View>
       <View style={styles.borderStyle} />
       <View style={styles.heading}>
-      <Image source={ImagesPath.offer_setting}
-            style={{height:Scale(22),width:Scale(30),marginRight:Scale(-5),resizeMode:'contain'}} 
-      />
-        {/* <Icon type="Ionicons" name="settings-sharp" style={{ fontSize: Scale(20), color: Colors.DARK_RED }} /> */}
+        <Icon type="Ionicons" name="settings-sharp" style={{ fontSize: Scale(20), color: Colors.DARK_RED }} />
         <Text style={styles.itemText1}>  20% off  |  Use code <Text style={{ color: Colors.DARK_RED }}> "AKALAT20"</Text></Text>
       </View>
     </View>
@@ -138,8 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: Scale(1),
     borderColor: Colors.WHITE,
-    borderRadius: Scale(26),
-    overflow: 'hidden',
+    borderRadius: Scale(26)
   },
   cancelButton: {
     width: '45%',
@@ -162,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderWidth: Scale(2),
     borderColor: "#00000029",
-    marginVertical: Scale(10),
+    marginVertical: Scale(15),
     paddingHorizontal: Scale(15),
     paddingVertical: Scale(15),
     alignSelf: 'center',
@@ -200,24 +196,23 @@ const styles = StyleSheet.create({
   textStyle: {
     backgroundColor: Colors.WHITE,
     borderRadius: Scale(20),
-    width: Scale(90),
-    paddingVertical: 10,
+    width: Scale(120),
+    height: Scale(40),
     textAlignVertical: 'center',
     textAlign: 'center',
     color: Colors.APPCOLOR,
-    fontSize: Scale(15),
-    fontWeight: 'bold',
-    zIndex: 1,
+    fontSize: Scale(14),
+    fontWeight: 'bold'
   },
   inActiveStyle: {
-    width: Scale(90),
-    paddingVertical: 10,
+    width: Scale(120),
+    height: Scale(40),
     borderRadius: Scale(20),
     textAlignVertical: 'center',
     textAlign: 'center',
     color: Colors.WHITE,
-    fontSize: Scale(15),
-    fontWeight: 'bold',
+    fontSize: Scale(14),
+    fontWeight: 'bold'
   },
   loginInputCont: {
     flex: 1,

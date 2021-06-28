@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, ImageBackground,KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
-import { FormInput, CustomButton, PasswordInput, NumberInput } from '../../Component';
+import { FormInput, CustomButton,NumberInput } from '../../Component';
 import { Icon } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginRequest, loaderRequest, } from '../../redux/actions'

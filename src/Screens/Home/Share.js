@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import {Icon, Left} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
-import {CustomButton, FormInput} from '../../Component'
+import {CustomButton,} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import Share from 'react-native-share'
 

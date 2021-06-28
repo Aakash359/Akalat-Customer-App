@@ -19,11 +19,8 @@ const DropDown = ({
   ...props
 }) => (
   <View>
-    <Text style={styles.textStyle}> {placeholder}</Text>
-
     <View style={styles.heading}>
-
-      <Dropdown
+       <Dropdown
         rippleOpacity={0}
         animationDuration={0}
         dropdownPosition={0}
@@ -44,7 +41,7 @@ const DropDown = ({
         data={dropDownData}
         underlineColor="transparent"
       />
-      <Icon name="angle-down" type="FontAwesome" style={{ marginTop: Scale(6), marginRight: Scale(8), color: Colors.BORDERCOLOR }} />
+      <Icon name="angle-down" type="FontAwesome" style={{ marginTop: Scale(12), marginRight: Scale(10), color: Colors.BORDERCOLOR }} />
     </View>
   </View>
 );
@@ -58,10 +55,11 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
     height: Scale(50),
     alignSelf: 'center',
-    marginTop: Scale(-20),
+    marginTop: Scale(-10),
     paddingRight: Scale(15),
     borderWidth: 0,
     borderColor: '#707070',
+    
   },
   container: {
     alignContent: 'center',
@@ -82,11 +80,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: Scale(50),
     justifyContent: 'space-around',
-    borderWidth: Scale(1),
     borderColor: '#707070',
-    alignSelf: 'center',
     borderRadius: Scale(5),
-    width: '100%',
+    width: '55%',
+    backgroundColor:'red',
+    marginLeft:Scale(-10)
   },
   textStyle: {
     color: Colors.BORDERCOLOR,

@@ -24,18 +24,9 @@ const mapScreen = props => {
 
     const { navigate } = useNavigation();
     const navigation = useNavigation();
-    const [pickUpModal, setPickUpModal] = useState(false);
-    const  user = useSelector((state) => state.Auth.user);
     const dispatch = useDispatch();
-
     const  orderDetailsResponse = useSelector((state) => state.Home.orderDetailsResponse);
-
-    console.log("Aakash=======>",orderDetailsResponse?.data)
-
     const orderDetails = orderDetailsResponse?.data
-
-    console.log("Aakash=======>",orderDetailsResponse?.data?.[0]?.status)
-
     useEffect(() => {
 
         const data = { 
