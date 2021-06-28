@@ -35,6 +35,11 @@ function Explore() {
   }
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
+    
+  }
+  const redirectToRating = (item) => {
+    navigate('Rating')
+    
   }
   const onFavorite = (item) => {
     const data = {
@@ -250,7 +255,7 @@ function Explore() {
               }}>
               Near By
             </Text>
-            <TouchableOpacity onPress={redirectToHomeMaker}>
+            <TouchableOpacity onPress={redirectToRating}>
               <Text style={{color: Colors.DARK_RED, fontSize: Scale(16)}}>
                 View All
               </Text>

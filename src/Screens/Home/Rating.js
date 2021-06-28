@@ -18,6 +18,28 @@ function Rating() {
       setIsEnabled(!isEnabled)
     };
 
+    const onRatings = async () => {
+       
+        const url = `${API_BASE}/order/rateReviewOrderFromUser`
+        const payload = {
+            // 'distance': value1,
+            'rating_from_user': value+"",
+            'restaurent_type': 'veg_and_non_veg'
+          }
+        try 
+          {
+          const res = await axios.post(url, payload)
+          route.params.onBack();
+          navigate('Home')
+          console.log("Aakash======>",res)
+        
+        } 
+        catch (error) 
+        {
+          console.log('Error',error);  
+        }
+      }
+
 
     return (
         <View style={styles.container}>
@@ -49,7 +71,7 @@ function Rating() {
                         
                     
                         <View style={{marginTop:Scale(30),}}>
-                        <CustomButton title="Submit" isSecondary={true} onSubmit={redirectToMyAccount}/>
+                        <CustomButton title="Submit" isSecondary={true} onSubmit={onRatings}/>
                         </View>
 
                  </View>  

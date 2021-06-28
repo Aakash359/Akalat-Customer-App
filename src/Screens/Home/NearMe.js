@@ -17,7 +17,6 @@ import {useNavigation} from '@react-navigation/native'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {
   offercardRequest,
-  restroListRequest,
   addfavouriteRequest,
   couponRequest,
 } from '../../redux/actions'
@@ -30,6 +29,8 @@ function NearMe(props) {
   const navigation = useNavigation()
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
   const user = useSelector((state) => state.Auth.user)
+  const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
+  console.log("Aakash===>",addFavouriteStatus);
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
@@ -84,13 +85,23 @@ function NearMe(props) {
   }
 
   const onFavorite = (item) => {
+
+    const Status = addFavouriteStatus
     const data = {
       userid: user?._id,
       restro_id: item?._id,
-      is_favourited_restro: true,
+     
     }
+     if(Status==true){
+      dispatch(addfavouriteRequest(data))
+     }
+     else{
 
-    dispatch(addfavouriteRequest(data))
+      return
+     
+     
+     }
+    
     alert('Added to favourite list successfully')
   }
   const onBack = res => {
@@ -118,7 +129,7 @@ function NearMe(props) {
   
   }, [])
 
-  const renderItems = ({item, is_favourited_restro}) => (
+  const renderItems = ({item}) => (
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
@@ -192,13 +203,13 @@ function NearMe(props) {
               {' '}
               (11:00 am - 10:00 pm)
             </Text>
-            {is_favourited_restro != true ? (
+            {addFavouriteStatus == true ? (
               <TouchableOpacity onPress={() => onFavorite(item)}>
                 <Icon
                   name="heart"
                   type="FontAwesome"
                   style={{
-                    color: '#AB8F8E',
+                    color: Colors.DARK_RED,
                     fontSize: Scale(16),
                   }}
                 />
@@ -209,7 +220,7 @@ function NearMe(props) {
                   name="heart"
                   type="FontAwesome"
                   style={{
-                    color: Colors.DARK_RED,
+                    color: '#AB8F8E',
                     fontSize: Scale(16),
                   }}
                 />

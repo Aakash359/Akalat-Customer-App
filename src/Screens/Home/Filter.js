@@ -44,7 +44,7 @@ function Filter({na}) {
         const url = `${API_BASE}/restro/filter`
         const payload = {
             // 'distance': value1,
-            'rating_from_user': value+"",
+            '_id': value+"",
             'restaurent_type': 'veg_and_non_veg'
           }
         try 
