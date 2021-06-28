@@ -10,12 +10,16 @@ import {
   TextInput,
   ImageBackground,
   Alert,
+  Modal,
+  FlatList,
+  Dimensions,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {FormArea, CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {scale} from '../../CommonConfig/HelperFunctions/functions'
+
 import {connect} from 'react-redux'
 import {
   addToCart,
@@ -37,6 +41,7 @@ import {useSelector, useDispatch} from 'react-redux'
 function Card(props) {
   const [count, setIsPopupVisible] = useState(1)
   const [coupon, setCoupon] = useState(props?.couponCode || '')
+  const [modal, setModal] = React.useState(false)
 
   const [det, setDet] = useState({
     dis: props?.applyCoupon?.discount_amount || 0,
@@ -55,6 +60,12 @@ function Card(props) {
 
     props?.navigation.setOptions({headerShown: false})
   }, [])
+
+  const addressListResponse = useSelector(
+    (state) => state.Setting.addressListResponse,
+  )
+
+  const addressList = addressListResponse?.data?.addressList || []
 
   const increment = () => {
     setIsPopupVisible(count + 1)
@@ -128,7 +139,7 @@ function Card(props) {
       global.dropDownAlertRef.alertWithType(
         'error',
         'Error',
-        'Enter coupon code',
+        'Please enter coupon code',
       )
     }
   }
@@ -146,6 +157,43 @@ function Card(props) {
   const remove = () => {
     dispatch(removeCoupon())
   }
+
+  const renderItems = ({item, index}) => (
+    <TouchableOpacity
+      onPress={() => setAddress({...address, selectedId: index})}
+      style={styles.cardStyle}>
+      <View
+        style={{
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <View>
+          <View style={styles.cardHeader}>
+            <Text style={[styles.placeText, {marginBottom: 10}]}>
+              {item?.address_type}
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.placeText}>{item?.house_name_and_no},</Text>
+            <Text style={styles.placeText}>{item?.area_name},</Text>
+            <Text style={styles.placeText}>{item?.nearby}</Text>
+          </View>
+        </View>
+        <Icon
+          type="FontAwesome"
+          style={[
+            {
+              color:
+                address?.selectedId === index ? Colors.RED : Colors.LIGHT_GRAY,
+            },
+            {fontSize: 25},
+          ]}
+          name={address?.selectedId === index ? 'dot-circle-o' : 'circle-o'}
+        />
+      </View>
+    </TouchableOpacity>
+  )
 
   return (
     <View style={styles.container}>
@@ -221,13 +269,18 @@ function Card(props) {
               )
             })}
           </View>
-          <View style={{marginHorizontal: scale(20), marginVertical: -20}}>
+          <View
+            style={{
+              marginHorizontal: scale(20),
+              marginVertical: -20,
+            }}>
             <FormArea
-              
               placeholder="Any Instructions..."
               autoCapitalize="none"
               value={props?.instruction}
               onChangeText={(instruction) => props.setInstruction(instruction)}
+              height={100}
+              style={{paddingTop: 10}}
               // maxLength={30}
             />
           </View>
@@ -347,7 +400,7 @@ function Card(props) {
               ]}>
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText3}>Delivery Address</Text>
-                <TouchableOpacity onPress={() => navigate('AddNewAddress') }>
+                <TouchableOpacity onPress={() => setModal(true)}>
                   <Text style={styles.countText}>change</Text>
                 </TouchableOpacity>
               </View>
@@ -378,6 +431,53 @@ function Card(props) {
           </View>
         </ScrollView>
       </ImageBackground>
+      <Modal visible={modal} transparent={true} animationType="slide">
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setModal(false)}
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            width: '100%',
+            height: '100%',
+            position: 'relative',
+          }}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={null}
+            style={{
+              backgroundColor: '#fff',
+              width: '100%',
+              height: Dimensions.get('screen').height / 1.5,
+              position: 'absolute',
+              bottom: 0,
+              paddingBottom: 20,
+            }}>
+            <View style={styles.headerContainer}>
+              <Icon
+                onPress={() => setModal(false)}
+                name="arrowleft"
+                type="AntDesign"
+                style={styles.logoStyle}
+              />
+              <Text
+                style={{
+                  fontSize: Scale(15),
+                  fontWeight: 'bold',
+                  marginHorizontal: Scale(25),
+                  color: Colors.WHITE,
+                }}>
+                Change Address
+              </Text>
+            </View>
+
+            <FlatList
+              data={addressList}
+              renderItem={renderItems}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </View>
   )
 }
@@ -418,13 +518,14 @@ const styles = StyleSheet.create({
   },
 
   addButton: {
-    height: '97%',
+    height: '93%',
     width: Scale(100),
     backgroundColor: Colors.APPCOLOR,
     borderRadius: Scale(30),
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
+    margin: 2,
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -455,7 +556,6 @@ const styles = StyleSheet.create({
     fontSize: Scale(18),
     fontWeight: 'bold',
     paddingLeft: 5,
-    paddingTop: 10,
   },
   primaryText2: {
     color: Colors.BLACK,
@@ -534,5 +634,18 @@ const styles = StyleSheet.create({
     color: Colors.APPCOLOR,
     fontSize: Scale(15),
     marginHorizontal: Scale(3),
+  },
+  headerContainer: {
+    paddingTop: Scale(0),
+    height: Scale(40),
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: Colors.APPCOLOR,
+    paddingHorizontal: Scale(25),
+  },
+
+  logoStyle: {
+    fontSize: Scale(25),
+    color: Colors.WHITE,
   },
 })

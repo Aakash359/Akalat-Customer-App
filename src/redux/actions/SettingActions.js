@@ -14,6 +14,9 @@ import {
   FAVOURITE_LIST_REQUEST,
   CHANGE_PASSWORD_REQUEST,
   SET_FAVOURITE_LIST_LOADER,
+  SET_EDIT_PROFILE_LOADER,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAILED,
 } from '../Types/type'
 
 // =================About Us GET REQUEST =================
@@ -59,6 +62,27 @@ export const HelpRequest = (data) => {
 export const EditProfileResquest = (data) => {
   return {
     type: EDIT_PROFILE_REQUEST,
+    data,
+  }
+}
+// =================Set Edit Profile LOADER =================
+export const setEditProfileLoader = (payload) => {
+  return {
+    type: SET_EDIT_PROFILE_LOADER,
+    payload,
+  }
+}
+// =================Edit Profile SUCCUSS =================
+export const editProfileSuccess = (data) => {
+  return {
+    type: EDIT_PROFILE_SUCCESS,
+    data,
+  }
+}
+// =================Edit Profile FAILED =================
+export const editProfileFailed = (data) => {
+  return {
+    type: EDIT_PROFILE_FAILED,
     data,
   }
 }
