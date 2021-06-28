@@ -64,6 +64,9 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="PlaceOrder"
         component={PlaceOrder}
+        options={{
+          headerBackTitleVisible: true,
+        }}
         options={{headerShown: false}}
       />
       <Stack.Screen

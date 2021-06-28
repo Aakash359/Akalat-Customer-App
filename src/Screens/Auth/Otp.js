@@ -42,9 +42,7 @@ function Otp(props) {
                  else{
                      navigate('ResetPassword', data)
                  }
-          
-                //  console.log("Aakash====>",data)
-              dispatch(OTPVerifyRequest(data));
+                dispatch(OTPVerifyRequest(data));
         }
       }
 

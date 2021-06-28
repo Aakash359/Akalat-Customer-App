@@ -15,19 +15,6 @@ function PlaceOrder(props) {
     const redirectToTrackOrder = () => {
         navigate('TrackOrder')
     }
-
-    
-    console.log("Aakash--->",props?.restroDetails)
-
-    // useEffect(() => {
-
-    //     const data = { 
-    //          "userid": user?._id
-    //          }
-            
-    //         dispatch(favouriteListRequest(data));
-    //      }, 
-    //   []); 
     return (
         <ImageBackground
             source={ImagesPath.background}

@@ -237,7 +237,6 @@ const subToCart = (item) => {
               spacing={Scale(12)}
               renderItem={({ item }) => {
                 let inCart = cartProducts?.find(i => i?._id === item?._id)
-                console.log("Aakash=======>",list)
                 return (
                   <View style={styles.itemContainer}>
                     

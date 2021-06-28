@@ -13,13 +13,13 @@ import {
     Scale,
     ImagesPath,
 } from '../../CommonConfig'
-import { CustomButton, FormInput } from '../../Component'
+import { CustomButton,} from '../../Component'
 import { useNavigation , useRoute} from '@react-navigation/native'
 import Slider from '@react-native-community/slider'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
 
-function Filter({na}) {
+function Filter() {
     const [value, setValue] = useState()
     const [value1, setValue1] = useState()
 
@@ -31,28 +31,54 @@ function Filter({na}) {
         route.params.onBack('rahul');
         navigate('Home')
     }
-    const [isEnabled, setIsEnabled] = useState(true)
+    const [isEnabled, setIsEnabled] = useState()
 
     const setCheckedSwitch = () => {
         setIsEnabled(!isEnabled)
     }
 
-   
+    console.log("IsEnabled===>",isEnabled)
 
     const onFilter = async () => {
+        var restro_type = '';
+        if(isEnabled){
+            restro_type = 'veg_and_non_veg';
+        } else {
+            restro_type = 'veg'
+        }
+        const url = `${API_BASE}/restro/filter`
+        const payload = {
+            
+            'rating_from_user': value+"",
+            'restaurent_type': restro_type,
+          }
+          console.log("Aakash===>",payload)
+        try 
+          {
+          const res = await axios.post(url, payload)
+          route.params.onBack({restro:res?.data?.data?.restro});
+          navigate('Home')
+        
+        
+        } 
+        catch (error) 
+        {
+          console.log('Error',error);  
+        }
+      }
+
+      const onReset = async () => {
        
         const url = `${API_BASE}/restro/filter`
         const payload = {
-            // 'distance': value1,
-            'rating_from_user': value+"",
-            'restaurent_type': 'veg_and_non_veg'
+            'restaurent_type': ''
           }
         try 
           {
           const res = await axios.post(url, payload)
-          route.params.onBack();
+          route.params.onBack({restro:res?.data?.data?.restro});
           navigate('Home')
-          console.log("Aakash======>",res)
+        
         
         } 
         catch (error) 
@@ -117,6 +143,7 @@ function Filter({na}) {
                         minimumValue={0}
                         maximumValue={10}
                         value={value1}
+                        step={0.5}
                         onValueChange={(value) => setValue1(value)}
                         thumbTintColor={Colors.APPCOLOR}
                         minimumTrackTintColor={Colors.APPCOLOR}
@@ -157,6 +184,7 @@ function Filter({na}) {
                         minimumValue={0}
                         maximumValue={10}
                         value={value}
+                        step={0.5}
                         onValueChange={(value) => setValue(value)}
                         thumbTintColor={Colors.APPCOLOR}
                         minimumTrackTintColor={Colors.APPCOLOR}
@@ -208,7 +236,8 @@ function Filter({na}) {
                         style={{ marginTop: Scale(50), flexDirection: 'row' }}
                     >
                         <View style={{ flex: 1, marginRight: Scale(15) }}>
-                            <CustomButton title="Reset All" />
+                            <CustomButton title="Reset All" 
+                            onSubmit={onReset}/>
                         </View>
                         <View style={{ flex: 1 }}>
                             <CustomButton

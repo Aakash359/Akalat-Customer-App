@@ -19,7 +19,6 @@ import {
   offercardRequest,
   restroListRequest,
   addfavouriteRequest,
-  couponRequest
 } from '../../redux/actions'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
@@ -29,8 +28,9 @@ function HomeScreen(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const couponResponse = useSelector((state) => state.Home.couponResponse)
+  const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
   const redirectToFilter = () => {
-    navigate('Filter')
+    navigate("Filter", { onBack: (data) => onBack(data)});
   }
   const redirectToSortBy = () => {
     navigate('SortBy')
@@ -73,8 +73,6 @@ function HomeScreen(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      console.log("Aakash====>",res)
-
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
@@ -104,6 +102,15 @@ function HomeScreen(props) {
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list succesfully')
   }
+  const onBack = res => {
+    
+    setdata({
+      ...data,
+      restroList: res.restro,
+    
+    })
+    
+  };
 
   const renderItems = ({item, is_favourited_restro}) => (
     <View style={styles.cardStyle}>
@@ -175,13 +182,13 @@ function HomeScreen(props) {
             {' '}
             (11:00 am - 10:00 pm)
           </Text>
-          {is_favourited_restro != true ? (
+          {addFavouriteStatus == true ? (
             <TouchableOpacity onPress={() => onFavorite(item)}>
               <Icon
                 name="heart"
                 type="FontAwesome"
                 style={{
-                  color: '#AB8F8E',
+                  color: Colors.DARK_RED,
                   fontSize: Scale(16),
                 }}
               />
@@ -192,7 +199,7 @@ function HomeScreen(props) {
                 name="heart"
                 type="FontAwesome"
                 style={{
-                  color: Colors.DARK_RED,
+                  color: '#AB8F8E',
                   fontSize: Scale(16),
                 }}
               />
@@ -312,7 +319,7 @@ function HomeScreen(props) {
                 marginTop: Scale(3),
                 fontWeight: 'bold',
               }}>
-             {item?.coupon_discount_in_percentage} % OFF{' '}
+             {item?.coupon_discount_in_percentage}% OFF{' '}
               <Text
                 style={{
                   fontSize: Scale(12),
