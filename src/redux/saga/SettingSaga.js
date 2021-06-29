@@ -35,14 +35,16 @@ import {
   CHANGE_PASSWORD_FAILED,
   SET_FAVOURITE_LIST_LOADER,
 } from '../Types/type'
-import {put, call, takeEvery} from 'redux-saga/effects'
+import {put, call, takeEvery, select} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
 import {
+  AddressListResquest,
   deleteAddressFailed,
   deleteAddressSuccess,
   editProfileFailed,
   editProfileSuccess,
   setEditProfileLoader,
+  setUserDetails,
   signUpLogin,
 } from '../actions'
 
@@ -223,8 +225,7 @@ export const AddressListSaga = function* AddressListSaga({data}) {
 
 // ====================== Profie Info GET ======================
 
-function* EditProfileSaga({payload}) {
-  let data = payload
+function* EditProfileSaga({data}) {
   yield put(setEditProfileLoader(true))
   yield put(editProfileFailed(''))
   try {
@@ -242,6 +243,22 @@ function* EditProfileSaga({payload}) {
       yield put(setEditProfileLoader(false))
       yield put(editProfileFailed(''))
       yield put(editProfileSuccess(response.data))
+      let ud = {...response.data}
+      console.log(
+        'edit profile res====================================',
+        response.data,
+      )
+      console.log(response.data)
+      console.log('====================================')
+      delete ud.role
+      delete ud.verification_status
+      delete ud.is_active
+      delete ud.is_deleted
+      delete ud._id
+      console.log('====================================')
+      console.log(ud)
+      console.log('====================================')
+      yield put(setUserDetails(ud))
     }
   } catch (e) {
     yield put(setEditProfileLoader(false))
@@ -287,6 +304,8 @@ function* deleteAddress({data}) {
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
     } else {
       yield put(deleteAddressSuccess(response))
+      userId = yield select(({Auth}) => Auth.user._id)
+      yield put(AddressListResquest({created_by: userId}))
     }
   } catch (e) {
     yield put(deleteAddressFailed(e))

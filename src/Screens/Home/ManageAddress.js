@@ -138,8 +138,8 @@ function ManageAddress() {
         visible={deleteAdd?.show}
         title={'Delete Address'}
         alertTitle={'Are you sure you want to delete this address?'}
-        rightButtonText={'Yes'}
-        leftButtonText={'No'}
+        rightButtonText={'No'}
+        leftButtonText={'Yes'}
         //onPressLeftButton={() => this.setState({logoutModal: false})}
         onPressLeftButton={() => delAdd()}
         onPressRightButton={() => setDeleteAdd({...deleteAdd, show: false})}
