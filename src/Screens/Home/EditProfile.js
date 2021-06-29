@@ -31,7 +31,7 @@ function Profile(props) {
 
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  
+
   const onSave = async () => {
     let reg =
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -47,16 +47,22 @@ function Profile(props) {
       alert('Please enter valid email')
     } else {
       const data = {
-        first_name: profileDetails?.first_name,
-        last_name: profileDetails?.last_name,
-        phone: profileDetails?.phone,
-        email: profileDetails?.email,
+        first_name: first_name,
+        last_name: last_name,
+        phone: phone,
+        email: email,
         _id: profileDetails?._id != undefined ? profileDetails?._id : 0,
       }
 
       dispatch(EditProfileResquest(data))
     }
   }
+
+  useEffect(() => {
+    if (props.editProfileStatus) {
+      navigation.navigate('Profile')
+    }
+  }, [props?.editProfileStatus])
 
   return (
     <View style={styles.container}>
@@ -135,8 +141,11 @@ function Profile(props) {
   )
 }
 
-const mapStateToProps = ({Setting: {editProfileLoader}}) => ({
+const mapStateToProps = ({
+  Setting: {editProfileLoader, editProfileStatus},
+}) => ({
   editProfileLoader,
+  editProfileStatus,
 })
 
 export default connect(mapStateToProps)(Profile)

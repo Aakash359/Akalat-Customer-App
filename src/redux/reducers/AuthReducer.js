@@ -21,7 +21,7 @@ import {
   GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_FAILED,
-
+  SET_USER_DETAILS,
 } from '../Types/type'
 
 const initialState = {
@@ -38,9 +38,8 @@ const initialState = {
   otpResponse: {},
   otpVerifyResponse: {},
   logoutResponse: {},
-  getUserDetailsResponse:{},
-  getUserDetailsStatus:false
-  
+  getUserDetailsResponse: {},
+  getUserDetailsStatus: false,
 }
 
 export default function AuthReducer(state = initialState, action) {
@@ -81,13 +80,25 @@ export default function AuthReducer(state = initialState, action) {
       return {...state, OTPStatus: false, otpResponse: action.payload}
 
     case OTP_VERIFY_REQUEST:
-      return {...state,OTPVerifyStatus: false,otpVerifyResponse: action.payload,}
+      return {
+        ...state,
+        OTPVerifyStatus: false,
+        otpVerifyResponse: action.payload,
+      }
 
     case OTP_VERIFY_SUCCESS:
-      return {...state,OTPVerifyStatus: true,otpVerifyResponse: action.payload,}
+      return {
+        ...state,
+        OTPVerifyStatus: true,
+        otpVerifyResponse: action.payload,
+      }
 
     case OTP_VERIFY_FAILED:
-      return {...state,OTPVerifyStatus: false,otpVerifyResponse: action.payload,}
+      return {
+        ...state,
+        OTPVerifyStatus: false,
+        otpVerifyResponse: action.payload,
+      }
 
     case LOGOUT_REQUEST:
       return {...state, logoutStatus: false, logoutResponse: action.payload}
@@ -99,20 +110,44 @@ export default function AuthReducer(state = initialState, action) {
       return {...state, logoutStatus: false, logoutResponse: action.payload}
 
     case GET_USER_DETAILS_REQUEST:
-      return {...state, getUserDetailsStatus: false, getUserDetailsResponse: action.payload}
-  
+      return {
+        ...state,
+        getUserDetailsStatus: false,
+        getUserDetailsResponse: action.payload,
+      }
+
     case GET_USER_DETAILS_SUCCESS:
-      return {...state, getUserDetailsStatus: true, getUserDetailsResponse: action.payload}
-  
+      return {
+        ...state,
+        getUserDetailsStatus: true,
+        getUserDetailsResponse: action.payload,
+      }
+
     case GET_USER_DETAILS_FAILED:
-      return {...state, getUserDetailsStatus: false, getUserDetailsResponse: action.payload}
+      return {
+        ...state,
+        getUserDetailsStatus: false,
+        getUserDetailsResponse: action.payload,
+      }
 
     case LOADER_REQUEST:
       return {...state, isLoading: action.payload}
 
     case UPDATE_USER_DETAILS:
       return {...state, user: {...state.user, ...action.payload}}
-      
+    case SET_USER_DETAILS:
+      let ud = action.payload
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          first_name: ud.first_name,
+          last_name: ud.last_name,
+          phone: ud.phone,
+          email: ud.email,
+          _id: state.user._id,
+        },
+      }
     default:
       return state
   }
