@@ -14,9 +14,6 @@ function Favorites() {
   const dispatch = useDispatch();
   const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
   const  favouriteList = favouriteListResponse?.data?.restroList || []
-  
-  console.log("Aakash======>",favouriteList)
-  
   const  user = useSelector((state) => state.Auth.user);
   const  {setFavouriteListLoader} = useSelector((state) => state.Setting);
   const onPressChecked = () => {

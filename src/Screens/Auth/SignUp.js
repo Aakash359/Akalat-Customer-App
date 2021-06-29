@@ -4,7 +4,7 @@ import { useNavigation,CommonActions } from '@react-navigation/native';
 import { SignUpRequest,loaderRequest, setSignupStatus } from '../../redux/actions';
 import { Scale, Colors, ImagesPath,COUNTRY } from '../../CommonConfig';
 import { localize } from '../../Utils/Localization';
-import { FormInput, CustomButton, PasswordInput, NumberInput } from '../../Component';
+import { FormInput, CustomButton, } from '../../Component';
 import { Icon } from 'native-base';
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
 import { useSelector, useDispatch } from 'react-redux';

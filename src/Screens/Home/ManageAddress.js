@@ -75,7 +75,7 @@ function ManageAddress() {
             Delete{' '}
           </Text>
           <Text
-            onPress={() => EditAddress()}
+            onPress={EditAddress}
             style={[
               styles.placeText,
               {

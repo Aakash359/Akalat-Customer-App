@@ -42,9 +42,7 @@ function Otp(props) {
                  else{
                      navigate('ResetPassword', data)
                  }
-          
-                //  console.log("Aakash====>",data)
-              dispatch(OTPVerifyRequest(data));
+                dispatch(OTPVerifyRequest(data));
         }
       }
 
@@ -110,11 +108,21 @@ function Otp(props) {
                                     />
                                     </View>
                                 <CustomButton title="Submit" onSubmit={onSubmit} isSecondary={true} />
-                                <TouchableOpacity onPress={onPress} >
-                           <Text style={styles.normalText1}>Didn't get the code?
-                           
-                           <Text style={{color:Colors.DARK_RED}}> Resend OTP</Text></Text>
-                           </TouchableOpacity>
+                               
+                               <View style={{flexDirection:'row',justifyContent:'center'}}>
+                                       
+                           <Text style={styles.normalText1}>Didn't get the code?</Text>
+                           <TouchableOpacity onPress={onPress} >
+                           <Text style={{fontSize: Scale(16),
+                                        fontFamily: Fonts.Medium,
+                                        marginTop: Scale(5),
+                                        marginLeft:Scale(5),
+                                        textAlign: 'center',
+                                        color: Colors.RED,}}>Resend OTP</Text>
+                                         </TouchableOpacity>
+                           </View> 
+                          
+                          
                             </View>
                         </ImageBackground>
                     </ScrollView>
