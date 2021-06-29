@@ -27,15 +27,15 @@ function Profile(props) {
     })
   }, [])
 
-  // useEffect(() => {
-  //   const data = {
-  //     _id: user?._id,
-  //   }
+  useEffect(() => {
+    const data = {
+      _id: user?._id,
+    }
 
-  //   setTimeout(() => {
-  //     dispatch(getUserDetails(data))
-  //   }, 5000)
-  // }, [])
+    setTimeout(() => {
+      dispatch(getUserDetails(data))
+    }, 5000)
+  }, [])
 
   return (
     <View style={styles.container}>

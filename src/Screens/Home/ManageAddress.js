@@ -75,7 +75,7 @@ function ManageAddress() {
             Delete{' '}
           </Text>
           <Text
-            onPress={EditAddress}
+            onPress={() => EditAddress()}
             style={[
               styles.placeText,
               {
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: Colors.BORDERCOLOR,
-    fontSize: Scale(12),
+    fontSize: Scale(10),
     //marginTop: Scale(10)
   },
   cardHeader: {
