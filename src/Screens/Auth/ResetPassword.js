@@ -5,7 +5,7 @@ import { screenWidth, screenHeight, ImagesPath, Colors, Scale, Fonts, } from '..
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
 import { CustomButton, FormInput } from '../../Component';
-import { connect } from 'react-redux';
+import { connect,useSelector } from 'react-redux';
 import { API_BASE } from '../../apiServices/ApiService';
 import axios from 'axios';
 
@@ -13,15 +13,21 @@ function ResetPassword(props) {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const [form, setForm] = React.useState({password: '', confirm_password: ''})
+    const user = useSelector((state) => state.Auth.user)
+    console.log("Aalask====>",user)
 
     const onReset = async () => {
         const {password, confirm_password} = form
-        if(!password || password?.length < 8) {
-          return  Alert.alert('', 'Please enter 8 characters password')
+        if(password=='') {
+          return  Alert.alert('', 'Please enter password')
         }
-        if(!confirm_password || confirm_password?.length < 8) {
-            return  Alert.alert('', 'Please enter 8 characters password')
+        if(confirm_password=='') {
+            return  Alert.alert('', 'Please enter confirm password')
           }
+        if(password.length<8 || confirm_password.length<8  ) {
+            return  Alert.alert('', 'Please enter minimum 8 charcter password')
+          }
+         
           const url = `${API_BASE}/resetPassword`
           const payload = {
               password,
@@ -29,6 +35,7 @@ function ResetPassword(props) {
               phone: props?.route?.params?.phone,
               _id: props?.user?._id
           }
+          
           try {
               const res = await axios.post(url, payload)
               if(res?.data?.error) {
@@ -69,7 +76,7 @@ function ResetPassword(props) {
                                 </TouchableOpacity>
                                 <Text style={styles.primaryText}>Reset Password</Text>
                                 
-                                <View style={{marginVertical:Scale(10)}}>
+                                <View style={{marginVertical:Scale(2)}}>
                                     <FormInput
                                         placeholder="Password"
                                         autoCapitalize="none"
