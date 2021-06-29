@@ -40,6 +40,7 @@ import {
   CHANGE_PASSWORD_FAILED,
   SET_FAVOURITE_LIST_LOADER,
   SET_EDIT_PROFILE_LOADER,
+  SET_EDIT_PROFILE_STATUS,
 } from '../Types/type'
 
 const initialState = {
@@ -191,6 +192,11 @@ export default function SettingReducer(state = initialState, action) {
       return {
         ...state,
         editProfileError: action.payload,
+      }
+    case SET_EDIT_PROFILE_STATUS:
+      return {
+        ...state,
+        editProfileStatus: action?.data,
       }
     case MYORDER_LIST_REQUEST:
       return {

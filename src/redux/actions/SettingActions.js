@@ -17,6 +17,8 @@ import {
   SET_EDIT_PROFILE_LOADER,
   EDIT_PROFILE_SUCCESS,
   EDIT_PROFILE_FAILED,
+  SET_EDIT_PROFILE_STATUS,
+  DELETE_ADDRESS_FAILED,
 } from '../Types/type'
 
 // =================About Us GET REQUEST =================
@@ -83,6 +85,13 @@ export const editProfileSuccess = (data) => {
 export const editProfileFailed = (data) => {
   return {
     type: EDIT_PROFILE_FAILED,
+    data,
+  }
+}
+// =================SET edit Profile status =================
+export const SetEditProfileStatus = (data) => {
+  return {
+    type: SET_EDIT_PROFILE_STATUS,
     data,
   }
 }

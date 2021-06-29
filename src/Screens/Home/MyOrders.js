@@ -93,7 +93,7 @@ function MyOrders(props) {
         {moment(item?.order_date_placed).format('MMM D, LT')}
       </Text>
       <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>{item?.total_price}</Text>
+      <Text style={styles.itemText}>$ {item?.total_price}</Text>
       <View style={styles.heading}>
         <Text style={styles.cancelButton}>Cancel Order</Text>
         <Text style={[styles.cancelButton, {backgroundColor: Colors.APPCOLOR}]}>
@@ -125,7 +125,7 @@ function MyOrders(props) {
         {moment(item?.order_date_placed).format('MMM D, LT')}
       </Text>
       <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>{item?.total_price}</Text>
+      <Text style={styles.itemText}>$ {item?.total_price}</Text>
       <View style={styles.heading}>
         <Text style={[styles.cancelButton, {backgroundColor: Colors.APPCOLOR}]}>
           Re-Order
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(20),
     fontSize: Scale(16),
     color: Colors.WHITE,
-    borderRadius: 20,
+    // borderRadius: 20,
   },
   borderStyle: {
     height: Scale(2),
