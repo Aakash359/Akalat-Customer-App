@@ -95,10 +95,32 @@ function MyOrders(props) {
       <Text style={styles.seconderyText}>Total Amount</Text>
       <Text style={styles.itemText}>$ {item?.total_price}</Text>
       <View style={styles.heading}>
-        <Text style={styles.cancelButton}>Cancel Order</Text>
-        <Text style={[styles.cancelButton, {backgroundColor: Colors.APPCOLOR}]}>
-          Track Order
-        </Text>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: Colors.DARK_RED,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            borderRadius: 25,
+          }}>
+          <Text style={{color: 'white', fontWeight: '600', fontSize: 20}}>
+            Cancel Order
+          </Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: Colors.APPCOLOR,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            borderRadius: 25,
+          }}>
+          <Text style={{color: 'white', fontWeight: '600', fontSize: 20}}>
+            Track Order
+          </Text>
+        </View>
       </View>
     </View>
   )

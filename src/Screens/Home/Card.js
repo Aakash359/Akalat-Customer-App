@@ -168,16 +168,16 @@ function Card(props) {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-        <View>
-          <View style={styles.cardHeader}>
+        <View style={{maxWidth: '70%'}}>
+          <View style={[styles.cardHeader, {maxWidth: '70%'}]}>
             <Text style={[styles.placeText, {marginBottom: 10}]}>
               {item?.address_type}
             </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.placeText}>{item?.house_name_and_no},</Text>
-            <Text style={styles.placeText}>{item?.area_name},</Text>
-            <Text style={styles.placeText}>{item?.nearby}</Text>
+            <Text style={styles.placeText}>
+              {item?.house_name_and_no}, {item?.area_name}, {item?.nearby}
+            </Text>
           </View>
         </View>
         <Icon
