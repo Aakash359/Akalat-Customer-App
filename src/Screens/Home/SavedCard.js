@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 },
     nameText:{
         fontSize:Scale(16),
-        fontFamily:Fonts.Bold,
+        fontFamily:Fonts.Regular,
         color:Colors.BLACK
     },
     cardStyle: {
