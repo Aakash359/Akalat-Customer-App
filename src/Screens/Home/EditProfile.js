@@ -15,7 +15,7 @@ import {CustomButton, FormInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {
-  EditProfileResquest,
+  EditProfileRequest,
   loaderRequest,
   setEditProfileLoader,
 } from '../../redux/actions'
@@ -54,13 +54,13 @@ function Profile(props) {
         _id: profileDetails?._id != undefined ? profileDetails?._id : 0,
       }
 
-      dispatch(EditProfileResquest(data))
+      dispatch(EditProfileRequest(data))
     }
   }
 
   useEffect(() => {
     if (props.editProfileStatus) {
-      navigation.navigate('Profile')
+      // navigation.navigate('Profile')
     }
   }, [props?.editProfileStatus])
 
@@ -91,27 +91,24 @@ function Profile(props) {
           <ScrollView indicatorStyle="white">
             <FormInput
               placeholder="First Name"
-              autoCapitalize="none"
+              autoCapitalize = 'words'
               maxLength={30}
               value={first_name}
-              // editable={edit_id == 0 ? false : true}
               onChangeText={(text) => setfirst_name(text)}
             />
             <FormInput
               placeholder="Last Name"
-              autoCapitalize="none"
+              autoCapitalize = 'words'
               maxLength={30}
               value={last_name}
-              // editable={edit_id == 0 ? false : true}
               onChangeText={(text) => setlast_name(text)}
             />
             <FormInput
               placeholder="Mobile Number"
-              autoCapitalize="none"
+              autoCapitalize = 'none'
               keyboardType={'numeric'}
               maxLength={30}
               value={phone}
-              // editable={edit_id == 0 ? false : true}
               onChangeText={(text) => setphone(text)}
             />
             <FormInput
@@ -120,7 +117,6 @@ function Profile(props) {
               autoCapitalize="none"
               maxLength={30}
               value={email}
-              // editable={edit_id == 0 ? false : true}
               onChangeText={(text) => setemail(text)}
             />
             <View style={{marginTop: Scale(20)}}>

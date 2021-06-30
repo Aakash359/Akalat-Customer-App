@@ -38,27 +38,6 @@ function SignUp(props) {
 
     }
   }, [signupResponse?.SignStatus])
-
-
-
-  // console.log('================================SigIN  data',signupResponse);
-
- 
-
-    // if(signupResponse.SignStatus==true)
-    // {
-    //   navigation.dispatch(
-    //       CommonActions.reset({
-    //           index: 0,
-    //           routes: [
-    //               {
-    //                   name: 'Otp',
-    //                   params: { user: 'jane' }
-    //               },
-    //           ],
-    //       }))
-     
-    // }
     
   const onSubmit = async() =>{
         const {
