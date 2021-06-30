@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, FlatList,PermissionsAndroid, StyleSheet, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
+import { Text, View, FlatList,PermissionsAndroid, StyleSheet, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base';
-import { Colors, Scale, Fonts,ImagesPath, iOSMapAPIKey, androidMapAPIKey } from '../../CommonConfig';
+import { Colors, Scale,ImagesPath, iOSMapAPIKey, androidMapAPIKey } from '../../CommonConfig';
 import { CustomButton} from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { Searchbar } from 'react-native-paper';
+import {AddressListRequest} from '../../redux/actions'
+import {useSelector, useDispatch} from 'react-redux'
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
-function SelectLocation() {
+
+function SelectLocation(props) {
     const [value, setValue]=useState(false);
     const { navigate } = useNavigation();
     const navigation = useNavigation();
+    const dispatch = useDispatch()
     const [
         currentAddress,
         setAddress
-    ] = useState('');
-    const [items, setItems] = React.useState([
-        {id:'2',place: 'Home', address: 'HN-256, C block, DLF phase 3, Gurgaon-122016',  },
-        {id:'2', place: 'Work', address: 'HN-256, C block, DLF phase 3, Gurgaon-122016', },
+    ] = useState({d: null,
+        selectedId: props?.selectedAddress || 0});
+    const addressListResponse = useSelector((state) => state.Setting.addressListResponse,)
+    const addressList = addressListResponse?.data?.addressList || []
+    const user = useSelector((state) => state.Auth.user)
     
-      ]);
     const redirectToMyAccount = () => {
-        navigate('SavedCard');
+        navigate('HomeScreen');
     };
     const redirectToAddress = () =>{
         navigate('AddNewAddress');
     }
+    useEffect(() => {
+        const data = {
+          created_by: user?._id,
+        }
+    
+        setTimeout(() => {
+          dispatch(AddressListRequest(data))
+        }, 5000)
+      }, [])
     useEffect(() => {
         const requestLocationPermission = async () => {
             if (Platform.OS === 'ios') {
@@ -42,12 +55,12 @@ function SelectLocation() {
                         },
                     );
                     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                        //To Check, If Permission is granted
+                      
                         getOneTimeLocation();
                     } else {
                     }
                 } catch (err) {
-                    console.warn(err);
+                    
                 }
             }
         };
@@ -59,22 +72,18 @@ function SelectLocation() {
 
     const getOneTimeLocation = () => {
         Geolocation.getCurrentPosition(
-            //Will give you the current location
+            
             (position) => {
-
-                //getting the Longitude from the location json
-                const currentLongitude =
+                    const currentLongitude =
                     JSON.stringify(position.coords.longitude);
 
-                //getting the Latitude from the location json
+             
                 const currentLatitude =
                     JSON.stringify(position.coords.latitude);
                 Geocoder.from(position.coords.latitude, position.coords.longitude)
                     .then(json => {
-                        console.log("=============================================json data", json.results[1].formatted_address, "================================Flat no")
-                        // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name 
                         let addressComponent = json.results[1].formatted_address;
-                        console.log(addressComponent, 'addressComponent');
+                        
                         setAddress(addressComponent)
 
                     })
@@ -93,15 +102,24 @@ function SelectLocation() {
     )
     const renderItems = ({ item, index }) => (
       
-        <View style={styles.cardStyle}>
+        <TouchableOpacity style={styles.cardStyle}
+        onPress={() => setAddress({...currentAddress, selectedId: index})}>
             <View style={styles.cardHeader}>             
-                    <Text style={styles.placeText}>{item.place}</Text>                
-                   <Icon style={{fontSize:Scale(25),color:value ? Colors.DARK_RED :'#AF9163'}} onPress={checked} type='FontAwesome' name={value ? 'dot-circle-o' : "circle-o"}/>
+                    <Text style={styles.placeText}>{item?.address_type}</Text>                
+                    <Icon
+          type="FontAwesome"
+          style={[
+            {
+              color:
+              currentAddress?.selectedId === index ? Colors.RED : Colors.LIGHT_GRAY,
+            },
+            {fontSize: 25},
+          ]}
+          name={currentAddress?.selectedId === index ? 'dot-circle-o' : 'circle-o'}
+        />
             </View>
-            <Text style={styles.placeText}>
-                {item.address}
-                </Text>
-        </View>
+           <Text style={styles.placeText}>{item?.house_name_and_no},{item?.area_name},{item?.nearby}</Text>
+        </TouchableOpacity>
     );
 
     return (
@@ -137,7 +155,7 @@ function SelectLocation() {
                         <Text onPress={redirectToAddress} style={styles.addStyle}>Add New Address</Text>
                     </View>
                     <FlatList
-                            data={items}
+                            data={addressList}
                             renderItem={renderItems}
                         />
                     <View style={{ marginTop: Scale(20) }}>
@@ -166,10 +184,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         marginBottom:Scale(10)
     },
-    placeText:{
-        fontSize:Scale(16),
-        fontFamily:Fonts.Bold,
-        color:Colors.BLACK
+    placeText: {
+        fontSize: Scale(16),
+        color: Colors.BLACK,
     },
     cardStyle: {
         width: '100%',
@@ -200,7 +217,6 @@ const styles = StyleSheet.create({
     buttonImage: {
         textAlign: 'center',
         textAlignVertical: 'center',
-        // paddingLeft:Scale(5),
         fontSize: Scale(25),
         color: "#F7A00D",
     },

@@ -4,17 +4,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-    Platform,
+  Platform,
   Image,
   PermissionsAndroid
 } from "react-native";
 import {
   ImagesPath,
-  screenWidth,
   Colors,
-  Scale,
-  Fonts,
-  LoadWheel,
   GOOGLE_MAPS_APIKEY
 } from '../../CommonConfig';
 import MapView, {

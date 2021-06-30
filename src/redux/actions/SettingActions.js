@@ -112,7 +112,7 @@ export const AddAddressRequest = (data) => {
 }
 
 // =================Address List GET REQUEST =================
-export const AddressListResquest = (data) => {
+export const AddressListRequest = (data) => {
   return {
     type: ADDRESSLIST_REQUEST,
     data,

@@ -185,7 +185,7 @@ function AddNewAddress(props) {
                         <CustomButton title="Save" isSecondary={true} onSubmit={onSubmit} />
                     </View>
                 </ScrollView>
-                {/* <LoadWheel visible={loader} /> */}
+              
                 </KeyboardAvoidingView>
             </ImageBackground>
 

@@ -93,7 +93,7 @@ const renderCustomizeModal = () =>  {
           <TouchableOpacity activeOpacity={1} onPress={() => setCustomizeModal(false)} style={{ flex: 1, backgroundColor: Colors.TRANSPARENT, justifyContent: 'center', alignItems: 'center', width: '100%' }}>
               <TouchableOpacity activeOpacity={1} onPress={() => { }} style={{ width: '85%', borderRadius: Scale(10), backgroundColor: Colors.WHITE }}>
                   <View style={{ height: Scale(80), justifyContent: 'center', alignItems: 'center' }}>
-                      <Text style={{ color: '#202020', fontSize: Scale(20), fontFamily: Fonts.Bold }}>Jumbo Cheese Burger </Text>
+                      <Text style={{ color: '#202020', fontSize: Scale(20), fontFamily: Fonts.Regular }}>Jumbo Cheese Burger </Text>
                   </View>
 
                   {/* SUGAR */}
