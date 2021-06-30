@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, ImageBackground,KeyboardAvoidingView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground,KeyboardAvoidingView,TextInput, ScrollView } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
 import { FormInput, CustomButton,NumberInput } from '../../Component';
@@ -7,6 +7,7 @@ import { Icon } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginRequest, loaderRequest, } from '../../redux/actions'
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
+import CountryPicker from 'react-native-country-picker-modal'
 
 function Login(props) {
     const { navigate } = useNavigation();
@@ -16,7 +17,8 @@ function Login(props) {
     const  {isLoading} = useSelector((state) => state.Auth);
     const [phone, setphone] = useState('');
     const [password, setpassword] = useState('');
-
+    const [countryCode, setCountryCode] = useState('IN')
+    const [callingCode, setcallingCode] = useState('+91')
 
       if(user.loginStatus==true)
       {
@@ -83,15 +85,48 @@ function Login(props) {
                         <Text style={styles.primaryText}>Hello !</Text>
 
                         <Text style={styles.normalText}>Welcome back</Text>
+                        <Text style={styles.mobile}>Mobile Number</Text>
+                        <View style={styles.textInputView}>
 
-                        <FormInput
-                            placeholder="Mobile Number"
-                            autoCapitalize="none"
-                            keyboardType={'numeric'}
-                            maxLength={10}
-                            value={phone}
-                            onChangeText={(text) => setphone(text )}
+                        <CountryPicker
+                            countryCode={countryCode}
+                            withFilter
+                            withFlag
+                            withCurrencyButton={false}
+                            withAlphaFilter={false}
+                            withCallingCode
+                            withEmoji
+                            onSelect={ country=>{
+                                console.log("Country",country)
+                                const {cca2,callingCode} = country
+                                setCountryCode(cca2);
+                                setcallingCode(callingCode[0]);
+                            }}
+                            
+                            containerButtonStyle={{
+                                marginLeft:10,
+                                marginTop:10
+                            }}
+                          
                         />
+
+                        <TextInput
+                          style={styles.textInputContainer}
+                          value={phone}
+                          maxLength={10}
+                          autoCapitalize="none"
+                          placeholder="Mobile Number"
+                          keyboardType={'numeric'}
+                          onChangeText={(text) => setphone(text )}
+                          placeholderTextColor={Colors.BORDERCOLOR}
+                          placeholderStyle={{fontWeight:'bold'}}
+                          underlineColorAndroid="transparent"
+                                
+                          />
+
+                        </View>
+                        
+                        
                         <FormInput
                             placeholder="Password"
                             autoCapitalize="none"
@@ -126,6 +161,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: Scale(25),
         paddingTop: Scale(10),
     },
+    textInputView: {
+        flexDirection:'row',
+        marginVertical: Scale(8),
+        height: Scale(50),
+        fontSize: Scale(16),
+        color: Colors.BLACK, 
+        fontWeight:'500', 
+        borderWidth: Scale(1),
+        borderColor: "#AB8F8E",
+        width: '100%',
+        alignSelf: 'center',
+        borderRadius:Scale(5),
+      },
+      
     imageBachgroundStyle: {
         height: '100%',
         width: '100%'
@@ -155,5 +204,14 @@ const styles = StyleSheet.create({
         textAlign: "left",
         marginTop:Scale(5),
         marginBottom: Scale(25)
+    },
+    mobile: {
+        fontSize:Scale(14),
+        marginBottom:Scale(5),
+        color: Colors.BORDERCOLOR,
+        textAlign: "left",
+        marginTop:Scale(5),
+        marginLeft:Scale(2)
+        
     },
 });

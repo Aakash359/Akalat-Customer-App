@@ -18,7 +18,6 @@ import {
   GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_FAILED,
-  UPDATE_USER_DETAILS,
 } from '../Types/type';
 import {put, call, takeEvery, takeLatest} from 'redux-saga/effects';
 import Request from '../../apiServices/Request';

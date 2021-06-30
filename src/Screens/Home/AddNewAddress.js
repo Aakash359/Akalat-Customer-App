@@ -157,21 +157,21 @@ function AddNewAddress(props) {
                             <Text style={{fontSize:Scale(16),textAlign:'center',color:Colors.BORDERCOLOR,marginVertical:Scale(10)}}>or</Text>
                         <FormInput
                             placeholder="House No/Flat No"
-                            autoCapitalize="none"
+                            autoCapitalize = 'words'
                             maxLength={30}
                             value={house_name_and_no}
                             onChangeText={(text) => setHouseName(text)}
                         />
                         <FormInput
                             placeholder="Area"
-                            autoCapitalize="none"
+                            autoCapitalize = 'words'
                             maxLength={30}
                             value={area_name}
                             onChangeText={(text) => setAreaName(text)}
                         />
                         <FormInput
                             placeholder="Nearby"
-                            autoCapitalize="none"
+                            autoCapitalize = 'words'
                             maxLength={30}
                             value={nearby}
                             onChangeText={(text) => setNearby(text)}
