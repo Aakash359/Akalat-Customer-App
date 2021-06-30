@@ -5,7 +5,7 @@ import { screenWidth, screenHeight, ImagesPath, Colors, Scale, Fonts, } from '..
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
 import { CustomButton, FormInput } from '../../Component';
-import { connect,useSelector } from 'react-redux';
+import { connect} from 'react-redux';
 import { API_BASE } from '../../apiServices/ApiService';
 import axios from 'axios';
 
@@ -13,8 +13,8 @@ function ResetPassword(props) {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const [form, setForm] = React.useState({password: '', confirm_password: ''})
-    const user = useSelector((state) => state.Auth.user)
-    console.log("Aalask====>",props?.route?.params?._id)
+ 
+
 
     const onReset = async () => {
         const {password, confirm_password} = form
@@ -33,8 +33,9 @@ function ResetPassword(props) {
               password,
               confirm_password,
               phone: props?.route?.params?.phone,
-              _id: props?.route?.params?._id
+              _id: props?.user?._id
           }
+        
           
           try {
               const res = await axios.post(url, payload)
@@ -43,6 +44,8 @@ function ResetPassword(props) {
               }
               else {
                   props.navigation.navigate('Login')
+                  Alert.alert('', "Your Password has been changed successfully!")
+                  
               }
 
           } catch (error) {

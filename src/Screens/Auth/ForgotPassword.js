@@ -28,10 +28,10 @@ function ForgotPassword() {
             const data = { 
                 'phone': phone,
                 'role' : 'customer',
-                'country_code' : COUNTRY == "IN" ? '971' : '91'
+                'country_code' : COUNTRY == "IN" ? '91' : '971'
      
                 }
-                console.log("Data",data)
+               
               navigate('Otp', data)
               dispatch(OTPRequest(data));
         }
