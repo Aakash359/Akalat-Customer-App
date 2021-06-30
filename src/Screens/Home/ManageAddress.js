@@ -53,8 +53,8 @@ function ManageAddress() {
   const redirectToAddress = () => {
     navigate('AddNewAddress')
   }
-  const EditAddress = () => {
-    navigate('EditAddress')
+  const EditAddress = (address) => {
+    navigate('EditAddress', {address})
   }
   const renderItems = ({item}) => (
     <View style={styles.cardStyle}>
@@ -74,7 +74,7 @@ function ManageAddress() {
             Delete{' '}
           </Text>
           <Text
-            onPress={EditAddress}
+            onPress={() => EditAddress(item)}
             style={[
               styles.placeText,
               {
@@ -111,9 +111,13 @@ function ManageAddress() {
       </View>
       <View style={styles.buttonHeader}>
         <Text style={styles.headerText}>Manage Address </Text>
-        <Text onPress={redirectToAddress} style={styles.textStyle}>
-          Add New Address
-        </Text>
+        <View style={styles.textStyle}>
+          <Text
+            onPress={redirectToAddress}
+            style={{color: 'white', fontWeight: '700'}}>
+            Add New Address
+          </Text>
+        </View>
       </View>
       <ImageBackground
         source={ImagesPath.background}
@@ -152,9 +156,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.APPCOLOR,
   },
   textStyle: {
-    color: Colors.BORDERCOLOR,
-    fontSize: Scale(10),
-    //marginTop: Scale(10)
+    borderWidth: 1.5,
+    padding: 15,
+    borderRadius: 25,
+    borderColor: 'white',
+    paddingVertical: 10,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -193,21 +199,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: Scale(25),
-  },
-  textStyle: {
-    // backgroundColor: Colors.WHITE,
-    borderRadius: Scale(20),
-    borderWidth: Scale(2),
-    borderColor: Colors.WHITE,
-    width: Scale(124),
-
-    paddingHorizontal: Scale(9),
-    height: Scale(40),
-    textAlignVertical: 'center',
-    //textAlign: 'center',
-    color: Colors.WHITE,
-    fontSize: Scale(13),
-    fontWeight: 'bold',
   },
   loginInputCont: {
     flex: 1,
