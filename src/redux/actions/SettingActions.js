@@ -7,7 +7,6 @@ import {
   ADDADDRESS_REQUEST,
   ADDRESSLIST_REQUEST,
   EDIT_PROFILE_REQUEST,
-  PROFILE_INFO_REQUEST,
   MYORDER_LIST_REQUEST,
   DELETE_ADDRESS_REQUEST,
   DELETE_ADDRESS_SUCCESS,
@@ -61,7 +60,7 @@ export const HelpRequest = (data) => {
   }
 }
 // =================Edit Profile REQUEST =================
-export const EditProfileResquest = (data) => {
+export const EditProfileRequest = (data) => {
   return {
     type: EDIT_PROFILE_REQUEST,
     data,

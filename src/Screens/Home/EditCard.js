@@ -5,8 +5,8 @@ import { Colors, Scale, ImagesPath,iOSMapAPIKey,androidMapAPIKey } from '../../C
 import { CustomButton, FormInput } from '../../Component';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
-
 import Geocoder from 'react-native-geocoding';
+
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
 function EditCard() {
       const [

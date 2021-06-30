@@ -34,8 +34,9 @@ function Otp(props) {
                 'otp':    otp,
                 'role' : 'customer',
                 'phone' :  phone,
-                'country_code' : "91" ,
+                'country_code' : COUNTRY == "IN" ? '91' : '971'
                  }
+                 
                  if(email){
                     navigate('Address')
                  }
@@ -51,7 +52,7 @@ function Otp(props) {
         const data = { 
             'phone': phone,
             'role' : 'customer',
-            'country_code' : COUNTRY == "IN" ? '971' : '91'
+            'country_code' : COUNTRY == "IN" ? '91' : '971'
  
             }
             

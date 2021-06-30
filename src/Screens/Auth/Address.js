@@ -12,7 +12,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 Geolocation.setRNConfiguration({ authorizationLevel : "whenInUse" });
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey);
+
 function Address() {
+  
     const { navigate } = useNavigation();
     const navigation = useNavigation();    
     const [logoutModal, setLogoutModal] = useState(false);

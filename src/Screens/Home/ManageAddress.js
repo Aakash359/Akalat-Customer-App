@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   StatusBar,
-  LayoutAnimation,
   FlatList,
   ScrollView,
   KeyboardAvoidingView,
@@ -89,9 +88,8 @@ function ManageAddress() {
         </View>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text style={styles.placeText}>{item?.house_name_and_no},</Text>
-        <Text style={styles.placeText}>{item?.area_name},</Text>
-        <Text style={styles.placeText}>{item?.nearby}</Text>
+        <Text style={styles.placeText} >{item?.house_name_and_no},{item?.area_name},{item?.nearby}</Text>
+       
       </View>
     </View>
   )
@@ -172,9 +170,10 @@ const styles = StyleSheet.create({
   },
   placeText: {
     fontSize: Scale(16),
-    //fontFamily: Fonts.Bold,
     color: Colors.BLACK,
+   
   },
+  
   cardStyle: {
     width: '100%',
     backgroundColor: '#ffffff',
