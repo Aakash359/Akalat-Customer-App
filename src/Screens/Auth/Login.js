@@ -5,9 +5,11 @@ import { Scale, Colors, ImagesPath } from '../../CommonConfig';
 import { FormInput, CustomButton,NumberInput } from '../../Component';
 import { Icon } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginRequest, loaderRequest, } from '../../redux/actions'
+import { loginRequest, loaderRequest, countryListRequest} from '../../redux/actions'
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
 import CountryPicker from 'react-native-country-picker-modal'
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 function Login(props) {
     const { navigate } = useNavigation();
@@ -15,10 +17,14 @@ function Login(props) {
     const dispatch = useDispatch();
     const  user = useSelector((state) => state.Auth);
     const  {isLoading} = useSelector((state) => state.Auth);
+    const  counrtryListResponse = useSelector((state) => state.Auth.counrtryListResponse);
+    const  countryList = counrtryListResponse?.data || []
+    console.log("Aakash=====>",countryList?.[0]?.dial_code);
     const [phone, setphone] = useState('');
     const [password, setpassword] = useState('');
-    const [countryCode, setCountryCode] = useState('IN')
-    const [callingCode, setcallingCode] = useState('+91')
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState();
+    const [items, setItems] = useState();
 
       if(user.loginStatus==true)
       {
@@ -44,6 +50,7 @@ function Login(props) {
         else
         {
             const data = { 
+                'country_code': '91',
                 'phone': parseInt(phone),
                 'password':password,
          }
@@ -52,11 +59,19 @@ function Login(props) {
         setTimeout(() => {
 
             dispatch(loginRequest(data));
+            
 
                 }, 1000);
         }
         
       }
+
+      useEffect(() => {
+
+         dispatch(countryListRequest());
+           
+         }, 
+      []); 
 
     
     const redirectToForgotPassword = () => {
@@ -70,7 +85,7 @@ function Login(props) {
 
    
 
-    console.log('ISLOADING: ', isLoading);
+    
 
     return (
         <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
@@ -87,29 +102,28 @@ function Login(props) {
                         <Text style={styles.normalText}>Welcome back</Text>
                         <Text style={styles.mobile}>Mobile Number</Text>
                         <View style={styles.textInputView}>
+                        <DropDownPicker
+                        placeholder={'+92'}
+                        value={value}
+                        open={open}
+                        items={countryList.map((items)=>{
+                            return{
+                                label:items.dial_code
+                            }
+                        })}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems={setItems}
+                        style={{width:Scale(72),borderWidth:0,fontWeight:'bold',
+                            backgroundColor:Colors.TRANSPARENT}}
+                        containerStyle={{
+                           width:Scale(72),
+                           borderWidth:0,
+                           fontWeight:'bold',
+                           backgroundColor:Colors.TRANSPARENT
 
-                        <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withCurrencyButton={false}
-                            withAlphaFilter={false}
-                            withCallingCode
-                            withEmoji
-                            onSelect={ country=>{
-                                console.log("Country",country)
-                                const {cca2,callingCode} = country
-                                setCountryCode(cca2);
-                                setcallingCode(callingCode[0]);
-                            }}
-                            
-                            containerButtonStyle={{
-                                marginLeft:10,
-                                marginTop:10
-                            }}
-                          
+                        }}
                         />
-
                         <TextInput
                           style={styles.textInputContainer}
                           value={phone}
