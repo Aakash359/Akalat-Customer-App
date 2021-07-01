@@ -1,217 +1,218 @@
-import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, ImageBackground,KeyboardAvoidingView,TextInput, ScrollView } from 'react-native';
-import { useNavigation, CommonActions } from '@react-navigation/native';
-import { Scale, Colors, ImagesPath } from '../../CommonConfig';
-import { FormInput, CustomButton,NumberInput } from '../../Component';
-import { Icon } from 'native-base';
-import { useSelector, useDispatch } from 'react-redux';
-import { loginRequest, loaderRequest, } from '../../redux/actions'
-import { LoadWheel } from '../../CommonConfig/LoadWheel'
+import React, {useState, useEffect} from 'react'
+import {
+  Text,
+  View,
+  StyleSheet,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TextInput,
+  ScrollView,
+} from 'react-native'
+import {useNavigation, CommonActions} from '@react-navigation/native'
+import {Scale, Colors, ImagesPath} from '../../CommonConfig'
+import {FormInput, CustomButton, NumberInput} from '../../Component'
+import {Icon} from 'native-base'
+import {useSelector, useDispatch} from 'react-redux'
+import {loginRequest, loaderRequest} from '../../redux/actions'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import CountryPicker from 'react-native-country-picker-modal'
 
 function Login(props) {
-    const { navigate } = useNavigation();
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
-    const  user = useSelector((state) => state.Auth);
-    const  {isLoading} = useSelector((state) => state.Auth);
-    const [phone, setphone] = useState('');
-    const [password, setpassword] = useState('');
-    const [countryCode, setCountryCode] = useState('IN')
-    const [callingCode, setcallingCode] = useState('+91')
+  const {navigate} = useNavigation()
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.Auth)
+  const {isLoading} = useSelector((state) => state.Auth)
+  const [phone, setphone] = useState('')
+  const [password, setpassword] = useState('')
+  const [countryCode, setCountryCode] = useState('IN')
+  const [callingCode, setcallingCode] = useState('+91')
 
-      if(user.loginStatus==true)
-      {
-        navigation.dispatch(
-            CommonActions.reset({
-                index: 0,
-                routes: [
-                    {
-                        name: 'HomeStack',
-                        params: { user: 'jane' }
-                    },
-                ],
-            }))
+  if (user.loginStatus == true) {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'HomeStack',
+            params: {user: 'jane'},
+          },
+        ],
+      }),
+    )
+  }
+
+  const onSubmit = () => {
+    if (phone == '') {
+      alert('Please enter Mobile Number')
+    } else if (password == '') {
+      alert('Please enter Password')
+    } else {
+      const data = {
+        phone: parseInt(phone),
+        password: password,
+        country_code: '91',
       }
+      dispatch(loaderRequest(true))
 
-    const  onSubmit = () =>{
-        if(phone == '') {
-        alert("Please enter Mobile Number")
-        }
-        else if(password == '') {
-          alert("Please enter Password")
-        }
-        else
-        {
-            const data = { 
-                'phone': parseInt(phone),
-                'password':password,
-         }
-        dispatch(loaderRequest(true))
+      setTimeout(() => {
+        dispatch(loginRequest(data))
+      }, 1000)
+    }
+  }
 
-        setTimeout(() => {
+  const redirectToForgotPassword = () => {
+    navigate('ForgotPassword')
+  }
+  const [hidePassword, setHidePasswordl] = useState(true)
 
-            dispatch(loginRequest(data));
+  const setPasswordVisibility = () => {
+    setHidePasswordl(!hidePassword)
+  }
 
-                }, 1000);
-        }
-        
-      }
+  console.log('ISLOADING: ', isLoading)
 
-    
-    const redirectToForgotPassword = () => {
-        navigate('ForgotPassword');
-    };
-    const [hidePassword, setHidePasswordl] = useState(true);
+  return (
+    <ImageBackground
+      source={ImagesPath.background}
+      style={styles.imageBachgroundStyle}>
+      <KeyboardAvoidingView
+        style={styles.keyboardStyle}
+        behavior={Platform.OS == 'android' ? '' : 'padding'}
+        enabled>
+        <Icon
+          onPress={() => navigation.goBack()}
+          name="arrowleft"
+          type="AntDesign"
+          style={styles.logoStyle}
+        />
+        <ScrollView indicatorStyle="white">
+          <View style={styles.container}>
+            <Text style={styles.primaryText}>Hello !</Text>
 
-    const setPasswordVisibility = () => {
-        setHidePasswordl(!hidePassword);
-    };
+            <Text style={styles.normalText}>Welcome back</Text>
+            <Text style={styles.mobile}>Mobile Number</Text>
+            <View style={styles.textInputView}>
+              <CountryPicker
+                countryCode={countryCode}
+                withFilter
+                withFlag
+                withCurrencyButton={false}
+                withAlphaFilter={false}
+                withCallingCode
+                withEmoji
+                onSelect={(country) => {
+                  console.log('Country', country)
+                  const {cca2, callingCode} = country
+                  setCountryCode(cca2)
+                  setcallingCode(callingCode[0])
+                }}
+                containerButtonStyle={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                }}
+              />
 
-   
+              <TextInput
+                style={styles.textInputContainer}
+                value={phone}
+                maxLength={10}
+                autoCapitalize="none"
+                placeholder="Mobile Number"
+                keyboardType={'numeric'}
+                onChangeText={(text) => setphone(text)}
+                placeholderTextColor={Colors.BORDERCOLOR}
+                placeholderStyle={{fontWeight: 'bold'}}
+                underlineColorAndroid="transparent"
+              />
+            </View>
 
-    console.log('ISLOADING: ', isLoading);
-
-    return (
-        <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
-            <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
-                enabled>
-
-             <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
-                <ScrollView indicatorStyle='white'>
-                  
-                    <View style={styles.container}>
-                    
-                        <Text style={styles.primaryText}>Hello !</Text>
-
-                        <Text style={styles.normalText}>Welcome back</Text>
-                        <Text style={styles.mobile}>Mobile Number</Text>
-                        <View style={styles.textInputView}>
-
-                        <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withCurrencyButton={false}
-                            withAlphaFilter={false}
-                            withCallingCode
-                            withEmoji
-                            onSelect={ country=>{
-                                console.log("Country",country)
-                                const {cca2,callingCode} = country
-                                setCountryCode(cca2);
-                                setcallingCode(callingCode[0]);
-                            }}
-                            
-                            containerButtonStyle={{
-                                marginLeft:10,
-                                marginTop:10
-                            }}
-                          
-                        />
-
-                        <TextInput
-                          style={styles.textInputContainer}
-                          value={phone}
-                          maxLength={10}
-                          autoCapitalize="none"
-                          placeholder="Mobile Number"
-                          keyboardType={'numeric'}
-                          onChangeText={(text) => setphone(text )}
-                          placeholderTextColor={Colors.BORDERCOLOR}
-                          placeholderStyle={{fontWeight:'bold'}}
-                          underlineColorAndroid="transparent"
-                                
-                          />
-
-                        </View>
-                        
-                        
-                        <FormInput
-                            placeholder="Password"
-                            autoCapitalize="none"
-                            secureTextEntry={true}
-                            maxLength={30}
-                            value={password}
-                            onChangeText={(text) => setpassword(text)}
-                        />
-                        <Text onPress={redirectToForgotPassword} style={styles.forgotButton}>Forgot Password?</Text>
-                        <View style={{ marginVertical: '60%' }}>
-
-                        <CustomButton isSecondary={true}  title="Login" onSubmit={onSubmit}  />
-
-                        </View>
-                    </View>
-                </ScrollView>
-                <LoadWheel visible={isLoading} />
-            </KeyboardAvoidingView>
-
-        </ImageBackground>
-
-    );
+            <FormInput
+              placeholder="Password"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              maxLength={30}
+              value={password}
+              onChangeText={(text) => setpassword(text)}
+            />
+            <Text
+              onPress={redirectToForgotPassword}
+              style={styles.forgotButton}>
+              Forgot Password?
+            </Text>
+            <View style={{marginVertical: '60%'}}>
+              <CustomButton
+                isSecondary={true}
+                title="Login"
+                onSubmit={onSubmit}
+              />
+            </View>
+          </View>
+        </ScrollView>
+        <LoadWheel visible={isLoading} />
+      </KeyboardAvoidingView>
+    </ImageBackground>
+  )
 }
 
-
-
-export default Login;
+export default Login
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: Scale(25),
-        paddingTop: Scale(10),
-    },
-    textInputView: {
-        flexDirection:'row',
-        marginVertical: Scale(8),
-        height: Scale(50),
-        fontSize: Scale(16),
-        color: Colors.BLACK, 
-        fontWeight:'500', 
-        borderWidth: Scale(1),
-        borderColor: "#AB8F8E",
-        width: '100%',
-        alignSelf: 'center',
-        borderRadius:Scale(5),
-      },
-      
-    imageBachgroundStyle: {
-        height: '100%',
-        width: '100%'
-    },
-    forgotButton: {
-        alignSelf: 'center',
-        fontSize: Scale(15),
-        textAlign: 'center',
-        marginTop: Scale(15),
-        color: Colors.DARK_RED,
-    },
-    logoStyle: {
-        fontSize: Scale(25),
-        color: Colors.DARK_RED,
-        marginTop:Scale(40),
-        marginLeft:Scale(25),
-    },
-    primaryText: {
-        marginTop: Scale(30),
-        fontSize: Scale(24),
-        fontWeight: 'bold',
-        textAlign: 'left',
-    },
-    normalText: {
-        fontSize: Scale(16),
-        color: Colors.BLACK,
-        textAlign: "left",
-        marginTop:Scale(5),
-        marginBottom: Scale(25)
-    },
-    mobile: {
-        fontSize:Scale(14),
-        marginBottom:Scale(5),
-        color: Colors.BORDERCOLOR,
-        textAlign: "left",
-        marginTop:Scale(5),
-        marginLeft:Scale(2)
-        
-    },
-});
+  container: {
+    flex: 1,
+    paddingHorizontal: Scale(25),
+    paddingTop: Scale(10),
+  },
+  textInputView: {
+    flexDirection: 'row',
+    marginVertical: Scale(8),
+    height: Scale(50),
+    fontSize: Scale(16),
+    color: Colors.BLACK,
+    fontWeight: '500',
+    borderWidth: Scale(1),
+    borderColor: '#AB8F8E',
+    width: '100%',
+    alignSelf: 'center',
+    borderRadius: Scale(5),
+  },
+
+  imageBachgroundStyle: {
+    height: '100%',
+    width: '100%',
+  },
+  forgotButton: {
+    alignSelf: 'center',
+    fontSize: Scale(15),
+    textAlign: 'center',
+    marginTop: Scale(15),
+    color: Colors.DARK_RED,
+  },
+  logoStyle: {
+    fontSize: Scale(25),
+    color: Colors.DARK_RED,
+    marginTop: Scale(40),
+    marginLeft: Scale(25),
+  },
+  primaryText: {
+    marginTop: Scale(30),
+    fontSize: Scale(24),
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  normalText: {
+    fontSize: Scale(16),
+    color: Colors.BLACK,
+    textAlign: 'left',
+    marginTop: Scale(5),
+    marginBottom: Scale(25),
+  },
+  mobile: {
+    fontSize: Scale(14),
+    marginBottom: Scale(5),
+    color: Colors.BORDERCOLOR,
+    textAlign: 'left',
+    marginTop: Scale(5),
+    marginLeft: Scale(2),
+  },
+})

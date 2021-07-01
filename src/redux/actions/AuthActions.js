@@ -10,6 +10,8 @@ import {
   SET_SIGNUP_STATUS,
   SIGNUP_LOGIN,
   SET_USER_DETAILS,
+  OTP_VERIFY_SUCCESS,
+  OTP_VERIFY_FAILED,
 } from '../Types/type'
 
 //================= SIGNUP POST REQUEST =================
@@ -39,6 +41,20 @@ export const OTPRequest = (data) => {
 export const OTPVerifyRequest = (data) => {
   return {
     type: OTP_VERIFY_REQUEST,
+    data,
+  }
+}
+// =================OTP-Verify POST Success =================
+export const OTPVerifySuccess = (data) => {
+  return {
+    type: OTP_VERIFY_SUCCESS,
+    data,
+  }
+}
+// =================OTP-Verify POST Failed =================
+export const OTPVerifyFailed = (data) => {
+  return {
+    type: OTP_VERIFY_FAILED,
     data,
   }
 }
