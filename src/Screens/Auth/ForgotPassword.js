@@ -6,7 +6,7 @@ import {screenWidth,screenHeight,ImagesPath,COUNTRY, Colors,Scale,Fonts,} from '
 import { AuthStyle } from './AuthStyle';
 import { useNavigation } from '@react-navigation/native';
 import {useSelector,useDispatch} from 'react-redux'
-import { CustomButton,FormInput} from '../../Component';
+import { CustomButton, NumberInput ,FormInput, PasswordInput} from '../../Component';
 import { OTPRequest } from '../../redux/actions'
 
 function ForgotPassword() {
@@ -31,7 +31,7 @@ function ForgotPassword() {
                 'country_code' : COUNTRY == "IN" ? '91' : '971'
      
                 }
-               
+                console.log("Aakash====>",data)
               navigate('Otp', data)
               dispatch(OTPRequest(data));
         }
