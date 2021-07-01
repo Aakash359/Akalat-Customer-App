@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet,Alert, ImageBackground, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet,TextInput, ImageBackground, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useNavigation,CommonActions } from '@react-navigation/native';
-import { SignUpRequest,loaderRequest, setSignupStatus } from '../../redux/actions';
+import { SignUpRequest,loaderRequest, countryListRequest } from '../../redux/actions';
 import { Scale, Colors, ImagesPath,COUNTRY } from '../../CommonConfig';
-import { localize } from '../../Utils/Localization';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { FormInput, CustomButton, } from '../../Component';
 import { Icon } from 'native-base';
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
@@ -28,7 +28,12 @@ function SignUp(props) {
   const [confirm_pass, setconfirm_pass] = useState('');
   const {isLoading} = useSelector((state) => state.Auth);
   const [checkBox, setcheckBox] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState();
+  const [items, setItems] = useState();
+  const  counrtryListResponse = useSelector((state) => state.Auth.counrtryListResponse);
+  const  countryList = counrtryListResponse?.data || []
+  console.log("Aakash=====>",countryList?.[0]?.dial_code);
   
 
   useEffect(() => {
@@ -37,6 +42,7 @@ function SignUp(props) {
       navigate('Otp' , {phone, email})
 
     }
+    dispatch(countryListRequest());
   }, [signupResponse?.SignStatus])
     
   const onSubmit = async() =>{
@@ -127,15 +133,46 @@ function SignUp(props) {
                             value={last_name}
                             onChangeText={(text) => setlast_name(text)}
                         />
-                        <View style={{marginTop:Scale(-5)}}> 
-                        <FormInput
-                            placeholder="Mobile Number"
-                            autoCapitalize="none"
-                            keyboardType={'numeric'}
-                            maxLength={10}
-                            value={phone}
-                            onChangeText={(text) => setphone(text)}
+                        <Text style={styles.mobile}>Mobile Number</Text>
+                       
+                        <View style={styles.textInputView}>
+                        <DropDownPicker
+                        placeholder={'+92'}
+                        value={value}
+                        open={open}
+                        items={countryList.map((items)=>{
+                            return{
+                                label:items.dial_code
+                            }
+                        })}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems={setItems}
+                        style={{width:Scale(72),borderWidth:0,fontWeight:'bold',
+                            backgroundColor:Colors.TRANSPARENT}}
+                        containerStyle={{
+                           width:Scale(72),
+                           borderWidth:0,
+                           fontWeight:'bold',
+                           backgroundColor:Colors.TRANSPARENT
+
+                        }}
                         />
+                        <TextInput
+                          style={styles.textInputContainer}
+                          value={phone}
+                          maxLength={10}
+                          autoCapitalize="none"
+                          placeholder="Mobile Number"
+                          keyboardType={'numeric'}
+                          onChangeText={(text) => setphone(text )}
+                          placeholderTextColor={Colors.BORDERCOLOR}
+                          placeholderStyle={{fontWeight:'bold'}}
+                          underlineColorAndroid="transparent"
+                                
+                          />
+
+                       
                         </View>
                         
                         <FormInput
@@ -211,6 +248,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: Scale(25),
         paddingTop: Scale(0),
     },
+    textInputView: {
+      flexDirection:'row',
+      marginVertical: Scale(8),
+      height: Scale(50),
+      fontSize: Scale(16),
+      color: Colors.BLACK, 
+      fontWeight:'500', 
+      borderWidth: Scale(1),
+      borderColor: "#AB8F8E",
+      width: '100%',
+      alignSelf: 'center',
+      borderRadius:Scale(5),
+    },
     imageBachgroundStyle: {
         height: '100%',
         width: '100%'
@@ -241,5 +291,13 @@ const styles = StyleSheet.create({
         color: Colors.BLACK,
         textAlign: "left",
     },
+    mobile: {
+      fontSize:Scale(14),
+      marginBottom:Scale(5),
+      color: Colors.BORDERCOLOR,
+      textAlign: "left",
+      marginTop:Scale(5),
+      marginLeft:Scale(2)
+   },
 });
 

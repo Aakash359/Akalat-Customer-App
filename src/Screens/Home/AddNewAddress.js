@@ -101,8 +101,6 @@ function AddNewAddress(props) {
       alert('Please enter House No')
     } else if (area_name == '') {
       alert('Please enter area')
-    } else if (nearby == '') {
-      alert('Please enter nearby')
     } else {
       let lat = ''
       let lng = ''
