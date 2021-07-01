@@ -8,6 +8,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {
@@ -21,6 +22,7 @@ import {CustomButton, FormInput, LocationInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
+import {color} from 'react-native-reanimated'
 ;``
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 function EditAddress(props) {
@@ -30,6 +32,9 @@ function EditAddress(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const [currentAddress, setAddress] = useState('')
+  const [HouseNumber, setHouseNumber] = useState(address?.house_name_and_no)
+  const [Area, setArea] = useState(address?.area_name)
+  const [Near, setNear] = useState(address?.nearby)
   const redirectToMyAccount = () => {
     navigate('ManageAddress')
   }
@@ -146,19 +151,22 @@ function EditAddress(props) {
               placeholder="House No/Flat No"
               autoCapitalize="none"
               maxLength={30}
-              value={address?.house_name_and_no}
+              value={HouseNumber}
+              onChangeText={(text) => setHouseNumber(text)}
             />
             <FormInput
               placeholder="Area"
               autoCapitalize="none"
               maxLength={30}
-              value={address?.area_name}
+              value={Area}
+              onChangeText={(text) => setArea(text)}
             />
             <FormInput
               placeholder="Nearby"
               autoCapitalize="none"
               maxLength={30}
-              value={address?.nearby}
+              value={Near}
+              onChangeText={(text) => setNear(text)}
             />
             <View
               style={{
@@ -167,33 +175,57 @@ function EditAddress(props) {
                 alignItems: 'center',
                 marginTop: Scale(10),
               }}>
-              <Text
-                onPress={() => setActiveTab('HOME')}
-                style={
-                  activeTab == 'HOME'
-                    ? styles.forgotButton1
-                    : styles.forgotButton
-                }>
-                Home
-              </Text>
-              <Text
-                onPress={() => setActiveTab('WORK')}
-                style={
-                  activeTab == 'WORK'
-                    ? styles.forgotButton1
-                    : styles.forgotButton
-                }>
-                Work
-              </Text>
-              <Text
-                onPress={() => setActiveTab('OTHER')}
-                style={
-                  activeTab == 'OTHER'
-                    ? styles.forgotButton1
-                    : styles.forgotButton
-                }>
-                Other
-              </Text>
+              <TouchableOpacity onPress={() => setActiveTab('HOME')}>
+                <View
+                  style={
+                    activeTab == 'HOME'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'HOME'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Home
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab('WORK')}>
+                <View
+                  style={
+                    activeTab == 'WORK'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'WORK'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Work
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab('OTHER')}>
+                <View
+                  style={
+                    activeTab == 'OTHER'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'OTHER'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Other
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={{marginTop: Scale(20)}}>
               <CustomButton
@@ -221,9 +253,9 @@ const styles = StyleSheet.create({
   },
   forgotButton: {
     // backgroundColor:Colors.DARK_RED,
-    paddingHorizontal: Scale(23),
+    paddingHorizontal: Scale(30),
     paddingVertical: Scale(14),
-    borderRadius: Scale(30),
+    borderRadius: Scale(25),
     fontSize: Scale(16),
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
@@ -231,11 +263,17 @@ const styles = StyleSheet.create({
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
-    paddingHorizontal: Scale(23),
+    paddingHorizontal: Scale(30),
     paddingVertical: Scale(14),
-    borderRadius: Scale(30),
+    borderRadius: Scale(25),
     fontSize: Scale(16),
     color: Colors.WHITE,
+  },
+  forgotButton2: {
+    color: Colors.WHITE,
+  },
+  forgotButton3: {
+    color: Colors.BLACK,
   },
 
   loginInputCont: {
