@@ -16,9 +16,7 @@ import {AddressListRequest, deleteAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
 function ManageAddress() {
-  const addressListResponse = useSelector(
-    (state) => state.Setting.addressListResponse,
-  )
+  const addressListResponse = useSelector((state) => state.Setting.addressListResponse)
 
   const addressList = addressListResponse?.data?.addressList || []
 

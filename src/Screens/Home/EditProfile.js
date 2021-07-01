@@ -13,15 +13,12 @@ import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {CustomButton, FormInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
-import {useSelector, useDispatch, connect} from 'react-redux'
+import {useDispatch, connect} from 'react-redux'
 import {
   EditProfileRequest,
-  loaderRequest,
-  setEditProfileLoader,
 } from '../../redux/actions'
 
 function Profile(props) {
-  const [edit_id, setEdit_Id] = useState(0)
   const dispatch = useDispatch()
   const {profileDetails} = props.route.params
   const [first_name, setfirst_name] = useState(profileDetails?.first_name || '')
@@ -56,11 +53,12 @@ function Profile(props) {
 
       dispatch(EditProfileRequest(data))
     }
+    navigate('Profile')
   }
 
   useEffect(() => {
     if (props.editProfileStatus) {
-      // navigation.navigate('Profile')
+       
     }
   }, [props?.editProfileStatus])
 

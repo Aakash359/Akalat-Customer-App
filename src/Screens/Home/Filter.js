@@ -52,7 +52,6 @@ function Filter() {
             'rating_from_user': value+"",
             'restaurent_type': restro_type,
           }
-          console.log("Aakash===>",payload)
         try 
           {
           const res = await axios.post(url, payload)
