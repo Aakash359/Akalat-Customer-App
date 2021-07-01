@@ -30,7 +30,7 @@ import {
 } from '../../redux/actions/CartActions'
 import axios from 'axios'
 import {API_BASE} from '../../apiServices/ApiService'
-import {AddressListResquest} from '../../redux/actions/SettingActions'
+import {AddressListRequest} from '../../redux/actions/SettingActions'
 import {
   applyCoupon,
   removeCoupon,
@@ -56,7 +56,7 @@ function Card(props) {
   const dispatch = useDispatch()
 
   React.useEffect(() => {
-    props?.AddressListResquest({created_by: props?.user?._id})
+    props?.AddressListRequest({created_by: props?.user?._id})
 
     props?.navigation.setOptions({headerShown: false})
   }, [])
@@ -506,7 +506,7 @@ const mapDispatchToProps = {
   setInstruction,
   setAddressId,
   setSelectedAddress,
-  AddressListResquest,
+  AddressListRequest,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Card)
 

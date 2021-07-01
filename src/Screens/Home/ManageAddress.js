@@ -10,15 +10,13 @@ import {
   ImageBackground,
 } from 'react-native'
 import {Icon} from 'native-base'
-import {Colors, Scale, ImagesPath, Fonts, LogoutAlert} from '../../CommonConfig'
+import {Colors, Scale, ImagesPath, LogoutAlert} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
-import {AddressListResquest, deleteAddressRequest} from '../../redux/actions'
+import {AddressListRequest, deleteAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
 function ManageAddress() {
-  const addressListResponse = useSelector(
-    (state) => state.Setting.addressListResponse,
-  )
+  const addressListResponse = useSelector((state) => state.Setting.addressListResponse)
 
   const addressList = addressListResponse?.data?.addressList || []
 
@@ -38,14 +36,11 @@ function ManageAddress() {
     }
 
     setTimeout(() => {
-      dispatch(AddressListResquest(data))
+      dispatch(AddressListRequest(data))
     }, 5000)
   }, [])
 
   const delAdd = () => {
-    console.log('====================================')
-    console.log(deleteAdd?.id)
-    console.log('====================================')
     dispatch(deleteAddressRequest({_id: deleteAdd?.id}))
     setDeleteAdd({...deleteAdd, show: false, id: null})
   }
@@ -130,7 +125,6 @@ function ManageAddress() {
             <FlatList
               data={addressList}
               renderItem={renderItems}
-              // extraData={data}
               keyExtractor={(item, index) => index.toString()}
             />
           </ScrollView>
@@ -142,7 +136,6 @@ function ManageAddress() {
         alertTitle={'Are you sure you want to delete this address?'}
         rightButtonText={'No'}
         leftButtonText={'Yes'}
-        //onPressLeftButton={() => this.setState({logoutModal: false})}
         onPressLeftButton={() => delAdd()}
         onPressRightButton={() => setDeleteAdd({...deleteAdd, show: false})}
       />
@@ -186,7 +179,6 @@ const styles = StyleSheet.create({
     borderRadius: Scale(10),
   },
   buttonContainer: {
-    // flexDirection: 'row',
     alignItems: 'center',
     borderWidth: Scale(1),
     borderColor: Colors.WHITE,

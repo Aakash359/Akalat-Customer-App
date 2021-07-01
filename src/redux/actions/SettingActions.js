@@ -6,13 +6,13 @@ import {
   HELP_REQUEST,
   ADDADDRESS_REQUEST,
   ADDRESSLIST_REQUEST,
-  EDIT_PROFILE_REQUEST,
   MYORDER_LIST_REQUEST,
   DELETE_ADDRESS_REQUEST,
   DELETE_ADDRESS_SUCCESS,
   FAVOURITE_LIST_REQUEST,
   CHANGE_PASSWORD_REQUEST,
   SET_FAVOURITE_LIST_LOADER,
+  EDIT_PROFILE_REQUEST,
   SET_EDIT_PROFILE_LOADER,
   EDIT_PROFILE_SUCCESS,
   EDIT_PROFILE_FAILED,
@@ -112,7 +112,7 @@ export const AddAddressRequest = (data) => {
 }
 
 // =================Address List GET REQUEST =================
-export const AddressListResquest = (data) => {
+export const AddressListRequest = (data) => {
   return {
     type: ADDRESSLIST_REQUEST,
     data,

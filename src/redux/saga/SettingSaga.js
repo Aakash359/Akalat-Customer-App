@@ -21,8 +21,6 @@ import {
   ADDRESSLIST_SUCCESS,
   ADDRESSLIST_FAILED,
   EDIT_PROFILE_REQUEST,
-  EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAILED,
   MYORDER_LIST_REQUEST,
   MYORDER_LIST_SUCCESS,
   MYORDER_LIST_FAILED,
@@ -169,7 +167,6 @@ export const HelpSaga = function* HelpSaga({data}) {
       )
     } else {
       yield put({type: HELP_SUCCESS, payload: response})
-      //    alert("Submitted Sucessfully")
     }
   } catch (e) {
     yield put({type: HELP_FAILED, payload: e})
@@ -223,7 +220,7 @@ export const AddressListSaga = function* AddressListSaga({data}) {
   }
 }
 
-// ====================== Profie Info GET ======================
+// ====================== Profie Upadate POST ======================
 
 function* EditProfileSaga({data}) {
   yield put(setEditProfileLoader(true))
@@ -244,20 +241,6 @@ function* EditProfileSaga({data}) {
       yield put(editProfileFailed(''))
       yield put(editProfileSuccess(response.data))
       let ud = {...response.data}
-      console.log(
-        'edit profile res====================================',
-        response.data,
-      )
-      console.log(response.data)
-      console.log('====================================')
-      delete ud.role
-      delete ud.verification_status
-      delete ud.is_active
-      delete ud.is_deleted
-      delete ud._id
-      console.log('====================================')
-      console.log(ud)
-      console.log('====================================')
       yield put(setUserDetails(ud))
     }
   } catch (e) {

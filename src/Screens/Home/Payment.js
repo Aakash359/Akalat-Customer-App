@@ -21,9 +21,9 @@ function Payment(props) {
   const [check, setCheck] = React.useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const redirectToPlaceOrder = () => {
-    navigate('PlaceOrder')
-  }
+  // const redirectToPlaceOrder = () => {
+  //   navigate('PlaceOrder')
+  // }
   const checked = (method) => {
     setCheck(method)
   }
@@ -57,9 +57,7 @@ function Payment(props) {
       discounted_price: det?.dis,
       transaction_id: '123',
     }
-    console.log('====================================')
-    console.log(payload)
-    console.log('====================================')
+    console.log("Aakash======>",payload)
     if (check) {
       props?.createOrder(payload)
     } else {

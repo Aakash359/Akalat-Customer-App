@@ -2,8 +2,7 @@
 import React from 'react';
 import { StyleSheet, I18nManager } from 'react-native';
 
-// Assets
-// assets
+
 import {
   screenWidth,
   screenHeight,

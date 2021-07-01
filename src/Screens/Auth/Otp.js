@@ -18,8 +18,6 @@ function Otp(props) {
     const [phone, setphone] = useState(props.route.params.phone);
     const [email, setemail] = useState(props.route.params.email);
     const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
-
-    
     
     const  onSubmit = () =>{
 
@@ -32,22 +30,23 @@ function Otp(props) {
             const data = { 
                 
                 'otp':    otp,
-                'role' : 'customer',
+                'role' : 'cutomer',
                 'phone' :  phone,
-                'country_code' : COUNTRY == "IN" ? '91' : '971'
+                'country_code' : "91" ,
                  }
-                 
                  if(email){
                     navigate('Address')
                  }
                  else{
                      navigate('ResetPassword', data)
                  }
-                dispatch(OTPVerifyRequest(data));
+          
+           
+              dispatch(OTPVerifyRequest(data));
         }
       }
 
-      const  onPress = () =>{
+      const  resendOTP = () =>{
 
         const data = { 
             'phone': phone,
@@ -58,7 +57,6 @@ function Otp(props) {
             
           navigate('Otp', data)
           dispatch(OTPRequest(data));
-          alert("Otp send successfully!")
         }
 
     return (
@@ -109,21 +107,11 @@ function Otp(props) {
                                     />
                                     </View>
                                 <CustomButton title="Submit" onSubmit={onSubmit} isSecondary={true} />
-                               
-                               <View style={{flexDirection:'row',justifyContent:'center'}}>
-                                       
-                           <Text style={styles.normalText1}>Didn't get the code?</Text>
-                           <TouchableOpacity onPress={onPress} >
-                           <Text style={{fontSize: Scale(16),
-                                        fontFamily: Fonts.Medium,
-                                        marginTop: Scale(5),
-                                        marginLeft:Scale(5),
-                                        textAlign: 'center',
-                                        color: Colors.RED,}}>Resend OTP</Text>
-                                         </TouchableOpacity>
-                           </View> 
-                          
-                          
+                                <TouchableOpacity onSubmit={resendOTP} >
+                           <Text style={styles.normalText1}>Didn't get the code?
+                           
+                           <Text style={{color:Colors.DARK_RED}}> Resend OTP</Text></Text>
+                           </TouchableOpacity>
                             </View>
                         </ImageBackground>
                     </ScrollView>

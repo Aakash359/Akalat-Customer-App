@@ -51,13 +51,13 @@ function NearMe(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      console.log("Aakash====>",res)
+
+      console.log("Aakash=====>",res?.data?.data?.restro?.categoryNameArray)
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
         isLoading: false,
       })
-      console.log("Verma===>",res?.data?.data?.restro)
     } catch (error) {}
   }
 
@@ -233,8 +233,7 @@ function NearMe(props) {
                 paddingBottom: 20,
                 paddingLeft: 12,
               }}>
-              {item?.street_name}, {item?.area_name}, {item?.region},{' '}
-              {item?.state}...
+              {item?.categoryNameArray}
             </Text>
           </View>
         </View>

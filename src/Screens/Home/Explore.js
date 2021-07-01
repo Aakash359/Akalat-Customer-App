@@ -190,8 +190,7 @@ function Explore() {
                 paddingBottom: 20,
                 paddingLeft: 12,
               }}>
-              {item?.street_name}, {item?.area_name}, {item?.region},{' '}
-              {item?.state}...
+              {item?.categoryNameArray}
             </Text>
           </View>
         </View>
