@@ -23,7 +23,7 @@ function Login(props) {
     const [password, setpassword] = useState('');
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState();
-    const [items, setItems] = useState();
+    const [items, setItems] = useState([{}]);
 
       if(user.loginStatus==true)
       {
@@ -110,6 +110,7 @@ function Login(props) {
                                 label:items.dial_code
                             }
                         })}
+                        // onChangeItem={countryList.map(item => {alert(item.dial_code)})}
                         setOpen={setOpen}
                         setValue={setValue}
                         setItems={setItems}
@@ -119,7 +120,8 @@ function Login(props) {
                            width:Scale(72),
                            borderWidth:0,
                            fontWeight:'bold',
-                           backgroundColor:Colors.TRANSPARENT
+                           backgroundColor:Colors.TRANSPARENT,
+                           alignSelf:'center'
 
                         }}
                         />

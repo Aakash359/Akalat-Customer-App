@@ -41,7 +41,10 @@ function Otp(props) {
                     navigate('Address')
                  }
                  else{
-                     navigate('ResetPassword')
+                     if(OTPVerifyStatus==true){
+                        navigate('ResetPassword')
+                     }
+                    
                  }
           
            
@@ -94,16 +97,25 @@ function Otp(props) {
                                         keyboardType="number-pad"
                                         autoFocusOnLoad
                                         codeInputFieldStyle={{
+                                            // backgroundColor: Colors.WHITE,
+                                            // borderWidth: 1,
+                                            // borderColor:Colors.BORDERCOLOR,
+                                            // borderRadius: Scale(5),
+                                            // color: Colors.BLACK,
+
                                             backgroundColor: Colors.WHITE,
+                                            borderRadius:Scale(5),
                                             borderWidth: 1,
-                                            borderColor:Colors.BORDERCOLOR,
-                                            borderRadius: Scale(5),
                                             color: Colors.BLACK,
+                                            borderColor:Colors.BORDERCOLOR,
+                                            height: Scale(55),
+                                            width: Scale(70),
                                         }}
                                         editable={true}
                                         codeInputHighlightStyle={{
                                             color: Colors.BLACK,
                                             fontSize: Scale(16),
+                                            
                                             
                                         }}
                                         value={otp}
@@ -146,9 +158,11 @@ const styles = StyleSheet.create({
         color: Colors.BLACK,
     },
     otpContainer: {
-        width: '70%',
-        height: Scale(60),
         alignSelf: 'center',
+        height: Scale(60),
+        marginTop: Scale(20),
+        width: '100%',
+        padding: Scale(-50),
     },
     heading: {
         flexDirection: 'row',
