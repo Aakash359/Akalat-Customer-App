@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
+import {useNavigation} from '@react-navigation/native'
+import {useSelector, useDispatch, connect} from 'react-redux'
+
 
 function HungryNow() {
     const renderItems = ({ item, index }) => (
@@ -57,13 +60,7 @@ function HungryNow() {
                 backgroundColor={Colors.APPCOLOR}
                 barStyle="light-content"
             />
-            <View style={styles.headerContainer}>
-                <Image source={ImagesPath.location} style={styles.location} />
-                <Text style={{ color: Colors.WHITE }}>NH 28,C block DLF Phase 3...</Text>
-                <View style={styles.bottomHeader}>
-                    <Image source={ImagesPath.notification} style={styles.notificationStyle} />
-                </View>
-            </View>
+            
                 <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                     <FlatList
                         data={[0, 1, 2, 3]}
@@ -94,9 +91,7 @@ const styles = StyleSheet.create({
   textStyle: { color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold' },
     loginInputCont: {
         flex:1,
-        // top: Scale(-20),
         paddingTop: Scale(10),
-        paddingBottom: Scale(50),
         borderTopLeftRadius: Scale(25),
         borderTopRightRadius: Scale(25),
         backgroundColor: Colors.WHITE,

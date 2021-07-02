@@ -52,7 +52,7 @@ function NearMe(props) {
     try {
       const res = await axios.post(url, payload)
 
-      console.log("Aakash=====>",res?.data?.data?.restro?.categoryNameArray)
+      
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,

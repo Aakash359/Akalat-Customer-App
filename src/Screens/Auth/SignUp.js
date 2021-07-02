@@ -33,7 +33,7 @@ function SignUp(props) {
   const [items, setItems] = useState();
   const  counrtryListResponse = useSelector((state) => state.Auth.counrtryListResponse);
   const  countryList = counrtryListResponse?.data || []
-  console.log("Aakash=====>",countryList?.[0]?.dial_code);
+ 
   
 
   useEffect(() => {
@@ -85,9 +85,10 @@ function SignUp(props) {
             'phone': phone,
             'email': email,
             'password':password,
-            'country_code' : COUNTRY == "IN" ? "91" : "971"
+            'country_code' : COUNTRY == "IN" ? "91" : "971",
+            'role_for_user': 'user'
             }
-
+           
           dispatch(loaderRequest(true))
          
 
@@ -101,11 +102,9 @@ function SignUp(props) {
        
     
         return (
-          <SafeAreaInsetsContext.Consumer>
-               {(insets) => (
-              <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
+          <KeyboardAvoidingView style={styles.keyboardStyle} behavior={Platform.OS == 'android' ? '' : 'padding'}
                 enabled>
-        <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
+           <ImageBackground source={ImagesPath.background} style={styles.imageBachgroundStyle}>
 
         
               
@@ -117,12 +116,11 @@ function SignUp(props) {
                  >
                     <View style={styles.container}>
                        
-                       
-                        
-                        <FormInput
+                         <FormInput
                             placeholder="First Name"
                             autoCapitalize="none"
                             maxLength={30}
+                            autoCapitalize="words"
                             value={first_name}
                             onChangeText={(text) => setfirst_name(text)}
                         />
@@ -130,6 +128,7 @@ function SignUp(props) {
                             placeholder="Last Name"
                             autoCapitalize="none"
                             maxLength={30}
+                            autoCapitalize="words"
                             value={last_name}
                             onChangeText={(text) => setlast_name(text)}
                         />
@@ -223,22 +222,10 @@ function SignUp(props) {
 
         </ImageBackground>
         </KeyboardAvoidingView>
-         )
-        }
-        </SafeAreaInsetsContext.Consumer>
+        
     );
  
 }
-
-
-// SignUp.propTypes = {
-//   loginSuccess: func.isRequired,
-//   navigation: shape({
-//       dispatch: func.isRequired,
-//       goBack: func.isRequired,
-//   }).isRequired,
-//   t: func.isRequired,
-// }
 
 export default SignUp;
 
@@ -285,6 +272,13 @@ const styles = StyleSheet.create({
         fontSize: Scale(30),
         fontWeight: 'bold',
         textAlign: 'left',
+    },
+    textInputContainer: {
+      fontWeight:'500', 
+      fontSize: Scale(16),
+      color: Colors.BLACK, 
+      justifyContent: 'center',
+      alignSelf: 'center',
     },
     normalText: {
         fontSize: Scale(16),

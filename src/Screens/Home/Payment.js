@@ -57,7 +57,7 @@ function Payment(props) {
       discounted_price: det?.dis,
       transaction_id: '123',
     }
-    console.log("Aakash======>",payload)
+    
     if (check) {
       props?.createOrder(payload)
     } else {

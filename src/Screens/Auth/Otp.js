@@ -18,6 +18,9 @@ function Otp(props) {
     const [phone, setphone] = useState(props.route.params.phone);
     const [email, setemail] = useState(props.route.params.email);
     const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
+    const OTPVerifyStatus = useSelector((state) => state.Auth.OTPVerifyStatus)
+
+   
     
     const  onSubmit = () =>{
 
@@ -30,15 +33,15 @@ function Otp(props) {
             const data = { 
                 
                 'otp':    otp,
-                'role' : 'cutomer',
+                'role' : 'user',
                 'phone' :  phone,
-                'country_code' : "91" ,
+                'country_code' : COUNTRY == "IN" ? '91' : '971'
                  }
                  if(email){
                     navigate('Address')
                  }
                  else{
-                     navigate('ResetPassword', data)
+                     navigate('ResetPassword')
                  }
           
            
@@ -101,6 +104,7 @@ function Otp(props) {
                                         codeInputHighlightStyle={{
                                             color: Colors.BLACK,
                                             fontSize: Scale(16),
+                                            
                                         }}
                                         value={otp}
                                         onCodeFilled={(text) => setotp( text)}
