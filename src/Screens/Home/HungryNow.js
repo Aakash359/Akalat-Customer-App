@@ -1,34 +1,53 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import {useNavigation} from '@react-navigation/native'
-import {useSelector, useDispatch, connect} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+import {hungryNowListRequest,hungryNowListLoader} from '../../redux/actions'
+
+
 
 
 function HungryNow() {
+
+    const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
+    const dispatch = useDispatch()
+    const product_list = hungryNowListResponse?.data?.product_list || []
+    console.log('====================================');
+    console.log(product_list);
+    console.log('====================================');
+    
+    useEffect(() => {
+    
+
+        
+          dispatch(hungryNowListRequest())
+     
+      }, [])
+
     const renderItems = ({ item, index }) => (
         <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
-                <Text style={styles.headingText}>NeelGiri Restaurant</Text>
+                <Text style={styles.headingText}>{item.restro_name}</Text>
                 <Text style={styles.headingText}>1.5 km</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
                 <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image source={ImagesPath.veg}/>
-                        <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
+                        <Image source={{ uri: item?.image }}/>
+                        <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
                     </View>
-                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }}>Lorem ipsum is simply{'\n'}dummy text of the prinitng</Text>
+                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }}>{item.description}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>$40.00  <Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through', }}>$100.00</Text>
+                <Text style={styles.headingText}>{item.price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through', }}>$100.00</Text>
                 </Text>
                 <View style={styles.addButton}>
                 <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
               </View></View>
-              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity:3</Text>
+              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between',height:Scale(2), marginVertical:Scale(15) ,backgroundColor:"#E0E0E0"}}>
                 
             </View>
@@ -39,7 +58,7 @@ function HungryNow() {
                     <Image source={ImagesPath.non_veg}/>
                          <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
                     </View>
-                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >Lorem ipsum is simply{'\n'}dummy text of the prinitng</Text>
+                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >{item.description}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
@@ -63,7 +82,7 @@ function HungryNow() {
             
                 <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                     <FlatList
-                        data={[0, 1, 2, 3]}
+                        data={product_list}
                         renderItem={renderItems}
                     />
                 </ImageBackground>

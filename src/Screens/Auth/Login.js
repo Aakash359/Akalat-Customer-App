@@ -19,11 +19,13 @@ function Login(props) {
     const  {isLoading} = useSelector((state) => state.Auth);
     const  counrtryListResponse = useSelector((state) => state.Auth.counrtryListResponse);
     const  countryList = counrtryListResponse?.data || []
+    console.log("Aakash===>",countryList)
     const [phone, setphone] = useState('');
     const [password, setpassword] = useState('');
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState();
     const [items, setItems] = useState([{}]);
+    const [dial_codes, setDialCodes] = useState([]);
 
       if(user.loginStatus==true)
       {
@@ -68,7 +70,23 @@ function Login(props) {
       useEffect(() => {
 
          dispatch(countryListRequest());
-           
+         let codes = [];
+         let countries = [
+             {
+                 lable1:'91',
+                 value1:'21',
+             },
+
+         ]
+           for (let i = 0; i < countryList.length; i++) {
+               let country_code = {
+                   label : countryList[i].dial_code,
+                   value : countryList[i].dial_code
+               }
+               codes.push(country_code);
+               setDialCodes(codes);
+               console.log("Dialcode======>", dial_codes);
+           }
          }, 
       []); 
 
@@ -102,7 +120,7 @@ function Login(props) {
                         <Text style={styles.mobile}>Mobile Number</Text>
                         <View style={styles.textInputView}>
                         <DropDownPicker
-                        placeholder={'+92'}
+                        // placeholder={'+92'}
                         value={value}
                         open={open}
                         items={countryList.map((items)=>{
@@ -110,7 +128,12 @@ function Login(props) {
                                 label:items.dial_code
                             }
                         })}
-                        // onChangeItem={countryList.map(item => {alert(item.dial_code)})}
+                        // onChangeItem={(value)=>{console.log("Akash====>",value)}}
+                        // onChangeValue={(value) => {
+                        //     console.log(value);
+                        //   }}
+                          onChangeItem={item => console.log(item)}
+
                         setOpen={setOpen}
                         setValue={setValue}
                         setItems={setItems}
