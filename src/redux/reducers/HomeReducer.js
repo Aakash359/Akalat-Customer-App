@@ -21,6 +21,10 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     ORDER_DETAILS_FAILED,
+    HUNGRY_NOW_LIST_REQUEST,
+    HUNGRY_NOW_LIST_SUCCESS,
+    HUNGRY_NOW_LIST_FAILED,
+    HUNGRY_NOW_LIST_LOADER
   
     } from '../Types/type';
 
@@ -42,6 +46,8 @@ import {
         addFavouriteStatus:false,
         orderDetailsResponse:{},
         orderDetailsStatus:false,
+        hungryNowListStatus:false,
+        hungryNowListResponse:{},
        };
        
        export default function HomeReducer(state = initialState, action) {
@@ -55,6 +61,17 @@ import {
            case OFFER_CARD_FAILED:
              return {...state, offercardStatus:false, offercardResponse: action.payload,         
             };
+            case HUNGRY_NOW_LIST_REQUEST:
+             return {...state, hungryNowListStatus:false, hungryNowListResponse: action.payload, 
+             };
+           case  HUNGRY_NOW_LIST_SUCCESS:
+             return {...state, hungryNowListStatus:true, hungryNowListResponse: action.payload,  
+            };
+           case HUNGRY_NOW_LIST_FAILED:
+             return {...state, hungryNowListStatus:false, hungryNowListResponse: action.payload,         
+            };
+            case HUNGRY_NOW_LIST_LOADER:
+              return {...state, isLoading: action.payload};
            case COUPON_REQUEST:
              return {...state, couponStatus:false, couponResponse: action.payload, 
             };

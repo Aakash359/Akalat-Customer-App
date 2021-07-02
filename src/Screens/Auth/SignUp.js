@@ -90,9 +90,7 @@ function SignUp(props) {
             }
            
           dispatch(loaderRequest(true))
-         
-
-            dispatch(SignUpRequest(data));
+          dispatch(SignUpRequest(data));
 
            
          

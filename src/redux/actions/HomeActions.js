@@ -1,9 +1,30 @@
 
 import {
-        OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,ORDER_DETAILS_REQUEST,
-        RESTRO_ITEM_REQUEST,ADD_FAVOURITE_REQUEST,SET_FAVOURITE_LOADER,COUPON_REQUEST
+        OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,ORDER_DETAILS_REQUEST,HUNGRY_NOW_LIST_LOADER,
+        RESTRO_ITEM_REQUEST,ADD_FAVOURITE_REQUEST,SET_FAVOURITE_LOADER,COUPON_REQUEST,HUNGRY_NOW_LIST_REQUEST
     } from '../Types/type';
 
+
+
+// ================= Hungry Now Product List REQUEST =================
+export const hungryNowListRequest = (data) => {
+    
+    return {
+        type: HUNGRY_NOW_LIST_REQUEST,
+        payload: data,
+       
+    };
+}
+
+// ================= Hungry Now Product List REQUEST =================
+export const hungryNowListLoader = (data) => {
+    
+    return {
+        type: HUNGRY_NOW_LIST_LOADER,
+        payload: data,
+       
+    };
+}
 
 // ================= Offer-Card REQUEST =================
 export const searchRequest = (data) => {

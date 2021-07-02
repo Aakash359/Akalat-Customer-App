@@ -20,9 +20,12 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     ORDER_DETAILS_FAILED,
+    HUNGRY_NOW_LIST_REQUEST,
+    HUNGRY_NOW_LIST_SUCCESS,
+    HUNGRY_NOW_LIST_FAILED,
 
     } from '../Types/type';
-import {setFavouriteLoader,
+import {setFavouriteLoader,hungryNowListLoader
       } from '../actions/HomeActions';    
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Request from '../../apiServices/Request'; 
@@ -114,6 +117,39 @@ export const RestroListSaga = function* RestroListSaga({params}) {
         
         yield put({ type: RESTRO_LIST_FAILED, payload: e });
     }
+}
+
+//====================== Hungry Now List POST ======================
+
+export const hungryNowListSaga = function* hungryNowListSaga({data}) {
+ 
+  yield put(hungryNowListLoader(true));
+  try {
+      const response = yield call(Request, {
+          url: 'product/listHungryProduct',
+          method: 'POST',
+          data,
+        })
+        if (response?.data?.error == true){
+          yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: response?.data  });
+          
+          yield put(hungryNowListLoader(false));
+          global.dropDownAlertRef.alertWithType(
+            'error',
+            'Error',
+             response?.data?.message,
+          );
+        }
+     else{ 
+         yield put(hungryNowListLoader(false));
+         yield put({ type: HUNGRY_NOW_LIST_SUCCESS, payload: response });
+      }
+      
+  }
+  catch (e) {
+      yield put(hungryNowListLoader(false));
+      yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: e });
+  }
 }
 
 //====================== Restro Item List POST ======================
@@ -246,5 +282,6 @@ export function* homeSaga() {
     yield takeEvery(RESTRO_ITEM_REQUEST, RestroItemSaga);
     yield takeEvery(ADD_FAVOURITE_REQUEST, AddFavouriteSaga);
     yield takeEvery(ORDER_DETAILS_REQUEST, OrderDetailsSaga);
+    yield takeEvery(HUNGRY_NOW_LIST_REQUEST, hungryNowListSaga);
 }
 export default homeSaga;
