@@ -16,7 +16,9 @@ import {AddressListRequest, deleteAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
 function ManageAddress() {
-  const addressListResponse = useSelector((state) => state.Setting.addressListResponse)
+  const addressListResponse = useSelector(
+    (state) => state.Setting.addressListResponse,
+  )
 
   const addressList = addressListResponse?.data?.addressList || []
 
@@ -83,8 +85,9 @@ function ManageAddress() {
         </View>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text style={styles.placeText} >{item?.house_name_and_no},{item?.area_name},{item?.nearby}</Text>
-       
+        <Text style={styles.placeText}>
+          {item?.house_name_and_no},{item?.area_name},{item?.nearby}
+        </Text>
       </View>
     </View>
   )
@@ -164,9 +167,8 @@ const styles = StyleSheet.create({
   placeText: {
     fontSize: Scale(16),
     color: Colors.BLACK,
-   
   },
-  
+
   cardStyle: {
     width: '100%',
     backgroundColor: '#ffffff',

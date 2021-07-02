@@ -31,9 +31,9 @@ function ResetPassword(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const [form, setForm] = React.useState({password: '', confirm_password: ''})
+  const [otpRes, setotpRes] = React.useState(props.route.params.data._id || '')
 
-  console.log('Aakash===>', props?.user?._id)
-
+  console.log('Aakash===>', otpRes)
   const onReset = async () => {
     const {password, confirm_password} = form
     if (password == '') {
@@ -50,8 +50,8 @@ function ResetPassword(props) {
     const payload = {
       password,
       confirm_password,
-      phone: props?.route?.params?.phone,
-      _id: props?.user?._id,
+      phone: props?.user?.phone,
+      _id: otpRes,
     }
 
     try {
@@ -90,12 +90,12 @@ function ResetPassword(props) {
               source={ImagesPath.background}
               style={AuthStyle.loginInputCont}>
               <View style={{paddingHorizontal: Scale(25)}}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                {/* <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Image
                     source={ImagesPath.backArrow}
                     style={styles.arrowStyle}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <Text style={styles.primaryText}>Reset Password</Text>
 
                 <View style={{marginVertical: Scale(2)}}>

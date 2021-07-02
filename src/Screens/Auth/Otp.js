@@ -31,7 +31,7 @@ function Otp(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const [otp, setotp] = useState('')
+  const [otp, setotp] = useState('5431')
   const [phone, setphone] = useState(props.route.params.phone)
   const [email, setemail] = useState(props.route.params.email)
   const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
@@ -45,7 +45,7 @@ function Otp(props) {
     } else {
       const data = {
         otp: otp,
-        role: 'cutomer',
+        role: 'user',
         phone: phone,
         country_code: '91',
       }
@@ -63,7 +63,7 @@ function Otp(props) {
   const resendOTP = () => {
     const data = {
       phone: phone,
-      role: 'customer',
+      role: 'user',
       country_code: COUNTRY == 'IN' ? '91' : '971',
     }
 
@@ -72,7 +72,11 @@ function Otp(props) {
   }
   React.useEffect(() => {
     if (props?.otpSuccess) {
-      navigate('ResetPassword')
+      const {data} = props?.otpReponse
+      console.log('====================================')
+      console.log('otpReponse', data)
+      console.log('====================================')
+      navigate('ResetPassword', {data: data})
     }
   }, [props?.otpSuccess])
 
@@ -157,6 +161,7 @@ function Otp(props) {
 const mapStateToProps = (state) => {
   return {
     otpSuccess: state.Auth.OTPVerifyStatus,
+    otpReponse: state.Auth.otpVerifyResponse,
   }
 }
 

@@ -10,8 +10,7 @@ import {
   SET_SIGNUP_STATUS,
   SIGNUP_LOGIN,
   SET_USER_DETAILS,
-  OTP_VERIFY_SUCCESS,
-  OTP_VERIFY_FAILED,
+  COUNTRY_LIST_REQUEST,
 } from '../Types/type'
 
 //================= SIGNUP POST REQUEST =================
@@ -98,6 +97,14 @@ export const setSignupStatus = (data) => {
 export const signUpLogin = () => {
   return {
     type: SIGNUP_LOGIN,
+  }
+}
+
+// ================= Send OTP POST REQUEST =================
+export const countryListRequest = (data) => {
+  return {
+    type: COUNTRY_LIST_REQUEST,
+    data,
   }
 }
 

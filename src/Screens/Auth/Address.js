@@ -134,9 +134,7 @@ function Address() {
       else if(area_name == '') {
         alert("Please enter area")
       }
-      else if(nearby == '') {
-        alert("Please enter nearby")
-      }
+      
       else {
          
           let lat = '';

@@ -42,7 +42,6 @@ function AddNewAddress(props) {
   const addAddressResponse = useSelector((state) => state.Setting)
   const user = useSelector((state) => state.Auth.user)
   const dispatch = useDispatch()
-  const [location, setLocation] = useState(null)
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -101,8 +100,6 @@ function AddNewAddress(props) {
       alert('Please enter House No')
     } else if (area_name == '') {
       alert('Please enter area')
-    } else if (nearby == '') {
-      alert('Please enter nearby')
     } else {
       let lat = ''
       let lng = ''

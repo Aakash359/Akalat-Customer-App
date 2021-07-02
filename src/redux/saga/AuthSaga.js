@@ -18,6 +18,9 @@ import {
   GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_FAILED,
+  COUNTRY_LIST_REQUEST,
+  COUNTRY_LIST_SUCCESS,
+  COUNTRY_LIST_FAILED,
 } from '../Types/type'
 import {put, call, takeEvery, takeLatest} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
@@ -146,6 +149,26 @@ export const logoutSaga = function* logoutSaga({data}) {
   }
 }
 
+// ====================== Country Code List GET ======================
+
+export const countryListSaga = function* getUserDetails({data}) {
+  try {
+    const response = yield call(Request, {
+      url: '/listCountry',
+      method: 'POST',
+      data,
+    })
+    if (response?.error == true) {
+      yield put({type: COUNTRY_LIST_FAILED, payload: response})
+      global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
+    } else {
+      yield put({type: COUNTRY_LIST_SUCCESS, payload: response})
+    }
+  } catch (e) {
+    yield put({type: COUNTRY_LIST_FAILED, payload: e})
+  }
+}
+
 export function* authSaga() {
   yield takeEvery(SIGNUP_REQUEST, SignUpSaga)
   yield takeEvery(LOGIN_REQUEST, loginSaga)
@@ -153,5 +176,6 @@ export function* authSaga() {
   yield takeEvery(OTP_VERIFY_REQUEST, OtpVerifySaga)
   yield takeEvery(LOGOUT_REQUEST, logoutSaga)
   yield takeLatest(GET_USER_DETAILS_REQUEST, getUserDetails)
+  yield takeLatest(COUNTRY_LIST_REQUEST, countryListSaga)
 }
 export default authSaga
