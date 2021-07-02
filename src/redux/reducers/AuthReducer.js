@@ -36,15 +36,15 @@ const initialState = {
   SignStatus: false,
   OTPStatus: false,
   logoutStatus: false,
-  OTPVerifyStatus: false,
   signupResponse: {},
   otpResponse: {},
-  otpVerifyResponse: {},
   logoutResponse: {},
   getUserDetailsResponse: {},
   getUserDetailsStatus: false,
   counrtryListResponse: {},
   counrtryListStatus: false,
+  OTPVerifyStatus: false,
+  otpVerifyResponse: {},
 }
 
 export default function AuthReducer(state = initialState, action) {
@@ -108,11 +108,7 @@ export default function AuthReducer(state = initialState, action) {
       }
 
     case OTP_VERIFY_FAILED:
-      return {
-        ...state,
-        OTPVerifyStatus: false,
-        otpVerifyResponse: action.payload,
-      }
+      return {...state, OTPVerifyStatus: false, otpVerifyResponse: action.payload,}
 
     case LOGOUT_REQUEST:
       return {...state, logoutStatus: false, logoutResponse: action.payload}

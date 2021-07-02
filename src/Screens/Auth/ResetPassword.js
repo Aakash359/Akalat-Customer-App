@@ -14,7 +14,7 @@ function ResetPassword(props) {
     const navigation = useNavigation();
     const [form, setForm] = React.useState({password: '', confirm_password: ''})
  
-    console.log("Aakash===>",props?.user?._id)
+    
 
     const onReset = async () => {
         const {password, confirm_password} = form
@@ -32,7 +32,7 @@ function ResetPassword(props) {
           const payload = {
               password,
               confirm_password,
-              phone: props?.route?.params?.phone,
+              phone: props?.user?.phone,
               _id: props?.user?._id
           }
         

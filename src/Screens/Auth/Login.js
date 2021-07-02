@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, ImageBackground,KeyboardAvoidingView,TextInput, ScrollView } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
-import { Scale, Colors, ImagesPath } from '../../CommonConfig';
+import { Scale, Colors, ImagesPath,COUNTRY } from '../../CommonConfig';
 import { FormInput, CustomButton,NumberInput } from '../../Component';
 import { Icon } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,12 +19,11 @@ function Login(props) {
     const  {isLoading} = useSelector((state) => state.Auth);
     const  counrtryListResponse = useSelector((state) => state.Auth.counrtryListResponse);
     const  countryList = counrtryListResponse?.data || []
-    console.log("Aakash=====>",countryList?.[0]?.dial_code);
     const [phone, setphone] = useState('');
     const [password, setpassword] = useState('');
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState();
-    const [items, setItems] = useState();
+    const [items, setItems] = useState([{}]);
 
       if(user.loginStatus==true)
       {
@@ -50,7 +49,7 @@ function Login(props) {
         else
         {
             const data = { 
-                'country_code': '91',
+                'country_code' : COUNTRY == "IN" ? "91" : "971",
                 'phone': parseInt(phone),
                 'password':password,
          }
@@ -111,6 +110,7 @@ function Login(props) {
                                 label:items.dial_code
                             }
                         })}
+                        // onChangeItem={countryList.map(item => {alert(item.dial_code)})}
                         setOpen={setOpen}
                         setValue={setValue}
                         setItems={setItems}
@@ -120,7 +120,8 @@ function Login(props) {
                            width:Scale(72),
                            borderWidth:0,
                            fontWeight:'bold',
-                           backgroundColor:Colors.TRANSPARENT
+                           backgroundColor:Colors.TRANSPARENT,
+                           alignSelf:'center'
 
                         }}
                         />
@@ -187,6 +188,13 @@ const styles = StyleSheet.create({
         width: '100%',
         alignSelf: 'center',
         borderRadius:Scale(5),
+      },
+      textInputContainer: {
+        fontWeight:'500', 
+        fontSize: Scale(16),
+        color: Colors.BLACK, 
+        justifyContent: 'center',
+        alignSelf: 'center',
       },
       
     imageBachgroundStyle: {
