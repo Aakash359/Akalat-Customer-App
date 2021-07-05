@@ -31,14 +31,11 @@ function Otp(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const [otp, setotp] = useState('5431')
+  const [otp, setotp] = useState('')
   const [phone, setphone] = useState(props.route.params.phone)
   const [email, setemail] = useState(props.route.params.email)
   const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
 
-  console.log('====================================')
-  console.log(props?.otpSuccess)
-  console.log('====================================')
   const onSubmit = () => {
     if (otp == '') {
       alert('Please enter otp')
@@ -49,10 +46,6 @@ function Otp(props) {
         phone: phone,
         country_code: COUNTRY == 'IN' ? '91' : '971',
       }
-      if (email) {
-        navigate('Address')
-      }
-    
 
       dispatch(OTPVerifyRequest(data))
     }
@@ -71,8 +64,13 @@ function Otp(props) {
   }
   React.useEffect(() => {
     if (props?.otpSuccess) {
-      const {data} = props?.otpReponse
-      navigate('ResetPassword', {data: data})
+      if (props?.route?.params?.email) {
+        const {data} = props?.otpReponse
+        navigate('Address', {data: data})
+      } else {
+        const {data} = props?.otpReponse
+        navigate('ResetPassword', {data: data})
+      }
     }
   }, [props?.otpSuccess])
 
@@ -180,7 +178,6 @@ const styles = StyleSheet.create({
   normalText1: {
     fontSize: Scale(16),
     fontFamily: Fonts.Medium,
-   
     color: Colors.BLACK,
   },
   otpContainer: {
