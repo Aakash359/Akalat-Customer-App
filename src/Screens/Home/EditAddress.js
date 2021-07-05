@@ -23,7 +23,9 @@ import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
 import {color} from 'react-native-reanimated'
-;``
+import {AddAddressRequest} from '../../redux/actions'
+import {useSelector, useDispatch} from 'react-redux'
+
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 function EditAddress(props) {
   const {address} = props.route.params
@@ -32,17 +34,21 @@ function EditAddress(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const [currentAddress, setAddress] = useState('')
-  const [HouseNumber, setHouseNumber] = useState(address?.house_name_and_no)
-  const [Area, setArea] = useState(address?.area_name)
-  const [Near, setNear] = useState(address?.nearby)
-  const redirectToMyAccount = () => {
-    navigate('ManageAddress')
-  }
+  const [house_name_and_no, setHouseName] = useState(address?.house_name_and_no)
+  const [area_name, setAreaName] = useState(address?.area_name)
+  const [nearby, setNearby] = useState(address?.nearby)
+  const user = useSelector((state) => state.Auth.user)
+  const dispatch = useDispatch()
+  const [location, setLocation] = useState(null)
+
+  // const redirectToMyAccount = () => {
+  //   navigate('ManageAddress')
+  // }
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        subscribeLocationLocation()
+        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -79,14 +85,8 @@ function EditAddress(props) {
         const currentLatitude = JSON.stringify(position.coords.latitude)
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
-            console.log(
-              '=============================================json data',
-              json.results[1].formatted_address,
-              '================================Flat no',
-            )
             // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name
             let addressComponent = json.results[1].formatted_address
-            console.log(addressComponent, 'addressComponent')
             setAddress(addressComponent)
           },
         )
@@ -100,6 +100,55 @@ function EditAddress(props) {
     )
   }
   const checked = () => setValue(!value)
+
+  const redirectToMyAccount = async () => {
+    if (house_name_and_no == '') {
+      alert('Please enter House No')
+    } else if (area_name == '') {
+      alert('Please enter area')
+    } else {
+      let lat = ''
+      let lng = ''
+      console.log('====================================')
+      console.log('abcd')
+      console.log('====================================')
+      Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
+        .then((json) => {
+          var location = json.results[0].geometry.location
+          lat = parseFloat(location.lat)
+          lng = parseFloat(location.lng)
+          console.log('lat Na log ', lat, lag)
+          const data = {
+            address_type: activeTab,
+            lng,
+            lat,
+            house_name_and_no: house_name_and_no,
+            area_name: area_name,
+            nearby: nearby,
+            created_by: user?._id,
+            _id: address?._id,
+          }
+          console.log('Data--', data)
+          dispatch(AddAddressRequest(data))
+          navigate('ManageAddress')
+        })
+        .catch((error) => {
+          const data = {
+            address_type: activeTab,
+            lng: address?.lng,
+            lat: address?.lat,
+            house_name_and_no: house_name_and_no,
+            area_name: area_name,
+            nearby: nearby,
+            created_by: user?._id,
+            _id: address?._id,
+          }
+          console.log('Data--', data)
+          dispatch(AddAddressRequest(data))
+          navigate('ManageAddress')
+        })
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -151,22 +200,22 @@ function EditAddress(props) {
               placeholder="House No/Flat No"
               autoCapitalize="none"
               maxLength={30}
-              value={HouseNumber}
-              onChangeText={(text) => setHouseNumber(text)}
+              value={house_name_and_no}
+              onChangeText={(text) => setHouseName(text)}
             />
             <FormInput
               placeholder="Area"
               autoCapitalize="none"
               maxLength={30}
-              value={Area}
-              onChangeText={(text) => setArea(text)}
+              value={area_name}
+              onChangeText={(text) => setAreaName(text)}
             />
             <FormInput
               placeholder="Nearby"
               autoCapitalize="none"
               maxLength={30}
-              value={Near}
-              onChangeText={(text) => setNear(text)}
+              value={nearby}
+              onChangeText={(text) => setNearby(text)}
             />
             <View
               style={{

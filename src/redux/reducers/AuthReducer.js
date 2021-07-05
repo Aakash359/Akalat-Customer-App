@@ -25,6 +25,7 @@ import {
   COUNTRY_LIST_REQUEST,
   COUNTRY_LIST_SUCCESS,
   COUNTRY_LIST_FAILED,
+  SET_OTP_VERIFY_STATUS,
 } from '../Types/type'
 
 const initialState = {
@@ -83,15 +84,27 @@ export default function AuthReducer(state = initialState, action) {
 
     case OTP_FAILED:
       return {...state, OTPStatus: false, otpResponse: action.payload}
-    
+
     case COUNTRY_LIST_REQUEST:
-        return {...state, counrtryListStatus: false, counrtryListResponse: action.payload}
-  
+      return {
+        ...state,
+        counrtryListStatus: false,
+        counrtryListResponse: action.payload,
+      }
+
     case COUNTRY_LIST_SUCCESS:
-        return {...state, counrtryListStatus: true, counrtryListResponse: action.payload}
-  
+      return {
+        ...state,
+        counrtryListStatus: true,
+        counrtryListResponse: action.payload,
+      }
+
     case COUNTRY_LIST_FAILED:
-        return {...state, counrtryListStatus: false, counrtryListResponse: action.payload}  
+      return {
+        ...state,
+        counrtryListStatus: false,
+        counrtryListResponse: action.payload,
+      }
 
     case OTP_VERIFY_REQUEST:
       return {
@@ -108,7 +121,11 @@ export default function AuthReducer(state = initialState, action) {
       }
 
     case OTP_VERIFY_FAILED:
-      return {...state, OTPVerifyStatus: false, otpVerifyResponse: action.payload,}
+      return {
+        ...state,
+        OTPVerifyStatus: false,
+        otpVerifyResponse: action.payload,
+      }
 
     case LOGOUT_REQUEST:
       return {...state, logoutStatus: false, logoutResponse: action.payload}
@@ -158,6 +175,8 @@ export default function AuthReducer(state = initialState, action) {
           _id: state.user._id,
         },
       }
+    case SET_OTP_VERIFY_STATUS:
+      return {...state, OTPVerifyStatus: action?.payload}
     default:
       return state
   }

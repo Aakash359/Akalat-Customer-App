@@ -62,7 +62,7 @@ function SelectLocation(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        subscribeLocationLocation()
+        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -123,7 +123,7 @@ function SelectLocation(props) {
                   ? Colors.RED
                   : Colors.LIGHT_GRAY,
             },
-            {fontSize: 25},
+            {fontSize: 23},
           ]}
           name={
             currentAddress?.selectedId === index ? 'dot-circle-o' : 'circle-o'
@@ -176,12 +176,14 @@ function SelectLocation(props) {
           />
           <View style={styles.heading}>
             <Text style={styles.savedStyle}>Saved Addresses</Text>
-            <Text onPress={redirectToAddress} style={styles.addStyle}>
-              Add New Address
-            </Text>
+            <TouchableOpacity onPress={redirectToAddress}>
+              <View style={styles.addStyle}>
+                <Text style={styles.addStyle1}>Add New Address</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <FlatList data={addressList} renderItem={renderItems} />
-          <View style={{marginTop: Scale(20)}}>
+          <View style={{marginTop: Scale(80)}}>
             <CustomButton
               title="Save"
               isSecondary={true}
@@ -198,6 +200,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.APPCOLOR,
+  },
+  addStyle1: {
+    color: Colors.WHITE,
+    fontWeight: '600',
+    padding: 14,
+    paddingLeft: 18,
   },
   textStyle: {
     color: Colors.BORDERCOLOR,

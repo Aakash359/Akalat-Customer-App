@@ -30,7 +30,7 @@ import {withTranslation, useTranslation} from 'react-i18next'
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function AddNewAddress(props) {
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(null)
   const [value, setValue] = useState(false)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
@@ -48,7 +48,7 @@ function AddNewAddress(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        subscribeLocationLocation()
+        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -105,11 +105,7 @@ function AddNewAddress(props) {
       let lat = ''
       let lng = ''
 
-      await Geocoder.from([
-        {house_name_and_no} + ' ',
-        {area_name} + '',
-        {nearby},
-      ])
+      Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
         .then((json) => {
           var location = json.results[0].geometry.location
           lat = parseFloat(location.lat)

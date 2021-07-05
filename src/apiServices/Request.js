@@ -1,28 +1,26 @@
-import axios from 'axios';
-import {API_BASE} from './ApiService';
+import axios from 'axios'
+import {API_BASE} from './ApiService'
 
 const client = axios.create({
   baseURL: API_BASE,
-});
+})
 
-const Request = function (options,) {
-  // console.log('=================================options',options);
+const Request = function (options) {
+  console.log('=================================options', options)
   const onSuccess = (response) => {
-    return response.data;
-  };
+    return response.data
+  }
 
   const onError = (error) => {
     if (error.response) {
-      console.log('Data:', error.response.data);
-    
+      console.log('Data:', error.response.data)
     } else {
-      console.log('Error Message:', error.message);
+      console.log('Error Message:', error.message)
     }
-    return Promise.reject(error.response || error.message);
-  };
+    return Promise.reject(error.response || error.message)
+  }
 
-  return client(options).then(onSuccess).catch(onError);
-};
+  return client(options).then(onSuccess).catch(onError)
+}
 
-export default Request;
-
+export default Request
