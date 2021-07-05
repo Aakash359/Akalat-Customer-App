@@ -9,8 +9,9 @@ import { connect } from 'react-redux'
 function PlaceOrder(props) {
     const { navigate } = useNavigation()
     const navigation = useNavigation()
+
     const redirectToHome = () => {
-        navigate('HomeScreen')
+        navigate('NearMe')
     }
     const redirectToTrackOrder = () => {
         navigate('TrackOrder')

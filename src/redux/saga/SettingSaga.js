@@ -42,7 +42,6 @@ import {
   editProfileSuccess,
   setEditProfileLoader,
   setUserDetails,
-  signUpLogin,
   AddressListRequest,
 } from '../actions'
 
@@ -188,7 +187,6 @@ export const AddAddressSaga = function* AddAddressSaga({data}) {
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
     } else {
       yield put({type: ADDADDRESS_SUCCESS, payload: response})
-      yield put(signUpLogin())
     }
   } catch (e) {
     yield put({type: ADDADDRESS_FAILED, payload: e})

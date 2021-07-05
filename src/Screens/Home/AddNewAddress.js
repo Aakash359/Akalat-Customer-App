@@ -48,7 +48,7 @@ function AddNewAddress(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        //subscribeLocationLocation()
+        
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -71,7 +71,7 @@ function AddNewAddress(props) {
     return () => {
       Geolocation.clearWatch()
     }
-  }, []) //jyoti
+  }, []) 
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(

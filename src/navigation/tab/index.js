@@ -6,7 +6,7 @@ import HungryNow from '../../Screens/Home/HungryNow'
 import MyAccount from '../../Screens/Home/MyAccount'
 import Card from '../../Screens/Home/Card'
 import ImageIcon from '../../containers/ImageIcon'
-import {Scale, Colors, ImagesPath, LocationAlert} from '../../CommonConfig'
+import {Scale, Colors, ImagesPath,} from '../../CommonConfig'
 
 const getOptions = ({tabBarLabel, icon}) => {
   return {
@@ -59,7 +59,7 @@ function index() {
         }}
       />
       <Tab.Screen
-        name="HomeScreen"
+        name="HungryNow"
         component={HungryNow}
         options={{
           ...getOptions({

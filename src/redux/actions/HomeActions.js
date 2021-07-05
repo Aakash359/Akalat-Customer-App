@@ -1,7 +1,7 @@
 
 import {
         OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,ORDER_DETAILS_REQUEST,HUNGRY_NOW_LIST_LOADER,
-        RESTRO_ITEM_REQUEST,ADD_FAVOURITE_REQUEST,SET_FAVOURITE_LOADER,COUPON_REQUEST,HUNGRY_NOW_LIST_REQUEST
+        ADD_FAVOURITE_REQUEST,SET_FAVOURITE_LOADER,COUPON_REQUEST,HUNGRY_NOW_LIST_REQUEST
     } from '../Types/type';
 
 
@@ -55,18 +55,6 @@ export const restroListRequest = (data) => {
        
     };
 }
-
-// ================= Restro Item REQUEST =================
-export const restroItemRequest = (data) => {
-    
-    return {
-        type: RESTRO_ITEM_REQUEST,
-        data,
-       
-    };
-}
-
-
 
 // ================= Offer-Card REQUEST =================
 export const offercardRequest = (data) => {

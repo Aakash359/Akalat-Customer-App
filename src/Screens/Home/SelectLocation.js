@@ -44,7 +44,7 @@ function SelectLocation(props) {
   const user = useSelector((state) => state.Auth.user)
 
   const redirectToMyAccount = () => {
-    navigate('HomeScreen')
+    navigate('HungryNow')
   }
   const redirectToAddress = () => {
     navigate('AddNewAddress')
