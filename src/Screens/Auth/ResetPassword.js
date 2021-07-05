@@ -90,12 +90,6 @@ function ResetPassword(props) {
               source={ImagesPath.background}
               style={AuthStyle.loginInputCont}>
               <View style={{paddingHorizontal: Scale(25)}}>
-                {/* <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Image
-                    source={ImagesPath.backArrow}
-                    style={styles.arrowStyle}
-                  />
-                </TouchableOpacity> */}
                 <Text style={styles.primaryText}>Reset Password</Text>
 
                 <View style={{marginVertical: Scale(2)}}>

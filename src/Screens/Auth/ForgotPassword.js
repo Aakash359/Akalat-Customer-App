@@ -15,7 +15,6 @@ function ForgotPassword() {
     const otpResponse = useSelector((state) => state.Auth);
     const  counrtryListResponse = useSelector((state) => state.Auth.counrtryListResponse);
     const  countryList = counrtryListResponse?.data || []
-    console.log("Aakash=====>",countryList?.[0]?.dial_code);
     const [phone, setphone] = useState('');
     const { navigate } = useNavigation();
     const navigation = useNavigation();
@@ -37,7 +36,7 @@ function ForgotPassword() {
                 'country_code' : COUNTRY == "IN" ? '91' : '971'
      
                 }
-                console.log("Aakash====>",data)
+               
               navigate('Otp', data)
               dispatch(OTPRequest(data));
         }
@@ -188,6 +187,13 @@ const styles = StyleSheet.create({
         marginLeft:Scale(2)
         
     },
+    textInputContainer: {
+        fontWeight:'500', 
+        fontSize: Scale(16),
+        color: Colors.BLACK, 
+        justifyContent: 'center',
+        alignSelf: 'center',
+      },
     heading: {
         flexDirection: 'row',
         marginHorizontal: Scale(30),

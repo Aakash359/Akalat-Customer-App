@@ -2,7 +2,7 @@ import * as React from 'react'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import NearMe from '../../Screens/Home/NearMe'
 import Explore from '../../Screens/Home/Explore'
-import HomeScreen from '../stack/HungryStack'
+import HungryNow from '../../Screens/Home/HungryNow'
 import MyAccount from '../../Screens/Home/MyAccount'
 import Card from '../../Screens/Home/Card'
 import ImageIcon from '../../containers/ImageIcon'
@@ -60,7 +60,7 @@ function index() {
       />
       <Tab.Screen
         name="HomeScreen"
-        component={HomeScreen}
+        component={HungryNow}
         options={{
           ...getOptions({
             tabBarLabel: 'Hungry Now',

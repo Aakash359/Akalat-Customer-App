@@ -47,7 +47,6 @@ function SignUp(props) {
     (state) => state.Auth.counrtryListResponse,
   )
   const countryList = counrtryListResponse?.data || []
-  console.log('Aakash=====>', countryList?.[0]?.dial_code)
 
   useEffect(() => {
     if (signupResponse?.SignStatus) {
@@ -93,170 +92,154 @@ function SignUp(props) {
       }
 
       dispatch(loaderRequest(true))
-
       dispatch(SignUpRequest(data))
     }
   }
 
   return (
-    <SafeAreaInsetsContext.Consumer>
-      {(insets) => (
-        <KeyboardAvoidingView
-          style={styles.keyboardStyle}
-          behavior={Platform.OS == 'android' ? '' : 'padding'}
-          enabled>
-          <ImageBackground
-            source={ImagesPath.background}
-            style={styles.imageBachgroundStyle}>
-            <Icon
-              name="arrowleft"
-              type="AntDesign"
-              style={styles.logoStyle}
-              onPress={() => navigation.goBack()}
+    <KeyboardAvoidingView
+      style={styles.keyboardStyle}
+      behavior={Platform.OS == 'android' ? '' : 'padding'}
+      enabled>
+      <ImageBackground
+        source={ImagesPath.background}
+        style={styles.imageBachgroundStyle}>
+        <Icon
+          name="arrowleft"
+          type="AntDesign"
+          style={styles.logoStyle}
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.primaryText}>Signup</Text>
+
+        <ScrollView indicatorStyle="white">
+          <View style={styles.container}>
+            <FormInput
+              placeholder="First Name"
+              autoCapitalize="none"
+              maxLength={30}
+              autoCapitalize="words"
+              value={first_name}
+              onChangeText={(text) => setfirst_name(text)}
             />
-            <Text style={styles.primaryText}>Signup</Text>
+            <FormInput
+              placeholder="Last Name"
+              autoCapitalize="none"
+              maxLength={30}
+              autoCapitalize="words"
+              value={last_name}
+              onChangeText={(text) => setlast_name(text)}
+            />
+            <Text style={styles.mobile}>Mobile Number</Text>
 
-            <ScrollView indicatorStyle="white">
-              <View style={styles.container}>
-                <FormInput
-                  placeholder="First Name"
-                  autoCapitalize="none"
-                  maxLength={30}
-                  value={first_name}
-                  onChangeText={(text) => setfirst_name(text)}
-                />
-                <FormInput
-                  placeholder="Last Name"
-                  autoCapitalize="none"
-                  maxLength={30}
-                  value={last_name}
-                  onChangeText={(text) => setlast_name(text)}
-                />
-                <Text style={styles.mobile}>Mobile Number</Text>
+            <View style={styles.textInputView}>
+              <DropDownPicker
+                placeholder={'+92'}
+                value={value}
+                open={open}
+                items={countryList.map((items) => {
+                  return {
+                    label: items.dial_code,
+                  }
+                })}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                style={{
+                  width: Scale(72),
+                  borderWidth: 0,
+                  fontWeight: 'bold',
+                  backgroundColor: Colors.TRANSPARENT,
+                }}
+                containerStyle={{
+                  width: Scale(72),
+                  borderWidth: 0,
+                  fontWeight: 'bold',
+                  backgroundColor: Colors.TRANSPARENT,
+                }}
+              />
+              <TextInput
+                style={styles.textInputContainer}
+                value={phone}
+                maxLength={10}
+                autoCapitalize="none"
+                placeholder="Mobile Number"
+                keyboardType={'numeric'}
+                onChangeText={(text) => setphone(text)}
+                placeholderTextColor={Colors.BORDERCOLOR}
+                placeholderStyle={{fontWeight: 'bold'}}
+                underlineColorAndroid="transparent"
+              />
+            </View>
 
-                <View style={styles.textInputView}>
-                  <DropDownPicker
-                    placeholder={'+92'}
-                    value={value}
-                    open={open}
-                    items={countryList.map((items) => {
-                      return {
-                        label: items.dial_code,
-                      }
-                    })}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    style={{
-                      width: Scale(72),
-                      borderWidth: 0,
-                      fontWeight: 'bold',
-                      backgroundColor: Colors.TRANSPARENT,
-                    }}
-                    containerStyle={{
-                      width: Scale(72),
-                      borderWidth: 0,
-                      fontWeight: 'bold',
-                      backgroundColor: Colors.TRANSPARENT,
-                    }}
-                  />
-                  <TextInput
-                    style={styles.textInputContainer}
-                    value={phone}
-                    maxLength={10}
-                    autoCapitalize="none"
-                    placeholder="Mobile Number"
-                    keyboardType={'numeric'}
-                    onChangeText={(text) => setphone(text)}
-                    placeholderTextColor={Colors.BORDERCOLOR}
-                    placeholderStyle={{fontWeight: 'bold'}}
-                    underlineColorAndroid="transparent"
-                  />
-                </View>
+            <FormInput
+              placeholder="Email Address"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              maxLength={30}
+              value={email}
+              onChangeText={(text) => setemail(text)}
+            />
 
-                <FormInput
-                  placeholder="Email Address"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  maxLength={30}
-                  value={email}
-                  onChangeText={(text) => setemail(text)}
-                />
-
-                <FormInput
-                  placeholder="Password"
-                  autoCapitalize="none"
-                  secureTextEntry={true}
-                  maxLength={30}
-                  value={password}
-                  onChangeText={(text) => setpassword(text)}
-                />
-                <FormInput
-                  placeholder="Confirm Password"
-                  autoCapitalize="none"
-                  secureTextEntry={true}
-                  maxLength={30}
-                  value={confirm_pass}
-                  onChangeText={(text) => setconfirm_pass(text)}
-                />
-                <View
+            <FormInput
+              placeholder="Password"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              maxLength={30}
+              value={password}
+              onChangeText={(text) => setpassword(text)}
+            />
+            <FormInput
+              placeholder="Confirm Password"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              maxLength={30}
+              value={confirm_pass}
+              onChangeText={(text) => setconfirm_pass(text)}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: Scale(10),
+              }}>
+              <TouchableOpacity
+                onPress={() => setcheckBox(!checkBox)}
+                activeOpacity={0.7}>
+                <Image
+                  source={
+                    checkBox == true ? ImagesPath.check1 : ImagesPath.uncheck
+                  }
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: Scale(10),
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => setcheckBox(!checkBox)}
-                    activeOpacity={0.7}>
-                    <Image
-                      source={
-                        checkBox == true
-                          ? ImagesPath.check1
-                          : ImagesPath.uncheck
-                      }
-                      style={{
-                        width: Scale(17),
-                        height: Scale(17),
-                        marginRight: Scale(5),
-                      }}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.forgotButton}>
-                    I accept{' '}
-                    <Text style={{color: Colors.APPCOLOR}}>Privacy Policy</Text>{' '}
-                    and
-                    <Text
-                      style={{color: Colors.APPCOLOR, marginLeft: Scale(5)}}>
-                      {' '}
-                      Terms &{'\n'}Conditions{' '}
-                    </Text>
-                  </Text>
-                </View>
-                <View style={{marginTop: Scale(10)}}>
-                  <CustomButton
-                    title="Signup"
-                    onSubmit={onSubmit}
-                    isSecondary={true}
-                  />
-                </View>
-              </View>
-            </ScrollView>
-            <LoadWheel visible={isLoading} />
-          </ImageBackground>
-        </KeyboardAvoidingView>
-      )}
-    </SafeAreaInsetsContext.Consumer>
+                    width: Scale(17),
+                    height: Scale(17),
+                    marginRight: Scale(5),
+                  }}
+                />
+              </TouchableOpacity>
+              <Text style={styles.forgotButton}>
+                I accept{' '}
+                <Text style={{color: Colors.APPCOLOR}}>Privacy Policy</Text> and
+                <Text style={{color: Colors.APPCOLOR, marginLeft: Scale(5)}}>
+                  {' '}
+                  Terms &{'\n'}Conditions{' '}
+                </Text>
+              </Text>
+            </View>
+            <View style={{marginTop: Scale(10)}}>
+              <CustomButton
+                title="Signup"
+                onSubmit={onSubmit}
+                isSecondary={true}
+              />
+            </View>
+          </View>
+        </ScrollView>
+        <LoadWheel visible={isLoading} />
+      </ImageBackground>
+    </KeyboardAvoidingView>
   )
 }
-
-// SignUp.propTypes = {
-//   loginSuccess: func.isRequired,
-//   navigation: shape({
-//       dispatch: func.isRequired,
-//       goBack: func.isRequired,
-//   }).isRequired,
-//   t: func.isRequired,
-// }
 
 export default SignUp
 
@@ -303,6 +286,13 @@ const styles = StyleSheet.create({
     fontSize: Scale(30),
     fontWeight: 'bold',
     textAlign: 'left',
+  },
+  textInputContainer: {
+    fontWeight: '500',
+    fontSize: Scale(16),
+    color: Colors.BLACK,
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   normalText: {
     fontSize: Scale(16),
