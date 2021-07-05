@@ -31,7 +31,7 @@ function Otp(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const [otp, setotp] = useState('5431')
+  const [otp, setotp] = useState('')
   const [phone, setphone] = useState(props.route.params.phone)
   const [email, setemail] = useState(props.route.params.email)
   const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
