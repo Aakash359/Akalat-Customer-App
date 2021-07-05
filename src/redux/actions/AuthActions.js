@@ -11,6 +11,7 @@ import {
   SIGNUP_LOGIN,
   SET_USER_DETAILS,
   COUNTRY_LIST_REQUEST,
+  SET_OTP_VERIFY_STATUS,
 } from '../Types/type'
 
 //================= SIGNUP POST REQUEST =================
@@ -109,3 +110,8 @@ export const countryListRequest = (data) => {
 }
 
 export const setUserDetails = (payload) => ({type: SET_USER_DETAILS, payload})
+
+export const setOtpVerifyStatus = (payload) => ({
+  type: SET_OTP_VERIFY_STATUS,
+  payload,
+})
