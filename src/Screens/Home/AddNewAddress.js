@@ -71,7 +71,7 @@ function AddNewAddress(props) {
     return () => {
       Geolocation.clearWatch()
     }
-  }, [])
+  }, []) //jyoti
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
