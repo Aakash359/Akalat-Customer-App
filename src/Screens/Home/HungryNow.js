@@ -13,17 +13,24 @@ function HungryNow() {
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
-    console.log('====================================');
-    console.log(product_list);
-    console.log('====================================');
+    
     
     useEffect(() => {
     
-
-        
-          dispatch(hungryNowListRequest())
+        dispatch(hungryNowListRequest())
      
       }, [])
+
+      const addToCart = (item) => {
+        const {cartRestroDetails, addToCart} = props
+        const {restroDetails = {}} = props.route?.params || {}
+        if(cartRestroDetails && cartRestroDetails?._id !== restroDetails?._id ) {
+          return Alert.alert('You have another other in your cart')
+        }
+        else {
+            addToCart({restroDetails, product: item})
+        }
+      }   
 
     const renderItems = ({ item, index }) => (
         <View style={styles.cardStyle}>
@@ -42,7 +49,7 @@ function HungryNow() {
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>{item.price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through', }}>$100.00</Text>
+                <Text style={styles.headingText}>$ {item.price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through', }}>$100.00</Text>
                 </Text>
                 <View style={styles.addButton}>
                 <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
@@ -55,19 +62,19 @@ function HungryNow() {
                 <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={ImagesPath.non_veg}/>
+                    <Image  source={{ uri: item?.image }}/>
                          <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
                     </View>
                     <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >{item.description}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>$40.00  <Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal', textDecorationLine:'line-through', }}>$100.00</Text>
+                <Text style={styles.headingText}>$ {item.price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal', textDecorationLine:'line-through', }}>$100.00</Text>
                 </Text>
                 <View style={styles.addButton}>
                 <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
               </View></View>
-              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity:3</Text>
+              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>
        
         </View>
     );
