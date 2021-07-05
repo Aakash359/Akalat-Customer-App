@@ -21,9 +21,9 @@ function Payment(props) {
   const [check, setCheck] = React.useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  // const redirectToPlaceOrder = () => {
-  //   navigate('PlaceOrder')
-  // }
+  const redirectToPlaceOrder = () => {
+    navigate('PlaceOrder')
+  }
   const checked = (method) => {
     setCheck(method)
   }

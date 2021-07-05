@@ -2,7 +2,7 @@
 import {Colors,Scale,} from '../CommonConfig';
 export const headerLeftStyle = () => {
   return {    
-   //s headerTitleAlign: 'left',
+   
    headerTitleStyle:{
      color:'#fff',
     fontSize:Scale(16),

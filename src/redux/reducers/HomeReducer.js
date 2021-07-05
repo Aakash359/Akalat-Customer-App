@@ -11,9 +11,6 @@ import {
     RESTRO_LIST_REQUEST,
     RESTRO_LIST_SUCCESS,
     RESTRO_LIST_FAILED,
-    RESTRO_ITEM_REQUEST,
-    RESTRO_ITEM_SUCCESS,
-    RESTRO_ITEM_FAILED,
     ADD_FAVOURITE_REQUEST,
     ADD_FAVOURITE_SUCCESS,
     ADD_FAVOURITE_FAILED,
@@ -40,8 +37,6 @@ import {
         searchStatus: false,
         restroResponse: {},
         restroStatus: false,
-        restroItemResponse: {},
-        restroItemStatus: false,
         addFavouriteResponse:{},
         addFavouriteStatus:false,
         orderDetailsResponse:{},
@@ -98,15 +93,6 @@ import {
             };
            case RESTRO_LIST_FAILED:
               return {...state, restroStatus:false, restroResponse: action.payload,         
-            };
-           case RESTRO_ITEM_REQUEST:
-              return {...state, restroItemStatus:false, restroItemResponse: action.payload, 
-            };
-           case RESTRO_ITEM_SUCCESS:
-              return {...state, restroItemStatus:true, restroItemResponse: action.payload,  
-            };
-           case RESTRO_ITEM_FAILED:
-              return {...state, restroItemStatus:false, restroItemResponse: action.payload,         
             };
            case ADD_FAVOURITE_REQUEST:
               return {...state, addFavouriteStatus:false, addFavouriteResponse: action.payload, 

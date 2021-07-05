@@ -129,7 +129,7 @@ function Address() {
   }
 
   const redirectToHome = () => {
-    navigate('HomeStack')
+    // navigate('HomeStack')
   }
 
   const onSubmit = async () => {
@@ -164,7 +164,7 @@ function Address() {
       }
       console.log('Data--', data)
       dispatch(AddAddressRequest(data))
-      navigate('HomeScreen')
+      navigate('NearMe')
     }
   }
 

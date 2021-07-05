@@ -34,8 +34,8 @@ import Coupon from '../../Screens/Home/Coupon'
 import EditAddress from '../../Screens/Home/EditAddress'
 import RightButton from '../../containers/RightButton'
 import {headerLeftStyle} from '../Helper'
-
 import LogoTitle from '../../containers/LogoTitle'
+
 const Stack = createStackNavigator()
 
 function HomeStack(navigation) {
