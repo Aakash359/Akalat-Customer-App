@@ -124,7 +124,7 @@ function Login(props) {
             <Text style={styles.mobile}>Mobile Number</Text>
             <View style={styles.textInputView}>
               <DropDownPicker
-                // placeholder={'+92'}
+                placeholder={'+92'}
                 value={value}
                 open={open}
                 items={countryList.map((items) => {
@@ -132,22 +132,19 @@ function Login(props) {
                     label: items.dial_code,
                   }
                 })}
-                // onChangeItem={(value)=>{console.log("Akash====>",value)}}
-                // onChangeValue={(value) => {
-                //     console.log(value);
-                //   }}
+               
                 onChangeItem={(item) => console.log(item)}
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
                 style={{
-                  width: Scale(72),
+                  width: Scale(80),
                   borderWidth: 0,
                   fontWeight: 'bold',
                   backgroundColor: Colors.TRANSPARENT,
                 }}
                 containerStyle={{
-                  width: Scale(72),
+                  width: Scale(80),
                   borderWidth: 0,
                   fontWeight: 'bold',
                   backgroundColor: Colors.TRANSPARENT,

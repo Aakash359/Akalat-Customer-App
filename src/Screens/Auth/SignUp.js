@@ -153,13 +153,13 @@ function SignUp(props) {
                 setValue={setValue}
                 setItems={setItems}
                 style={{
-                  width: Scale(72),
+                  width: Scale(80),
                   borderWidth: 0,
                   fontWeight: 'bold',
                   backgroundColor: Colors.TRANSPARENT,
                 }}
                 containerStyle={{
-                  width: Scale(72),
+                  width: Scale(80),
                   borderWidth: 0,
                   fontWeight: 'bold',
                   backgroundColor: Colors.TRANSPARENT,
