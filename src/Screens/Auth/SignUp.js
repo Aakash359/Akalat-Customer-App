@@ -15,6 +15,7 @@ import {
   SignUpRequest,
   loaderRequest,
   countryListRequest,
+  setOtpVerifyStatus,
 } from '../../redux/actions'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -95,6 +96,12 @@ function SignUp(props) {
       dispatch(SignUpRequest(data))
     }
   }
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      dispatch(setOtpVerifyStatus(false))
+    })
+  }, [])
 
   return (
     <KeyboardAvoidingView

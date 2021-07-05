@@ -36,9 +36,6 @@ function Otp(props) {
   const [email, setemail] = useState(props.route.params.email)
   const otpData = useSelector(({Auth: {otpResponse}}) => otpResponse)
 
-  console.log('====================================')
-  console.log(props?.otpSuccess)
-  console.log('====================================')
   const onSubmit = () => {
     if (otp == '') {
       alert('Please enter otp')
@@ -49,12 +46,6 @@ function Otp(props) {
         phone: phone,
         country_code: '91',
       }
-      if (email) {
-        navigate('Address')
-      }
-      //   else {
-      //     navigate('ResetPassword', data)
-      //   }
 
       dispatch(OTPVerifyRequest(data))
     }
@@ -72,11 +63,13 @@ function Otp(props) {
   }
   React.useEffect(() => {
     if (props?.otpSuccess) {
-      const {data} = props?.otpReponse
-      console.log('====================================')
-      console.log('otpReponse', data)
-      console.log('====================================')
-      navigate('ResetPassword', {data: data})
+      if (props?.route?.params?.email) {
+        const {data} = props?.otpReponse
+        navigate('Address', {data: data})
+      } else {
+        const {data} = props?.otpReponse
+        navigate('ResetPassword', {data: data})
+      }
     }
   }, [props?.otpSuccess])
 
