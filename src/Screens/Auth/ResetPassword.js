@@ -33,7 +33,6 @@ function ResetPassword(props) {
   const [form, setForm] = React.useState({password: '', confirm_password: ''})
   const [otpRes, setotpRes] = React.useState(props.route.params.data._id || '')
 
-  console.log('Aakash===>', otpRes)
   const onReset = async () => {
     const {password, confirm_password} = form
     if (password == '') {
