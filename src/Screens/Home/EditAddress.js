@@ -130,7 +130,7 @@ function EditAddress(props) {
           }
           console.log('Data--', data)
           dispatch(AddAddressRequest(data))
-          navigate('ManageAddress')
+          navigate('ManageAddress') //jyoti
         })
         .catch((error) => {
           const data = {
