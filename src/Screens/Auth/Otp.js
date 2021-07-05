@@ -47,20 +47,18 @@ function Otp(props) {
         otp: otp,
         role: 'user',
         phone: phone,
-        country_code: '91',
+        country_code: COUNTRY == 'IN' ? '91' : '971',
       }
       if (email) {
         navigate('Address')
       }
-      //   else {
-      //     navigate('ResetPassword', data)
-      //   }
+    
 
       dispatch(OTPVerifyRequest(data))
     }
   }
 
-  const resendOTP = () => {
+  const onPress = () => {
     const data = {
       phone: phone,
       role: 'user',
@@ -69,13 +67,11 @@ function Otp(props) {
 
     navigate('Otp', data)
     dispatch(OTPRequest(data))
+    alert("OTP has been sent successfully")
   }
   React.useEffect(() => {
     if (props?.otpSuccess) {
       const {data} = props?.otpReponse
-      console.log('====================================')
-      console.log('otpReponse', data)
-      console.log('====================================')
       navigate('ResetPassword', {data: data})
     }
   }, [props?.otpSuccess])
@@ -143,12 +139,15 @@ function Otp(props) {
                   onSubmit={onSubmit}
                   isSecondary={true}
                 />
-                <TouchableOpacity onSubmit={resendOTP}>
+                <View  style={{flexDirection:'row' ,justifyContent:'center',}}>
                   <Text style={styles.normalText1}>
                     Didn't get the code?
-                    <Text style={{color: Colors.DARK_RED}}> Resend OTP</Text>
                   </Text>
-                </TouchableOpacity>
+                  <TouchableOpacity  onPress={onPress}>
+                  <Text style={{color: Colors.DARK_RED ,justifyContent:'center',}}> Resend OTP</Text>
+                  </TouchableOpacity>
+                  
+                </View>
               </View>
             </ImageBackground>
           </ScrollView>
@@ -181,8 +180,7 @@ const styles = StyleSheet.create({
   normalText1: {
     fontSize: Scale(16),
     fontFamily: Fonts.Medium,
-    marginTop: Scale(5),
-    textAlign: 'center',
+   
     color: Colors.BLACK,
   },
   otpContainer: {
