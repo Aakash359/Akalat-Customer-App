@@ -50,7 +50,7 @@ function ResetPassword(props) {
     const payload = {
       password,
       confirm_password,
-      phone: props?.user?.phone,
+      phone: props?.route?.params?.data?.phone,
       _id: otpRes,
     }
 

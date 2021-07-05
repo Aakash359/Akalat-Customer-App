@@ -39,7 +39,7 @@ function EditAddress(props) {
   const [nearby, setNearby] = useState(address?.nearby)
   const user = useSelector((state) => state.Auth.user)
   const dispatch = useDispatch()
-  // const [location, setLocation] = useState(null)
+  const [location, setLocation] = useState(null)
 
   // const redirectToMyAccount = () => {
   //   navigate('ManageAddress')
@@ -48,7 +48,7 @@ function EditAddress(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        subscribeLocationLocation()
+        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -85,14 +85,8 @@ function EditAddress(props) {
         const currentLatitude = JSON.stringify(position.coords.latitude)
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
-            console.log(
-              '=============================================json data',
-              json.results[1].formatted_address,
-              '================================Flat no',
-            )
             // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name
             let addressComponent = json.results[1].formatted_address
-            console.log(addressComponent, 'addressComponent')
             setAddress(addressComponent)
           },
         )
@@ -115,34 +109,44 @@ function EditAddress(props) {
     } else {
       let lat = ''
       let lng = ''
-
-      await Geocoder.from([
-        {house_name_and_no} + ' ',
-        {area_name} + '',
-        {nearby},
-      ])
+      console.log('====================================')
+      console.log('abcd')
+      console.log('====================================')
+      Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
         .then((json) => {
           var location = json.results[0].geometry.location
           lat = parseFloat(location.lat)
           lng = parseFloat(location.lng)
           console.log('lat Na log ', lat, lag)
+          const data = {
+            address_type: activeTab,
+            lng,
+            lat,
+            house_name_and_no: house_name_and_no,
+            area_name: area_name,
+            nearby: nearby,
+            created_by: user?._id,
+            _id: address?._id,
+          }
+          console.log('Data--', data)
+          dispatch(AddAddressRequest(data))
+          navigate('ManageAddress')
         })
-        .catch((error) => console.warn(error))
-      const data = {
-        address_type:
-          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-        lng: location?.latitude,
-        lat: location?.longitude,
-        house_name_and_no: house_name_and_no,
-        area_name: area_name,
-        nearby: nearby,
-        created_by: user?._id,
-      }
-      console.log('Data--', data)
-      dispatch(AddAddressRequest(data))
-      navigate('ManageAddress')
-
-      alert('Address added succesfully')
+        .catch((error) => {
+          const data = {
+            address_type: activeTab,
+            lng: address?.lng,
+            lat: address?.lat,
+            house_name_and_no: house_name_and_no,
+            area_name: area_name,
+            nearby: nearby,
+            created_by: user?._id,
+            _id: address?._id,
+          }
+          console.log('Data--', data)
+          dispatch(AddAddressRequest(data))
+          navigate('ManageAddress')
+        })
     }
   }
 

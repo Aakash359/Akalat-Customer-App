@@ -14,7 +14,7 @@ export default function LogoTitle(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        subscribeLocationLocation()
+        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -81,9 +81,8 @@ export default function LogoTitle(props) {
           height: Scale(20),
           textAlignVertical: 'center',
           color: '#fff',
-          
+
           fontSize: Scale(16),
-         
         }}>
         {currentAddress}
       </Text>

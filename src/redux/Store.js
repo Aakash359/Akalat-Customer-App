@@ -10,7 +10,7 @@ import rootReducer from './reducers' // List of Reducers
 import {sagaMonitor} from './Config'
 
 const persistConfig = {
-  blacklist: ['Auth'],
+  // blacklist: ['Auth'],
   key: 'root',
   storage: AsyncStorage,
 }
