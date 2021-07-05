@@ -2,13 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import {useNavigation} from '@react-navigation/native'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, useDispatch,connect} from 'react-redux'
 import {hungryNowListRequest,hungryNowListLoader} from '../../redux/actions'
+import { addToCart, subToCart } from '../../redux/actions/CartActions';
 
 
 
-
-function HungryNow() {
+function HungryNow(props) {
 
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
     const dispatch = useDispatch()
@@ -30,9 +30,19 @@ function HungryNow() {
         else {
             addToCart({restroDetails, product: item})
         }
-      }   
-
-    const renderItems = ({ item, index }) => (
+      } 
+      const increment = () => {
+        if (addItem > 8)
+        {
+          SetAddItem( addItem);
+        }
+        else{SetAddItem(addItem + 1);}
+        
+      };  
+      const {cartProducts} = props
+      const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
+      const renderItems = ({ item, index }) => (
+          
         <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
                 <Text style={styles.headingText}>{item.restro_name}</Text>
@@ -97,7 +107,20 @@ function HungryNow() {
         </View>
     );
 }
-export default HungryNow;
+
+const mapStateToProps = ({Cart: {restroDetails, products}}) => {
+    return {
+    cartRestroDetails: restroDetails,
+    cartProducts: products
+    }
+}
+
+const mapDispatchToProps = {
+    addToCart: addToCart,
+    subToCart: subToCart
+ }
+
+export default connect(mapStateToProps, mapDispatchToProps)(HungryNow);
 const styles = StyleSheet.create({
     container: {
         flex: 1,

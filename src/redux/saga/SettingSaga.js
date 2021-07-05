@@ -36,7 +36,6 @@ import {
 import {put, call, takeEvery, select} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
 import {
-  AddressListResquest,
   deleteAddressFailed,
   deleteAddressSuccess,
   editProfileFailed,
@@ -44,6 +43,7 @@ import {
   setEditProfileLoader,
   setUserDetails,
   signUpLogin,
+  AddressListRequest,
 } from '../actions'
 
 // ====================== About US GET ======================
@@ -288,10 +288,10 @@ function* deleteAddress({data}) {
     } else {
       yield put(deleteAddressSuccess(response))
       userId = yield select(({Auth}) => Auth.user._id)
-      yield put(AddressListResquest({created_by: userId}))
+      yield put(AddressListRequest({created_by: userId}))
     }
   } catch (e) {
-    yield put(deleteAddressFailed(e))
+    yield put(deleteAddressFailed(e.message))
   }
 }
 
