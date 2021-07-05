@@ -265,7 +265,7 @@ function AddNewAddress(props) {
               />
             </View>
           </ScrollView>
-          {/* <LoadWheel visible={loader} /> */}
+         
         </KeyboardAvoidingView>
       </ImageBackground>
     </View>
