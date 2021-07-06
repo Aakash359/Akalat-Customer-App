@@ -3,6 +3,7 @@ import {Text, View, StatusBar, Alert, Clipboard, LogBox} from 'react-native'
 import {Colors} from './CommonConfig'
 // import messaging from '@react-native-firebase/messaging';
 //yarn remove "@react-native-firebase/app"
+import SplashScreen from 'react-native-splash-screen'
 import NetInfo from '@react-native-community/netinfo'
 import DropdownAlert from 'react-native-dropdownalert'
 import {Store, Persistor} from './redux/Store'
@@ -16,6 +17,7 @@ LogBox.ignoreAllLogs()
 
 export class App extends Component {
   componentDidMount() {
+    SplashScreen.hide()
     NetInfo.addEventListener((state) => {
       if (state.isConnected === false && state.isInternetReachable === false) {
         global.dropDownAlertRef &&
