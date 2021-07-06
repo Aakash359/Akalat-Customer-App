@@ -239,7 +239,7 @@ function* EditProfileSaga({data}) {
       yield put(editProfileFailed(''))
       yield put(editProfileSuccess(response.data))
       let ud = {...response.data}
-      yield put(setUserDetails(ud))
+      // yield put(setUserDetails(ud))
     }
   } catch (e) {
     yield put(setEditProfileLoader(false))
