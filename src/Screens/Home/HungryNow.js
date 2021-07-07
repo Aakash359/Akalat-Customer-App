@@ -5,7 +5,7 @@ import { Icon } from 'native-base';
 import {useSelector, useDispatch,connect} from 'react-redux'
 import {hungryNowListRequest,hungryNowListLoader} from '../../redux/actions'
 import { addToCart, subToCart } from '../../redux/actions/CartActions';
-
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
 
 function HungryNow(props) {
@@ -13,10 +13,10 @@ function HungryNow(props) {
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
-    
+    const  {setHungryNowListLoader} = useSelector((state) => state.Home);
     
     useEffect(() => {
-    
+        dispatch(hungryNowListLoader(true));
         dispatch(hungryNowListRequest())
      
       }, [])
@@ -131,6 +131,7 @@ function HungryNow(props) {
 
                         </View>
                         :null}
+                         <LoadWheel visible={setHungryNowListLoader} />
                 </ImageBackground>
            
         </View>

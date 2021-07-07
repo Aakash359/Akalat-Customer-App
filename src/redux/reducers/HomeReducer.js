@@ -21,7 +21,7 @@ import {
     HUNGRY_NOW_LIST_REQUEST,
     HUNGRY_NOW_LIST_SUCCESS,
     HUNGRY_NOW_LIST_FAILED,
-    HUNGRY_NOW_LIST_LOADER
+    SET_HUNGRY_NOW_LIST_LOADER
   
     } from '../Types/type';
 
@@ -43,6 +43,7 @@ import {
         orderDetailsStatus:false,
         hungryNowListStatus:false,
         hungryNowListResponse:{},
+        setHungryNowListLoader:false,
        };
        
        export default function HomeReducer(state = initialState, action) {
@@ -65,8 +66,8 @@ import {
            case HUNGRY_NOW_LIST_FAILED:
              return {...state, hungryNowListStatus:false, hungryNowListResponse: action.payload,         
             };
-            case HUNGRY_NOW_LIST_LOADER:
-              return {...state, isLoading: action.payload};
+            case SET_HUNGRY_NOW_LIST_LOADER:
+              return {...state, setHungryNowListLoader: action.payload};
            case COUPON_REQUEST:
              return {...state, couponStatus:false, couponResponse: action.payload, 
             };

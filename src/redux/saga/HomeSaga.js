@@ -20,7 +20,7 @@ import {
     HUNGRY_NOW_LIST_REQUEST,
     HUNGRY_NOW_LIST_SUCCESS,
     HUNGRY_NOW_LIST_FAILED,
-
+    SET_HUNGRY_NOW_LIST_LOADER,
     } from '../Types/type';
 import {setFavouriteLoader,hungryNowListLoader
       } from '../actions/HomeActions';    
@@ -120,7 +120,8 @@ export const RestroListSaga = function* RestroListSaga({params}) {
 
 export const hungryNowListSaga = function* hungryNowListSaga({data}) {
  
-  yield put(hungryNowListLoader(true));
+  
+  yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: true})
   try {
       const response = yield call(Request, {
           url: 'product/listHungryProduct',
@@ -130,7 +131,8 @@ export const hungryNowListSaga = function* hungryNowListSaga({data}) {
         if (response?.data?.error == true){
           yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: response?.data  });
           
-          yield put(hungryNowListLoader(false));
+          
+          yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
           global.dropDownAlertRef.alertWithType(
             'error',
             'Error',
@@ -138,13 +140,15 @@ export const hungryNowListSaga = function* hungryNowListSaga({data}) {
           );
         }
      else{ 
-         yield put(hungryNowListLoader(false));
+        
+         yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
          yield put({ type: HUNGRY_NOW_LIST_SUCCESS, payload: response });
       }
       
   }
   catch (e) {
-      yield put(hungryNowListLoader(false));
+    
+      yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
       yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: e });
   }
 }

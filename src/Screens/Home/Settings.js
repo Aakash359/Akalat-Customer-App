@@ -120,7 +120,7 @@ function Settings() {
         onPressLeftButton={() => setLogoutModal(false)}
         onPressRightButton={redirectToLogin}
       />
-      {/* <LoadWheel visible={isLoading} /> */}
+      <LoadWheel visible={isLoading} />
     </View>
   )
 }
