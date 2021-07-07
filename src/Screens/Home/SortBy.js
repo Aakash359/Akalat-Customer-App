@@ -8,7 +8,7 @@ import { useSelector} from 'react-redux';
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
 
-function SortBy() {
+function SortBy(props) {
   const [value, setActiveTab] = useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
@@ -27,7 +27,7 @@ function SortBy() {
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }
-
+  
   const onSortBy = async () => {
 
     
@@ -56,6 +56,7 @@ function SortBy() {
       console.log('Error',error);  
     }
   }
+
 
   const onReset = async () => {
        

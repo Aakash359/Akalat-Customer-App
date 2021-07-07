@@ -159,7 +159,7 @@ function Address() {
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
         area_name: area_name,
-        nearby: nearby,
+        nearby: nearby==''? undefined :nearby,
         created_by: '6093b6eb8db4690de06c5c21',
       }
       console.log('Data--', data)

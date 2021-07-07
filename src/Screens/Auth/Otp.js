@@ -45,6 +45,7 @@ function Otp(props) {
         role: 'user',
         phone: phone,
         country_code: COUNTRY == 'IN' ? '91' : '971',
+        verification_status : true
       }
 
       dispatch(OTPVerifyRequest(data))
@@ -79,7 +80,7 @@ function Otp(props) {
       {(insets) => (
         <KeyboardAvoidingView
           style={AuthStyle.keyboardAware}
-          behavior={Platform.OS == 'android' ? '' : 'padding'}
+          
           enabled>
           <ScrollView
             bounces={false}

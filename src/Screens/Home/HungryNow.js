@@ -76,7 +76,7 @@ function HungryNow(props) {
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>$ {item.price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through', }}>$100.00</Text>
+                <Text style={styles.headingText}>$ {item.final_price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through',}}>$ {item.price}</Text>
                 </Text>
                 {inCart ?
                   <View style={{flexDirection:'row',alignItems:'center'}}>
