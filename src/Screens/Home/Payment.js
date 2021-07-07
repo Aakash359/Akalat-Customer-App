@@ -57,7 +57,6 @@ function Payment(props) {
       discounted_price: det?.dis,
       transaction_id: '123',
     }
-    
     if (check) {
       props?.createOrder(payload)
     } else {
@@ -204,7 +203,7 @@ function Payment(props) {
           </View>
           <View style={{paddingHorizontal: '5%'}}>
             <CustomButton
-              title="Place order"
+              title="Place Order"
               isSecondary={true}
               onSubmit={createOrder}
             />

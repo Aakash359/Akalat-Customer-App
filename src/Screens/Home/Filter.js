@@ -22,15 +22,11 @@ import axios from 'axios'
 function Filter() {
     const [value, setValue] = useState()
     const [value1, setValue1] = useState()
-
     const { navigate } = useNavigation()
     const navigation = useNavigation()
     const route = useRoute(); 
 
-    const redirectToHome = () => {
-        route.params.onBack('rahul');
-        navigate('Home')
-    }
+   
     const [isEnabled, setIsEnabled] = useState()
 
     const setCheckedSwitch = () => {
@@ -70,6 +66,7 @@ function Filter() {
        
         const url = `${API_BASE}/restro/filter`
         const payload = {
+            'rating_from_user': '',
             'restaurent_type': ''
           }
         try 

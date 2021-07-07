@@ -1,6 +1,6 @@
 
 import {
-        OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,ORDER_DETAILS_REQUEST,HUNGRY_NOW_LIST_LOADER,
+        OFFER_CARD_REQUEST,SEARCH_REQUEST,RESTRO_LIST_REQUEST,ORDER_DETAILS_REQUEST,SET_HUNGRY_NOW_LIST_LOADER,
         ADD_FAVOURITE_REQUEST,SET_FAVOURITE_LOADER,COUPON_REQUEST,HUNGRY_NOW_LIST_REQUEST
     } from '../Types/type';
 
@@ -20,7 +20,7 @@ export const hungryNowListRequest = (data) => {
 export const hungryNowListLoader = (data) => {
     
     return {
-        type: HUNGRY_NOW_LIST_LOADER,
+        type: SET_HUNGRY_NOW_LIST_LOADER,
         payload: data,
        
     };

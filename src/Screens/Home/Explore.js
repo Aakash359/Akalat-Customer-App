@@ -17,7 +17,7 @@ import {Searchbar} from 'react-native-paper'
 import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import {addfavouriteRequest} from '../../redux/actions'
-
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import axios from 'axios'
 
 function Explore() {
@@ -32,8 +32,40 @@ function Explore() {
     restroList: [],
     isLoading: true,
   })
-  const redirectTocheck = () => {
+  const redirectTocheck = async () => {
+
     setChecked(!check)
+    let Datatype = ''
+    if(check==true){
+      Datatype = 'restaurant'
+      console.log("Aakash", Datatype)
+    }
+    else{
+      Datatype = 'Dishes'
+      console.log("Aakash", Datatype)
+
+    }
+
+    setdata({...data, isLoading: true})
+    const url = `${API_BASE}/restro/search`
+   
+    const payload = {
+      searchKey: search,
+      type: Datatype,
+    }
+  
+    try {
+      const res = await axios.post(url, payload)
+
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restro,
+        isLoading: false,
+      })
+      console.log('====================================');
+      console.log("Check", res?.data?.data?.restro);
+      console.log('====================================');
+    } catch (error) {}
   }
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
@@ -43,6 +75,7 @@ function Explore() {
     navigate('Rating')
     
   }
+  
   const onFavorite = (item) => {
     const data = {
       userid: user?._id,
@@ -55,11 +88,15 @@ function Explore() {
   }
 
   const onSearch = async () => {
+    
     setdata({...data, isLoading: true})
     const url = `${API_BASE}/restro/search`
+   
     const payload = {
       searchKey: search,
+     
     }
+    
     try {
       const res = await axios.post(url, payload)
 
@@ -199,6 +236,7 @@ function Explore() {
   )
 
   return (
+    
     <View style={styles.container}>
       <StatusBar
         translucent={true}
@@ -270,7 +308,9 @@ function Explore() {
               return <Text style={{textAlign:'center'}}>No data found</Text>
             }}
           />
+          <LoadWheel visible={data.isLoading} />
         </ScrollView>
+        
       </ImageBackground>
     </View>
   )

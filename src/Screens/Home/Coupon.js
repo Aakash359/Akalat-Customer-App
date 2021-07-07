@@ -17,9 +17,7 @@ import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {
-  offercardRequest,
   addfavouriteRequest,
-  couponRequest,
 } from '../../redux/actions'
 
 import axios from 'axios'

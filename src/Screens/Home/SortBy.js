@@ -3,19 +3,82 @@ import {Text, View, StyleSheet, StatusBar, ImageBackground} from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {CustomButton} from '../../Component'
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation,useRoute} from '@react-navigation/native'
+import { useSelector} from 'react-redux';
+import {API_BASE} from '../../apiServices/ApiService'
+import axios from 'axios'
 
 function SortBy() {
   const [value, setActiveTab] = useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const redirectToHome = () => {
-    navigate('Home')
-  }
+  const route = useRoute(); 
+  const  user = useSelector((state) => state.Auth.user);
+  const [data, setdata] = React.useState({
+    isLoading: true,
+  })
+  console.log('====================================');
+  console.log("userid",user?._id);
+  console.log('====================================');
+
+  
   const [isEnabled, setIsEnabled] = useState(false)
 
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
+  }
+
+  const onSortBy = async () => {
+
+    
+    const url = `${API_BASE}/restro/sortBy`
+    const payload = {
+        
+        'userid': "60dbf51098319623d40960c6",
+        'relevance': value==0,
+        'rating_high_to_low': value==1,
+        'rating_low_to_high': value==2,
+        'delivery_time': value==3
+      }
+      console.log('====================================');
+      console.log(payload);
+      console.log('====================================');
+    try 
+      {
+      const res = await axios.post(url, payload)
+      route.params.onBack({sortByRestro:res?.data?.data?.restroNewArrayList,isLoading: true});
+      navigate('NearMe')
+    
+    
+    } 
+    catch (error) 
+    {
+      console.log('Error',error);  
+    }
+  }
+
+  const onReset = async () => {
+       
+    const url = `${API_BASE}/restro/sortBy`
+    const payload = {
+      'userid': "60dbf51098319623d40960c6",
+      'relevance': '',
+      'rating_high_to_low': '',
+      'rating_low_to_high': '',
+      'delivery_time': ''
+      }
+    try 
+      {
+      const res = await axios.post(url, payload)
+      route.params.onBack({sortByRestro:res?.data?.data?.restroNewArrayList});
+      navigate('NearMe')
+    
+    
+    } 
+    catch (error) 
+    {
+      console.log('Error',error);  
+    }
   }
 
   return (
@@ -177,13 +240,13 @@ function SortBy() {
                 flex: 1,
                 marginRight: Scale(10),
               }}>
-              <CustomButton title="Reset All" />
+              <CustomButton title="Reset All"  onSubmit={onReset} />
             </View>
             <View style={{flex: 1}}>
               <CustomButton
                 title="Apply"
                 isSecondary={true}
-                onSubmit={redirectToHome}
+                onSubmit={onSortBy}
               />
             </View>
           </View>

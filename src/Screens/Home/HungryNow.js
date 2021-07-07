@@ -5,7 +5,7 @@ import { Icon } from 'native-base';
 import {useSelector, useDispatch,connect} from 'react-redux'
 import {hungryNowListRequest,hungryNowListLoader} from '../../redux/actions'
 import { addToCart, subToCart } from '../../redux/actions/CartActions';
-
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
 
 function HungryNow(props) {
@@ -13,10 +13,10 @@ function HungryNow(props) {
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
-    
+    const  {setHungryNowListLoader} = useSelector((state) => state.Home);
     
     useEffect(() => {
-    
+        dispatch(hungryNowListLoader(true));
         dispatch(hungryNowListRequest())
      
       }, [])
@@ -66,10 +66,10 @@ function HungryNow(props) {
                 <Text style={styles.headingText}>1.5 km</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+                <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image source={{ uri: item?.image }}/>
+                       <Image source={ImagesPath.veg}/>
                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
                     </View>
                     <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }}>{item.description}</Text>
@@ -95,11 +95,11 @@ function HungryNow(props) {
                 
             </View>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+                <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image  source={{ uri: item?.image }}/>
-                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
+                    <Image source={ImagesPath.non_veg}/>
+                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
                     </View>
                     <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >{item.description}</Text>
                 </View>
@@ -131,6 +131,7 @@ function HungryNow(props) {
 
                         </View>
                         :null}
+                         <LoadWheel visible={setHungryNowListLoader} />
                 </ImageBackground>
            
         </View>

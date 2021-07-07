@@ -35,11 +35,11 @@ function NearMe(props) {
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
-  const [isLoading, setIsLoading] = useState(false)
   const couponResponse = useSelector((state) => state.Home.couponResponse)
 
   const [data, setdata] = React.useState({
     restroList: [],
+    isLoading: true,
   })
 
   const [search, setSearch] = React.useState('')
@@ -49,6 +49,7 @@ function NearMe(props) {
     const url = `${API_BASE}/restro/search`
     const payload = {
       searchKey: search,
+     
     }
     try {
       const res = await axios.post(url, payload)
@@ -87,17 +88,25 @@ function NearMe(props) {
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list successfully')
   }
-  const onBack = (res) => {
-    setdata({
-      ...data,
-      restroList: res.restro,
-    })
-  }
+  const onBack = res => {
+
+    const USERID = {
+      userid: user?._id,
+     }
+      setdata({
+        ...data, isLoading: false,
+        restroList: res.sortByRestro,
+        // restroList: res.restro,
+      })
+      
+   
+    
+  };
   const redirectToFilter = () => {
     navigate('Filter', {onBack: (data) => onBack(data)})
   }
   const redirectToSortBy = () => {
-    navigate('SortBy')
+    navigate("SortBy", { onBack: (data) => onBack(data)});
   }
   const redirectToNotification = () => {
     navigate('Notification')
@@ -116,7 +125,7 @@ function NearMe(props) {
           source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
-            <LoadWheel visible={isLoading} />
+          <LoadWheel visible={data.isLoading}/>
             <View
               style={{
                 flexDirection: 'row',
