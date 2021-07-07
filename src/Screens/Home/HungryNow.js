@@ -66,10 +66,10 @@ function HungryNow(props) {
                 <Text style={styles.headingText}>1.5 km</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+                <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image source={{ uri: item?.image }}/>
+                       <Image source={ImagesPath.veg}/>
                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
                     </View>
                     <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }}>{item.description}</Text>
@@ -95,11 +95,11 @@ function HungryNow(props) {
                 
             </View>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+                <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image  source={{ uri: item?.image }}/>
-                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}> Chichen Tikka</Text>
+                    <Image source={ImagesPath.non_veg}/>
+                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
                     </View>
                     <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >{item.description}</Text>
                 </View>

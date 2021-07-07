@@ -22,14 +22,16 @@ import {
 } from '../../redux/actions'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
-import { LoadWheel } from '../../CommonConfig/LoadWheel'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 
 function NearMe(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
   const user = useSelector((state) => state.Auth.user)
-  const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
+  const addFavouriteStatus = useSelector(
+    (state) => state.Home.addFavouriteStatus,
+  )
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
@@ -52,7 +54,6 @@ function NearMe(props) {
     try {
       const res = await axios.post(url, payload)
 
-      
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
@@ -70,7 +71,6 @@ function NearMe(props) {
   }, [search])
 
   useEffect(() => {
-    
     setTimeout(() => {
       dispatch(couponRequest())
     }, 5000)
@@ -81,15 +81,12 @@ function NearMe(props) {
   }
 
   const onFavorite = (item) => {
-
-    
     const data = {
       userid: user?._id,
       restro_id: item?._id,
-     
     }
-     dispatch(addfavouriteRequest(data))
-     alert('Added to favourite list successfully')
+    dispatch(addfavouriteRequest(data))
+    alert('Added to favourite list successfully')
   }
   const onBack = res => {
 
@@ -106,8 +103,7 @@ function NearMe(props) {
     
   };
   const redirectToFilter = () => {
-    
-    navigate("Filter", { onBack: (data) => onBack(data)});
+    navigate('Filter', {onBack: (data) => onBack(data)})
   }
   const redirectToSortBy = () => {
     navigate("SortBy", { onBack: (data) => onBack(data)});
@@ -119,11 +115,7 @@ function NearMe(props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-   
-      dispatch(offercardRequest())
-      
-     
-  
+    dispatch(offercardRequest())
   }, [])
 
   const renderItems = ({item}) => (
@@ -277,7 +269,7 @@ function NearMe(props) {
                 paddingVertical: Scale(5),
                 backgroundColor: 'green',
               }}>
-               {item?.price}
+              ${item?.price}
             </Text>
             <Text
               style={{
@@ -299,12 +291,15 @@ function NearMe(props) {
   const renderItem1 = ({item, index}) => (
     <View
       style={{
-        width: Scale(170),
+        width: Scale(185),
         height: Scale(55),
         marginVertical: Scale(15),
         alignSelf: 'center',
       }}>
-      <TouchableOpacity onPress={() => navigate('Coupon', {couponId: item?._id, couponDetails: item}) }>
+      <TouchableOpacity
+        onPress={() =>
+          navigate('Coupon', {couponId: item?._id, couponDetails: item})
+        }>
         <ImageBackground
           source={ImagesPath.coupon}
           style={{
@@ -411,13 +406,13 @@ function NearMe(props) {
             <Image source={ImagesPath.filter} style={styles.Filter} />
           </TouchableOpacity>
         </View>
-        
+
         <FlatList
           data={data?.restroList}
           renderItem={renderItems}
           keyExtractor={(item, i) => `${i}`}
           ListEmptyComponent={() => {
-            return <Text style={{textAlign:'center'}}>No data found</Text>
+            return <Text style={{textAlign: 'center'}}>No data found</Text>
           }}
         />
       </ScrollView>

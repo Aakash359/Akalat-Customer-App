@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View, StatusBar, Alert, Clipboard, LogBox} from 'react-native'
 import {Colors} from './CommonConfig'
-// import messaging from '@react-native-firebase/messaging';
-//yarn remove "@react-native-firebase/app"
 import SplashScreen from 'react-native-splash-screen'
 import NetInfo from '@react-native-community/netinfo'
 import DropdownAlert from 'react-native-dropdownalert'
