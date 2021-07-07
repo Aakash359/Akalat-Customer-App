@@ -13,6 +13,7 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCES'
 export const SIGNUP_FAILED = 'SIGNUP_FAILED'
 export const SET_SIGNUP_STATUS = 'SET_SIGNUP_STATUS'
 export const SIGNUP_LOGIN = 'SIGNUP_LOGIN'
+export const MAKE_SIGNUP_SUCCESS = 'MAKE_SIGNUP_SUCCESS'
 
 // =======>>   OTP-UP ACTIONS <<<<<<<=======
 export const OTP_REQUEST = 'OTP_REQUEST'

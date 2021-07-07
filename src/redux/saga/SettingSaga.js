@@ -43,6 +43,8 @@ import {
   setEditProfileLoader,
   setUserDetails,
   AddressListRequest,
+  makeSignUpSuccess,
+  signUpLogin,
 } from '../actions'
 
 // ====================== About US GET ======================
@@ -174,12 +176,13 @@ export const HelpSaga = function* HelpSaga({data}) {
 
 // ====================== Add Address  POST ======================
 export const AddAddressSaga = function* AddAddressSaga({data}) {
+  const {signUp, ...payload} = data
   //
   try {
     const response = yield call(Request, {
       url: '/addUserAddress',
       method: 'POST',
-      data,
+      data: payload,
     })
 
     if (response?.error) {
@@ -187,6 +190,9 @@ export const AddAddressSaga = function* AddAddressSaga({data}) {
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
     } else {
       yield put({type: ADDADDRESS_SUCCESS, payload: response})
+      if (signUp) {
+        yield put(signUpLogin())
+      }
     }
   } catch (e) {
     yield put({type: ADDADDRESS_FAILED, payload: e})

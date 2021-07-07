@@ -45,6 +45,7 @@ function Otp(props) {
         role: 'user',
         phone: phone,
         country_code: COUNTRY == 'IN' ? '91' : '971',
+        verification_status: 'true',
       }
 
       dispatch(OTPVerifyRequest(data))
@@ -60,7 +61,7 @@ function Otp(props) {
 
     navigate('Otp', data)
     dispatch(OTPRequest(data))
-    alert("OTP has been sent successfully")
+    alert('OTP has been sent successfully')
   }
   React.useEffect(() => {
     if (props?.otpSuccess) {
@@ -137,14 +138,18 @@ function Otp(props) {
                   onSubmit={onSubmit}
                   isSecondary={true}
                 />
-                <View  style={{flexDirection:'row' ,justifyContent:'center',}}>
-                  <Text style={styles.normalText1}>
-                    Didn't get the code?
-                  </Text>
-                  <TouchableOpacity  onPress={onPress}>
-                  <Text style={{color: Colors.DARK_RED ,justifyContent:'center',}}> Resend OTP</Text>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                  <Text style={styles.normalText1}>Didn't get the code?</Text>
+                  <TouchableOpacity onPress={onPress}>
+                    <Text
+                      style={{
+                        color: Colors.DARK_RED,
+                        justifyContent: 'center',
+                      }}>
+                      {' '}
+                      Resend OTP
+                    </Text>
                   </TouchableOpacity>
-                  
                 </View>
               </View>
             </ImageBackground>

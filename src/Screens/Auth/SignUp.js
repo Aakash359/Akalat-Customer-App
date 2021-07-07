@@ -104,10 +104,7 @@ function SignUp(props) {
   }, [])
 
   return (
-    <KeyboardAvoidingView
-      style={styles.keyboardStyle}
-      behavior={Platform.OS == 'android' ? '' : 'padding'}
-      enabled>
+    <KeyboardAvoidingView style={styles.keyboardStyle} enabled>
       <ImageBackground
         source={ImagesPath.background}
         style={styles.imageBachgroundStyle}>

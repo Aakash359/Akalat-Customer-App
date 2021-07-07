@@ -61,7 +61,7 @@ export default function AuthReducer(state = initialState, action) {
         ...state,
         loginStatus: true,
         SignStatus: false,
-        user: {...state.user, ...state.signupResponse?.data},
+        user: {...state.user, ...state.otpVerifyResponse?.data},
         signupResponse: null,
       }
     case SIGNUP_REQUEST:
@@ -80,7 +80,11 @@ export default function AuthReducer(state = initialState, action) {
       return {...state, OTPStatus: false, otpResponse: action.payload}
 
     case OTP_SUCCESS:
-      return {...state, OTPStatus: true, otpResponse: action.payload}
+      return {
+        ...state,
+        OTPStatus: true,
+        otpResponse: action.payload,
+      }
 
     case OTP_FAILED:
       return {...state, OTPStatus: false, otpResponse: action.payload}
@@ -118,6 +122,7 @@ export default function AuthReducer(state = initialState, action) {
         ...state,
         OTPVerifyStatus: true,
         otpVerifyResponse: action.payload,
+        signupResponse: action.payload,
       }
 
     case OTP_VERIFY_FAILED:
