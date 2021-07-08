@@ -119,6 +119,13 @@ export const AddressListRequest = (data) => {
     data,
   }
 }
+// =================Address List Loadar =================
+export const AddressListLoader = (data) => {
+  return {
+    type: SET_ADDRESS_LIST_LOADER,
+    data,
+  }
+}
 
 // =================Delete Address =================
 export const deleteAddressRequest = (data) => {

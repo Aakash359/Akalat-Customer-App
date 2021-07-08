@@ -8,9 +8,6 @@ import {
     SEARCH_REQUEST,
     SEARCH_SUCCESS,
     SEARCH_FAILED,
-    RESTRO_LIST_REQUEST,
-    RESTRO_LIST_SUCCESS,
-    RESTRO_LIST_FAILED,
     ADD_FAVOURITE_REQUEST,
     ADD_FAVOURITE_SUCCESS,
     ADD_FAVOURITE_FAILED,
@@ -35,8 +32,6 @@ import {
         couponResponse: {},
         searchResponse:{},
         searchStatus: false,
-        restroResponse: {},
-        restroStatus: false,
         addFavouriteResponse:{},
         addFavouriteStatus:false,
         orderDetailsResponse:{},
@@ -85,15 +80,6 @@ import {
             };
            case SEARCH_FAILED:
               return {...state, searchStatus:false, searchResponse: action.payload,         
-            };
-            case RESTRO_LIST_REQUEST:
-              return {...state, restroStatus:false, restroResponse: action.payload, 
-            };
-           case RESTRO_LIST_SUCCESS:
-              return {...state, restroStatus:true, restroResponse: action.payload,  
-            };
-           case RESTRO_LIST_FAILED:
-              return {...state, restroStatus:false, restroResponse: action.payload,         
             };
            case ADD_FAVOURITE_REQUEST:
               return {...state, addFavouriteStatus:false, addFavouriteResponse: action.payload, 

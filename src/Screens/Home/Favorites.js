@@ -93,16 +93,21 @@ function Favorites() {
             return (
                 
                 <Text style={{ alignSelf: 'center' }}>
-                  <LoadWheel visible={setFavouriteListLoader} />
+                  
                     You don't have any favourite list
                 </Text>
             )
         }}
         />
-        
+    
+      <LoadWheel visible={setFavouriteListLoader} />
+    
       </ImageBackground>
-      
+     
+     
     </View>
+   
+     
   );
 }
 export default Favorites;

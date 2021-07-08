@@ -39,7 +39,7 @@ function ManageAddress() {
 
     setTimeout(() => {
       dispatch(AddressListRequest(data))
-    }, 5000)
+    }, )
   }, [])
 
   const delAdd = () => {

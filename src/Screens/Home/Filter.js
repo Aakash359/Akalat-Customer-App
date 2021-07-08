@@ -52,6 +52,9 @@ function Filter() {
           try 
           {
           const res = await axios.post(url, payload)
+          console.log('====================================');
+          console.log();
+          console.log('====================================');
           route.params.onBack({restro:res?.data?.data?.restro});
           navigate('NearMe')
         

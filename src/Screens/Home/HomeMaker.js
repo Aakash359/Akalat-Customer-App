@@ -4,8 +4,7 @@ import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { Colors, Scale, ImagesPath ,Fonts} from '../../CommonConfig';
 import { FlatGrid } from 'react-native-super-grid';
-import { restroListRequest  } from '../../redux/actions'
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import axios from 'axios';
 import { API_BASE } from '../../apiServices/ApiService';
 import { addToCart, subToCart } from '../../redux/actions/CartActions';
@@ -13,8 +12,6 @@ import { addToCart, subToCart } from '../../redux/actions/CartActions';
 function HomeMaker(props) {
   const { navigate } = useNavigation();
   const navigation = useNavigation(); 
-  const restroResponse = useSelector((state) => state.Home.restroResponse); 
-  const [restroItems, setrestroItems] = React.useState(restroResponse?.data || []);
   const [check , setCheck] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const[addItem, SetAddItem] = useState(0);
@@ -58,22 +55,9 @@ function HomeMaker(props) {
   getRestoDetails()
  }, [])
 
-
-
-   
-
-  useEffect(() => {
-
-    setTimeout(() => {
-
-      dispatch(restroListRequest());
   
-    }, 1000);
-    
-   
-   },[]); 
 
-  const decrement = () => {
+const decrement = () => {
   if (addItem < 1)
   {
     SetAddItem(addItem);

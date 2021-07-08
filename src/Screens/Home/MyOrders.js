@@ -10,14 +10,13 @@ import {
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
-import {myOrderListRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {API_BASE} from '../../apiServices/ApiService'
 import {orderList} from '../../redux/actions/OrderAction'
 import moment from 'moment'
-
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 function MyOrders(props) {
   const [checked, setChecked] = useState(false)
   const {navigate} = useNavigation()
@@ -210,6 +209,7 @@ function MyOrders(props) {
             )
           }}
         />
+        {/* <LoadWheel visible={orderDetail.isLoading} /> */}
       </ImageBackground>
     </View>
   )
