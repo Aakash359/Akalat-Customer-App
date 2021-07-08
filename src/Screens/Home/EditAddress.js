@@ -63,9 +63,7 @@ function EditAddress(props) {
             getOneTimeLocation()
           } else {
           }
-        } catch (err) {
-          
-        }
+        } catch (err) {}
       }
     }
     requestLocationPermission()
@@ -109,15 +107,13 @@ function EditAddress(props) {
     } else {
       let lat = ''
       let lng = ''
-      
-      
-      
+
       Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
         .then((json) => {
           var location = json.results[0].geometry.location
           lat = parseFloat(location.lat)
           lng = parseFloat(location.lng)
-          
+
           const data = {
             address_type: activeTab,
             lng,
@@ -128,9 +124,9 @@ function EditAddress(props) {
             created_by: user?._id,
             _id: address?._id,
           }
-          
+
           dispatch(AddAddressRequest(data))
-          navigate('ManageAddress') 
+          navigate('ManageAddress')
         })
         .catch((error) => {
           const data = {
@@ -143,7 +139,7 @@ function EditAddress(props) {
             created_by: user?._id,
             _id: address?._id,
           }
-          
+
           dispatch(AddAddressRequest(data))
           navigate('ManageAddress')
         })

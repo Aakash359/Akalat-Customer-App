@@ -46,6 +46,7 @@ function Address() {
   const [area_name, setAreaName] = useState('')
   const [location, setLocation] = useState(null)
   const [currentAddress, setAddress] = useState('')
+  const user = useSelector((state) => state.Auth.signupResponse.data)
 
   const [addAddress, setaddAddress] = React.useState({
     addUserAddress: [],
@@ -60,9 +61,9 @@ function Address() {
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
-     
+      // Geolocation.requestAuthorization()
       getOneTimeLocation()
-     
+      // //subscribeLocationLocation();
     } else {
       try {
         const granted = await PermissionsAndroid.request(
@@ -76,13 +77,8 @@ function Address() {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           getOneTimeLocation()
         } else {
-          
-          
-          
         }
-      } catch (err) {
-        
-      }
+      } catch (err) {}
     }
   }
 
@@ -109,18 +105,14 @@ function Address() {
               '================================Flat no',
             )
             let addressComponent = json.results[1].formatted_address
-            
+
             setAddress(addressComponent)
           })
         },
-        (error) => {
-       },
+        (error) => {},
       )
-    } catch (error) {
-    }
+    } catch (error) {}
   }
-
-  
 
   const onSubmit = async () => {
     if (house_name_and_no == '') {
@@ -128,36 +120,19 @@ function Address() {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      let data = {
+      const data = {
         address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
-        house_name_and_no,
-        area_name,
-        nearby,
-        created_by: '6093b6eb8db4690de06c5c21',
+        house_name_and_no: house_name_and_no,
+        area_name: area_name,
+        nearby: nearby == '' ? 'null' : nearby,
+        created_by: user?._id,
         signUp: true,
       }
-
-        if(!nearby) {
-          data = {
-
-            address_type: activeTab,
-            lng: location?.latitude,
-            lat: location?.longitude,
-            house_name_and_no,
-            area_name,
-            created_by: '6093b6eb8db4690de06c5c21',
-            signUp: true,
-       }
-          
-
-        }
-      }
-
       dispatch(AddAddressRequest(data))
     }
-  
+  }
 
   return (
     <ImageBackground
@@ -316,30 +291,30 @@ const styles = StyleSheet.create({
   },
   forgotButton2: {
     color: Colors.WHITE,
-    fontWeight:'700'
+    fontWeight: '700',
   },
   forgotButton3: {
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
+    fontWeight: '700',
   },
   forgotButton: {
-    paddingHorizontal: Scale(25),
+    // backgroundColor:Colors.DARK_RED,
+    paddingHorizontal: Scale(30),
     paddingVertical: Scale(13),
     borderRadius: Scale(30),
     fontSize: Scale(16),
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
+    fontWeight: 'bold',
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
-    paddingHorizontal: Scale(25),
+    paddingHorizontal: Scale(30),
     paddingVertical: Scale(13),
     borderRadius: Scale(30),
     fontSize: Scale(16),
-    color: Colors.BORDERCOLOR,
-    fontWeight:'700'
+    color: Colors.WHITE,
   },
   logoStyle: {
     fontSize: Scale(25),

@@ -47,7 +47,6 @@ function AddNewAddress(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -61,16 +60,14 @@ function AddNewAddress(props) {
             getOneTimeLocation()
           } else {
           }
-        } catch (err) {
-          
-        }
+        } catch (err) {}
       }
     }
     requestLocationPermission()
     return () => {
       Geolocation.clearWatch()
     }
-  }, []) 
+  }, [])
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
@@ -101,22 +98,21 @@ function AddNewAddress(props) {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-     
-      let data = {
+      const data = {
         address_type:
-        activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         lng: location?.latitude,
         lat: location?.longitude,
-        house_name_and_no,
-        area_name,
-        nearby,
+        house_name_and_no: house_name_and_no,
+        area_name: area_name,
+        nearby: nearby == '' ? 'null' : nearby,
         created_by: user?._id,
       }
 
-      if(!nearby) {
+      if (!nearby) {
         data = {
           address_type:
-          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+            activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
@@ -156,12 +152,12 @@ function AddNewAddress(props) {
           behavior={Platform.OS == 'android' ? '' : 'padding'}
           enabled>
           <ScrollView indicatorStyle="white">
-            <Icon
+            {/* <Icon
               name="arrowleft"
               type="AntDesign"
               style={styles.logoStyle}
               onPress={() => navigation.goBack()}
-            />
+            /> */}
             <LocationInput
               placeholder="Current Location"
               autoCapitalize="none"
@@ -266,7 +262,6 @@ function AddNewAddress(props) {
               />
             </View>
           </ScrollView>
-         
         </KeyboardAvoidingView>
       </ImageBackground>
     </View>
@@ -291,8 +286,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
-    
+    fontWeight: '700',
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
@@ -301,18 +295,15 @@ const styles = StyleSheet.create({
     borderRadius: Scale(25),
     fontSize: Scale(16),
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
-    
+    fontWeight: '700',
   },
   forgotButton2: {
     color: Colors.WHITE,
-    fontWeight:'700'
-    
+    fontWeight: '700',
   },
   forgotButton3: {
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
-  
+    fontWeight: '700',
   },
 
   loginInputCont: {

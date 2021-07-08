@@ -41,15 +41,13 @@ function MyOrders(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      
+
       setCreateOrder({
         ...orderDetail,
         setOrderDetail: res?.data?.data,
         isLoading: false,
       })
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
   React.useEffect(() => {
     props?.getOrderList()
