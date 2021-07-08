@@ -48,7 +48,6 @@ function AddNewAddress(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -71,7 +70,7 @@ function AddNewAddress(props) {
     return () => {
       Geolocation.clearWatch()
     }
-  }, []) 
+  }, [])
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
@@ -102,15 +101,14 @@ function AddNewAddress(props) {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-     
       const data = {
         address_type:
-        activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
         area_name: area_name,
-        nearby: nearby==''? 'null': nearby,
+        nearby: nearby == '' ? 'null' : nearby,
         created_by: user?._id,
       }
       console.log('Data--', data)
@@ -145,12 +143,12 @@ function AddNewAddress(props) {
           behavior={Platform.OS == 'android' ? '' : 'padding'}
           enabled>
           <ScrollView indicatorStyle="white">
-            <Icon
+            {/* <Icon
               name="arrowleft"
               type="AntDesign"
               style={styles.logoStyle}
               onPress={() => navigation.goBack()}
-            />
+            /> */}
             <LocationInput
               placeholder="Current Location"
               autoCapitalize="none"
@@ -255,7 +253,6 @@ function AddNewAddress(props) {
               />
             </View>
           </ScrollView>
-         
         </KeyboardAvoidingView>
       </ImageBackground>
     </View>

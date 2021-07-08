@@ -57,7 +57,9 @@ function ManageAddress() {
     <View style={styles.cardStyle}>
       <View style={styles.cardHeader}>
         <View>
-          <Text style={styles.placeText}>{item?.address_type}</Text>
+          <Text style={([styles.placeText], {fontWeight: 'bold'})}>
+            {item?.address_type}
+          </Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text

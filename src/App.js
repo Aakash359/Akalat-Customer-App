@@ -29,7 +29,6 @@ export class App extends Component {
     })
   }
 
- 
   render() {
     return (
       <View style={{flex: 1, backgroundColor: Colors.WHITE}}>
@@ -37,7 +36,7 @@ export class App extends Component {
           <PersistGate persistor={Persistor}>
             <StatusBar
               translucent={true}
-              backgroundColor="#ffffff"
+              backgroundColor="#fff"
               barStyle="light-content"
             />
             <RootStack />
