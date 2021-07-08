@@ -35,7 +35,7 @@ function SavedCard() {
     <View style={styles.cardStyle}>
       <View style={styles.nameStyle}>
         <View>
-          <Text style={styles.nameText}>{item.name}</Text>
+          <Text style={[styles.nameText],{fontWeight:'700'}}>{item.name}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text
@@ -146,8 +146,9 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: Scale(16),
-    fontFamily: Fonts.Bold,
+    fontFamily: Fonts.Regular,
     color: Colors.BLACK,
+    
   },
   cardStyle: {
     width: '100%',

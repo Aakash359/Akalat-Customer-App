@@ -60,9 +60,9 @@ function Address() {
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
-      // Geolocation.requestAuthorization()
+     
       getOneTimeLocation()
-      // //subscribeLocationLocation();
+     
     } else {
       try {
         const granted = await PermissionsAndroid.request(
@@ -97,9 +97,6 @@ function Address() {
     try {
       Geolocation.getCurrentPosition(
         (position) => {
-          
-          
-          
           setLocation(position.coords)
 
           Geocoder.from(
@@ -117,15 +114,9 @@ function Address() {
           })
         },
         (error) => {
-          
-          
-          
-        },
+       },
       )
     } catch (error) {
-      
-      
-      
     }
   }
 
@@ -137,19 +128,36 @@ function Address() {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      const data = {
+      let data = {
         address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
-        house_name_and_no: house_name_and_no,
-        area_name: area_name,
-        nearby: nearby==''? 'null':nearby,
+        house_name_and_no,
+        area_name,
+        nearby,
         created_by: '6093b6eb8db4690de06c5c21',
         signUp: true,
       }
+
+        if(!nearby) {
+          data = {
+
+            address_type: activeTab,
+            lng: location?.latitude,
+            lat: location?.longitude,
+            house_name_and_no,
+            area_name,
+            created_by: '6093b6eb8db4690de06c5c21',
+            signUp: true,
+       }
+          
+
+        }
+      }
+
       dispatch(AddAddressRequest(data))
     }
-  }
+  
 
   return (
     <ImageBackground
@@ -308,12 +316,13 @@ const styles = StyleSheet.create({
   },
   forgotButton2: {
     color: Colors.WHITE,
+    fontWeight:'700'
   },
   forgotButton3: {
-    color: Colors.BLACK,
+    color: Colors.BORDERCOLOR,
+    fontWeight:'700'
   },
   forgotButton: {
-    // backgroundColor:Colors.DARK_RED,
     paddingHorizontal: Scale(25),
     paddingVertical: Scale(13),
     borderRadius: Scale(30),
@@ -321,6 +330,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
+    fontWeight:'700'
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
@@ -328,7 +338,8 @@ const styles = StyleSheet.create({
     paddingVertical: Scale(13),
     borderRadius: Scale(30),
     fontSize: Scale(16),
-    color: Colors.WHITE,
+    color: Colors.BORDERCOLOR,
+    fontWeight:'700'
   },
   logoStyle: {
     fontSize: Scale(25),

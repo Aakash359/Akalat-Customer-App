@@ -8,9 +8,6 @@ import {
     SEARCH_REQUEST,
     SEARCH_SUCCESS,
     SEARCH_FAILED,
-    RESTRO_LIST_REQUEST,
-    RESTRO_LIST_SUCCESS,
-    RESTRO_LIST_FAILED,
     ADD_FAVOURITE_REQUEST,
     ADD_FAVOURITE_SUCCESS,
     ADD_FAVOURITE_FAILED,
@@ -83,36 +80,6 @@ export const CouponSaga = function* CouponSaga({data}) {
     catch (e) {
         
         yield put({ type: COUPON_FAILED, payload: e });
-    }
-}
-
-//====================== Restro List POST ======================
-
-export const RestroListSaga = function* RestroListSaga({params}) {
-    let data = params
-    // 
-    try {
-        const response = yield call(Request, {
-            url: 'http://3.7.147.28:3327/api/v1/restro/listRestro',
-            method: 'POST',
-            data,
-          })
-          if (response?.data?.error == true){
-            yield put({ type: RESTRO_LIST_FAILED, payload: response?.data  });
-            global.dropDownAlertRef.alertWithType(
-              'error',
-              'Error',
-               response?.data?.message,
-            );
-          }
-       else{ 
-           yield put({ type: RESTRO_LIST_SUCCESS, payload: response });
-        }
-        
-    }
-    catch (e) {
-        
-        yield put({ type: RESTRO_LIST_FAILED, payload: e });
     }
 }
 
@@ -250,7 +217,6 @@ export function* homeSaga() {
     yield takeEvery(OFFER_CARD_REQUEST, HomeSaga);
     yield takeEvery(COUPON_REQUEST, CouponSaga);
     yield takeEvery(SEARCH_REQUEST, SearchSaga);
-    yield takeEvery(RESTRO_LIST_REQUEST, RestroListSaga);
     yield takeEvery(ADD_FAVOURITE_REQUEST, AddFavouriteSaga);
     yield takeEvery(ORDER_DETAILS_REQUEST, OrderDetailsSaga);
     yield takeEvery(HUNGRY_NOW_LIST_REQUEST, hungryNowListSaga);

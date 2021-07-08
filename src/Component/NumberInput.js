@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   textBox: {
     flex: 1,
     fontSize: Scale(16),
-    fontFamily: Font.Bold,
+    fontFamily: Font.Medium,
     fontWeight: '500',
     alignSelf: 'stretch',
     left: 15,

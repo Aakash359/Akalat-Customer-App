@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: Scale(22),
-        fontFamily: Fonts.Bold,
+        fontFamily: Fonts.Medium,
         color: Colors.BLACK,
         fontWeight:'bold',
         width: '80%',

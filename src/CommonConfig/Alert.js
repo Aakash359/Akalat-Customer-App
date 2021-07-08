@@ -32,7 +32,7 @@ export const Alert = ({
           <Text
             style={{
               fontSize: Scale(18),
-              fontFamily: Fonts.Bold,
+              fontFamily: Fonts.Regular,
               color: Colors.BLACK,
               width: '80%',
               textAlign: 'center',
