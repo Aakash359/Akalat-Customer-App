@@ -40,11 +40,8 @@ function Coupon(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      console.log('====================================')
-      console.log(res)
-      console.log('====================================')
-
-      if (res?.data?.data) {
+      
+     if (res?.data?.data) {
         setRestro({
           ...restro,
           restroList: res?.data?.data?.restroNewArrayList,
@@ -239,7 +236,7 @@ function Coupon(props) {
     </View>
   )
   const {couponDetails = {}} = props.route.params || {}
-  console.log('couponDetails', couponDetails)
+  
   // const {restroDetails: couDet} = list
   return (
     <View style={styles.container}>

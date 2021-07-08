@@ -42,14 +42,14 @@ function MyOrders(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      console.log(' Order Details data ', res)
+      
       setCreateOrder({
         ...orderDetail,
         setOrderDetail: res?.data?.data,
         isLoading: false,
       })
     } catch (error) {
-      console.log(error)
+      
     }
   }
   React.useEffect(() => {

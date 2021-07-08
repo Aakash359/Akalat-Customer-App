@@ -38,11 +38,11 @@ function Explore() {
     let Datatype = ''
     if(check==true){
       Datatype = 'restaurant'
-      console.log("Aakash", Datatype)
+      
     }
     else{
       Datatype = 'Dishes'
-      console.log("Aakash", Datatype)
+      
 
     }
 
@@ -62,9 +62,9 @@ function Explore() {
         restroList: res?.data?.data?.restro,
         isLoading: false,
       })
-      console.log('====================================');
-      console.log("Check", res?.data?.data?.restro);
-      console.log('====================================');
+      
+      
+      
     } catch (error) {}
   }
   const redirectToHomeMaker = (item) => {

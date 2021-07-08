@@ -64,7 +64,7 @@ function EditAddress(props) {
           } else {
           }
         } catch (err) {
-          console.warn(err)
+          
         }
       }
     }
@@ -109,15 +109,15 @@ function EditAddress(props) {
     } else {
       let lat = ''
       let lng = ''
-      console.log('====================================')
-      console.log('abcd')
-      console.log('====================================')
+      
+      
+      
       Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
         .then((json) => {
           var location = json.results[0].geometry.location
           lat = parseFloat(location.lat)
           lng = parseFloat(location.lng)
-          console.log('lat Na log ', lat, lag)
+          
           const data = {
             address_type: activeTab,
             lng,
@@ -128,7 +128,7 @@ function EditAddress(props) {
             created_by: user?._id,
             _id: address?._id,
           }
-          console.log('Data--', data)
+          
           dispatch(AddAddressRequest(data))
           navigate('ManageAddress') 
         })
@@ -143,7 +143,7 @@ function EditAddress(props) {
             created_by: user?._id,
             _id: address?._id,
           }
-          console.log('Data--', data)
+          
           dispatch(AddAddressRequest(data))
           navigate('ManageAddress')
         })

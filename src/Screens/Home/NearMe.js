@@ -94,9 +94,9 @@ function NearMe(props) {
       userid: user?._id,
      }
       setdata({
-        ...data, isLoading: false,
+        ...data, 
         restroList: res.sortByRestro,
-        // restroList: res.restro,
+        restroList: res.restro,
       })
       
    

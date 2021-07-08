@@ -80,7 +80,7 @@ function Otp(props) {
       {(insets) => (
         <KeyboardAvoidingView
           style={AuthStyle.keyboardAware}
-          behavior={Platform.OS == 'android' ? '' : 'padding'}
+          
           enabled>
           <ScrollView
             bounces={false}

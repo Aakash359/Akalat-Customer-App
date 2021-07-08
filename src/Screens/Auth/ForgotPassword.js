@@ -137,7 +137,7 @@ function ForgotPassword() {
                             withCallingCode
                             withEmoji
                             onSelect={ country=>{
-                                console.log("Country",country)
+                                
                                 const {cca2,callingCode} = country
                                 setCountryCode(cca2);
                                 setcallingCode(callingCode[0]);

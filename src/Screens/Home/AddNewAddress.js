@@ -102,25 +102,15 @@ function AddNewAddress(props) {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      let lat = ''
-      let lng = ''
-
-      Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
-        .then((json) => {
-          var location = json.results[0].geometry.location
-          lat = parseFloat(location.lat)
-          lng = parseFloat(location.lng)
-          console.log('lat Na log ', lat, lag)
-        })
-        .catch((error) => console.warn(error))
+     
       const data = {
         address_type:
-          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
         area_name: area_name,
-        nearby: nearby,
+        nearby: nearby==''? 'null': nearby,
         created_by: user?._id,
       }
       console.log('Data--', data)

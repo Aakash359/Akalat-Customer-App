@@ -24,8 +24,6 @@ export const homeStyle = StyleSheet.create({
     borderTopRightRadius: Scale(25),
     paddingHorizontal:Scale(25),
     paddingVertical:Scale(15),
-    //borderWidth: 1,
-    // borderColor: Color.ThemeColor,
     borderBottomWidth: 0,
   },
 });

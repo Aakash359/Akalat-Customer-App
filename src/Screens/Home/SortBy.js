@@ -8,7 +8,7 @@ import { useSelector} from 'react-redux';
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
 
-function SortBy() {
+function SortBy(props) {
   const [value, setActiveTab] = useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
@@ -17,9 +17,9 @@ function SortBy() {
   const [data, setdata] = React.useState({
     isLoading: true,
   })
-  console.log('====================================');
-  console.log("userid",user?._id);
-  console.log('====================================');
+  
+  
+  
 
   
   const [isEnabled, setIsEnabled] = useState(false)
@@ -27,7 +27,7 @@ function SortBy() {
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }
-
+  
   const onSortBy = async () => {
 
     
@@ -40,9 +40,9 @@ function SortBy() {
         'rating_low_to_high': value==2,
         'delivery_time': value==3
       }
-      console.log('====================================');
-      console.log(payload);
-      console.log('====================================');
+      
+      
+      
     try 
       {
       const res = await axios.post(url, payload)
@@ -53,9 +53,10 @@ function SortBy() {
     } 
     catch (error) 
     {
-      console.log('Error',error);  
+        
     }
   }
+
 
   const onReset = async () => {
        
@@ -77,7 +78,7 @@ function SortBy() {
     } 
     catch (error) 
     {
-      console.log('Error',error);  
+        
     }
   }
 

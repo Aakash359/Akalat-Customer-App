@@ -76,12 +76,12 @@ function Address() {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           getOneTimeLocation()
         } else {
-          console.log('====================================')
-          console.log(granted)
-          console.log('====================================')
+          
+          
+          
         }
       } catch (err) {
-        console.log(err)
+        
       }
     }
   }
@@ -97,9 +97,9 @@ function Address() {
     try {
       Geolocation.getCurrentPosition(
         (position) => {
-          console.log('====================================')
-          console.log(position)
-          console.log('====================================')
+          
+          
+          
           setLocation(position.coords)
 
           Geocoder.from(
@@ -112,26 +112,24 @@ function Address() {
               '================================Flat no',
             )
             let addressComponent = json.results[1].formatted_address
-            console.log(addressComponent, 'addressComponent')
+            
             setAddress(addressComponent)
           })
         },
         (error) => {
-          console.log('====================================')
-          console.log(error)
-          console.log('====================================')
+          
+          
+          
         },
       )
     } catch (error) {
-      console.log('====================================')
-      console.log(error)
-      console.log('====================================')
+      
+      
+      
     }
   }
 
-  const redirectToHome = () => {
-    // navigate('HomeStack')
-  }
+  
 
   const onSubmit = async () => {
     if (house_name_and_no == '') {
@@ -145,7 +143,7 @@ function Address() {
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
         area_name: area_name,
-        nearby: nearby,
+        nearby: nearby==''? 'null':nearby,
         created_by: '6093b6eb8db4690de06c5c21',
         signUp: true,
       }

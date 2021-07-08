@@ -33,7 +33,7 @@ function Filter() {
         setIsEnabled(!isEnabled)
     }
 
-    console.log("IsEnabled===>",isEnabled)
+   
 
     const onFilter = async () => {
         var restro_type = '';
@@ -47,18 +47,19 @@ function Filter() {
             
             'rating_from_user': value+"",
             'restaurent_type': restro_type,
+            'type': 'filter'
           }
-        try 
+          try 
           {
           const res = await axios.post(url, payload)
           route.params.onBack({restro:res?.data?.data?.restro});
-          navigate('Home')
+          navigate('NearMe')
         
         
         } 
         catch (error) 
         {
-          console.log('Error',error);  
+            
         }
       }
 
@@ -79,7 +80,7 @@ function Filter() {
         } 
         catch (error) 
         {
-          console.log('Error',error);  
+            
         }
       }
     
@@ -148,7 +149,7 @@ function Filter() {
                 </View>
                 <View
                     style={{
-                        marginTop: Scale(25),
+                        marginTop: Scale(25), 
                         justifyContent: 'center',
                         height: Scale(100),
                         paddingVertical: Scale(20),

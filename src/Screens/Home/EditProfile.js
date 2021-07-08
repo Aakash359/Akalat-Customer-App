@@ -7,13 +7,13 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
-  ActivityIndicator,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {CustomButton, FormInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {useDispatch, connect} from 'react-redux'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {
   EditProfileRequest,
 } from '../../redux/actions'
@@ -119,7 +119,7 @@ function Profile(props) {
             />
             <View style={{marginTop: Scale(20)}}>
               {props?.editProfileLoader ? (
-                <ActivityIndicator color={Colors.APPCOLOR} />
+                <LoadWheel visible={props?.editProfileLoader} />
               ) : (
                 <CustomButton
                   title="Save"

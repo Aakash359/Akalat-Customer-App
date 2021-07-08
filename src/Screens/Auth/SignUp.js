@@ -157,6 +157,7 @@ function SignUp(props) {
                 }}
                 containerStyle={{
                   width: Scale(80),
+                  
                   borderWidth: 0,
                   fontWeight: 'bold',
                   backgroundColor: Colors.TRANSPARENT,
@@ -256,6 +257,7 @@ const styles = StyleSheet.create({
   textInputView: {
     flexDirection: 'row',
     marginVertical: Scale(8),
+    
     height: Scale(50),
     fontSize: Scale(16),
     color: Colors.BLACK,
