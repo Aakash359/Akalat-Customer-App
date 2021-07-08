@@ -301,7 +301,6 @@ const styles = StyleSheet.create({
     marginTop: Scale(10),
   },
   forgotButton: {
-    // backgroundColor:Colors.DARK_RED,
     paddingHorizontal: Scale(30),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
@@ -309,6 +308,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
+    fontWeight:'700'
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
@@ -316,18 +316,20 @@ const styles = StyleSheet.create({
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
     fontSize: Scale(16),
-    color: Colors.WHITE,
+    color: Colors.BORDERCOLOR,
+    fontWeight:'700'
   },
   forgotButton2: {
     color: Colors.WHITE,
+    fontWeight:'700'
   },
   forgotButton3: {
-    color: Colors.BLACK,
+    color: Colors.BORDERCOLOR,
+    fontWeight:'700'
   },
 
   loginInputCont: {
     flex: 1,
-    //paddingTop: Scale(-10),
     paddingBottom: Scale(10),
     paddingHorizontal: Scale(30),
     borderTopLeftRadius: Scale(25),

@@ -110,6 +110,10 @@ function Card(props) {
   }
 
   const {cartRestroDetails, cartProducts} = props
+
+  console.log('====================================');
+  console.log("Aakash====>", cartRestroDetails);
+  console.log('====================================');
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
     0,
@@ -215,7 +219,7 @@ function Card(props) {
               },
             ]}>
             <View style={{flexDirection: 'row'}}>
-              <Image source={ImagesPath.reset} style={styles.backgroundStyle} />
+            <Image source={{uri: cartRestroDetails?.building_front_img}}style={styles.backgroundStyle} />
               <View>
                 <Text style={styles.primaryText2}>
                   {cartRestroDetails?.restro_name}
@@ -281,7 +285,7 @@ function Card(props) {
               onChangeText={(instruction) => props.setInstruction(instruction)}
               height={100}
               style={{paddingTop: 10}}
-              // maxLength={30}
+    
             />
           </View>
           <View
@@ -337,7 +341,7 @@ function Card(props) {
                 height: Scale(330),
               },
             ]}>
-            <Text style={styles.primaryText}>
+            <Text style={[styles.primaryText,{marginLeft:Scale(-5)}]}>
               {cartRestroDetails?.restro_name}
             </Text>
             <View style={[styles.bottomContainer, {marginTop: Scale(20)}]}>

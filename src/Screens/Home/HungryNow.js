@@ -60,7 +60,7 @@ function HungryNow(props) {
                          let inCart = cartProducts?.find(i => i?._id === item?._id)
                             return(
 
-                                <View style={styles.cardStyle}>
+        <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
                 <Text style={styles.headingText}>{item.restro_name}</Text>
                 <Text style={styles.headingText}>1.5 km</Text>
@@ -94,42 +94,24 @@ function HungryNow(props) {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between',height:Scale(2), marginVertical:Scale(15) ,backgroundColor:"#E0E0E0"}}>
                 
             </View>
-            <View style={{ flexDirection: 'row' }}>
-                <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
-                <View >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={ImagesPath.non_veg}/>
-                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
-                    </View>
-                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }} >{item.description}</Text>
-                </View>
             </View>
-            <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>$ {item.price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal', textDecorationLine:'line-through', }}>$100.00</Text>
-                </Text>
-                <View style={styles.addButton}>
-                <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
-              </View></View>
-              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>
-       
-        </View>
 
                             )
                         }}
                     />
-                    {cartProducts?.length ?
-                         <View style = {{height:'15%',paddingHorizontal:'5%',flexDirection:'row',padding:10, justifyContent:'space-between', maxHeight:'15%',backgroundColor: Colors.APPCOLOR}}>
-                            <View style ={{alignItems:'flex-start'}}>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Regular }}>{`$ ${totalCartAmt}`}</Text>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Regular }}>{cartProducts?.length +' items in cart'}</Text>
-                            </View>
-                             <TouchableOpacity onPress={() => props.navigation.navigate('Card')}
-                              
-                               style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(5) }}>
-                                <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go To Cart'}</Text>
-                            </TouchableOpacity>
+                        {cartProducts?.length ?
+                            <View style = {{height:'15%',paddingHorizontal:'5%',flexDirection:'row',padding:10, justifyContent:'space-between', maxHeight:'15%',backgroundColor: Colors.APPCOLOR}}>
+                                <View style ={{alignItems:'flex-start'}}>
+                                    <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Regular }}>{`$ ${totalCartAmt}`}</Text>
+                                    <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Regular }}>{cartProducts?.length +' items in cart'}</Text>
+                                </View>
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Card')}
+                                
+                                style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(5) }}>
+                                    <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go To Cart'}</Text>
+                                </TouchableOpacity>
 
-                        </View>
+                            </View>
                         :null}
                          <LoadWheel visible={setHungryNowListLoader} />
                 </ImageBackground>
@@ -201,7 +183,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         backgroundColor: Colors.APPCOLOR,
-        // paddingVertical: Scale(35),
         paddingHorizontal: Scale(25),
     },
     location: {
@@ -214,7 +195,7 @@ const styles = StyleSheet.create({
     cardStyle: {
         elevation: 3,
         shadowOpacity: 3,
-        height: Scale(480),
+        height: Scale(250),
         width: '90%',
         backgroundColor: '#ffffff',
         borderWidth: 2,

@@ -20,6 +20,7 @@ import {
   ADDRESSLIST_REQUEST,
   ADDRESSLIST_SUCCESS,
   ADDRESSLIST_FAILED,
+  SET_ADDRESS_LIST_LOADER,
   MYORDER_LIST_REQUEST,
   MYORDER_LIST_SUCCESS,
   MYORDER_LIST_FAILED,
@@ -54,6 +55,7 @@ const initialState = {
   addAddressResponse: {},
   addAddressStatus: false,
   addressListResponse: {},
+  setaddressListLoader: false,
   addressListStatus: false,
   editProfileResponse: {},
   editProfileStatus: false,
@@ -69,6 +71,7 @@ const initialState = {
   setFavouriteListLoader: false,
   changePasswordResponse: {},
   changePasswordStatus: false,
+  
 }
 
 export default function SettingReducer(state = initialState, action) {
@@ -167,6 +170,8 @@ export default function SettingReducer(state = initialState, action) {
         addressListStatus: false,
         addressListResponse: action.payload,
       }
+    case SET_ADDRESS_LIST_LOADER:
+      return {...state, setaddressListLoader: action.payload}
     case EDIT_PROFILE_REQUEST:
       return {
         ...state,

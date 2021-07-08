@@ -37,7 +37,6 @@ function AddNewAddress(props) {
   const [currentAddress, setAddress] = useState('')
   const [house_name_and_no, setHouseName] = useState('')
   const [area_name, setAreaName] = useState('')
-  const [id, setid] = useState(props)
   const [nearby, setNearby] = useState('')
   const addAddressResponse = useSelector((state) => state.Setting)
   const user = useSelector((state) => state.Auth.user)
@@ -63,7 +62,7 @@ function AddNewAddress(props) {
           } else {
           }
         } catch (err) {
-          console.warn(err)
+          
         }
       }
     }
@@ -103,17 +102,29 @@ function AddNewAddress(props) {
       alert('Please enter area')
     } else {
      
-      const data = {
+      let data = {
         address_type:
         activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         lng: location?.latitude,
         lat: location?.longitude,
-        house_name_and_no: house_name_and_no,
-        area_name: area_name,
-        nearby: nearby==''? 'null': nearby,
+        house_name_and_no,
+        area_name,
+        nearby,
         created_by: user?._id,
       }
-      console.log('Data--', data)
+
+      if(!nearby) {
+        data = {
+          address_type:
+          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+          lng: location?.latitude,
+          lat: location?.longitude,
+          house_name_and_no,
+          area_name,
+          created_by: user?._id,
+        }
+      }
+
       dispatch(AddAddressRequest(data))
       navigate('ManageAddress')
 
@@ -280,6 +291,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
+    fontWeight:'700'
+    
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
@@ -287,18 +300,23 @@ const styles = StyleSheet.create({
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
     fontSize: Scale(16),
-    color: Colors.WHITE,
+    color: Colors.BORDERCOLOR,
+    fontWeight:'700'
+    
   },
   forgotButton2: {
     color: Colors.WHITE,
+    fontWeight:'700'
+    
   },
   forgotButton3: {
-    color: Colors.BLACK,
+    color: Colors.BORDERCOLOR,
+    fontWeight:'700'
+  
   },
 
   loginInputCont: {
     flex: 1,
-    //paddingTop: Scale(-10),
     paddingBottom: Scale(10),
     paddingHorizontal: Scale(30),
     borderTopLeftRadius: Scale(25),

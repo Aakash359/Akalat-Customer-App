@@ -17,9 +17,9 @@ function SortBy(props) {
   const [data, setdata] = React.useState({
     isLoading: true,
   })
-  
-  
-  
+  console.log('====================================');
+  console.log("userid",user?._id);
+  console.log('====================================');
 
   
   const [isEnabled, setIsEnabled] = useState(false)
@@ -40,9 +40,9 @@ function SortBy(props) {
         'rating_low_to_high': value==2,
         'delivery_time': value==3
       }
-      
-      
-      
+      console.log('====================================');
+      console.log(payload);
+      console.log('====================================');
     try 
       {
       const res = await axios.post(url, payload)
@@ -53,7 +53,7 @@ function SortBy(props) {
     } 
     catch (error) 
     {
-        
+      console.log('Error',error);  
     }
   }
 
@@ -78,7 +78,7 @@ function SortBy(props) {
     } 
     catch (error) 
     {
-        
+      console.log('Error',error);  
     }
   }
 

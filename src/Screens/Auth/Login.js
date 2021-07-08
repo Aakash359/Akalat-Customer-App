@@ -12,6 +12,7 @@ import {useNavigation, CommonActions} from '@react-navigation/native'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
 import {FormInput, CustomButton, NumberInput} from '../../Component'
 import {Icon} from 'native-base'
+import ModalDropdown from 'react-native-modal-dropdown'
 import {useSelector, useDispatch} from 'react-redux'
 import {
   loginRequest,
@@ -19,7 +20,7 @@ import {
   countryListRequest,
 } from '../../redux/actions'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
-import CountryPicker from 'react-native-country-picker-modal'
+import CountryPicker, { CountryList } from 'react-native-country-picker-modal'
 import DropDownPicker from 'react-native-dropdown-picker'
 
 function Login(props) {
@@ -32,7 +33,7 @@ function Login(props) {
     (state) => state.Auth.counrtryListResponse,
   )
   const countryList = counrtryListResponse?.data || []
-  console.log('Aakash===>', countryList)
+  console.log('Aakash===>', countryList?.[0]?.dial_code)
   const [phone, setphone] = useState('')
   const [password, setpassword] = useState('')
   const [open, setOpen] = useState(false)
@@ -75,22 +76,7 @@ function Login(props) {
 
   useEffect(() => {
     dispatch(countryListRequest())
-    let codes = []
-    let countries = [
-      {
-        lable1: '91',
-        value1: '21',
-      },
-    ]
-    for (let i = 0; i < countryList.length; i++) {
-      let country_code = {
-        label: countryList[i].dial_code,
-        value: countryList[i].dial_code,
-      }
-      codes.push(country_code)
-      setDialCodes(codes)
-      console.log('Dialcode======>', dial_codes)
-    }
+    
   }, [])
 
   const redirectToForgotPassword = () => {
@@ -122,8 +108,11 @@ function Login(props) {
 
             <Text style={styles.normalText}>Welcome back</Text>
             <Text style={styles.mobile}>Mobile Number</Text>
+            <Text style={{color:'red',height:10,width:10}}>
+                { countryList.dial_codes}
+              </Text>
             <View style={styles.textInputView}>
-              <DropDownPicker
+              {/* <DropDownPicker
                 placeholder={'+92'}
                 value={value}
                 open={open}
@@ -150,7 +139,22 @@ function Login(props) {
                   backgroundColor: Colors.TRANSPARENT,
                   alignSelf: 'center',
                 }}
-              />
+              /> */}
+              
+              <ModalDropdown 
+              options={countryList?.[0]?.dial_code}
+              onChangeItem={(item) => console.log(item)}
+              defaultIndex={0}
+              defaultValue={countryList.dial_code || '+91'}
+              style={styles.modal}
+              textStyle={styles.modalText}
+              dropdownStyle={styles.modalDropDown}
+              dropdownTextStyle={styles.modalDropDownText}
+              dropdownTextHighlightStyle={
+                  styles.modalDropDownHighlightedText
+              }
+              >
+              </ModalDropdown>
               <TextInput
                 style={styles.textInputContainer}
                 value={phone}
@@ -220,6 +224,10 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     justifyContent: 'center',
     alignSelf: 'center',
+    width:Scale(280),
+    height: Scale(50),
+    paddingHorizontal:Scale(10),
+    
   },
 
   imageBachgroundStyle: {
@@ -260,4 +268,28 @@ const styles = StyleSheet.create({
     marginTop: Scale(5),
     marginLeft: Scale(2),
   },
+  modal: {
+    justifyContent:'center',
+    backgroundColor: Colors.TRANSPARENT,
+    maxWidth: Scale(100),
+},
+modalText: {
+  color: Colors.BLACK,
+  fontSize: Scale(14),
+  marginLeft:Scale(10),
+  fontWeight:'500'
+},
+modalDropDown: {
+  backgroundColor: Colors.WHITE,
+  overflow: 'hidden',
+  marginTop: Scale(-30),
+  
+  
+},
+modalDropDownText: {
+  backgroundColor: Colors.TRANSPARENT,
+  color: Colors.BLACK,
+  fontSize: Scale(14),
+  paddingHorizontal: Scale(15),
+},
 })

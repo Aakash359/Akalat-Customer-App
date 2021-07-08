@@ -25,14 +25,14 @@ export const AuthStyle = StyleSheet.create({
   languateHeaderText: {
     fontSize: Scale(35),
     color: Colors.BLACK,
-    fontFamily: Fonts.Bold,
+    fontFamily: Fonts.Medium,
     fontWeight:'bold',
     marginLeft: Scale(40),
   },
   languateHeaderText2: {
     fontSize: Scale(35),
     color: Colors.APPCOLOR,
-    fontFamily: Fonts.Bold,
+    fontFamily: Fonts.Medium,
     marginLeft: Scale(30),
   },
   languageTouchable: {

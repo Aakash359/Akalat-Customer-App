@@ -21,7 +21,7 @@ import {
   addfavouriteRequest,
   couponRequest,
 } from '../../redux/actions'
-
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import axios from 'axios'
 
 function Coupon(props) {
@@ -108,6 +108,7 @@ function Coupon(props) {
         <ImageBackground
           source={{uri: item?.profile_image}}
           style={styles.backgroundStyle}>
+           
           <View style={{justifyContent: 'flex-end', flex: 1}}>
             <View
               style={{
@@ -278,6 +279,7 @@ function Coupon(props) {
               </TouchableOpacity>
             </View>
             <FlatList data={restro?.restroList} renderItem={renderItems} />
+            <LoadWheel visible={restro.isLoading}/>
           </ScrollView>
         </ImageBackground>
       </ImageBackground>

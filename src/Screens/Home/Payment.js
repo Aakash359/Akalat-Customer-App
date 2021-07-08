@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
-import {FormArea, CustomButton} from '../../Component'
+import {CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {connect} from 'react-redux'
 import {createOrder} from '../../redux/actions/CartActions'
