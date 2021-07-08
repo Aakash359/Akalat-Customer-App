@@ -15,7 +15,7 @@ function AboutUs() {
    
 
      const data = aboutUsResponse
-      console.log("PriVcyy===>",JSON.stringify(data))
+      
        useEffect(() => {
          dispatch(AboutUsRequest());
         },[]); 

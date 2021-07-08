@@ -9,6 +9,7 @@ import {
   Image,
   KeyboardAvoidingView,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {
@@ -75,12 +76,12 @@ function Address() {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           getOneTimeLocation()
         } else {
-          console.log('====================================')
-          console.log(granted)
-          console.log('====================================')
+          
+          
+          
         }
       } catch (err) {
-        console.log(err)
+        
       }
     }
   }
@@ -96,9 +97,9 @@ function Address() {
     try {
       Geolocation.getCurrentPosition(
         (position) => {
-          console.log('====================================')
-          console.log(position)
-          console.log('====================================')
+          
+          
+          
           setLocation(position.coords)
 
           Geocoder.from(
@@ -111,26 +112,24 @@ function Address() {
               '================================Flat no',
             )
             let addressComponent = json.results[1].formatted_address
-            console.log(addressComponent, 'addressComponent')
+            
             setAddress(addressComponent)
           })
         },
         (error) => {
-          console.log('====================================')
-          console.log(error)
-          console.log('====================================')
+          
+          
+          
         },
       )
     } catch (error) {
-      console.log('====================================')
-      console.log(error)
-      console.log('====================================')
+      
+      
+      
     }
   }
 
-  const redirectToHome = () => {
-    // navigate('HomeStack')
-  }
+  
 
   const onSubmit = async () => {
     if (house_name_and_no == '') {
@@ -138,33 +137,17 @@ function Address() {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      let lat = ''
-      let lng = ''
-
-      await Geocoder.from([
-        {house_name_and_no} + ' ',
-        {area_name} + '',
-        {nearby},
-      ])
-        .then((json) => {
-          var location = json.results[0].geometry.location
-          lat = parseFloat(location.lat)
-          lng = parseFloat(location.lng)
-          console.log('lat Na log ', lat, lag)
-        })
-        .catch((error) => console.warn(error))
       const data = {
         address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
         area_name: area_name,
-        nearby: nearby==''? undefined :nearby,
+        nearby: nearby==''? 'null':nearby,
         created_by: '6093b6eb8db4690de06c5c21',
+        signUp: true,
       }
-      console.log('Data--', data)
       dispatch(AddAddressRequest(data))
-      navigate('NearMe')
     }
   }
 
@@ -230,33 +213,57 @@ function Address() {
                 alignItems: 'center',
                 marginTop: Scale(10),
               }}>
-              <Text
-                onPress={() => setActiveTab('HOME')}
-                style={
-                  activeTab == 'HOME'
-                    ? styles.forgotButton1
-                    : styles.forgotButton
-                }>
-                Home
-              </Text>
-              <Text
-                onPress={() => setActiveTab('WORK')}
-                style={
-                  activeTab == 'WORK'
-                    ? styles.forgotButton1
-                    : styles.forgotButton
-                }>
-                Work
-              </Text>
-              <Text
-                onPress={() => setActiveTab('OTHER')}
-                style={
-                  activeTab == 'OTHER'
-                    ? styles.forgotButton1
-                    : styles.forgotButton
-                }>
-                Other
-              </Text>
+              <TouchableOpacity onPress={() => setActiveTab('HOME')}>
+                <View
+                  style={
+                    activeTab == 'HOME'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'HOME'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Home
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab('WORK')}>
+                <View
+                  style={
+                    activeTab == 'WORK'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'WORK'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Work
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab('OTHER')}>
+                <View
+                  style={
+                    activeTab == 'OTHER'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'OTHER'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Other
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={{marginTop: Scale(10)}}>
               <CustomButton
@@ -298,6 +305,12 @@ const styles = StyleSheet.create({
   imageBachgroundStyle: {
     height: '100%',
     width: '100%',
+  },
+  forgotButton2: {
+    color: Colors.WHITE,
+  },
+  forgotButton3: {
+    color: Colors.BLACK,
   },
   forgotButton: {
     // backgroundColor:Colors.DARK_RED,

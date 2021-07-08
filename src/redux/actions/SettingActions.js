@@ -18,6 +18,7 @@ import {
   EDIT_PROFILE_FAILED,
   SET_EDIT_PROFILE_STATUS,
   DELETE_ADDRESS_FAILED,
+  MAKE_SIGNUP_SUCCESS,
 } from '../Types/type'
 
 // =================About Us GET REQUEST =================
@@ -157,3 +158,8 @@ export const favouriteListRequest = (data) => {
 export const favouriteListLoader = (data) => {
   return {type: SET_FAVOURITE_LIST_LOADER, data}
 }
+
+export const makeSignUpSuccess = (payload) => ({
+  type: MAKE_SIGNUP_SUCCESS,
+  payload,
+})

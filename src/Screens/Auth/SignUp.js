@@ -104,9 +104,7 @@ function SignUp(props) {
   }, [])
 
   return (
-    <KeyboardAvoidingView
-      style={styles.keyboardStyle}
-      enabled>
+    <KeyboardAvoidingView style={styles.keyboardStyle} enabled>
       <ImageBackground
         source={ImagesPath.background}
         style={styles.imageBachgroundStyle}>

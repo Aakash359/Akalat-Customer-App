@@ -69,7 +69,7 @@ function Rating() {
         } 
         catch (error) 
         {
-          console.log('Error',error);  
+            
         }
       }
 

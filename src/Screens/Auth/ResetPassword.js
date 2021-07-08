@@ -66,7 +66,7 @@ function ResetPassword(props) {
     }
   }
 
-  console.log(props)
+  
 
   return (
     <SafeAreaInsetsContext.Consumer>

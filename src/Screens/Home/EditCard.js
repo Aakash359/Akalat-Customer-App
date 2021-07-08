@@ -52,7 +52,7 @@ function EditCard() {
           } else {
           }
         } catch (err) {
-          console.warn(err)
+          
         }
       }
     }
@@ -82,7 +82,7 @@ function EditCard() {
               json.results[0].address_components[1].long_name +
               ' ' +
               json.results[0].address_components[2].long_name
-            console.log(addressComponent, 'addressComponent')
+            
             setAddress(addressComponent)
           },
         )

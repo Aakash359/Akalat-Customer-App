@@ -31,7 +31,7 @@ function Settings() {
 
   const Userid = signupResponse?.user?._id
 
-  console.log('LogOutUserID', Userid)
+  
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }

@@ -43,7 +43,7 @@ export const SignUpSaga = function* SignUpSaga({params}) {
       yield put({type: SIGNUP_SUCCESS, payload: response})
       yield put({type: LOADER_REQUEST, payload: false})
       yield put(
-        OTPRequest({phone: data?.phone, role: 'customer', country_code: '91'}),
+        OTPRequest({phone: data?.phone, role: 'user', country_code: '91'}),
       )
     }
   } catch (e) {

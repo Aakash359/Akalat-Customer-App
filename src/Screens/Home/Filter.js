@@ -49,25 +49,17 @@ function Filter() {
             'restaurent_type': restro_type,
             'type': 'filter'
           }
-          console.log('====================================');
-          console.log("Aakash===>",payload);
-          console.log('====================================');
-         
-        try 
+          try 
           {
           const res = await axios.post(url, payload)
           route.params.onBack({restro:res?.data?.data?.restro});
-        console.log('====================================');
-        console.log("Aakash===>",res?.data?.data?.restro);
-        console.log('====================================');
-       
           navigate('NearMe')
         
         
         } 
         catch (error) 
         {
-          console.log('Error',error);  
+            
         }
       }
 
@@ -88,7 +80,7 @@ function Filter() {
         } 
         catch (error) 
         {
-          console.log('Error',error);  
+            
         }
       }
     

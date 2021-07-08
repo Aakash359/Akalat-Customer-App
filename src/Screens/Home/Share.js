@@ -25,24 +25,24 @@ function ShareScreen() {
   }
 
   const shareApp = async (social) => {
-    console.log('====================================')
-    console.log(Share)
-    console.log('====================================')
+    
+    
+    
     const shareOptions = {
       title: 'Share via',
       message: 'some message',
       social,
     }
 
-    console.log('====================================')
-    console.log(shareOptions)
-    console.log('====================================')
+    
+    
+    
 
     try {
       const shareResponse = await Share.shareSingle(shareOptions)
-      console.log('====================================')
-      console.log(shareResponse)
-      console.log('====================================')
+      
+      
+      
       if (!shareResponse?.success) {
         global.dropDownAlertRef.alertWithType('error', 'Error', 'App not found')
       }

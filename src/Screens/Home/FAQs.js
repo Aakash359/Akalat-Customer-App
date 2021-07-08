@@ -16,11 +16,6 @@ function FAQs() {
     const faqResponse = useSelector((state) => state.Setting.faqResponse);  
     const [items, setItems] = useState(faqResponse?.data?.faq || []);
 
-    
-    
-    
-   
-   
     useEffect(() => {
       setTimeout(() => {
 
