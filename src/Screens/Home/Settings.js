@@ -31,7 +31,6 @@ function Settings() {
 
   const Userid = signupResponse?.user?._id
 
-  
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }

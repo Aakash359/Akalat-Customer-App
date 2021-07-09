@@ -343,7 +343,6 @@ const styles = StyleSheet.create({
   },
   inActiveStyle: {
     width: Scale(90),
-    paddingVertical: 10,
     borderRadius: Scale(20),
     textAlignVertical: 'center',
     textAlign: 'center',

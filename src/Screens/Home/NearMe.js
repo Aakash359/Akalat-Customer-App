@@ -10,18 +10,19 @@ import {
   Image,
   ImageBackground,
   Modal,
-  Dimensions
+  Switch,
+  Dimensions,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
+import Slider from '@react-native-community/slider'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {
   offercardRequest,
   addfavouriteRequest,
   couponRequest,
-  
 } from '../../redux/actions'
 import {CustomButton} from '../../Component'
 import {API_BASE} from '../../apiServices/ApiService'
@@ -30,11 +31,22 @@ import {LoadWheel} from '../../CommonConfig/LoadWheel'
 
 function NearMe(props) {
   const {navigate} = useNavigation()
-  const [value, setActiveTab] = useState(null)
+  const [activeTab, setActiveTab] = useState(null)
   const navigation = useNavigation()
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
   const user = useSelector((state) => state.Auth.user)
   const [modal, setModal] = React.useState(false)
+  const [modal2, setModal2] = React.useState(false)
+  const [value, setValue] = useState()
+  const [value1, setValue1] = useState()
+
+  const route = useRoute()
+
+  const [isEnabled, setIsEnabled] = useState()
+
+  const setCheckedSwitch = () => {
+    setIsEnabled(!isEnabled)
+  }
   const addFavouriteStatus = useSelector(
     (state) => state.Home.addFavouriteStatus,
   )
@@ -55,7 +67,6 @@ function NearMe(props) {
     const url = `${API_BASE}/restro/search`
     const payload = {
       searchKey: search,
-     
     }
     try {
       const res = await axios.post(url, payload)
@@ -86,6 +97,42 @@ function NearMe(props) {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
 
+  const onFilter = async () => {
+    var restro_type = ''
+    if (isEnabled) {
+      restro_type = 'veg_and_non_veg'
+    } else {
+      restro_type = 'veg'
+    }
+    const url = `${API_BASE}/restro/filter`
+    const payload = {
+      rating_from_user: value + '',
+      restaurent_type: restro_type,
+      type: 'filter',
+    }
+    try {
+      const res = await axios.post(url, payload)
+      console.log('====================================')
+      console.log()
+      console.log('====================================')
+      route.params.onBack({restro: res?.data?.data?.restro})
+      navigate('NearMe')
+    } catch (error) {}
+  }
+
+  const onReset = async () => {
+    const url = `${API_BASE}/restro/filter`
+    const payload = {
+      rating_from_user: '',
+      restaurent_type: '',
+    }
+    try {
+      const res = await axios.post(url, payload)
+      route.params.onBack({restro: res?.data?.data?.restro})
+      navigate('Home')
+    } catch (error) {}
+  }
+
   const onFavorite = (item) => {
     const data = {
       userid: user?._id,
@@ -94,25 +141,21 @@ function NearMe(props) {
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list successfully')
   }
-  const onBack = res => {
-
+  const onBack = (res) => {
     const USERID = {
       userid: user?._id,
-     }
-      setdata({
-        ...data, 
-        restroList: res.sortByRestro,
-        restroList: res.restro,
-      })
-      
-   
-    
-  };
+    }
+    setdata({
+      ...data,
+      restroList: res.sortByRestro,
+      restroList: res.restro,
+    })
+  }
   const redirectToFilter = () => {
     navigate('Filter', {onBack: (data) => onBack(data)})
   }
   const redirectToSortBy = () => {
-    navigate("SortBy", { onBack: (data) => onBack(data)});
+    navigate('SortBy', {onBack: (data) => onBack(data)})
   }
   const redirectToNotification = () => {
     navigate('Notification')
@@ -131,7 +174,7 @@ function NearMe(props) {
           source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
-          <LoadWheel visible={data.isLoading}/>
+            <LoadWheel visible={data.isLoading} />
             <View
               style={{
                 flexDirection: 'row',
@@ -407,7 +450,7 @@ function NearMe(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.leftContainer}
-            onPress={redirectToFilter}>
+            onPress={() => setModal2(true)}>
             <Text style={styles.normalText}>Filters</Text>
             <Image source={ImagesPath.filter} style={styles.Filter} />
           </TouchableOpacity>
@@ -422,190 +465,315 @@ function NearMe(props) {
           }}
         />
       </ScrollView>
-      <Modal visible={modal}  animationType="slide"
-      >
-       
-          
-            <View style={styles.modalHeader}>
-              <Icon
-                onPress={() => setModal(false)}
-                name="arrowleft"
-                type="AntDesign"
-                style={styles.logoStyle}
-              />
-            </View>
-              <Text
-                style={{
-                  fontSize: Scale(20),
-                  marginHorizontal: Scale(25),
-                  marginBottom: Scale(25),
-                  color: Colors.WHITE,
-                  fontWeight: 'bold',
-                }}>
-                SortBy
-              </Text>
-            
-            <ImageBackground
-                source={ImagesPath.background}
-                style={styles.loginInputCont}
-            >
-            <View
-          style={{
-            marginTop: Scale(20),
-            justifyContent: 'center',
-            paddingVertical: Scale(15),
-            borderRadius: 10,
-            borderWidth: Scale(2),
-            width: '109%',
-            borderColor: Colors.LIGHT_GRAY,
-            alignSelf: 'center',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: Scale(15),
-              alignItems: 'center',
-            }}>
-            <Text>Relevance</Text>
-            <Icon
-              type="FontAwesome"
-              style={[
-                value == 0
-                  ? {color: Colors.DARK_RED}
-                  : {color: Colors.LIGHT_GRAY},
-                {fontSize: 25},
-              ]}
-              name={value == 0 ? 'dot-circle-o' : 'circle-o'}
-              onPress={() => setActiveTab(0)}
-            />
-          </View>
+      <Modal visible={modal} animationType="slide">
+        <View style={styles.modalHeader}>
+          <Icon
+            onPress={() => setModal(false)}
+            name="arrowleft"
+            type="AntDesign"
+            style={styles.logoStyle}
+          />
         </View>
-        <View
-          style={{
-            marginTop: Scale(20),
-            justifyContent: 'center',
-            paddingVertical: Scale(15),
-            borderRadius: 10,
-            borderWidth: Scale(2),
-            width: '109%',
-            borderColor: Colors.LIGHT_GRAY,
-            alignSelf: 'center',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: Scale(15),
-              alignItems: 'center',
-            }}>
-            <Text>Rating: High to Low</Text>
-            <Icon
-              type="FontAwesome"
-              style={[
-                value == 1
-                  ? {color: Colors.DARK_RED}
-                  : {color: Colors.LIGHT_GRAY},
-                {fontSize: 25},
-              ]}
-              name={value == 1 ? 'dot-circle-o' : 'circle-o'}
-              onPress={() => setActiveTab(1)}
-            />
-          </View>
+        <View style={styles.headerText}>
+          <Text style={styles.headerText1}>SortBy</Text>
         </View>
-        <View
-          style={{
-            marginTop: Scale(20),
-            justifyContent: 'center',
-            paddingVertical: Scale(15),
-            borderRadius: 10,
-            borderWidth: Scale(2),
-            width: '109%',
-            borderColor: Colors.LIGHT_GRAY,
-            alignSelf: 'center',
-          }}>
+
+        <ImageBackground
+          source={ImagesPath.background}
+          style={styles.loginInputCont}>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: Scale(15),
-              alignItems: 'center',
-            }}>
-            <Text>Rating: Low to High</Text>
-            <Icon
-              type="FontAwesome"
-              style={[
-                value == 2
-                  ? {color: Colors.DARK_RED}
-                  : {color: Colors.LIGHT_GRAY},
-                {fontSize: 25},
-              ]}
-              name={value == 2 ? 'dot-circle-o' : 'circle-o'}
-              onPress={() => setActiveTab(2)}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            marginTop: Scale(20),
-            justifyContent: 'center',
-            paddingVertical: Scale(15),
-            borderRadius: 10,
-            borderWidth: Scale(2),
-            width: '109%',
-            borderColor: Colors.LIGHT_GRAY,
-            alignSelf: 'center',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: Scale(15),
-              alignItems: 'center',
-            }}>
-            <Text>Delivery Time</Text>
-            <Icon
-              type="FontAwesome"
-              style={[
-                value == 3
-                  ? {color: Colors.DARK_RED}
-                  : {color: Colors.LIGHT_GRAY},
-                {fontSize: 25},
-              ]}
-              name={value == 3 ? 'dot-circle-o' : 'circle-o'}
-              onPress={() => setActiveTab(3)}
-            />
-          </View>
-        </View>
-        <View style={{justifyContent: 'flex-end', flex: 1}}>
-          <View
-            style={{
-              marginTop: Scale(50),
-              flexDirection: 'row',
-              marginVertical: 30,
-              alignSelf:'center'
+              marginTop: Scale(20),
+              justifyContent: 'center',
+              paddingVertical: Scale(15),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '109%',
+              borderColor: Colors.LIGHT_GRAY,
+              alignSelf: 'center',
             }}>
             <View
               style={{
-                flex: 1,
-                marginRight: Scale(10),
-               
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+                alignItems: 'center',
               }}>
-              <CustomButton title="Reset All"   />
-            </View>
-            <View style={{flex: 1}}>
-              <CustomButton
-                title="Apply"
-                isSecondary={true}
-             
+              <Text>Relevance</Text>
+              <Icon
+                type="FontAwesome"
+                style={[
+                  activeTab == 0
+                    ? {color: Colors.DARK_RED}
+                    : {color: Colors.LIGHT_GRAY},
+                  {fontSize: 25},
+                ]}
+                name={activeTab == 0 ? 'dot-circle-o' : 'circle-o'}
+                onPress={() => setActiveTab(0)}
               />
             </View>
           </View>
-        </View>
+          <View
+            style={{
+              marginTop: Scale(20),
+              justifyContent: 'center',
+              paddingVertical: Scale(15),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '109%',
+              borderColor: Colors.LIGHT_GRAY,
+              alignSelf: 'center',
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+                alignItems: 'center',
+              }}>
+              <Text>Rating: High to Low</Text>
+              <Icon
+                type="FontAwesome"
+                style={[
+                  activeTab == 1
+                    ? {color: Colors.DARK_RED}
+                    : {color: Colors.LIGHT_GRAY},
+                  {fontSize: 25},
+                ]}
+                name={activeTab == 1 ? 'dot-circle-o' : 'circle-o'}
+                onPress={() => setActiveTab(1)}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              marginTop: Scale(20),
+              justifyContent: 'center',
+              paddingVertical: Scale(15),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '109%',
+              borderColor: Colors.LIGHT_GRAY,
+              alignSelf: 'center',
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+                alignItems: 'center',
+              }}>
+              <Text>Rating: Low to High</Text>
+              <Icon
+                type="FontAwesome"
+                style={[
+                  activeTab == 2
+                    ? {color: Colors.DARK_RED}
+                    : {color: Colors.LIGHT_GRAY},
+                  {fontSize: 25},
+                ]}
+                name={activeTab == 2 ? 'dot-circle-o' : 'circle-o'}
+                onPress={() => setActiveTab(2)}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              marginTop: Scale(20),
+              justifyContent: 'center',
+              paddingVertical: Scale(15),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '109%',
+              borderColor: Colors.LIGHT_GRAY,
+              alignSelf: 'center',
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+                alignItems: 'center',
+              }}>
+              <Text>Delivery Time</Text>
+              <Icon
+                type="FontAwesome"
+                style={[
+                  activeTab == 3
+                    ? {color: Colors.DARK_RED}
+                    : {color: Colors.LIGHT_GRAY},
+                  {fontSize: 25},
+                ]}
+                name={activeTab == 3 ? 'dot-circle-o' : 'circle-o'}
+                onPress={() => setActiveTab(3)}
+              />
+            </View>
+          </View>
+          <View style={{justifyContent: 'flex-end', flex: 1}}>
+            <View
+              style={{
+                marginTop: Scale(50),
+                flexDirection: 'row',
+                marginVertical: 30,
+                alignSelf: 'center',
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  marginRight: Scale(10),
+                }}>
+                <CustomButton title="Reset All" />
+              </View>
+              <View style={{flex: 1}}>
+                <CustomButton title="Apply" isSecondary={true} />
+              </View>
+            </View>
+          </View>
         </ImageBackground>
-           
-          
-        
+      </Modal>
+      <Modal visible={modal2} animationType="slide">
+        <View style={styles.headerContainer}>
+          <Icon
+            onPress={() => setModal2(false)}
+            name="arrowleft"
+            type="AntDesign"
+            style={styles.logoStyle}
+          />
+        </View>
+        <View style={styles.headerText}>
+          <Text style={styles.headerText1}>Filters </Text>
+        </View>
+        <ImageBackground
+          source={ImagesPath.background}
+          style={styles.loginInputCont}>
+          <View
+            style={{
+              marginTop: Scale(20),
+              justifyContent: 'center',
+              height: Scale(100),
+              paddingVertical: Scale(20),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '100%',
+              borderColor: Colors.LIGHT_GRAY,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+              }}>
+              <Text>Distance</Text>
+              <Text
+                style={{
+                  fontSize: Scale(14),
+                  color: Colors.DARK_RED,
+                }}>
+                {value1 + ' Miles'}
+              </Text>
+            </View>
+            <Slider
+              style={{marginTop: Scale(20)}}
+              minimumValue={0}
+              maximumValue={10}
+              value={value1}
+              step={0.5}
+              onValueChange={(value) => setValue1(value)}
+              thumbTintColor={Colors.APPCOLOR}
+              minimumTrackTintColor={Colors.APPCOLOR}
+              maximumTrackTintColor="#000000"
+            />
+          </View>
+          <View
+            style={{
+              marginTop: Scale(25),
+              justifyContent: 'center',
+              height: Scale(100),
+              paddingVertical: Scale(20),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '100%',
+              borderColor: Colors.LIGHT_GRAY,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+              }}>
+              <Text>Rating</Text>
+              <Text
+                style={{
+                  fontSize: Scale(14),
+                  color: Colors.DARK_RED,
+                }}>
+                {value}
+              </Text>
+            </View>
+            <Slider
+              style={{marginTop: Scale(20)}}
+              minimumValue={0}
+              maximumValue={10}
+              value={value}
+              step={0.5}
+              onValueChange={(value) => setValue(value)}
+              thumbTintColor={Colors.APPCOLOR}
+              minimumTrackTintColor={Colors.APPCOLOR}
+              maximumTrackTintColor="#000000"
+            />
+          </View>
+          <View
+            style={{
+              marginTop: Scale(25),
+              justifyContent: 'center',
+              paddingVertical: Scale(15),
+              borderRadius: 10,
+              borderWidth: Scale(2),
+              width: '100%',
+              borderColor: Colors.LIGHT_GRAY,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: Scale(15),
+              }}>
+              <Text style={{fontSize: 18}}>Veg only</Text>
+              <Switch
+                trackColor={{
+                  false: Colors.GRAY,
+                  true: Colors.RED,
+                }}
+                style={{
+                  transform: [{scaleX: 1.1}, {scaleY: 1.1}],
+                }}
+                thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
+                ios_backgroundColor={Colors.GREEN}
+                onValueChange={setCheckedSwitch}
+                value={isEnabled}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              justifyContent: 'flex-end',
+              flex: 1,
+              marginVertical: 30,
+            }}>
+            <View style={{marginTop: Scale(50), flexDirection: 'row'}}>
+              <View style={{flex: 1, marginRight: Scale(15)}}>
+                <CustomButton title="Reset All" onSubmit={onReset} />
+              </View>
+              <View style={{flex: 1}}>
+                <CustomButton
+                  title="Apply"
+                  isSecondary={true}
+                  onSubmit={onFilter}
+                />
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
       </Modal>
     </View>
   )
@@ -724,7 +892,7 @@ const styles = StyleSheet.create({
     fontSize: Scale(15),
     marginLeft: Scale(8),
   },
-  modalHeader:{
+  modalHeader: {
     paddingTop: Scale(20),
     height: Scale(80),
     alignItems: 'center',
@@ -732,6 +900,58 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.APPCOLOR,
     paddingHorizontal: Scale(25),
   },
+  logoStyle: {
+    marginTop: Scale(15),
+    fontSize: Scale(25),
+    color: Colors.WHITE,
+  },
+  headerText: {
+    backgroundColor: Colors.APPCOLOR,
+    width: '100%',
+  },
+  headerText1: {
+    fontSize: Scale(20),
+    fontWeight: 'bold',
+    marginHorizontal: Scale(25),
+    marginBottom: Scale(25),
+    color: Colors.WHITE,
+  },
+  textStyle: {
+    color: Colors.BORDERCOLOR,
+    fontSize: Scale(14),
+    marginTop: Scale(10),
+  },
+  inputStyle: {
+    color: Colors.BLACK,
+    fontSize: Scale(16),
+    marginBottom: Scale(15),
+    fontWeight: 'bold',
+  },
+  loginInputCont: {
+    flex: 1,
+    paddingTop: Scale(10),
+    paddingBottom: Scale(10),
+    paddingHorizontal: Scale(30),
+    borderTopLeftRadius: Scale(25),
+    borderTopRightRadius: Scale(25),
+    backgroundColor: Colors.WHITE,
+  },
+  notificationStyle: {
+    width: Scale(25),
+    height: Scale(25),
+    resizeMode: 'contain',
+    tintColor: Colors.WHITE,
+    alignSelf: 'flex-end',
+  },
+  headerContainer: {
+    paddingTop: Scale(20),
+    height: Scale(80),
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: Colors.APPCOLOR,
+    paddingHorizontal: Scale(25),
+  },
+
   logoStyle: {
     marginTop: Scale(15),
     fontSize: Scale(25),
