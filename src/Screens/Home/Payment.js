@@ -65,9 +65,10 @@ function Payment(props) {
   }
 
   React.useEffect(() => {
-    if (props?.restroDetails === null) {
-      redirectToPlaceOrder()
-    }
+    // if (props?.restroDetails === null) {
+    //   redirectToPlaceOrder()
+    // }
+    redirectToPlaceOrder()
   }, [props?.restroDetails])
 
   const {totalCartAmt, det} = props?.route?.params

@@ -80,8 +80,7 @@ function Otp(props) {
       {(insets) => (
         <KeyboardAvoidingView
           style={AuthStyle.keyboardAware}
-          
-          enabled>
+          showsVerticalScrollIndicator={false}>
           <ScrollView
             bounces={false}
             keyboardShouldPersistTaps={'handled'}
