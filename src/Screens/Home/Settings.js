@@ -51,7 +51,7 @@ function Settings() {
           index: 0,
           routes: [
             {
-              name: 'SelectLoginSignup',
+              name: 'Step',
               params: {user: 'jane'},
             },
           ],

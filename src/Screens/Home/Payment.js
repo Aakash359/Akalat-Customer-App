@@ -5,8 +5,6 @@ import {
   StyleSheet,
   StatusBar,
   ScrollView,
-  Image,
-  TextInput,
   ImageBackground,
   Alert,
 } from 'react-native'
@@ -63,24 +61,18 @@ function Payment(props) {
   }
   
 
-  // useEffect(() => {
-  //   if (props?.restroDetails === !null) {
-  //     navigate('PlaceOrder')
-  //   }
-  // }, [props?.restroDetails])
-  // 60c9dc1b35dd775a634356a6
-  //60cc2d6fbadef773e8798102
-  const Restro_id = props?.restroDetails?._id
-
-  console.log('====================================');
-  console.log("Aakash==>",props?.restroDetails);
-  console.log('====================================');
-
   useEffect(() => {
+    if (props?.restroDetails === !null) {
+      navigate('PlaceOrder')
+    }
+  }, [props?.restroDetails])
+
+
+  // useEffect(() => {
   
-      navigate('PlaceOrder', {Restro_id : props?.restroDetails?._id })
+  //     navigate('PlaceOrder', {Restro_id : props?.restroDetails?._id })
     
-  },)
+  // },)
 
   const {totalCartAmt, det} = props?.route?.params
 
