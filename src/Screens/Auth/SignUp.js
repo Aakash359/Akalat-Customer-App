@@ -102,8 +102,10 @@ function SignUp(props) {
   }, [])
 
   return (
-    <KeyboardAvoidingView style={styles.keyboardStyle} enabled
-    >
+    <KeyboardAvoidingView
+      keyboardShouldPersistTaps={'always'}
+      showsVerticalScrollIndicator={false}
+      style={styles.keyboardStyle}>
       <ImageBackground
         source={ImagesPath.background}
         style={styles.imageBachgroundStyle}>
@@ -136,20 +138,20 @@ function SignUp(props) {
             <Text style={styles.mobile}>Mobile Number</Text>
 
             <View style={styles.textInputView}>
-            <ModalDropdown 
-              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
-              onSelect={(country_Code) => setCountryCode(country_Code)}
-              defaultIndex={0}
-              defaultValue={countryList.dial_code || '+91'}
-              style={styles.modal}
-              textStyle={styles.modalText}
-              dropdownStyle={styles.modalDropDown}
-              dropdownTextStyle={styles.modalDropDownText}
-              dropdownTextHighlightStyle={
+              <ModalDropdown
+                options={[
+                  ...new Set(countryList.map((i) => `${i?.dial_code}`)),
+                ]}
+                onSelect={(country_Code) => setCountryCode(country_Code)}
+                defaultIndex={0}
+                defaultValue={countryList.dial_code || '+91'}
+                style={styles.modal}
+                textStyle={styles.modalText}
+                dropdownStyle={styles.modalDropDown}
+                dropdownTextStyle={styles.modalDropDownText}
+                dropdownTextHighlightStyle={
                   styles.modalDropDownHighlightedText
-              }
-              >
-              </ModalDropdown>
+                }></ModalDropdown>
               <TextInput
                 style={styles.textInputContainer}
                 value={phone}
@@ -244,7 +246,7 @@ const styles = StyleSheet.create({
   textInputView: {
     flexDirection: 'row',
     marginVertical: Scale(8),
-    
+
     height: Scale(50),
     fontSize: Scale(16),
     color: Colors.BLACK,
@@ -254,6 +256,9 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     borderRadius: Scale(5),
+  },
+  keyboardStyle: {
+    flex: 1,
   },
   imageBachgroundStyle: {
     height: '100%',
@@ -286,9 +291,9 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     justifyContent: 'center',
     alignSelf: 'center',
-    width:Scale(280),
+    width: Scale(280),
     height: Scale(50),
-    paddingHorizontal:Scale(10),
+    paddingHorizontal: Scale(10),
   },
   normalText: {
     fontSize: Scale(16),
@@ -304,21 +309,21 @@ const styles = StyleSheet.create({
     marginLeft: Scale(2),
   },
   modal: {
-    justifyContent:'center',
+    justifyContent: 'center',
     backgroundColor: Colors.TRANSPARENT,
     maxWidth: Scale(100),
   },
   modalText: {
     color: Colors.BLACK,
     fontSize: Scale(14),
-    marginLeft:Scale(10),
-    fontWeight:'500'
+    marginLeft: Scale(10),
+    fontWeight: '500',
   },
   modalDropDown: {
     backgroundColor: Colors.WHITE,
     overflow: 'hidden',
     marginTop: Scale(-30),
-    height:Scale(55)
+    height: Scale(55),
   },
   modalDropDownText: {
     backgroundColor: Colors.TRANSPARENT,

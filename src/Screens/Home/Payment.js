@@ -19,7 +19,7 @@ function Payment(props) {
   const [check, setCheck] = React.useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  
+
   const checked = (method) => {
     setCheck(method)
   }
@@ -59,7 +59,6 @@ function Payment(props) {
       Alert.alert('', 'Select payment method')
     }
   }
-  
 
   useEffect(() => {
     if (props?.restroDetails === !null) {
@@ -67,11 +66,10 @@ function Payment(props) {
     }
   }, [props?.restroDetails])
 
-
   // useEffect(() => {
-  
+
   //     navigate('PlaceOrder', {Restro_id : props?.restroDetails?._id })
-    
+
   // },)
 
   const {totalCartAmt, det} = props?.route?.params
