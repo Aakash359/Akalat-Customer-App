@@ -39,7 +39,7 @@ function NearMe(props) {
   const [modal2, setModal2] = React.useState(false)
   const [value, setValue] = useState()
   const [value1, setValue1] = useState()
-
+  const dispatch = useDispatch()
   const route = useRoute()
 
   const [isEnabled, setIsEnabled] = useState()
@@ -58,6 +58,7 @@ function NearMe(props) {
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
+    resetStatus: false,
   })
 
   const [search, setSearch] = React.useState('')
@@ -70,7 +71,6 @@ function NearMe(props) {
     }
     try {
       const res = await axios.post(url, payload)
-
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
@@ -97,42 +97,6 @@ function NearMe(props) {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
 
-  const onFilter = async () => {
-    var restro_type = ''
-    if (isEnabled) {
-      restro_type = 'veg_and_non_veg'
-    } else {
-      restro_type = 'veg'
-    }
-    const url = `${API_BASE}/restro/filter`
-    const payload = {
-      rating_from_user: value + '',
-      restaurent_type: restro_type,
-      type: 'filter',
-    }
-    try {
-      const res = await axios.post(url, payload)
-      console.log('====================================')
-      console.log()
-      console.log('====================================')
-      route.params.onBack({restro: res?.data?.data?.restro})
-      navigate('NearMe')
-    } catch (error) {}
-  }
-
-  const onReset = async () => {
-    const url = `${API_BASE}/restro/filter`
-    const payload = {
-      rating_from_user: '',
-      restaurent_type: '',
-    }
-    try {
-      const res = await axios.post(url, payload)
-      route.params.onBack({restro: res?.data?.data?.restro})
-      navigate('Home')
-    } catch (error) {}
-  }
-
   const onFavorite = (item) => {
     const data = {
       userid: user?._id,
@@ -141,31 +105,130 @@ function NearMe(props) {
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list successfully')
   }
-  const onBack = (res) => {
-    const USERID = {
-      userid: user?._id,
-    }
-    setdata({
-      ...data,
-      restroList: res.sortByRestro,
-      restroList: res.restro,
-    })
-  }
-  const redirectToFilter = () => {
-    navigate('Filter', {onBack: (data) => onBack(data)})
-  }
-  const redirectToSortBy = () => {
-    navigate('SortBy', {onBack: (data) => onBack(data)})
-  }
-  const redirectToNotification = () => {
-    navigate('Notification')
-  }
-
-  const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(offercardRequest())
   }, [])
+  
+//********* Searching And filtering Both */
+
+  const onFilter = async () => {
+    var restro_type = ''
+    if (isEnabled) {
+      restro_type = 'veg_and_non_veg'
+    } else {
+      restro_type = 'veg'
+    }
+    const url = `${API_BASE}/restro/searchAndFilter`
+    const payload = {
+       searchKey: search,
+      'rating_from_user': value + '',
+      'restaurent_type': restro_type,
+     }
+    try {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restroNew,
+        isLoading: false,
+      })
+      setModal2(false)
+      navigate('NearMe')
+     
+    } catch (error) {
+      console.log("Error",error);
+    
+    }
+  }
+
+  const onResetFilter = async () => {
+    const url = `${API_BASE}/restro/search`
+    setValue(0);
+    const payload = {
+       searchKey: '',
+      'rating_from_user': '',
+      'restaurent_type': '',
+    }
+   
+    try {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restro,
+        isLoading: false,
+        
+      })
+      navigate('NearMe')
+      setModal2(false)
+    } catch (error) {
+      console.log("Error",error);
+    
+    }
+  }
+
+ //********* Searching And Sorting Both */
+
+  const onSortBy = async () => {
+    
+    const url = `${API_BASE}/restro/sortByAndSearch`
+    const payload = {
+         searchKey: search,
+        'userid': user?._id,
+        'relevance': activeTab==0,
+        'rating_high_to_low': activeTab==1,
+        'rating_low_to_high': activeTab==2,
+        'delivery_time': activeTab==3
+      }
+      
+      
+    try 
+      {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restroNewArrayList,
+        isLoading: false,
+      })
+     
+      setModal(false)
+      navigate('NearMe')
+    } 
+    catch (error) 
+    {
+      console.log('Error',error);  
+    }
+  }
+
+  const onSortByReset = async () => {
+       
+    const url = `${API_BASE}/restro/search`
+    setActiveTab(0);
+    const payload = {
+      'userid': user?._id,
+      'relevance': '',
+      'rating_high_to_low': '',
+      'rating_low_to_high': '',
+      'delivery_time': ''
+      }
+      
+    try 
+      {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restro,
+        isLoading: false,
+        
+      })
+      setModal(false)
+      navigate('NearMe')
+    
+    
+    } 
+    catch (error) 
+    {
+      console.log('Error',error);  
+    }
+  }
 
   const renderItems = ({item}) => (
     <View style={styles.cardStyle}>
@@ -622,10 +685,13 @@ function NearMe(props) {
                   flex: 1,
                   marginRight: Scale(10),
                 }}>
-                <CustomButton title="Reset All" />
+                <CustomButton title="Reset All" 
+                 onSubmit={onSortByReset} 
+                 />
               </View>
               <View style={{flex: 1}}>
-                <CustomButton title="Apply" isSecondary={true} />
+                <CustomButton title="Apply" isSecondary={true} 
+                onSubmit={onSortBy}/>
               </View>
             </View>
           </View>
@@ -762,7 +828,10 @@ function NearMe(props) {
             }}>
             <View style={{marginTop: Scale(50), flexDirection: 'row'}}>
               <View style={{flex: 1, marginRight: Scale(15)}}>
-                <CustomButton title="Reset All" onSubmit={onReset} />
+                <CustomButton title="Reset All" 
+                onSubmit={onResetFilter} 
+                
+                />
               </View>
               <View style={{flex: 1}}>
                 <CustomButton

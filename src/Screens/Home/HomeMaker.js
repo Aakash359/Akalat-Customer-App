@@ -42,7 +42,12 @@ function HomeMaker(props) {
 
     if(res?.status === 200) {
       setList({...list, restroDetails: res?.data?.data?.restro_detail, productList: res?.data?.data?.product_list, productCategory:res?.data?.data?.product_list?.product_categories, isLoading: false})
-      
+      console.log('====================================');
+      console.log("Aakash===>",res?.data?.data?.product_list);
+      console.log('====================================');
+      console.log('====================================');
+      console.log("ProductList===>",res?.data?.data?.product_list?.[0]?.product_categories);
+      console.log('====================================');
     }
     else {
       setList({...list, isLoading: false, error: res?.data?.message})
@@ -161,6 +166,8 @@ const subToCart = (item) => {
 }
   
   const {restroDetails ={}} = props.route.params || {}
+
+  
   
   const {restroDetails: resDet} = list
   const {cartProducts} = props

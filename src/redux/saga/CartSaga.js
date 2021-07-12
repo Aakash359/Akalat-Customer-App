@@ -18,9 +18,7 @@ function* createOrder({payload}) {
       method: 'POST',
       data,
     });
-    console.log('====================================');
-    console.log("OrderResponse",response);
-    console.log('====================================');
+
     if (response?.error) {
       yield put(setCreateOrderLoader(false));
       yield put(setCreateOrderError(response?.message));

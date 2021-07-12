@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native'
-import {useNavigation, CommonActions} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native'
 import {
   SignUpRequest,
   loaderRequest,
@@ -18,7 +18,7 @@ import {
   setOtpVerifyStatus,
 } from '../../redux/actions'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
-import DropDownPicker from 'react-native-dropdown-picker'
+import ModalDropdown from 'react-native-modal-dropdown'
 import {FormInput, CustomButton} from '../../Component'
 import {Icon} from 'native-base'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
@@ -41,9 +41,7 @@ function SignUp(props) {
   const [confirm_pass, setconfirm_pass] = useState('')
   const {isLoading} = useSelector((state) => state.Auth)
   const [checkBox, setcheckBox] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState()
-  const [items, setItems] = useState()
+  const [country_Code, setCountryCode] = useState('')
   const counrtryListResponse = useSelector(
     (state) => state.Auth.counrtryListResponse,
   )
@@ -104,7 +102,8 @@ function SignUp(props) {
   }, [])
 
   return (
-    <KeyboardAvoidingView style={styles.keyboardStyle} enabled>
+    <KeyboardAvoidingView style={styles.keyboardStyle} enabled
+    >
       <ImageBackground
         source={ImagesPath.background}
         style={styles.imageBachgroundStyle}>
@@ -137,32 +136,20 @@ function SignUp(props) {
             <Text style={styles.mobile}>Mobile Number</Text>
 
             <View style={styles.textInputView}>
-              <DropDownPicker
-                placeholder={'+92'}
-                value={value}
-                open={open}
-                items={countryList.map((items) => {
-                  return {
-                    label: items.dial_code,
-                  }
-                })}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-                style={{
-                  width: Scale(80),
-                  borderWidth: 0,
-                  fontWeight: 'bold',
-                  backgroundColor: Colors.TRANSPARENT,
-                }}
-                containerStyle={{
-                  width: Scale(80),
-                  
-                  borderWidth: 0,
-                  fontWeight: 'bold',
-                  backgroundColor: Colors.TRANSPARENT,
-                }}
-              />
+            <ModalDropdown 
+              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
+              onSelect={(country_Code) => setCountryCode(country_Code)}
+              defaultIndex={0}
+              defaultValue={countryList.dial_code || '+91'}
+              style={styles.modal}
+              textStyle={styles.modalText}
+              dropdownStyle={styles.modalDropDown}
+              dropdownTextStyle={styles.modalDropDownText}
+              dropdownTextHighlightStyle={
+                  styles.modalDropDownHighlightedText
+              }
+              >
+              </ModalDropdown>
               <TextInput
                 style={styles.textInputContainer}
                 value={phone}
@@ -299,6 +286,9 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     justifyContent: 'center',
     alignSelf: 'center',
+    width:Scale(280),
+    height: Scale(50),
+    paddingHorizontal:Scale(10),
   },
   normalText: {
     fontSize: Scale(16),
@@ -312,5 +302,31 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginTop: Scale(5),
     marginLeft: Scale(2),
+  },
+  modal: {
+    justifyContent:'center',
+    backgroundColor: Colors.TRANSPARENT,
+    maxWidth: Scale(100),
+  },
+  modalText: {
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    marginLeft:Scale(10),
+    fontWeight:'500'
+  },
+  modalDropDown: {
+    backgroundColor: Colors.WHITE,
+    overflow: 'hidden',
+    marginTop: Scale(-30),
+    height:Scale(55)
+  },
+  modalDropDownText: {
+    backgroundColor: Colors.TRANSPARENT,
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    paddingHorizontal: Scale(15),
+  },
+  modalDropDownHighlightedText: {
+    color: Colors.BLACK,
   },
 })
