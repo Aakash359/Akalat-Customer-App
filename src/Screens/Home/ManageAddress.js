@@ -12,16 +12,16 @@ import {
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath, LogoutAlert} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
-import {AddressListRequest, deleteAddressRequest} from '../../redux/actions'
+import {AddressListRequest, deleteAddressRequest,AddressListLoader} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
+import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
 function ManageAddress() {
   const addressListResponse = useSelector(
     (state) => state.Setting.addressListResponse,
   )
-
   const addressList = addressListResponse?.data?.addressList || []
-
+  const  {setaddressListLoader} = useSelector((state) => state.Setting);
   const [deleteAdd, setDeleteAdd] = useState({
     id: null,
     show: false,
@@ -36,10 +36,11 @@ function ManageAddress() {
     const data = {
       created_by: user?._id,
     }
-
+    
     setTimeout(() => {
+      dispatch(AddressListLoader(true))
       dispatch(AddressListRequest(data))
-    }, )
+    }, 1000 )
   }, [])
 
   const delAdd = () => {
@@ -132,6 +133,7 @@ function ManageAddress() {
               renderItem={renderItems}
               keyExtractor={(item, index) => index.toString()}
             />
+            <LoadWheel visible={setaddressListLoader} />
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>

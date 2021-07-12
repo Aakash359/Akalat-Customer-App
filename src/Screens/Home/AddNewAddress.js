@@ -38,7 +38,6 @@ function AddNewAddress(props) {
   const [house_name_and_no, setHouseName] = useState('')
   const [area_name, setAreaName] = useState('')
   const [nearby, setNearby] = useState('')
-  const addAddressResponse = useSelector((state) => state.Setting)
   const user = useSelector((state) => state.Auth.user)
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
@@ -98,7 +97,7 @@ function AddNewAddress(props) {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      const data = {
+      let data = {
         address_type:
           activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         lng: location?.latitude,
@@ -112,7 +111,7 @@ function AddNewAddress(props) {
       if (!nearby) {
         data = {
           address_type:
-            activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+          activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
@@ -123,7 +122,6 @@ function AddNewAddress(props) {
 
       dispatch(AddAddressRequest(data))
       navigate('ManageAddress')
-
       alert('Address added succesfully')
     }
   }
@@ -152,13 +150,7 @@ function AddNewAddress(props) {
           behavior={Platform.OS == 'android' ? '' : 'padding'}
           enabled>
           <ScrollView indicatorStyle="white">
-            {/* <Icon
-              name="arrowleft"
-              type="AntDesign"
-              style={styles.logoStyle}
-              onPress={() => navigation.goBack()}
-            /> */}
-            <LocationInput
+           <LocationInput
               placeholder="Current Location"
               autoCapitalize="none"
               value={currentAddress}

@@ -20,8 +20,7 @@ import {
   countryListRequest,
 } from '../../redux/actions'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
-import CountryPicker, { CountryList } from 'react-native-country-picker-modal'
-import DropDownPicker from 'react-native-dropdown-picker'
+
 
 function Login(props) {
   const {navigate} = useNavigation()
@@ -33,11 +32,11 @@ function Login(props) {
     (state) => state.Auth.counrtryListResponse,
   )
   const countryList = counrtryListResponse?.data || []
-  console.log('Aakash===>', countryList?.[0]?.dial_code)
+  
   const [phone, setphone] = useState('')
   const [password, setpassword] = useState('')
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState()
+  const [country_Code, setCountryCode] = useState('')
   const [items, setItems] = useState([{}])
   const [dial_codes, setDialCodes] = useState([])
 
@@ -66,6 +65,9 @@ function Login(props) {
         phone: parseInt(phone),
         password: password,
       }
+      
+      
+      
       dispatch(loaderRequest(true))
 
       setTimeout(() => {
@@ -122,7 +124,7 @@ function Login(props) {
                   }
                 })}
                
-                onChangeItem={(item) => console.log(item)}
+                onChangeItem={(item) => }
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
@@ -143,8 +145,9 @@ function Login(props) {
               
               <ModalDropdown 
               options={countryList?.[0]?.dial_code}
-              onChangeItem={(item) => console.log(item)}
+              onSelect={(country_Code) => setCountryCode(country_Code)}
               defaultIndex={0}
+              value={country_Code}
               defaultValue={countryList.dial_code || '+91'}
               style={styles.modal}
               textStyle={styles.modalText}
@@ -291,5 +294,8 @@ modalDropDownText: {
   color: Colors.BLACK,
   fontSize: Scale(14),
   paddingHorizontal: Scale(15),
+},
+modalDropDownHighlightedText: {
+  color: Colors.BLACK,
 },
 })

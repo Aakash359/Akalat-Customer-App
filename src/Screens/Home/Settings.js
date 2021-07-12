@@ -94,7 +94,7 @@ function Settings() {
             <Text style={styles.textStyle}>Notifications</Text>
             <Switch
               trackColor={{false: Colors.DARK_RED, true: Colors.DARK_RED}}
-              style={{transform: [{scaleX: 1.1}, {scaleY: 1.1}]}}
+              style={{transform: [{scaleX: .9}, {scaleY: 0.8}]}}
               thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
               ios_backgroundColor={Colors.GREEN}
               onValueChange={setCheckedSwitch}
