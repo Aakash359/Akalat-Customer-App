@@ -278,7 +278,7 @@ function Explore() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        <ScrollView>
+        <ScrollView style={{marginBottom:Scale(10)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -304,6 +304,7 @@ function Explore() {
             data={data?.restroList}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
+           
             ListEmptyComponent={() => {
               return <Text style={{textAlign:'center'}}>No data found</Text>
             }}
@@ -368,29 +369,29 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   leftContainer: {
-    paddingHorizontal: Scale(10),
+    
     borderRadius: Scale(30),
-    marginLeft: Scale(25),
+    marginLeft: Scale(20),
     borderColor: 'grey',
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: Colors.WHITE,
-    height: Scale(50),
-    width: '35%',
+    height: Scale(45),
+    width: '30%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   leftContainer1: {
-    paddingHorizontal: Scale(10),
+    
     borderRadius: Scale(30),
     backgroundColor: Colors.WHITE,
-    marginLeft: Scale(25),
+    marginLeft: Scale(18),
     borderColor: 'grey',
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: Colors.WHITE,
-    height: Scale(50),
-    width: '35%',
+    height: Scale(45),
+    width: '30%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -422,7 +423,8 @@ const styles = StyleSheet.create({
   cardStyle: {
     elevation: 3,
     shadowOpacity: 3,
-    height: Scale(225),
+    height: Scale(230),
+    
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: 2,

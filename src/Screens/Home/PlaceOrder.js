@@ -5,16 +5,18 @@ import { Scale, Colors, ImagesPath } from '../../CommonConfig'
 import { CustomButton } from '../../Component'
 import { useSelector, useDispatch } from 'react-redux';
 import { connect } from 'react-redux'
+import { round } from 'react-native-reanimated'
 
 function PlaceOrder(props) {
     const { navigate } = useNavigation()
     const navigation = useNavigation()
+    const  { Restro_id } = props.route.params
 
     const redirectToHome = () => {
         navigate('NearMe')
     }
     const redirectToTrackOrder = () => {
-        navigate('TrackOrder')
+        navigate('TrackOrder', {Restro_id : props.route.params} )
     }
     return (
         <ImageBackground

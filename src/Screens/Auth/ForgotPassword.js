@@ -31,21 +31,19 @@ import {
   countryListRequest,
   setOtpVerifyStatus,
 } from '../../redux/actions'
-import CountryPicker from 'react-native-country-picker-modal'
-import DropDownPicker from 'react-native-dropdown-picker'
+import ModalDropdown from 'react-native-modal-dropdown'
+
 
 function ForgotPassword() {
-  const otpResponse = useSelector((state) => state.Auth)
   const counrtryListResponse = useSelector(
     (state) => state.Auth.counrtryListResponse,
   )
+  const [country_Code, setCountryCode] = useState('')
   const countryList = counrtryListResponse?.data || []
   const [phone, setphone] = useState('')
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState()
-  const [items, setItems] = useState()
+  const [dial_codes, setDialCodes] = useState([])
   const dispatch = useDispatch()
 
   const onSubmit = () => {
@@ -103,52 +101,23 @@ function ForgotPassword() {
                 </Text>
                 <Text style={styles.mobile}>Mobile Number</Text>
                 <View style={styles.textInputView}>
-                  <DropDownPicker
-                    placeholder={'+92'}
-                    open={open}
-                    onChangeText={(items) => setItems(items.dial_code)}
-                    items={countryList.map((items) => {
-                      return {
-                        label: items.dial_code,
-                      }
-                    })}
-                    setOpen={setOpen}
-                    setValue={value}
-                    setItems={setItems}
-                    style={{
-                      width: Scale(80),
-                      borderWidth: 0,
-                      fontWeight: 'bold',
-                      backgroundColor: Colors.TRANSPARENT,
-                    }}
-                    containerStyle={{
-                      width: Scale(80),
-                      borderWidth: 0,
-                      fontWeight: 'bold',
-                      backgroundColor: Colors.TRANSPARENT,
-                    }}
-                  />
-                  {/* <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withCurrencyButton={false}
-                            withAlphaFilter={false}
-                            withCallingCode
-                            withEmoji
-                            onSelect={ country=>{
-                                
-                                const {cca2,callingCode} = country
-                                setCountryCode(cca2);
-                                setcallingCode(callingCode[0]);
-                            }}
-                            
-                            containerButtonStyle={{
-                                marginLeft:10,
-                                marginTop:10
-                            }}
-                          
-                        /> */}
+                  
+                <ModalDropdown 
+                options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
+                onSelect={(country_Code) => setCountryCode(country_Code)}
+                defaultIndex={0}
+                value={country_Code}
+                defaultValue={countryList.dial_code || '+91'}
+                style={styles.modal}
+                textStyle={styles.modalText}
+                dropdownStyle={styles.modalDropDown}
+                dropdownTextStyle={styles.modalDropDownText}
+                dropdownTextHighlightStyle={
+                    styles.modalDropDownHighlightedText
+                }
+                >
+                </ModalDropdown>
+                 
 
                   <TextInput
                     style={styles.textInputContainer}
@@ -221,6 +190,9 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     justifyContent: 'center',
     alignSelf: 'center',
+    width:Scale(280),
+    height: Scale(50),
+    paddingHorizontal:Scale(10),
   },
   heading: {
     flexDirection: 'row',
@@ -241,5 +213,31 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     fontFamily: Fonts.Light,
     marginTop: Scale(22),
+  },
+  modal: {
+    justifyContent:'center',
+    backgroundColor: Colors.TRANSPARENT,
+    maxWidth: Scale(100),
+  },
+  modalText: {
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    marginLeft:Scale(10),
+    fontWeight:'500'
+  },
+  modalDropDown: {
+    backgroundColor: Colors.WHITE,
+    overflow: 'hidden',
+    marginTop: Scale(-30),
+    height:Scale(55)
+  },
+  modalDropDownText: {
+    backgroundColor: Colors.TRANSPARENT,
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    paddingHorizontal: Scale(15),
+  },
+  modalDropDownHighlightedText: {
+    color: Colors.BLACK,
   },
 })

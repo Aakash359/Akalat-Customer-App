@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     padding: 14,
     paddingLeft: 18,
+    alignSelf:'center'
   },
   textStyle: {
     color: Colors.BORDERCOLOR,
@@ -251,6 +252,7 @@ const styles = StyleSheet.create({
     fontSize: Scale(12),
     color: Colors.WHITE,
     width: Scale(150),
+    justifyContent:'center',
     height: Scale(45),
     textAlignVertical: 'center',
     backgroundColor: Colors.APPCOLOR,

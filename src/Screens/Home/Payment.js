@@ -1,12 +1,10 @@
-import * as React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   Text,
   View,
   StyleSheet,
   StatusBar,
   ScrollView,
-  Image,
-  TextInput,
   ImageBackground,
   Alert,
 } from 'react-native'
@@ -21,9 +19,7 @@ function Payment(props) {
   const [check, setCheck] = React.useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const redirectToPlaceOrder = () => {
-    navigate('PlaceOrder')
-  }
+
   const checked = (method) => {
     setCheck(method)
   }
@@ -64,12 +60,17 @@ function Payment(props) {
     }
   }
 
-  React.useEffect(() => {
-    // if (props?.restroDetails === null) {
-    //   redirectToPlaceOrder()
-    // }
-    redirectToPlaceOrder()
+  useEffect(() => {
+    if (props?.restroDetails === !null) {
+      navigate('PlaceOrder')
+    }
   }, [props?.restroDetails])
+
+  // useEffect(() => {
+
+  //     navigate('PlaceOrder', {Restro_id : props?.restroDetails?._id })
+
+  // },)
 
   const {totalCartAmt, det} = props?.route?.params
 

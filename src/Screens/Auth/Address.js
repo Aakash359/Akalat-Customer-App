@@ -120,17 +120,33 @@ function Address() {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      const data = {
-        address_type: activeTab,
+      let data = {
+        address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         lng: location?.latitude,
         lat: location?.longitude,
-        house_name_and_no: house_name_and_no,
-        area_name: area_name,
-        nearby: nearby == '' ? 'null' : nearby,
+        house_name_and_no,
+        area_name,
+        nearby,
         created_by: user?._id,
         signUp: true,
       }
+      if(!nearby){
+        data={
+
+        address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        lng: location?.latitude,
+        lat: location?.longitude,
+        house_name_and_no,
+        area_name,
+        created_by: user?._id,
+        signUp: true,
+
+        }
+
+      }
       dispatch(AddAddressRequest(data))
+      navigate('NearMe')
+      alert('Address added succesfully')
     }
   }
 

@@ -20,8 +20,7 @@ import {
   countryListRequest,
 } from '../../redux/actions'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
-import CountryPicker, { CountryList } from 'react-native-country-picker-modal'
-import DropDownPicker from 'react-native-dropdown-picker'
+
 
 function Login(props) {
   const {navigate} = useNavigation()
@@ -33,13 +32,9 @@ function Login(props) {
     (state) => state.Auth.counrtryListResponse,
   )
   const countryList = counrtryListResponse?.data || []
-  console.log('Aakash===>', countryList?.[0]?.dial_code)
   const [phone, setphone] = useState('')
   const [password, setpassword] = useState('')
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState()
-  const [items, setItems] = useState([{}])
-  const [dial_codes, setDialCodes] = useState([])
+  const [country_Code, setCountryCode] = useState('')
 
   if (user.loginStatus == true) {
     navigation.dispatch(
@@ -66,6 +61,9 @@ function Login(props) {
         phone: parseInt(phone),
         password: password,
       }
+      console.log('====================================');
+      console.log("Aakash===>",data);
+      console.log('====================================');
       dispatch(loaderRequest(true))
 
       setTimeout(() => {
@@ -108,42 +106,10 @@ function Login(props) {
 
             <Text style={styles.normalText}>Welcome back</Text>
             <Text style={styles.mobile}>Mobile Number</Text>
-            <Text style={{color:'red',height:10,width:10}}>
-                { countryList.dial_codes}
-              </Text>
             <View style={styles.textInputView}>
-              {/* <DropDownPicker
-                placeholder={'+92'}
-                value={value}
-                open={open}
-                items={countryList.map((items) => {
-                  return {
-                    label: items.dial_code,
-                  }
-                })}
-               
-                onChangeItem={(item) => console.log(item)}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-                style={{
-                  width: Scale(80),
-                  borderWidth: 0,
-                  fontWeight: 'bold',
-                  backgroundColor: Colors.TRANSPARENT,
-                }}
-                containerStyle={{
-                  width: Scale(80),
-                  borderWidth: 0,
-                  fontWeight: 'bold',
-                  backgroundColor: Colors.TRANSPARENT,
-                  alignSelf: 'center',
-                }}
-              /> */}
-              
               <ModalDropdown 
-              options={countryList?.[0]?.dial_code}
-              onChangeItem={(item) => console.log(item)}
+              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
+              onSelect={(country_Code) => setCountryCode(country_Code)}
               defaultIndex={0}
               defaultValue={countryList.dial_code || '+91'}
               style={styles.modal}
@@ -272,24 +238,26 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor: Colors.TRANSPARENT,
     maxWidth: Scale(100),
-},
-modalText: {
-  color: Colors.BLACK,
-  fontSize: Scale(14),
-  marginLeft:Scale(10),
-  fontWeight:'500'
-},
-modalDropDown: {
-  backgroundColor: Colors.WHITE,
-  overflow: 'hidden',
-  marginTop: Scale(-30),
-  
-  
-},
-modalDropDownText: {
-  backgroundColor: Colors.TRANSPARENT,
-  color: Colors.BLACK,
-  fontSize: Scale(14),
-  paddingHorizontal: Scale(15),
-},
+  },
+  modalText: {
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    marginLeft:Scale(10),
+    fontWeight:'500'
+  },
+  modalDropDown: {
+    backgroundColor: Colors.WHITE,
+    overflow: 'hidden',
+    marginTop: Scale(-30),
+    height:Scale(55)
+  },
+  modalDropDownText: {
+    backgroundColor: Colors.TRANSPARENT,
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    paddingHorizontal: Scale(15),
+  },
+  modalDropDownHighlightedText: {
+    color: Colors.BLACK,
+  },
 })
