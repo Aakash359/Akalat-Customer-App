@@ -20,17 +20,21 @@ import { MapScreen } from "../../Component/MapScreen";
 import { orderDetailsRequest } from '../../redux/actions'
 import { useSelector, useDispatch } from 'react-redux';
 
-const mapScreen = props => {
+const mapScreen = (props) => {
 
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const  orderDetailsResponse = useSelector((state) => state.Home.orderDetailsResponse);
     const orderDetails = orderDetailsResponse?.data
+    const  { Restro_id } = props.route.params
+    console.log('====================================');
+    console.log("Aakash===>",orderDetailsResponse);
+    console.log('====================================');
     useEffect(() => {
 
         const data = { 
-             "_id": '60d059680b0c40323d03227a'
+             "_id": Restro_id+''
              }
        
              setTimeout(() => {

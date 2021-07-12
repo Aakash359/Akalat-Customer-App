@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, Modal,Switch, StatusBar,TouchableOpacity, ScrollView, Image, ImageBackground, Alert } from 'react-native';
-import { Icon } from 'native-base';
+import { Icon, List } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { Colors, Scale, ImagesPath ,Fonts} from '../../CommonConfig';
 import { FlatGrid } from 'react-native-super-grid';
@@ -8,6 +8,7 @@ import { useDispatch, connect } from 'react-redux';
 import axios from 'axios';
 import { API_BASE } from '../../apiServices/ApiService';
 import { addToCart, subToCart } from '../../redux/actions/CartActions';
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 
 function HomeMaker(props) {
   const { navigate } = useNavigation();
@@ -147,7 +148,7 @@ const addToCart = (item) => {
   const {cartRestroDetails, addToCart} = props
   const {restroDetails = {}} = props.route?.params || {}
   if(cartRestroDetails && cartRestroDetails?._id !== restroDetails?._id ) {
-    return Alert.alert('You have another other in your cart')
+    return Alert.alert('You have another order in your cart')
   }
   else {
       addToCart({restroDetails, product: item})
@@ -207,6 +208,7 @@ const subToCart = (item) => {
                 trackColor={{ false: Colors.GRAY, true: Colors.RED }}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
                 ios_backgroundColor={Colors.GREEN}
+                style={{transform: [{scaleX: .9}, {scaleY: 0.8}]}}
                 onValueChange={toggleSwitch}
                 value={isEnabled}
               />
@@ -250,6 +252,7 @@ const subToCart = (item) => {
 
               }}
             />
+            <LoadWheel visible={list.isLoading}/>
             {renderCustomizeModal()}
             </ScrollView>
             {cartProducts?.length ?

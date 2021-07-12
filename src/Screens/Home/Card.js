@@ -66,7 +66,6 @@ function Card(props) {
   )
 
   const addressList = addressListResponse?.data?.addressList || []
-
   const increment = () => {
     setIsPopupVisible(count + 1)
   }
@@ -111,9 +110,6 @@ function Card(props) {
 
   const {cartRestroDetails, cartProducts} = props
 
-  console.log('====================================');
-  console.log("Aakash====>", cartRestroDetails);
-  console.log('====================================');
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
     0,
@@ -394,7 +390,7 @@ function Card(props) {
               </Text>
             ) : null}
           </View>
-          {props?.addressList && props?.addressList?.length ? (
+          { props?.addressList && props?.addressList?.length ? (
             <View
               style={[
                 styles.cardStyle,
@@ -405,14 +401,15 @@ function Card(props) {
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText3}>Delivery Address</Text>
                 <TouchableOpacity onPress={() => setModal(true)}>
-                  <Text style={styles.countText}>change</Text>
+                  <Text style={[styles.countText,{fontWeight:'bold'}]}>Change</Text>
                 </TouchableOpacity>
               </View>
 
               <Text style={styles.itemText2}>
-                {props?.addressList[address?.selectedId]?.house_name_and_no}
-                {'\n'}
-                {props?.addressList[address?.selectedId]?.area_name}
+                {props?.addressList[address?.selectedId]?.house_name_and_no},{''}
+                
+                {props?.addressList[address?.selectedId]?.area_name},{''}
+                {props?.addressList[address?.selectedId]?.nearby}
               </Text>
             </View>
           ) : (
@@ -421,8 +418,8 @@ function Card(props) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <TouchableOpacity onPress={() => navigate('EditAddress')}>
-                <Text>Add address</Text>
+              <TouchableOpacity onPress={() => navigate('AddNewAddress')}>
+                <Text style={{marginTop:Scale(10) , fontSize:15}}>Add address</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -465,7 +462,7 @@ function Card(props) {
               />
               <Text
                 style={{
-                  fontSize: Scale(15),
+                  fontSize: Scale(18),
                   fontWeight: 'bold',
                   marginHorizontal: Scale(25),
                   color: Colors.WHITE,

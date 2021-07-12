@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   Text,
   View,
@@ -21,9 +21,7 @@ function Payment(props) {
   const [check, setCheck] = React.useState(null)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const redirectToPlaceOrder = () => {
-    navigate('PlaceOrder')
-  }
+  
   const checked = (method) => {
     setCheck(method)
   }
@@ -63,12 +61,26 @@ function Payment(props) {
       Alert.alert('', 'Select payment method')
     }
   }
+  
 
-  React.useEffect(() => {
-    if (props?.restroDetails === null) {
-      redirectToPlaceOrder()
-    }
-  }, [props?.restroDetails])
+  // useEffect(() => {
+  //   if (props?.restroDetails === !null) {
+  //     navigate('PlaceOrder')
+  //   }
+  // }, [props?.restroDetails])
+  // 60c9dc1b35dd775a634356a6
+  //60cc2d6fbadef773e8798102
+  const Restro_id = props?.restroDetails?._id
+
+  console.log('====================================');
+  console.log("Aakash==>",props?.restroDetails);
+  console.log('====================================');
+
+  useEffect(() => {
+  
+      navigate('PlaceOrder', {Restro_id : props?.restroDetails?._id })
+    
+  },)
 
   const {totalCartAmt, det} = props?.route?.params
 

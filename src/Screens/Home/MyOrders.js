@@ -22,12 +22,7 @@ function MyOrders(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const myOrderListResponse = useSelector(
-    (state) => state.Setting.myOrderListResponse,
-  )
-  const [orderList, setOrderList] = React.useState(
-    myOrderListResponse?.data || [],
-  )
+  
   const [orderDetail, setOrderDetail] = React.useState({
     orderDetailList: [],
     isLoading: true,
@@ -41,7 +36,6 @@ function MyOrders(props) {
     }
     try {
       const res = await axios.post(url, payload)
-
       setCreateOrder({
         ...orderDetail,
         setOrderDetail: res?.data?.data,
@@ -53,9 +47,6 @@ function MyOrders(props) {
     props?.getOrderList()
   }, [])
 
-  const redirectToEditProfile = () => {
-    navigate('EditProfile')
-  }
   const onPressChecked = () => {
     setChecked(!checked)
   }
@@ -69,7 +60,7 @@ function MyOrders(props) {
   const renderItemsActive = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>
-        <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+        <Image source={{uri: item?.restro_detail?.building_front_img}} style={styles.backgroundStyle1} />
         <View>
           <Text style={styles.primaryText}>
             {item?.restro_detail.restro_name}

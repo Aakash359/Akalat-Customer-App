@@ -278,7 +278,7 @@ function Explore() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        <ScrollView>
+        <ScrollView style={{marginBottom:Scale(10)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -304,6 +304,7 @@ function Explore() {
             data={data?.restroList}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
+           
             ListEmptyComponent={() => {
               return <Text style={{textAlign:'center'}}>No data found</Text>
             }}
@@ -422,7 +423,8 @@ const styles = StyleSheet.create({
   cardStyle: {
     elevation: 3,
     shadowOpacity: 3,
-    height: Scale(225),
+    height: Scale(230),
+    
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: 2,

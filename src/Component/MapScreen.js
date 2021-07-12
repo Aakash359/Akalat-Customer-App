@@ -273,7 +273,6 @@ const styles = StyleSheet.create({
   map: {
     height: '100%'
   },
-  // Callout bubble
   bubble: {
     flexDirection: 'column',
     alignSelf: 'flex-start',
@@ -284,7 +283,6 @@ const styles = StyleSheet.create({
     padding: 15,
     width: 150,
   },
-  // Arrow below the bubble
   arrow: {
     backgroundColor: 'transparent',
     borderColor: 'transparent',
@@ -300,16 +298,16 @@ const styles = StyleSheet.create({
     borderWidth: 16,
     alignSelf: 'center',
     marginTop: -0.5,
-    // marginBottom: -15
   },
-  // Character name
+
   name: {
     fontSize: 16,
     marginBottom: 5,
   },
-  // Character image
+
   image: {
     width: "100%",
     height: 100,
   },
 });
+

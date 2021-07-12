@@ -20,6 +20,7 @@ import {
   ADDRESSLIST_REQUEST,
   ADDRESSLIST_SUCCESS,
   ADDRESSLIST_FAILED,
+  SET_ADDRESS_LIST_LOADER,
   EDIT_PROFILE_REQUEST,
   MYORDER_LIST_REQUEST,
   MYORDER_LIST_SUCCESS,
@@ -201,7 +202,7 @@ export const AddAddressSaga = function* AddAddressSaga({data}) {
 
 // ====================== Address List  POST ======================
 export const AddressListSaga = function* AddressListSaga({data}) {
-  //
+  yield put({type: SET_ADDRESS_LIST_LOADER, payload: true})
   try {
     const response = yield call(Request, {
       url: '/listUserAddress',
@@ -211,6 +212,7 @@ export const AddressListSaga = function* AddressListSaga({data}) {
 
     if (response?.data?.error == true) {
       yield put({type: ADDRESSLIST_FAILED, payload: response})
+      yield put({type: SET_ADDRESS_LIST_LOADER, payload: false})
       global.dropDownAlertRef.alertWithType(
         'error',
         'Error',
@@ -218,13 +220,15 @@ export const AddressListSaga = function* AddressListSaga({data}) {
       )
     } else {
       yield put({type: ADDRESSLIST_SUCCESS, payload: response})
+      yield put({type: SET_ADDRESS_LIST_LOADER, payload: false})
     }
   } catch (e) {
     yield put({type: ADDRESSLIST_FAILED, payload: e})
+    yield put({type: SET_ADDRESS_LIST_LOADER, payload: false})
   }
 }
 
-// ====================== Profie Upadate POST ======================
+// ====================== Edit Profie POST ======================
 
 function* EditProfileSaga({data}) {
   yield put(setEditProfileLoader(true))

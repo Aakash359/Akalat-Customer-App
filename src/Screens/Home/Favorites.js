@@ -25,11 +25,13 @@ function Favorites() {
     const data = { 
          "userid": user?._id
          }
-        
-        dispatch(favouriteListRequest(data));
-        dispatch(favouriteListLoader(true))
-     }, 
-  []); 
+         dispatch(favouriteListLoader(true))
+        setTimeout(() => {
+          dispatch(favouriteListRequest(data));
+         
+        },)
+     },[]
+     ); 
   const renderItems = ({ item, index }) => (
     
     <View style={styles.cardStyle}>
