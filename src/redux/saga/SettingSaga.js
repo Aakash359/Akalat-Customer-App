@@ -126,13 +126,17 @@ export const TermSaga = function* TermSaga({params}) {
 }
 
 // ====================== FAQ GET ======================
-export const FaqSaga = function* FaqSaga({data}) {
+export const FaqSaga = function* FaqSaga({data = {}}) {
   try {
     const response = yield call(Request, {
       url: '/getFaq',
       method: 'POST',
       data,
     })
+
+    console.log('====================================')
+    console.log('FAQ RESPONSE: ', response)
+    console.log('====================================')
 
     if (response?.data?.error == true) {
       yield put({type: FAQ_FAILED, payload: response?.data})
