@@ -11,8 +11,8 @@ import {
 import {useNavigation, CommonActions} from '@react-navigation/native'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
 import {FormInput, CustomButton, NumberInput} from '../../Component'
-import {Icon} from 'native-base'
 import ModalDropdown from 'react-native-modal-dropdown'
+import Icon from 'react-native-vector-icons/AntDesign';
 import {useSelector, useDispatch} from 'react-redux'
 import {
   loginRequest,
@@ -20,6 +20,7 @@ import {
   countryListRequest,
 } from '../../redux/actions'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
+
 
 
 function Login(props) {
@@ -107,6 +108,7 @@ function Login(props) {
             <Text style={styles.normalText}>Welcome back</Text>
             <Text style={styles.mobile}>Mobile Number</Text>
             <View style={styles.textInputView}>
+              <View style={{ flexDirection:'row', alignItems:'center' }}>
               <ModalDropdown 
               options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
               onSelect={(country_Code) => setCountryCode(country_Code)}
@@ -119,8 +121,12 @@ function Login(props) {
               dropdownTextHighlightStyle={
                   styles.modalDropDownHighlightedText
               }
-              >
-              </ModalDropdown>
+              />
+              
+              <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />
+              </View>
+              
+             
               <TextInput
                 style={styles.textInputContainer}
                 value={phone}
@@ -249,7 +255,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     overflow: 'hidden',
     marginTop: Scale(-30),
-    height:Scale(55)
+    height:Scale(80)
   },
   modalDropDownText: {
     backgroundColor: Colors.TRANSPARENT,

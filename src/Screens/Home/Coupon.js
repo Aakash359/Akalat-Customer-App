@@ -350,6 +350,7 @@ const styles = StyleSheet.create({
   normalText: {
     fontSize: Scale(16),
     color: Colors.BORDERCOLOR,
+    fontWeight:'bold'
   },
   filterContainer: {
     flexDirection: 'row',
