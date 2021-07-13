@@ -88,7 +88,7 @@ function MyOrders(props) {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: Colors.DARK_RED,
-            paddingHorizontal: 20,
+            paddingHorizontal: 12,
             paddingVertical: 10,
             borderRadius: 25,
           }}>
@@ -101,7 +101,7 @@ function MyOrders(props) {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: Colors.APPCOLOR,
-            paddingHorizontal: 20,
+            paddingHorizontal: 15,
             paddingVertical: 10,
             borderRadius: 25,
           }}>

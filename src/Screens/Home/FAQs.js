@@ -32,7 +32,7 @@ function FAQs() {
   // const renderItems = ({item, title}) => <Text>hello</Text>
 
   console.log('====================================')
-  console.log(faqResponse)
+  console.log('Aakash====>', faqResponse?.data?.faq)
   console.log('====================================')
 
   const SECTIONS = [

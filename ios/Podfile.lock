@@ -248,6 +248,8 @@ PODS:
     - React-Core
   - react-native-restart (0.0.20):
     - React-Core
+  - react-native-root-view-background-color (1.0.2):
+    - React
   - react-native-safe-area-context (3.2.0):
     - React-Core
   - react-native-slider (3.0.3):
@@ -335,6 +337,8 @@ PODS:
     - React-Core
   - RNShare (6.2.1):
     - React-Core
+  - RNVectorIcons (8.1.0):
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -360,6 +364,7 @@ DEPENDENCIES:
   - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
+  - react-native-root-view-background-color (from `../node_modules/react-native-root-view-background-color`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -382,6 +387,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -438,6 +444,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
+  react-native-root-view-background-color:
+    :path: "../node_modules/react-native-root-view-background-color"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-slider:
@@ -482,6 +490,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -516,6 +526,7 @@ SPEC CHECKSUMS:
   react-native-maps: 2d405b4e8cee0282e4c02bac434d81450dfea877
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-restart: a01029aadfe8e71f9e8205fdb17da2f0a4472d50
+  react-native-root-view-background-color: e7ba21b82c8b7b2a1f902750f08c9dc1a5b38cea
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -538,8 +549,9 @@ SPEC CHECKSUMS:
   RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNShare: 5ac8f6532ca4cd80fc71caef1cfbba1854a6a045
+  RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: e39583b491bcfdc99649c7ffcffd200dc4503117
+PODFILE CHECKSUM: fab39af3c474b3a3792a73c1226293b62a9dbf5e
 
 COCOAPODS: 1.10.1
