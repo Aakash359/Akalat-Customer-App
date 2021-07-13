@@ -26,6 +26,7 @@ import {AuthStyle} from './AuthStyle'
 import {useNavigation} from '@react-navigation/native'
 import {useSelector, useDispatch} from 'react-redux'
 import {CustomButton} from '../../Component'
+import Icon from 'react-native-vector-icons/AntDesign'
 import {
   OTPRequest,
   countryListRequest,
@@ -102,21 +103,23 @@ function ForgotPassword() {
                 <Text style={styles.mobile}>Mobile Number</Text>
                 <View style={styles.textInputView}>
                   
-                <ModalDropdown 
-                options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
-                onSelect={(country_Code) => setCountryCode(country_Code)}
-                defaultIndex={0}
-                value={country_Code}
-                defaultValue={countryList.dial_code || '+91'}
-                style={styles.modal}
-                textStyle={styles.modalText}
-                dropdownStyle={styles.modalDropDown}
-                dropdownTextStyle={styles.modalDropDownText}
-                dropdownTextHighlightStyle={
-                    styles.modalDropDownHighlightedText
-                }
-                >
-                </ModalDropdown>
+                <View style={{ flexDirection:'row', alignItems:'center' }}>
+              <ModalDropdown 
+              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
+              onSelect={(country_Code) => setCountryCode(country_Code)}
+              defaultIndex={0}
+              defaultValue={countryList.dial_code || '+91'}
+              style={styles.modal}
+              textStyle={styles.modalText}
+              dropdownStyle={styles.modalDropDown}
+              dropdownTextStyle={styles.modalDropDownText}
+              dropdownTextHighlightStyle={
+                  styles.modalDropDownHighlightedText
+              }
+              />
+              
+              <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />
+              </View>
                  
 
                   <TextInput
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     overflow: 'hidden',
     marginTop: Scale(-30),
-    height:Scale(55)
+    height:Scale(80)
   },
   modalDropDownText: {
     backgroundColor: Colors.TRANSPARENT,

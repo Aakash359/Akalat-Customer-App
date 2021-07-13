@@ -41,14 +41,10 @@ function EditAddress(props) {
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
 
-  // const redirectToMyAccount = () => {
-  //   navigate('ManageAddress')
-  // }
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -59,7 +55,6 @@ function EditAddress(props) {
             },
           )
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
             getOneTimeLocation()
           } else {
           }
@@ -74,16 +69,10 @@ function EditAddress(props) {
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
-      //Will give you the current location
       (position) => {
-        //getting the Longitude from the location json
-        const currentLongitude = JSON.stringify(position.coords.longitude)
 
-        //getting the Latitude from the location json
-        const currentLatitude = JSON.stringify(position.coords.latitude)
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
-            // var addressComponent = json.results[0].address_components[1].long_name+ ' ' +json.results[0].address_components[2].long_name
             let addressComponent = json.results[1].formatted_address
             setAddress(addressComponent)
           },

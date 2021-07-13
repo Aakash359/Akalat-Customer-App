@@ -74,7 +74,7 @@ function NearMe(props) {
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
-        isLoading: false,
+     
       })
     } catch (error) {}
   }
@@ -109,35 +109,78 @@ function NearMe(props) {
     dispatch(offercardRequest())
   }, [])
   
-//********* Searching And filtering Both */
+//********* Single Filtering And Searching And filtering Both */
 
   const onFilter = async () => {
-    var restro_type = ''
-    if (isEnabled) {
-      restro_type = 'veg_and_non_veg'
-    } else {
-      restro_type = 'veg'
+    var data = search 
+    if(data=!search) {
+      var restro_type = '';
+        if(isEnabled){
+            restro_type = 'veg_and_non_veg';
+        } else {
+            restro_type = 'veg'
+        }
+        const url = `${API_BASE}/restro/filter`
+        const payload = {
+            
+            'rating_from_user': value+"",
+            'restaurent_type': restro_type,
+            // 'distance': value1+'',
+            'type': 'filter'
+          }
+          try 
+          {
+          const res = await axios.post(url, payload)
+          setdata({
+            ...data,
+            restroList: res?.data?.data?.restro,
+           
+            
+          })
+          setModal2(false)
+          navigate('NearMe')
+        
+        
+        } 
+        catch (error) 
+        {
+            
+            console.log("Error",error);
+            
+        }
+    }else
+    {
+
+        var restro_type = ''
+        if (isEnabled) {
+          restro_type = 'veg_and_non_veg'
+        } else {
+          restro_type = 'veg'
+        }
+        const url = `${API_BASE}/restro/searchAndFilter`
+        const payload = {
+          searchKey: search,
+          'rating_from_user': value + '',
+          'restaurent_type': restro_type,
+          // 'distance': value1+'',
+        }
+        try {
+          const res = await axios.post(url, payload)
+          setdata({
+            ...data,
+            restroList: res?.data?.data?.restroNew,
+           
+          })
+          setModal2(false)
+          navigate('NearMe')
+        
+        } catch (error) {
+          console.log("Error",error);
+        
+        }
+      
     }
-    const url = `${API_BASE}/restro/searchAndFilter`
-    const payload = {
-       searchKey: search,
-      'rating_from_user': value + '',
-      'restaurent_type': restro_type,
-     }
-    try {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNew,
-        isLoading: false,
-      })
-      setModal2(false)
-      navigate('NearMe')
-     
-    } catch (error) {
-      console.log("Error",error);
     
-    }
   }
 
   const onResetFilter = async () => {
@@ -154,7 +197,7 @@ function NearMe(props) {
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
-        isLoading: false,
+       
         
       })
       navigate('NearMe')
@@ -165,12 +208,47 @@ function NearMe(props) {
     }
   }
 
- //********* Searching And Sorting Both */
+ //********* Single Sorting And Searching And Sorting Both */
 
   const onSortBy = async () => {
-    
-    const url = `${API_BASE}/restro/sortByAndSearch`
+   var data = search 
+    if(data=!search){
+    const url = `${API_BASE}/restro/sortBy`
     const payload = {
+        
+        'userid': user?._id+'',
+        'relevance': activeTab==0,
+        'rating_high_to_low': activeTab==1,
+        'rating_low_to_high': activeTab==2,
+        // 'delivery_time': activeTab==3
+      }
+    try 
+      {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restroNewArrayList,
+       
+      })
+      setModal(false)
+      navigate('NearMe')
+    
+    
+    } 
+    catch (error) 
+    {
+      console.log('Error',error);  
+    }
+
+    }
+    else 
+    {
+      console.log('====================================');
+      console.log("Error");
+      console.log('====================================');
+
+      const url = `${API_BASE}/restro/sortByAndSearch`
+      const payload = {
          searchKey: search,
         'userid': user?._id,
         'relevance': activeTab==0,
@@ -186,7 +264,7 @@ function NearMe(props) {
       setdata({
         ...data,
         restroList: res?.data?.data?.restroNewArrayList,
-        isLoading: false,
+       
       })
      
       setModal(false)
@@ -195,6 +273,8 @@ function NearMe(props) {
     catch (error) 
     {
       console.log('Error',error);  
+    }
+
     }
   }
 
@@ -216,7 +296,7 @@ function NearMe(props) {
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
-        isLoading: false,
+       
         
       })
       setModal(false)
@@ -237,7 +317,7 @@ function NearMe(props) {
           source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
-            <LoadWheel visible={data.isLoading} />
+            
             <View
               style={{
                 flexDirection: 'row',

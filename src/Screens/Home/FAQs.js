@@ -14,7 +14,7 @@ import Accordion from '../../Component/Accordion'
 import {useNavigation} from '@react-navigation/native'
 import {useSelector, useDispatch} from 'react-redux'
 import {FAQRequest} from '../../redux/actions'
-import {Menu} from 'react-native-paper'
+
 
 function FAQs() {
   const navigation = useNavigation()
@@ -23,7 +23,7 @@ function FAQs() {
   const faqResponse = useSelector((state) => state.Setting.faqResponse)
   const [items, setItems] = useState(faqResponse?.data?.faq || [])
   console.log('====================================')
-  console.log(faqResponse)
+  console.log("Aakash====>",faqResponse?.data?.faq)
   console.log('====================================')
   useEffect(() => {
     setTimeout(() => {

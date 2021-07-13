@@ -35,7 +35,7 @@ export class Step extends Component {
     renderItem = ({ item, index }) => {
         return (
             <View style={{ alignItems: 'center', }}>
-                <ImageBackground source={item.image} style={{ width: screenWidth, flex: 1  }} resizeMode='cover' />
+                <ImageBackground source={item.image} style={{ width: screenWidth,  flex: 1  }} resizeMode='stretch' />
             </View>
         );
     };
