@@ -7,6 +7,7 @@ import {
   ScrollView,
   FlatList,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
@@ -21,9 +22,7 @@ function FAQs() {
   const {navigate} = useNavigation()
   const dispatch = useDispatch()
   const faqResponse = useSelector((state) => state.Setting.faqResponse)
-  const [faqsList, setFaqsList] = React.useState({
-    activeSections: [],
-  })
+  const [faqsList, setFaqsList] = React.useState([])
 
   useEffect(() => {
     dispatch(FAQRequest())
@@ -32,7 +31,7 @@ function FAQs() {
   // const renderItems = ({item, title}) => <Text>hello</Text>
 
   console.log('====================================')
-  console.log('Aakash====>', faqResponse?.data?.faq)
+  console.log('Aakash====>', faqsList)
   console.log('====================================')
 
   const SECTIONS = [
@@ -46,29 +45,40 @@ function FAQs() {
     },
   ]
   const _updateSections = (activeSections) => {
-    setFaqsList({activeSections})
-  }
-
-  const _renderSectionTitle = (section) => {
-    return (
-      <View style={styles.content}>
-        <Text>{section.content}</Text>
-      </View>
-    )
+    setFaqsList(activeSections)
   }
 
   const _renderHeader = (section) => {
+    const index = faqResponse?.data?.faq.findIndex(
+      (i) => i.faq_id === section.faq_id,
+    )
+
+    const iconName = index === faqsList[0] ? 'chevron-up' : 'chevron-down'
+
     return (
-      <View style={styles.header}>
-        <Text style={styles.headerText}>{section.title}</Text>
+      <View
+        style={{
+          margin: 10,
+          paddingVertical: 5,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{fontSize: 16, fontWeight: '600'}}>
+          {section.question}
+        </Text>
+        <Icon
+          name={iconName}
+          type="Ionicons"
+          style={{fontSize: 25, color: 'lightgrey'}}
+        />
       </View>
     )
   }
 
   const _renderContent = (section) => {
     return (
-      <View style={styles.content}>
-        <Text>{section.content}</Text>
+      <View style={{margin: 10}}>
+        <Text style={{fontSize: 16}}>{section.answer}</Text>
       </View>
     )
   }
@@ -101,12 +111,15 @@ function FAQs() {
           keyExtractor={(item, index) => index.toString()}
         /> */}
         <Accordion
-          sections={SECTIONS}
-          activeSections={faqsList.activeSections}
-          renderSectionTitle={_renderSectionTitle}
+          sections={faqResponse?.data?.faq || []}
+          activeSections={faqsList}
           renderHeader={_renderHeader}
           renderContent={_renderContent}
           onChange={_updateSections}
+          touchableComponent={TouchableOpacity}
+          renderFooter={() => (
+            <View style={{height: 2, backgroundColor: '#E0E0E0'}}></View>
+          )}
         />
       </ImageBackground>
     </View>
