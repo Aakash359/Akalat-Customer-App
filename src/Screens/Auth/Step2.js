@@ -12,6 +12,8 @@ import {
     ImageBackground,
 } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import { setIntroComplete } from '../../redux/actions/AuthActions'
+
 import {
     screenWidth,
     screenHeight,
@@ -20,6 +22,7 @@ import {
     Scale,
     Fonts,
 } from '../../CommonConfig';
+import {connect} from 'react-redux'
 import { AuthStyle } from './AuthStyle';
 import { localize } from '../../Utils/Localization';
 import { CustomButton } from '../../Component';
@@ -87,7 +90,8 @@ export class Step2 extends Component {
                             <ImageBackground source={ImagesPath.background} style={[AuthStyle.loginInputCont, { padding: Scale(25), }]}>
                                 <Text style={styles.primaryText}>Step 3</Text>
                                 <Text style={styles.normalText}>Deliver it hot</Text>
-                                <CustomButton title="Get Started" onSubmit={() => this.props.navigation.navigate('SelectLoginSignup')} isSecondary={true} />
+                                <CustomButton title="Get Started" onSubmit={() => {this.props.navigation.navigate('SelectLoginSignup')
+                            this.props.setIntroComplete() }}isSecondary={true} />
 
                             </ImageBackground>
                         </ScrollView>
@@ -97,7 +101,21 @@ export class Step2 extends Component {
         );
     }
 }
-export default Step2;
+
+
+const mapStateToProps = ({Auth: {isIntro}}) => ({
+   
+    isIntro,
+})
+const mapDispatchToProps = {
+    setIntroComplete
+    
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Step2)
 
 const styles = StyleSheet.create({
     container: { height: screenHeight / 1.5, alignItems: 'center' },

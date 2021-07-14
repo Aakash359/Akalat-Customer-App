@@ -5,6 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  SET_INTRO_COMPLETE,
   OTP_REQUEST,
   OTP_SUCCESS,
   OTP_FAILED,
@@ -29,6 +30,7 @@ import {
 } from '../Types/type'
 
 const initialState = {
+  isIntro :false,
   user: {},
   error: '',
   isLoading: false,
@@ -51,11 +53,13 @@ const initialState = {
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return {...state, loginStatus: false, user: action.payload}
+      return {...state, loginStatus: false, user: action.payload, }
     case LOGIN_SUCCESS:
-      return {...state, user: action.payload, loginStatus: true}
+      return {...state, user: action.payload, loginStatus: true,}
     case LOGIN_FAILURE:
-      return {...state, loginStatus: false, user: action.payload}
+      return {...state, loginStatus: false, user: action.payload,}
+    case SET_INTRO_COMPLETE:
+        return {...state, isIntro :true,}  
     case SIGNUP_LOGIN:
       return {
         ...state,
@@ -186,3 +190,5 @@ export default function AuthReducer(state = initialState, action) {
       return state
   }
 }
+
+
