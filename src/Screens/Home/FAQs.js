@@ -103,13 +103,6 @@ function FAQs() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        {/* <FlatList
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 30}}
-          data={faqResponse?.data?.faq}
-          renderItem={renderItems}
-          keyExtractor={(item, index) => index.toString()}
-        /> */}
         <Accordion
           sections={faqResponse?.data?.faq || []}
           activeSections={faqsList}
