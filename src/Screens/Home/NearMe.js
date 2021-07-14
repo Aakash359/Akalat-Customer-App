@@ -27,7 +27,6 @@ import {
 import {CustomButton} from '../../Component'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
-import {LoadWheel} from '../../CommonConfig/LoadWheel'
 
 function NearMe(props) {
   const {navigate} = useNavigation()

@@ -52,9 +52,6 @@ function Filter() {
           try 
           {
           const res = await axios.post(url, payload)
-          console.log('====================================');
-          console.log();
-          console.log('====================================');
           route.params.onBack({restro:res?.data?.data?.restro});
           navigate('NearMe')
         
@@ -141,6 +138,7 @@ function Filter() {
                     <Slider
                         style={{ marginTop: Scale(20) }}
                         minimumValue={0}
+                        
                         maximumValue={10}
                         value={value1}
                         step={0.5}

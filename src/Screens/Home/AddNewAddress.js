@@ -26,7 +26,7 @@ import {AddAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {withTranslation, useTranslation} from 'react-i18next'
-//dkkdkjk
+
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function AddNewAddress(props) {
@@ -125,7 +125,7 @@ function AddNewAddress(props) {
       alert('Address added succesfully')
     }
   }
-//lklsaklsk
+
   return (
     <View style={styles.container}>
       <StatusBar
