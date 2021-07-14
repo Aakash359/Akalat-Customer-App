@@ -1,36 +1,36 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity, Text, FlatList, StyleSheet} from 'react-native';
-import {Icon} from 'native-base';
-import { Colors, Scale, Fonts } from '../CommonConfig';
+import React, {useState} from 'react'
+import {View, TouchableOpacity, Text, FlatList, StyleSheet} from 'react-native'
+import {Icon} from 'native-base'
+import {Colors, Scale, Fonts} from '../CommonConfig'
 
 const Accordion = ({item}) => {
-  const [expanded, setExpanded] = useState(false);
-  const {title, data} = item;
+  const [expanded, setExpanded] = useState(false)
+  const {title, data} = item
 
-  
   const handleExpanded = () => {
-    setExpanded(!expanded);
-  };
+    setExpanded(!expanded)
+  }
   return (
     <View>
-      <TouchableOpacity style={[styles.row,{borderBottomColor:expanded ? "#fff" : "#E0E0E0"}]} 
-      onPress={handleExpanded}>
+      <TouchableOpacity
+        style={[styles.row, {borderBottomColor: expanded ? '#fff' : '#E0E0E0'}]}
+        onPress={handleExpanded}>
         <View style={styles.LeftContainer}>
-          <Text style={styles.title} numberOfLines={1}>{title}</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
         </View>
         <View style={styles.RightContainer}>
           <Icon
-          type="MaterialIcons"
+            type="MaterialIcons"
             name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
             size={30}
-            style={{color:Colors.GRAY}}
+            style={{color: Colors.GRAY}}
             color="white"
           />
         </View>
       </TouchableOpacity>
-      { 
-      expanded && data.length > 0 && (
-
+      {expanded && data.length > 0 && (
         <FlatList
           data={data}
           renderItem={({item, index}) => (
@@ -41,39 +41,38 @@ const Accordion = ({item}) => {
         />
       )}
     </View>
-  );
-};
+  )
+}
 
-export default Accordion;
+export default Accordion
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'flex-start',
-    borderBottomWidth:2,    
-    borderBottomColor:"#00000029",   
-    marginHorizontal:Scale(12), 
+    borderBottomWidth: 2,
+    borderBottomColor: '#00000029',
+    marginHorizontal: Scale(12),
   },
   title: {
     fontSize: Scale(16),
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   itemInActive: {
     paddingBottom: Scale(10),
     fontSize: Scale(16),
-    color:"#202020",
-  
+    color: '#202020',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth:2, 
-    borderBottomColor:"#00000029",   
+    borderBottomWidth: 2,
+    borderBottomColor: '#00000029',
     paddingVertical: Scale(17.5),
     marginHorizontal: Scale(10),
   },
   LeftContainer: {
     flex: 1,
-    marginRight:Scale(10),
+    marginRight: Scale(10),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -82,4 +81,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
-});
+})
