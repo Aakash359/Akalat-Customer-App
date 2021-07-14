@@ -36,11 +36,9 @@ function ManageAddress() {
     const data = {
       created_by: user?._id,
     }
-    
-    setTimeout(() => {
       dispatch(AddressListLoader(true))
       dispatch(AddressListRequest(data))
-    }, 1000 )
+  
   }, [])
 
   const delAdd = () => {

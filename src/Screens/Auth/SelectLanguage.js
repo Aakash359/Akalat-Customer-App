@@ -21,10 +21,12 @@ import {
     LANGUAGE_CODE,
     LOAD_LOOKUPS,
 } from '../../CommonConfig';
+import {connect} from 'react-redux'
 import { AuthStyle } from './AuthStyle';
 import RNRestart from 'react-native-restart';
 import { localize } from '../../Utils/Localization';
 import { scale } from '../../CommonConfig/HelperFunctions/functions';
+import {SET_INTRO_COMPLETE} from '../../redux/actions/AuthActions'
 
 class SelectLanguage extends Component {
     constructor() {
@@ -42,6 +44,7 @@ class SelectLanguage extends Component {
     async onPressContinue(languageCode) {
         if (this.state.languageCode == '1002') {
             await AsyncStorage.setItem(LANGUAGE_CODE, '1002');
+           
             localize.setLanguage('ar');
             this.setState({ languageCode: '1002' });
             if (!I18nManager.isRTL) {
@@ -51,6 +54,7 @@ class SelectLanguage extends Component {
         }
         if (this.state.languageCode == 1001) {
             await AsyncStorage.setItem(LANGUAGE_CODE, '1001');
+            
             localize.setLanguage('en');
             this.setState({ languageCode: '1001' });
             if (I18nManager.isRTL) {
@@ -169,4 +173,4 @@ class SelectLanguage extends Component {
     }
 }
 
-export default SelectLanguage;
+export default SelectLanguage

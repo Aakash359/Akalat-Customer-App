@@ -12,6 +12,7 @@ import {
   SET_USER_DETAILS,
   COUNTRY_LIST_REQUEST,
   SET_OTP_VERIFY_STATUS,
+  SET_INTRO_COMPLETE
 } from '../Types/type'
 
 //================= SIGNUP POST REQUEST =================
@@ -115,3 +116,8 @@ export const setOtpVerifyStatus = (payload) => ({
   type: SET_OTP_VERIFY_STATUS,
   payload,
 })
+
+export function setIntroComplete() {
+  return ({type: SET_INTRO_COMPLETE})
+  
+}

@@ -121,7 +121,8 @@ function Address() {
       alert('Please enter area')
     } else {
       let data = {
-        address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
@@ -133,7 +134,8 @@ function Address() {
       if(!nearby){
         data={
 
-        address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,

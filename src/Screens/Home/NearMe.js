@@ -27,7 +27,7 @@ import {
 import {CustomButton} from '../../Component'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
-import {LoadWheel} from '../../CommonConfig/LoadWheel'
+
 
 function NearMe(props) {
   const {navigate} = useNavigation()
@@ -101,6 +101,7 @@ function NearMe(props) {
     const data = {
       userid: user?._id,
       restro_id: item?._id,
+      
     }
     dispatch(addfavouriteRequest(data))
     alert('Added to favourite list successfully')

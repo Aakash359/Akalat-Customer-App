@@ -32,7 +32,7 @@ function index() {
   }
 
   const user = useSelector((state) => state.Auth.user)
-
+  const isIntro = useSelector((state) => state.Auth.isIntro)
   const UserID = user?._id
 
   return (
@@ -40,7 +40,10 @@ function index() {
       {UserID ? (
         <Home />
       ) : (
-        <Stack.Navigator initialRouteName="SelectLanguage">
+       
+        <Stack.Navigator initialRouteName={isIntro? "SelectLoginSignup" : "SelectLanguage" }
+        >
+          
           <Stack.Screen
             name="Login"
             component={Login}
