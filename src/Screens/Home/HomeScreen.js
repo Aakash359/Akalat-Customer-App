@@ -212,7 +212,10 @@ function HomeScreen(props) {
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-
+      <View style={styles.headerContainer}>
+                <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign" style={styles.logoStyle} />
+            </View>
+            <Text style={styles.headerText}>View All</Text>
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
@@ -242,6 +245,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.APPCOLOR
   },
   loginInputCont: {
     flex: 1,
@@ -250,6 +254,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
   },
+  logoStyle: {
+    marginTop: Scale(15),
+    fontSize: Scale(25),
+    color: Colors.WHITE,
+   },
 
   backgroundStyle: {
     width: '100%',
@@ -258,6 +267,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: Scale(10),
     borderTopRightRadius: Scale(10),
     overflow: 'hidden',
+  },
+  headerText: {
+    fontSize: Scale(20),
+    marginHorizontal: Scale(25),
+    marginBottom: Scale(25),
+    color: Colors.WHITE,
+    fontWeight:'bold'
   },
 
   notificationStyle: {
@@ -272,12 +288,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flex: 1,
   },
-  headerContainer: {
+  headerContainer: {        
+    paddingTop:Scale(20),
+    height: Scale(80),
+    alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
-    paddingVertical: Scale(35),
     paddingHorizontal: Scale(25),
-  },
+},
   location: {
     marginRight: Scale(10),
     width: Scale(25),

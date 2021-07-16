@@ -50,7 +50,11 @@ function ForgotPassword() {
   const onSubmit = () => {
     if (phone == '') {
       alert('Please enter phone number')
-    } else {
+    }
+    else if (phone.length<10){
+      alert('Please enter 10 number digits')
+    }
+    else {
       const data = {
         phone: phone,
         role: 'customer',

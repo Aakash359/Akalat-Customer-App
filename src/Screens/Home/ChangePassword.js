@@ -32,6 +32,9 @@ function ChangePassword() {
         else if(newPass != conPass) {
             alert("Password & confirm password don't match")
         }
+        else if(oldPass.length<8) {
+            alert("Please enter min 8 characters in Old password")
+        }
         else if(newPass.length<8) {
             alert("Please enter min 8 characters password")
         }

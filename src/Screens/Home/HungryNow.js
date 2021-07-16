@@ -87,7 +87,7 @@ function HungryNow(props) {
                   </View> 
                   
                :  <View style={styles.addButton}>
-                  <Text onPress={() =>addToCart(item)} style={[styles.textStyle,{color:Colors.APPCOLOR}]}>Add</Text>
+                  <Text onPress={() =>addToCart(item)} style={[styles.textStyle,{color:Colors.APPCOLOR}]}>ADD</Text>
                 </View>}
               </View>
               <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>

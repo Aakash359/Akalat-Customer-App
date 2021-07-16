@@ -80,7 +80,7 @@ function Settings() {
           <View style={styles.cardStyle}>
             <Text style={styles.textStyle}>Notifications</Text>
             <Switch
-              trackColor={{false: Colors.DARK_RED, true: Colors.DARK_RED}}
+              trackColor={{false: Colors.BORDERCOLOR, true: Colors.DARK_RED}}
               style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
               thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
               ios_backgroundColor={Colors.GREEN}

@@ -143,7 +143,8 @@ const styles = StyleSheet.create({
         fontSize: Scale(20),
         marginHorizontal: Scale(25),
         marginBottom: Scale(25),
-        color: Colors.WHITE
+        color: Colors.WHITE,
+        
     },
     customRatingBarStyle: {
         justifyContent: 'center',
