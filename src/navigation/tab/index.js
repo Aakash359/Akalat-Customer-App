@@ -6,11 +6,13 @@ import HungryNow from '../../Screens/Home/HungryNow'
 import MyAccount from '../../Screens/Home/MyAccount'
 import Card from '../../Screens/Home/Card'
 import ImageIcon from '../../containers/ImageIcon'
-import {Scale, Colors, ImagesPath,} from '../../CommonConfig'
+import {Scale, Colors, ImagesPath} from '../../CommonConfig'
 
-const getOptions = ({tabBarLabel, icon}) => {
+const getOptions = ({tabBarLabel, icon, tint = true}) => {
   return {
-    tabBarIcon: ({color}) => <ImageIcon src={icon} tintColor={color} />,
+    tabBarIcon: ({color}) => (
+      <ImageIcon src={icon} tintColor={Colors.BORDERCOLOR} tint={tint} />
+    ),
     tabBarLabel,
     headerBackTitle: ' ',
   }
@@ -25,12 +27,13 @@ function index() {
         inactiveTintColor: Colors.BORDERCOLOR,
         activeTintColor: Colors.DARK_RED,
         labelStyle: {
-          fontSize: Scale(14),
+          fontSize: Scale(10),
           textTransform: 'capitalize',
           marginBottom: 5,
+          marginTop: 5,
         },
         style: {
-          height: 65,
+          height: 70,
           paddingTop: 10,
           paddingBottom: 10,
         },
@@ -42,7 +45,11 @@ function index() {
           ...getOptions({
             tabBarLabel: 'Near Me',
             tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+              <MaterialCommunityIcons
+                name="ios-home"
+                color={color}
+                size={size}
+              />
             ),
             icon: ImagesPath.location,
           }),
@@ -65,6 +72,7 @@ function index() {
           ...getOptions({
             tabBarLabel: 'Hungry Now',
             icon: ImagesPath.hungry,
+            tint: false,
           }),
         }}
       />

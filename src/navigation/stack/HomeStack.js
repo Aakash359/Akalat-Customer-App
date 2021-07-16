@@ -35,6 +35,7 @@ import EditAddress from '../../Screens/Home/EditAddress'
 import RightButton from '../../containers/RightButton'
 import {headerLeftStyle} from '../Helper'
 import LogoTitle from '../../containers/LogoTitle'
+import HomeScreen from '../../Screens/Home/HomeScreen'
 
 const Stack = createStackNavigator()
 
@@ -44,6 +45,16 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={{
+          headerTitle: (props) => <LogoTitle {...props} />,
+          ...headerLeftStyle(),
+          headerLeft: () => <HamburgerButton navigation={navigation} />,
+          headerRight: () => <RightButton navigation={navigation} />,
+        }}
+      />
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           headerTitle: (props) => <LogoTitle {...props} />,
           ...headerLeftStyle(),

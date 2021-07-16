@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
@@ -17,12 +18,19 @@ import {API_BASE} from '../../apiServices/ApiService'
 import {orderList} from '../../redux/actions/OrderAction'
 import moment from 'moment'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
+import {changeOrderStatusRequest} from '../../redux/actions/SettingActions'
+import {LogoutAlert} from '../../CommonConfig'
+
 function MyOrders(props) {
   const [checked, setChecked] = useState(false)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  
+  const [modal, setModal] = useState({
+    visible: false,
+    item: null,
+  })
+
   const [orderDetail, setOrderDetail] = React.useState({
     orderDetailList: [],
     isLoading: true,
@@ -57,10 +65,27 @@ function MyOrders(props) {
     })
   }
 
+  const cancelOrder = (order) => {
+    const {_id} = order
+    const payload = {
+      _id,
+      status: 'CC',
+    }
+    props?.changeOrderStatusRequest(payload, (res) => {
+      if (!res?.data?.error) {
+        dispatch({type: 'ORDER_LIST'})
+        setModal({...modal, visible: false})
+      }
+    })
+  }
+
   const renderItemsActive = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>
-        <Image source={{uri: item?.restro_detail?.building_front_img}} style={styles.backgroundStyle1} />
+        <Image
+          source={{uri: item?.restro_detail?.building_front_img}}
+          style={styles.backgroundStyle1}
+        />
         <View>
           <Text style={styles.primaryText}>
             {item?.restro_detail.restro_name}
@@ -74,8 +99,8 @@ function MyOrders(props) {
       </View>
       <View style={styles.borderStyle} />
       <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>Items</Text>
-      {productRender(item?.product_list)}
-      <Text style={styles.itemText}></Text>
+
+      <Text style={styles.itemText}>{productRender(item?.product_list)}</Text>
       <Text style={styles.seconderyText}>Ordered on</Text>
       <Text style={styles.itemText}>
         {moment(item?.order_date_placed).format('MMM D, LT')}
@@ -83,32 +108,36 @@ function MyOrders(props) {
       <Text style={styles.seconderyText}>Total Amount</Text>
       <Text style={styles.itemText}>$ {item?.total_price}</Text>
       <View style={styles.heading}>
-        <View
+        <TouchableOpacity
+          onPress={() => setModal({...modal, visible: true, item})}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: Colors.DARK_RED,
-            paddingHorizontal: 12,
+            paddingHorizontal: 25,
             paddingVertical: 10,
             borderRadius: 25,
+            marginLeft: 10,
           }}>
-          <Text style={{color: 'white', fontWeight: '600', fontSize: 20}}>
+          <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
             Cancel Order
           </Text>
-        </View>
-        <View
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigate('TrackOrder', item)}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: Colors.APPCOLOR,
-            paddingHorizontal: 15,
+            paddingHorizontal: 25,
             paddingVertical: 10,
             borderRadius: 25,
+            marginRight: 10,
           }}>
-          <Text style={{color: 'white', fontWeight: '600', fontSize: 20}}>
+          <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
             Track Order
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -202,6 +231,15 @@ function MyOrders(props) {
         />
         {/* <LoadWheel visible={orderDetail.isLoading} /> */}
       </ImageBackground>
+      <LogoutAlert
+        visible={modal?.visible}
+        title={'Cancel Order'}
+        alertTitle={'Are you sure you want to cancel this order?'}
+        rightButtonText={'Yes'}
+        leftButtonText={'No'}
+        onPressRightButton={() => cancelOrder(modal?.item)}
+        onPressLeftButton={() => setModal({...modal, visible: false})}
+      />
     </View>
   )
 }
@@ -220,6 +258,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   getOrderList: orderList,
+  changeOrderStatusRequest,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyOrders)
@@ -251,6 +290,7 @@ const styles = StyleSheet.create({
   itemText: {
     color: '#202020',
     fontSize: Scale(16),
+    marginTop: 5,
   },
   primaryText: {
     color: Colors.BLACK,

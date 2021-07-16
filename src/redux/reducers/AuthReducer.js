@@ -30,7 +30,7 @@ import {
 } from '../Types/type'
 
 const initialState = {
-  isIntro :false,
+  isIntro: false,
   user: {},
   error: '',
   isLoading: false,
@@ -53,13 +53,13 @@ const initialState = {
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return {...state, loginStatus: false, user: action.payload, }
+      return {...state, loginStatus: false, user: action.payload}
     case LOGIN_SUCCESS:
-      return {...state, user: action.payload, loginStatus: true,}
+      return {...state, user: action.payload, loginStatus: true}
     case LOGIN_FAILURE:
-      return {...state, loginStatus: false, user: action.payload,}
+      return {...state, loginStatus: false, user: action.payload}
     case SET_INTRO_COMPLETE:
-        return {...state, isIntro :true,}  
+      return {...state, isIntro: true}
     case SIGNUP_LOGIN:
       return {
         ...state,
@@ -140,7 +140,12 @@ export default function AuthReducer(state = initialState, action) {
       return {...state, logoutStatus: false, logoutResponse: action.payload}
 
     case LOGOUT_SUCCESS:
-      return {...state, logoutStatus: true, logoutResponse: action.payload}
+      return {
+        ...state,
+        logoutStatus: true,
+        logoutResponse: action.payload,
+        isIntro: true,
+      }
 
     case LOGOUT_FAILED:
       return {...state, logoutStatus: false, logoutResponse: action.payload}
@@ -190,5 +195,3 @@ export default function AuthReducer(state = initialState, action) {
       return state
   }
 }
-
-

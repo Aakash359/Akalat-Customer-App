@@ -24,7 +24,9 @@ function Explore() {
   const [check, setChecked] = useState(false)
   const [search, setSearch] = React.useState('')
   const user = useSelector((state) => state.Auth.user)
-  const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
+  const addFavouriteStatus = useSelector(
+    (state) => state.Home.addFavouriteStatus,
+  )
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -33,27 +35,22 @@ function Explore() {
     isLoading: true,
   })
   const redirectTocheck = async () => {
-
     setChecked(!check)
     let Datatype = ''
-    if(check==true){
+    if (check == true) {
       Datatype = 'restaurant'
-      
-    }
-    else{
+    } else {
       Datatype = 'Dishes'
-      
-
     }
 
     setdata({...data, isLoading: true})
     const url = `${API_BASE}/restro/search`
-   
+
     const payload = {
       searchKey: search,
       type: Datatype,
     }
-  
+
     try {
       const res = await axios.post(url, payload)
 
@@ -62,20 +59,15 @@ function Explore() {
         restroList: res?.data?.data?.restro,
         isLoading: false,
       })
-      
-      
-      
     } catch (error) {}
   }
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
-    
   }
   const redirectToRating = (item) => {
     navigate('Rating')
-    
   }
-  
+
   const onFavorite = (item) => {
     const data = {
       userid: user?._id,
@@ -88,15 +80,13 @@ function Explore() {
   }
 
   const onSearch = async () => {
-    
     setdata({...data, isLoading: true})
     const url = `${API_BASE}/restro/search`
-   
+
     const payload = {
       searchKey: search,
-     
     }
-    
+
     try {
       const res = await axios.post(url, payload)
 
@@ -116,7 +106,7 @@ function Explore() {
     onSearch()
   }, [search])
 
-  const renderItems = ({item, }) => (
+  const renderItems = ({item}) => (
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
@@ -236,7 +226,6 @@ function Explore() {
   )
 
   return (
-    
     <View style={styles.container}>
       <StatusBar
         translucent={true}
@@ -278,7 +267,7 @@ function Explore() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        <ScrollView style={{marginBottom:Scale(10)}}>
+        <ScrollView style={{marginBottom: Scale(10)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -304,14 +293,12 @@ function Explore() {
             data={data?.restroList}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
-           
             ListEmptyComponent={() => {
-              return <Text style={{textAlign:'center'}}>No data found</Text>
+              return <Text style={{textAlign: 'center'}}>No data found</Text>
             }}
           />
-          <LoadWheel visible={data.isLoading} />
+          {/* <LoadWheel visible={data.isLoading} /> */}
         </ScrollView>
-        
       </ImageBackground>
     </View>
   )
@@ -369,7 +356,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   leftContainer: {
-    
     borderRadius: Scale(30),
     marginLeft: Scale(20),
     borderColor: 'grey',
@@ -382,7 +368,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   leftContainer1: {
-    
     borderRadius: Scale(30),
     backgroundColor: Colors.WHITE,
     marginLeft: Scale(18),
@@ -424,7 +409,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     shadowOpacity: 3,
     height: Scale(230),
-    
+
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: 2,
