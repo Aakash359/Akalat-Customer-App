@@ -34,7 +34,6 @@ import {
 } from '../../redux/actions'
 import ModalDropdown from 'react-native-modal-dropdown'
 
-
 function ForgotPassword() {
   const counrtryListResponse = useSelector(
     (state) => state.Auth.counrtryListResponse,
@@ -50,6 +49,8 @@ function ForgotPassword() {
   const onSubmit = () => {
     if (phone == '') {
       alert('Please enter phone number')
+    } else if (phone.length < 10) {
+      alert('Phone number must be 10 digit')
     } else {
       const data = {
         phone: phone,
@@ -102,25 +103,29 @@ function ForgotPassword() {
                 </Text>
                 <Text style={styles.mobile}>Mobile Number</Text>
                 <View style={styles.textInputView}>
-                  
-                <View style={{ flexDirection:'row', alignItems:'center' }}>
-              <ModalDropdown 
-              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
-              onSelect={(country_Code) => setCountryCode(country_Code)}
-              defaultIndex={0}
-              defaultValue={countryList.dial_code || '+91'}
-              style={styles.modal}
-              textStyle={styles.modalText}
-              dropdownStyle={styles.modalDropDown}
-              dropdownTextStyle={styles.modalDropDownText}
-              dropdownTextHighlightStyle={
-                  styles.modalDropDownHighlightedText
-              }
-              />
-              
-              <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />
-              </View>
-                 
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <ModalDropdown
+                      options={[
+                        ...new Set(countryList.map((i) => `${i?.dial_code}`)),
+                      ]}
+                      onSelect={(country_Code) => setCountryCode(country_Code)}
+                      defaultIndex={0}
+                      defaultValue={countryList.dial_code || '+91'}
+                      style={styles.modal}
+                      textStyle={styles.modalText}
+                      dropdownStyle={styles.modalDropDown}
+                      dropdownTextStyle={styles.modalDropDownText}
+                      dropdownTextHighlightStyle={
+                        styles.modalDropDownHighlightedText
+                      }
+                    />
+
+                    <Icon
+                      name="caretdown"
+                      size={Scale(10)}
+                      style={{marginLeft: Scale(8)}}
+                    />
+                  </View>
 
                   <TextInput
                     style={styles.textInputContainer}
@@ -193,9 +198,9 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     justifyContent: 'center',
     alignSelf: 'center',
-    width:Scale(280),
+    width: Scale(280),
     height: Scale(50),
-    paddingHorizontal:Scale(10),
+    paddingHorizontal: Scale(10),
   },
   heading: {
     flexDirection: 'row',
@@ -218,21 +223,21 @@ const styles = StyleSheet.create({
     marginTop: Scale(22),
   },
   modal: {
-    justifyContent:'center',
+    justifyContent: 'center',
     backgroundColor: Colors.TRANSPARENT,
     maxWidth: Scale(100),
   },
   modalText: {
     color: Colors.BLACK,
     fontSize: Scale(14),
-    marginLeft:Scale(10),
-    fontWeight:'500'
+    marginLeft: Scale(10),
+    fontWeight: '500',
   },
   modalDropDown: {
     backgroundColor: Colors.WHITE,
     overflow: 'hidden',
     marginTop: Scale(-30),
-    height:Scale(80)
+    height: Scale(80),
   },
   modalDropDownText: {
     backgroundColor: Colors.TRANSPARENT,

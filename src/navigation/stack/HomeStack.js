@@ -55,12 +55,7 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{
-          headerTitle: (props) => <LogoTitle {...props} />,
-          ...headerLeftStyle(),
-          headerLeft: () => <HamburgerButton navigation={navigation} />,
-          headerRight: () => <RightButton navigation={navigation} />,
-        }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HomeMaker"
