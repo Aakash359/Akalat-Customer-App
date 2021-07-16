@@ -1,21 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Image, StyleSheet} from 'react-native';
-import {Scale} from '../CommonConfig';
-function ImageIcon({src, tintColor}) {
-  return <Image style={styles.icon} source={src} tintColor={tintColor} />;
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Image, StyleSheet} from 'react-native'
+import {Scale} from '../CommonConfig'
+function ImageIcon({src, tintColor, tint}) {
+  return (
+    <>
+      <Image
+        style={styles.icon}
+        source={src}
+        tintColor={tint ? tintColor : undefined}
+      />
+    </>
+  )
 }
 
 ImageIcon.propTypes = {
   src: PropTypes.number.isRequired,
-};
+}
 
-export default ImageIcon;
+export default ImageIcon
 
 const styles = StyleSheet.create({
-  icon: {    
+  icon: {
     width: Scale(20),
     height: Scale(20),
-    resizeMode:'contain'
+    resizeMode: 'contain',
   },
-});
+})

@@ -43,21 +43,8 @@ function Settings() {
   const redirectToLogin = async () => {
     dispatch(loaderRequest(true))
     let keys = ['token']
-    await AsyncStorage.clear()
-    setTimeout(() => {
-      dispatch(logOutRequest(data))
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [
-            {
-              name: 'Step',
-              params: {user: 'jane'},
-            },
-          ],
-        }),
-      )
-    }, 500)
+    // await AsyncStorage.clear()
+    dispatch(logOutRequest(data))
 
     setLogoutModal(false)
   }
@@ -94,7 +81,7 @@ function Settings() {
             <Text style={styles.textStyle}>Notifications</Text>
             <Switch
               trackColor={{false: Colors.DARK_RED, true: Colors.DARK_RED}}
-              style={{transform: [{scaleX: .9}, {scaleY: 0.8}]}}
+              style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
               thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
               ios_backgroundColor={Colors.GREEN}
               onValueChange={setCheckedSwitch}

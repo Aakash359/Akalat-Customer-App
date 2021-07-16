@@ -20,6 +20,10 @@ import {
   SET_EDIT_PROFILE_STATUS,
   DELETE_ADDRESS_FAILED,
   MAKE_SIGNUP_SUCCESS,
+  CHANGE_ORDER_STATUS_REQUEST,
+  CHANGE_ORDER_STATUS_SUCCESS,
+  CHANGE_ORDER_STATUS_FAILED,
+  CHANGE_ORDER_STATUS_LOADER,
 } from '../Types/type'
 
 // =================About Us GET REQUEST =================
@@ -147,6 +151,38 @@ export const deleteAddressSuccess = (data) => {
 export const deleteAddressFailed = (data) => {
   return {
     type: DELETE_ADDRESS_FAILED,
+    data,
+  }
+}
+
+// =================changeOrderStatus =================
+export const changeOrderStatusRequest = (data, callback = null) => {
+  return {
+    type: CHANGE_ORDER_STATUS_REQUEST,
+    data,
+    callback,
+  }
+}
+
+// =================changeOrderStatus =================
+export const changeOrderStatusLoader = (data) => {
+  return {
+    type: CHANGE_ORDER_STATUS_LOADER,
+    data,
+  }
+}
+
+// =================changeOrderStatus =================
+export const changeOrderStatusSuccess = (data) => {
+  return {
+    type: CHANGE_ORDER_STATUS_SUCCESS,
+    data,
+  }
+}
+// =================changeOrderStatus =================
+export const changeOrderStatusFailed = (data) => {
+  return {
+    type: CHANGE_ORDER_STATUS_FAILED,
     data,
   }
 }

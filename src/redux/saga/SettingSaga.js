@@ -33,6 +33,7 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILED,
   SET_FAVOURITE_LIST_LOADER,
+  CHANGE_ORDER_STATUS_REQUEST,
 } from '../Types/type'
 import {put, call, takeEvery, select} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
@@ -46,6 +47,8 @@ import {
   AddressListRequest,
   makeSignUpSuccess,
   signUpLogin,
+  changeOrderStatusFailed,
+  changeOrderStatusSuccess,
 } from '../actions'
 
 // ====================== About US GET ======================
@@ -363,6 +366,35 @@ export const changePassword = function* changePassword({data}) {
   }
 }
 
+// ====================== Change Order Status ======================
+
+function* changeOrderStatus({data, callback}) {
+  try {
+    const response = yield call(Request, {
+      url: 'order/changeOrderStatus',
+      method: 'POST',
+      data,
+    })
+    if (response?.error) {
+      yield put(changeOrderStatusFailed(response))
+      global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
+      if (callback) {
+        callback(response)
+      }
+    } else {
+      yield put(changeOrderStatusSuccess(response))
+      if (callback) {
+        callback(response)
+      }
+    }
+  } catch (e) {
+    yield put(changeOrderStatusFailed(e.message))
+    if (callback) {
+      callback(response)
+    }
+  }
+}
+
 export function* settingSaga() {
   yield takeEvery(ABOUTUS_REQUEST, AboutUsSaga)
   yield takeEvery(PRIVACY_REQUEST, PrivacySaga)
@@ -376,5 +408,6 @@ export function* settingSaga() {
   yield takeEvery(DELETE_ADDRESS_REQUEST, deleteAddress)
   yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList)
   yield takeEvery(CHANGE_PASSWORD_REQUEST, changePassword)
+  yield takeEvery(CHANGE_ORDER_STATUS_REQUEST, changeOrderStatus)
 }
 export default settingSaga

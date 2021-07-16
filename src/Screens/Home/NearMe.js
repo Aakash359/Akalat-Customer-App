@@ -28,7 +28,6 @@ import {CustomButton} from '../../Component'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
 
-
 function NearMe(props) {
   const {navigate} = useNavigation()
   const [activeTab, setActiveTab] = useState(null)
@@ -74,7 +73,6 @@ function NearMe(props) {
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
-     
       })
     } catch (error) {}
   }
@@ -101,213 +99,172 @@ function NearMe(props) {
     const data = {
       userid: user?._id,
       restro_id: item?._id,
-      
+      is_favourited_restro: true,
     }
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list successfully')
+    // dispatch(addfavouriteRequest(data))
+    // alert('Added to favourite list successfully')
+    console.log('====================================')
+    console.log(item, data)
+    console.log('====================================')
   }
   useEffect(() => {
     dispatch(offercardRequest())
   }, [])
-  
-//********* Single Filtering And Searching And filtering Both */
+
+  //********* Single Filtering And Searching And filtering Both */
 
   const onFilter = async () => {
-    var data = search 
-    if(data=!search) {
-      var restro_type = '';
-        if(isEnabled){
-            restro_type = 'veg_and_non_veg';
-        } else {
-            restro_type = 'veg'
-        }
-        const url = `${API_BASE}/restro/filter`
-        const payload = {
-            
-            'rating_from_user': value+"",
-            'restaurent_type': restro_type,
-            // 'distance': value1+'',
-            'type': 'filter'
-          }
-          try 
-          {
-          const res = await axios.post(url, payload)
-          setdata({
-            ...data,
-            restroList: res?.data?.data?.restro,
-           
-            
-          })
-          setModal2(false)
-          navigate('NearMe')
-        
-        
-        } 
-        catch (error) 
-        {
-            
-            console.log("Error",error);
-            
-        }
-    }else
-    {
-
-        var restro_type = ''
-        if (isEnabled) {
-          restro_type = 'veg_and_non_veg'
-        } else {
-          restro_type = 'veg'
-        }
-        const url = `${API_BASE}/restro/searchAndFilter`
-        const payload = {
-          searchKey: search,
-          'rating_from_user': value + '',
-          'restaurent_type': restro_type,
-          // 'distance': value1+'',
-        }
-        try {
-          const res = await axios.post(url, payload)
-          setdata({
-            ...data,
-            restroList: res?.data?.data?.restroNew,
-           
-          })
-          setModal2(false)
-          navigate('NearMe')
-        
-        } catch (error) {
-          console.log("Error",error);
-        
-        }
-      
+    var data = search
+    if ((data = !search)) {
+      var restro_type = ''
+      if (isEnabled) {
+        restro_type = 'veg_and_non_veg'
+      } else {
+        restro_type = 'veg'
+      }
+      const url = `${API_BASE}/restro/filter`
+      const payload = {
+        rating_from_user: value + '',
+        restaurent_type: restro_type,
+        // 'distance': value1+'',
+        type: 'filter',
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restro,
+        })
+        setModal2(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+      }
+    } else {
+      var restro_type = ''
+      if (isEnabled) {
+        restro_type = 'veg_and_non_veg'
+      } else {
+        restro_type = 'veg'
+      }
+      const url = `${API_BASE}/restro/searchAndFilter`
+      const payload = {
+        searchKey: search,
+        rating_from_user: value + '',
+        restaurent_type: restro_type,
+        // 'distance': value1+'',
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNew,
+        })
+        setModal2(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+      }
     }
-    
   }
 
   const onResetFilter = async () => {
     const url = `${API_BASE}/restro/search`
-    setValue(0);
+    setValue(0)
     const payload = {
-       searchKey: '',
-      'rating_from_user': '',
-      'restaurent_type': '',
+      searchKey: '',
+      rating_from_user: '',
+      restaurent_type: '',
     }
-   
+
     try {
       const res = await axios.post(url, payload)
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
-       
-        
       })
       navigate('NearMe')
       setModal2(false)
     } catch (error) {
-      console.log("Error",error);
-    
+      console.log('Error', error)
     }
   }
 
- //********* Single Sorting And Searching And Sorting Both */
+  //********* Single Sorting And Searching And Sorting Both */
 
   const onSortBy = async () => {
-   var data = search 
-    if(data=!search){
-    const url = `${API_BASE}/restro/sortBy`
-    const payload = {
-        
-        'userid': user?._id+'',
-        'relevance': activeTab==0,
-        'rating_high_to_low': activeTab==1,
-        'rating_low_to_high': activeTab==2,
+    var data = search
+    if ((data = !search)) {
+      const url = `${API_BASE}/restro/sortBy`
+      const payload = {
+        userid: user?._id + '',
+        relevance: activeTab == 0,
+        rating_high_to_low: activeTab == 1,
+        rating_low_to_high: activeTab == 2,
         // 'delivery_time': activeTab==3
       }
-    try 
-      {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNewArrayList,
-       
-      })
-      setModal(false)
-      navigate('NearMe')
-    
-    
-    } 
-    catch (error) 
-    {
-      console.log('Error',error);  
-    }
-
-    }
-    else 
-    {
-      console.log('====================================');
-      console.log("Error");
-      console.log('====================================');
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNewArrayList,
+        })
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+      }
+    } else {
+      console.log('====================================')
+      console.log('Error')
+      console.log('====================================')
 
       const url = `${API_BASE}/restro/sortByAndSearch`
       const payload = {
-         searchKey: search,
-        'userid': user?._id,
-        'relevance': activeTab==0,
-        'rating_high_to_low': activeTab==1,
-        'rating_low_to_high': activeTab==2,
-        'delivery_time': activeTab==3
+        searchKey: search,
+        userid: user?._id,
+        relevance: activeTab == 0,
+        rating_high_to_low: activeTab == 1,
+        rating_low_to_high: activeTab == 2,
+        delivery_time: activeTab == 3,
       }
-      
-      
-    try 
-      {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNewArrayList,
-       
-      })
-     
-      setModal(false)
-      navigate('NearMe')
-    } 
-    catch (error) 
-    {
-      console.log('Error',error);  
-    }
 
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNewArrayList,
+        })
+
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+      }
     }
   }
 
   const onSortByReset = async () => {
-       
     const url = `${API_BASE}/restro/search`
-    setActiveTab(0);
+    setActiveTab(0)
     const payload = {
-      'userid': user?._id,
-      'relevance': '',
-      'rating_high_to_low': '',
-      'rating_low_to_high': '',
-      'delivery_time': ''
-      }
-      
-    try 
-      {
+      userid: user?._id,
+      relevance: '',
+      rating_high_to_low: '',
+      rating_low_to_high: '',
+      delivery_time: '',
+    }
+
+    try {
       const res = await axios.post(url, payload)
       setdata({
         ...data,
         restroList: res?.data?.data?.restro,
-       
-        
       })
       setModal(false)
       navigate('NearMe')
-    
-    
-    } 
-    catch (error) 
-    {
-      console.log('Error',error);  
+    } catch (error) {
+      console.log('Error', error)
     }
   }
 
@@ -318,7 +275,6 @@ function NearMe(props) {
           source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
-            
             <View
               style={{
                 flexDirection: 'row',
@@ -766,13 +722,14 @@ function NearMe(props) {
                   flex: 1,
                   marginRight: Scale(10),
                 }}>
-                <CustomButton title="Reset All" 
-                 onSubmit={onSortByReset} 
-                 />
+                <CustomButton title="Reset All" onSubmit={onSortByReset} />
               </View>
               <View style={{flex: 1}}>
-                <CustomButton title="Apply" isSecondary={true} 
-                onSubmit={onSortBy}/>
+                <CustomButton
+                  title="Apply"
+                  isSecondary={true}
+                  onSubmit={onSortBy}
+                />
               </View>
             </View>
           </View>
@@ -909,10 +866,7 @@ function NearMe(props) {
             }}>
             <View style={{marginTop: Scale(50), flexDirection: 'row'}}>
               <View style={{flex: 1, marginRight: Scale(15)}}>
-                <CustomButton title="Reset All" 
-                onSubmit={onResetFilter} 
-                
-                />
+                <CustomButton title="Reset All" onSubmit={onResetFilter} />
               </View>
               <View style={{flex: 1}}>
                 <CustomButton

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   Text,
   View,
@@ -8,41 +8,43 @@ import {
   ImageBackground,
   Modal,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native'
 import {Icon, Left} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
-import {CustomButton,} from '../../Component'
+import {CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import Share from 'react-native-share'
+import Clipboard from '@react-native-community/clipboard'
 
 function ShareScreen() {
   const [modal, setModal] = React.useState(false)
-
+  const [copiedText, setCopiedText] = useState('')
+  const [visible, setVisible] = useState(false)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const redirectToMyAccount = () => {
     navigate('Favorites')
   }
+  const copyToClipboard = () => {
+    Clipboard.setString('Irshad_hussain_2605')
+    ToastAndroid.showWithGravityAndOffset(
+      'Text copied to Clipbaord',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50,
+    )
+  }
 
   const shareApp = async (social) => {
-    
-    
-    
     const shareOptions = {
       title: 'Share via',
-      message: 'some message',
+      message: 'Akalat',
       social,
     }
-
-    
-    
-    
-
     try {
       const shareResponse = await Share.shareSingle(shareOptions)
-      
-      
-      
       if (!shareResponse?.success) {
         global.dropDownAlertRef.alertWithType('error', 'Error', 'App not found')
       }
@@ -74,7 +76,9 @@ function ShareScreen() {
           source={ImagesPath.refer}
           style={{alignSelf: 'center', marginTop: Scale(100)}}
         />
-        <View
+
+        <TouchableOpacity
+          onPress={copyToClipboard}
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -84,8 +88,10 @@ function ShareScreen() {
           <Text style={{fontSize: Scale(20), color: '#202020'}}>
             Irshad_hussain_2605{' '}
           </Text>
+
           <Image source={ImagesPath.copy} style={{left: 15}} />
-        </View>
+        </TouchableOpacity>
+
         <Text
           style={{
             textAlign: 'center',
@@ -138,53 +144,62 @@ function ShareScreen() {
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.INSTAGRAM)}
                 style={{
-                  
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                   <Image
-                    resizeMode="contain"
-                    style={{height:40,width:40,alignSelf:'center'}}
-                    source={ImagesPath.Insta} 
-                            />
-                <Text style={{
-                 marginTop: 10,textAlign:'center'
-               }}>Instagram</Text>
+                <Image
+                  resizeMode="contain"
+                  style={{height: 40, width: 40, alignSelf: 'center'}}
+                  source={ImagesPath.Insta}
+                />
+                <Text
+                  style={{
+                    marginTop: 10,
+                    textAlign: 'center',
+                  }}>
+                  Instagram
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.FACEBOOK)}
                 style={{
-                  
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                  <Image
-                    resizeMode="contain"
-                    style={{height:40,width:40,alignSelf:'center'}}
-                    source={ImagesPath.fb} 
-                  />
-                <Text style={{
-                 marginTop: 10,textAlign:'center'
-               }}>Facebook</Text>
+                <Image
+                  resizeMode="contain"
+                  style={{height: 40, width: 40, alignSelf: 'center'}}
+                  source={ImagesPath.fb}
+                />
+                <Text
+                  style={{
+                    marginTop: 10,
+                    textAlign: 'center',
+                  }}>
+                  Facebook
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.WHATSAPP)}
                 style={{
-                
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                  <Image
-                    resizeMode="contain"
-                    style={{height:40,width:40,alignSelf:'center'}}
-                    source={ImagesPath.whatsapp} 
-                  />
-                <Text style={{
-                 marginTop: 10,textAlign:'center'
-               }}>Whatsapp</Text>
+                <Image
+                  resizeMode="contain"
+                  style={{height: 40, width: 40, alignSelf: 'center'}}
+                  source={ImagesPath.whatsapp}
+                />
+                <Text
+                  style={{
+                    marginTop: 10,
+                    textAlign: 'center',
+                  }}>
+                  Whatsapp
+                </Text>
               </TouchableOpacity>
             </View>
             <View
@@ -195,36 +210,42 @@ function ShareScreen() {
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.EMAIL)}
                 style={{
-                 
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                  <Image
-                    resizeMode="contain"
-                    style={{height:40,width:40,alignSelf:'center'}}
-                    source={ImagesPath.gmail} 
-                  />
-                <Text style={{
-                 marginTop: 10,textAlign:'center'
-               }}>Gmail</Text>
+                <Image
+                  resizeMode="contain"
+                  style={{height: 40, width: 40, alignSelf: 'center'}}
+                  source={ImagesPath.gmail}
+                />
+                <Text
+                  style={{
+                    marginTop: 10,
+                    textAlign: 'center',
+                  }}>
+                  Gmail
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => shareApp(Share.Social.SMS)}
                 style={{
-                  
                   width: 70,
                   height: 70,
                   margin: 10,
                 }}>
-                   <Image
-                    resizeMode="contain"
-                    style={{height:40,width:40,alignSelf:'center'}}
-                    source={ImagesPath.Sms} 
-                  />
-                <Text style={{
-                 marginTop: 10,textAlign:'center'
-               }}>Messages</Text>
+                <Image
+                  resizeMode="contain"
+                  style={{height: 40, width: 40, alignSelf: 'center'}}
+                  source={ImagesPath.Sms}
+                />
+                <Text
+                  style={{
+                    marginTop: 10,
+                    textAlign: 'center',
+                  }}>
+                  Messages
+                </Text>
               </TouchableOpacity>
               <View
                 style={{
