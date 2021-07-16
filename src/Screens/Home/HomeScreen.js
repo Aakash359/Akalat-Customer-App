@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
     paddingHorizontal: Scale(25),
-  },
+},
   location: {
     marginRight: Scale(10),
     width: Scale(25),

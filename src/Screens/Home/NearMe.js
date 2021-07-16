@@ -39,7 +39,7 @@ function NearMe(props) {
   const [value, setValue] = useState(0)
   const [value1, setValue1] = useState(0)
   const dispatch = useDispatch()
-  const route = useRoute()
+
 
   const [isEnabled, setIsEnabled] = useState()
 
@@ -74,6 +74,9 @@ function NearMe(props) {
         ...data,
         restroList: res?.data?.data?.restro,
       })
+      console.log('====================================');
+      console.log("Aakash====>",res?.data?.data?.restro);
+      console.log('====================================');
     } catch (error) {}
   }
 
