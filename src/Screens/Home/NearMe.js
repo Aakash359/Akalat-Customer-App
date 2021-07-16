@@ -36,8 +36,8 @@ function NearMe(props) {
   const user = useSelector((state) => state.Auth.user)
   const [modal, setModal] = React.useState(false)
   const [modal2, setModal2] = React.useState(false)
-  const [value, setValue] = useState()
-  const [value1, setValue1] = useState()
+  const [value, setValue] = useState(0)
+  const [value1, setValue1] = useState(0)
   const dispatch = useDispatch()
   const route = useRoute()
 
@@ -811,7 +811,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {value}
+                {value + ' Miles'}
               </Text>
             </View>
             <Slider
