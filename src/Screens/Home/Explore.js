@@ -284,7 +284,12 @@ function Explore() {
               Near By
             </Text>
             <TouchableOpacity onPress={redirectToRating}>
-              <Text style={{color: Colors.DARK_RED, fontSize: Scale(16),fontWeight:'bold'}}>
+              <Text
+                style={{
+                  color: Colors.DARK_RED,
+                  fontSize: Scale(16),
+                  fontWeight: 'bold',
+                }}>
                 View All
               </Text>
             </TouchableOpacity>
