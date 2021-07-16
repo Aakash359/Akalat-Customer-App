@@ -517,7 +517,7 @@ function NearMe(props) {
           style={styles.searchView}
           onIconPress={clearImmediate}
           inputStyle={{fontSize: Scale(14), marginLeft: Scale(-15)}}
-          placeholder="Search restaurant, dishes(or food) here..."
+          placeholder="Search restaurant, dishes(or food)..."
           onChangeText={(text) => setSearch(text)}
           value={search}
         />
