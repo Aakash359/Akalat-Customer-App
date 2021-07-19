@@ -62,9 +62,6 @@ function Login(props) {
         phone: parseInt(phone),
         password: password,
       }
-      console.log('====================================');
-      console.log("Aakash===>",data);
-      console.log('====================================');
       dispatch(loaderRequest(true))
 
       setTimeout(() => {

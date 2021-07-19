@@ -22,7 +22,7 @@ import {CustomButton, FormInput, LocationInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
-import {AddAddressRequest} from '../../redux/actions'
+import {AddAddressRequest,AddressListLoader,AddressListRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {withTranslation, useTranslation} from 'react-i18next'
@@ -41,6 +41,9 @@ function AddNewAddress(props) {
   const user = useSelector((state) => state.Auth.user)
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
+
+  const addAddressStatus = useSelector((state) => state.Setting.addAddressStatus)
+  
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -99,7 +102,7 @@ function AddNewAddress(props) {
     } else {
       let data = {
         // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-        address_type: activeTab ,
+        address_type: activeTab+"",
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
@@ -111,7 +114,7 @@ function AddNewAddress(props) {
       if (!nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-          address_type: activeTab ,
+          address_type: activeTab+"",
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
@@ -120,11 +123,20 @@ function AddNewAddress(props) {
         }
       }
 
+      
       dispatch(AddAddressRequest(data))
-      navigate('ManageAddress')
-      alert('Address added succesfully')
+      if (addAddressStatus){
+        const data = {
+          created_by: user?._id,
+        } 
+        navigate('ManageAddress')
+        alert('Address added succesfully')
+        dispatch(AddressListLoader(true))
+        dispatch(AddressListRequest(data))
+        }
     }
   }
+
 
   return (
     <View style={styles.container}>

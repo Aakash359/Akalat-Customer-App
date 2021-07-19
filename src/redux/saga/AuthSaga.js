@@ -21,10 +21,14 @@ import {
   COUNTRY_LIST_REQUEST,
   COUNTRY_LIST_SUCCESS,
   COUNTRY_LIST_FAILED,
+  EDIT_PROFILE_REQUEST,
 } from '../Types/type'
 import {put, call, takeEvery, takeLatest} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
-import {OTPRequest} from '../actions'
+import {OTPRequest,editProfileFailed,
+  editProfileSuccess,
+  setEditProfileLoader,
+  setUserDetails,} from '../actions'
 
 // ====================== Sign-Up POST ======================
 export const SignUpSaga = function* SignUpSaga({params}) {
@@ -169,6 +173,35 @@ export const countryListSaga = function* getUserDetails({data}) {
   }
 }
 
+  // ====================== Edit Profie POST ======================
+
+  function* EditProfileSaga({data}) {
+    yield put(setEditProfileLoader(true))
+    yield put(editProfileFailed(''))
+    try {
+      const response = yield call(Request, {
+        url: '/editUser',
+        method: 'POST',
+        data,
+      })
+
+      if (response?.error) {
+        yield put(setEditProfileLoader(false))
+        yield put(editProfileFailed(response?.message))
+        global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
+      } else {
+        yield put(setEditProfileLoader(false))
+        yield put(editProfileFailed(''))
+        yield put(editProfileSuccess(response.data))
+        let ud = {...response.data}
+        yield put(setUserDetails(ud))
+      }
+    } catch (e) {
+      yield put(setEditProfileLoader(false))
+      yield put(editProfileFailed(e.message))
+    }
+  }
+
 export function* authSaga() {
   yield takeEvery(SIGNUP_REQUEST, SignUpSaga)
   yield takeEvery(LOGIN_REQUEST, loginSaga)
@@ -177,5 +210,6 @@ export function* authSaga() {
   yield takeEvery(LOGOUT_REQUEST, logoutSaga)
   yield takeLatest(GET_USER_DETAILS_REQUEST, getUserDetails)
   yield takeLatest(COUNTRY_LIST_REQUEST, countryListSaga)
+  yield takeEvery(EDIT_PROFILE_REQUEST, EditProfileSaga)
 }
 export default authSaga
