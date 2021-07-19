@@ -158,7 +158,7 @@ function HomeScreen(props) {
               fontWeight: 'normal',
             }}>
             {' '}
-            (11:00 am - 10:00 pm)
+            {item?.opening_time} - {item?.closing_time}
           </Text>
           {addFavouriteStatus == true ? (
             <TouchableOpacity onPress={() => onFavorite(item)}>

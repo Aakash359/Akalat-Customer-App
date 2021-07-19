@@ -27,6 +27,12 @@ import {
   COUNTRY_LIST_SUCCESS,
   COUNTRY_LIST_FAILED,
   SET_OTP_VERIFY_STATUS,
+  EDIT_PROFILE_REQUEST,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAILED,
+  SET_EDIT_PROFILE_LOADER,
+  SET_EDIT_PROFILE_STATUS,
+  
 } from '../Types/type'
 
 const initialState = {
@@ -48,6 +54,11 @@ const initialState = {
   counrtryListStatus: false,
   OTPVerifyStatus: false,
   otpVerifyResponse: {},
+  userProfile :null,
+  editProfileResponse: {},
+  editProfileStatus: false,
+  editProfileError: '',
+  editProfileLoader: false,
 }
 
 export default function AuthReducer(state = initialState, action) {
@@ -55,7 +66,9 @@ export default function AuthReducer(state = initialState, action) {
     case LOGIN_REQUEST:
       return {...state, loginStatus: false, user: action.payload}
     case LOGIN_SUCCESS:
-      return {...state, user: action.payload, loginStatus: true}
+      return {...state, user: action.payload, loginStatus: true,
+        userProfile: action.payload
+      }
     case LOGIN_FAILURE:
       return {...state, loginStatus: false, user: action.payload}
     case SET_INTRO_COMPLETE:
@@ -67,18 +80,48 @@ export default function AuthReducer(state = initialState, action) {
         SignStatus: false,
         user: {...state.user, ...state.otpVerifyResponse?.data},
         signupResponse: null,
+        userProfile: {...state.user, ...state.otpVerifyResponse?.data},
       }
     case SIGNUP_REQUEST:
       return {...state, SignStatus: false, signupResponse: action.payload}
 
     case SIGNUP_SUCCESS:
-      return {...state, SignStatus: true, signupResponse: action.payload}
+      return {...state, SignStatus: true, signupResponse: action.payload,
+      }
 
     case SET_SIGNUP_STATUS:
       return {...state, SignStatus: action.data}
 
     case SIGNUP_FAILED:
       return {...state, SignStatus: false, signupResponse: action.payload}
+
+    case EDIT_PROFILE_REQUEST:
+        return {
+          ...state,
+          editProfileStatus: false,
+          editProfileResponse: action.payload,
+        }
+      case SET_EDIT_PROFILE_LOADER:
+        return {
+          ...state,
+          editProfileLoader: action.payload,
+        }
+      case EDIT_PROFILE_SUCCESS:
+        return {
+          ...state,
+          editProfileStatus: true,
+          editProfileResponse: action.payload,
+        }
+      case EDIT_PROFILE_FAILED:
+        return {
+          ...state,
+          editProfileError: action.payload,
+        }
+      case SET_EDIT_PROFILE_STATUS:
+        return {
+          ...state,
+          editProfileStatus: action?.data,
+        }  
 
     case OTP_REQUEST:
       return {...state, OTPStatus: false, otpResponse: action.payload}
