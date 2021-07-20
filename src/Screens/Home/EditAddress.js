@@ -23,7 +23,7 @@ import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
 import {color} from 'react-native-reanimated'
-import {AddAddressRequest} from '../../redux/actions'
+import {AddAddressRequest,AddressListRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
@@ -40,7 +40,7 @@ function EditAddress(props) {
   const user = useSelector((state) => state.Auth.user)
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
-
+  const addAddressStatus = useSelector((state) => state.Setting.addAddressStatus)
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
@@ -93,44 +93,45 @@ function EditAddress(props) {
     } else if (area_name == '') {
       alert('Please enter area')
     } else {
-      let lat = ''
-      let lng = ''
-
-      Geocoder.from([{house_name_and_no} + ' ', {area_name} + '', {nearby}])
-        .then((json) => {
-          var location = json.results[0].geometry.location
-          lat = parseFloat(location.lat)
-          lng = parseFloat(location.lng)
-
-          const data = {
+       let data = {
             address_type: activeTab,
-            lng,
-            lat,
-            house_name_and_no: house_name_and_no,
-            area_name: area_name,
-            nearby: nearby,
+            lng:address?.lng,
+            lat: address?.lat,
+            house_name_and_no,
+            area_name,
+            nearby,
             created_by: user?._id,
             _id: address?._id,
           }
-
-          dispatch(AddAddressRequest(data))
-          navigate('ManageAddress')
-        })
-        .catch((error) => {
+        if (!nearby){
           const data = {
             address_type: activeTab,
             lng: address?.lng,
             lat: address?.lat,
-            house_name_and_no: house_name_and_no,
-            area_name: area_name,
-            nearby: nearby,
+            house_name_and_no,
+            area_name,
             created_by: user?._id,
             _id: address?._id,
           }
-
-          dispatch(AddAddressRequest(data))
-          navigate('ManageAddress')
-        })
+         dispatch(AddressListRequest(data))
+          if (addAddressStatus){
+            const data = {
+              created_by: user?._id,
+            } 
+            navigate('ManageAddress')
+            alert('Address updated succesfully')
+            dispatch(AddressListRequest(data))
+            }
+        }
+        dispatch(AddAddressRequest(data))
+      if (addAddressStatus){
+        const data = {
+          created_by: user?._id,
+        } 
+        navigate('ManageAddress')
+        alert('Address updated succesfully')
+        dispatch(AddressListRequest(data))
+        }
     }
   }
 

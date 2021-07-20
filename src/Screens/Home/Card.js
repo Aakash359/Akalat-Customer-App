@@ -19,7 +19,7 @@ import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {FormArea, CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {scale} from '../../CommonConfig/HelperFunctions/functions'
-//dnfjsdfj
+
 import {connect} from 'react-redux'
 import {
   addToCart,

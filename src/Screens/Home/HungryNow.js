@@ -14,6 +14,9 @@ function HungryNow(props) {
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
+    console.log('====================================');
+    console.log("Aakash==>",product_list);
+    console.log('====================================');
     
     useEffect(() => {
         dispatch(hungryNowListLoader(true));
@@ -72,11 +75,11 @@ function HungryNow(props) {
                        <Image source={ImagesPath.veg}/>
                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
                     </View>
-                    <Text style={{ color: 'grey', fontSize: Scale(16), fontWeight: 'normal' }}>{item.description}</Text>
+                    <Text style={{ color: 'grey', fontSize: Scale(13), marginTop:Scale(8), fontWeight: 'normal' }}>{item.description}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>$ {item.final_price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through',}}>$ {item.price}</Text>
+                <Text style={styles.headingText}>$ {item.final_price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through',}}> ${item.price}</Text>
                 </Text>
                 {inCart ?
                   <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -90,7 +93,7 @@ function HungryNow(props) {
                   <Text onPress={() =>addToCart(item)} style={[styles.textStyle,{color:Colors.APPCOLOR}]}>ADD</Text>
                 </View>}
               </View>
-              <Text style={{ marginRight:Scale(7),color: 'grey', fontSize: Scale(16), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>
+              <Text style={{ color: 'grey', fontSize: Scale(13), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between',height:Scale(2), marginVertical:Scale(15) ,backgroundColor:"#E0E0E0"}}>
                 
             </View>
@@ -126,7 +129,7 @@ const mapStateToProps = ({Cart: {restroDetails, products}}) => {
     cartProducts: products
     }
 }
-
+//hdshskhkh
 const mapDispatchToProps = {
     addToCart: addToCart,
     subToCart: subToCart
@@ -149,7 +152,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
                 },
  
-  textStyle: { color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold' },
+  textStyle: { 
+      color: Colors.BLACK, 
+      fontSize: Scale(16), 
+      fontWeight: 'bold' 
+    },
     loginInputCont: {
         flex:1,
         paddingTop: Scale(10),

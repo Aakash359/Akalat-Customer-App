@@ -13,11 +13,6 @@ import {
   FAVOURITE_LIST_REQUEST,
   CHANGE_PASSWORD_REQUEST,
   SET_FAVOURITE_LIST_LOADER,
-  EDIT_PROFILE_REQUEST,
-  SET_EDIT_PROFILE_LOADER,
-  EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAILED,
-  SET_EDIT_PROFILE_STATUS,
   DELETE_ADDRESS_FAILED,
   MAKE_SIGNUP_SUCCESS,
   CHANGE_ORDER_STATUS_REQUEST,
@@ -65,41 +60,7 @@ export const HelpRequest = (data) => {
     data,
   }
 }
-// =================Edit Profile REQUEST =================
-export const EditProfileRequest = (data) => {
-  return {
-    type: EDIT_PROFILE_REQUEST,
-    data,
-  }
-}
-// =================Set Edit Profile LOADER =================
-export const setEditProfileLoader = (payload) => {
-  return {
-    type: SET_EDIT_PROFILE_LOADER,
-    payload,
-  }
-}
-// =================Edit Profile SUCCUSS =================
-export const editProfileSuccess = (data) => {
-  return {
-    type: EDIT_PROFILE_SUCCESS,
-    data,
-  }
-}
-// =================Edit Profile FAILED =================
-export const editProfileFailed = (data) => {
-  return {
-    type: EDIT_PROFILE_FAILED,
-    data,
-  }
-}
-// =================SET edit Profile status =================
-export const SetEditProfileStatus = (data) => {
-  return {
-    type: SET_EDIT_PROFILE_STATUS,
-    data,
-  }
-}
+
 
 // ================= My Order List REQUEST =================
 export const myOrderListRequest = (data) => {

@@ -2,526 +2,350 @@ import React, {useState, useEffect} from 'react'
 import {
   Text,
   View,
+  PermissionsAndroid,
   StyleSheet,
-  FlatList,
   StatusBar,
   ScrollView,
-  TouchableOpacity,
-  Image,
+  KeyboardAvoidingView,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native'
 import {Icon} from 'native-base'
-import {Colors, Scale, ImagesPath} from '../../CommonConfig'
-import {Searchbar} from 'react-native-paper'
-import {useNavigation} from '@react-navigation/native'
-import {useSelector, useDispatch, connect} from 'react-redux'
 import {
-  offercardRequest,
-  addfavouriteRequest,
-  couponRequest,
-} from '../../redux/actions'
-import {API_BASE} from '../../apiServices/ApiService'
-import axios from 'axios'
-import { LoadWheel } from '../../CommonConfig/LoadWheel'
+  Colors,
+  Scale,
+  ImagesPath,
+  iOSMapAPIKey,
+  androidMapAPIKey,
+} from '../../CommonConfig'
+import {CustomButton, FormInput, LocationInput} from '../../Component'
+import {useNavigation} from '@react-navigation/native'
+import Geolocation from 'react-native-geolocation-service'
+import Geocoder from 'react-native-geocoding'
+import {AddAddressRequest,AddressListLoader,AddressListRequest} from '../../redux/actions'
+import {useSelector, useDispatch} from 'react-redux'
 
-function NearMe(props) {
+
+Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
+
+function AddNewAddress(props) {
+  const [activeTab, setActiveTab] = useState(null)
+  const [value, setValue] = useState(false)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const offercardResponse = useSelector((state) => state.Home.offercardResponse)
+  const [currentAddress, setAddress] = useState('')
+  const [house_name_and_no, setHouseName] = useState('')
+  const [area_name, setAreaName] = useState('')
+  const [nearby, setNearby] = useState('')
   const user = useSelector((state) => state.Auth.user)
-  const addFavouriteStatus = useSelector((state) => state.Home.addFavouriteStatus)
-  const [offercard, setofferCard] = React.useState(
-    offercardResponse?.data || [],
-  )
-  const [isLoading, setIsLoading] = useState(false);
-  const couponResponse = useSelector((state) => state.Home.couponResponse)
-
-  const [data, setdata] = React.useState({
-    restroList: [],
-    
-  })
-
-  const [search, setSearch] = React.useState('')
-
-  const onSearch = async () => {
-    setdata({...data, isLoading: true})
-    const url = `${API_BASE}/restro/search`
-    const payload = {
-      searchKey: search,
-    }
-    try {
-      const res = await axios.post(url, payload)
-
-      
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restro,
-        isLoading: false,
-      })
-    } catch (error) {}
-  }
-
-  React.useEffect(() => {
-    onSearch()
-  }, [])
-
-  React.useEffect(() => {
-    onSearch()
-  }, [search])
-
-  useEffect(() => {
-    
-    setTimeout(() => {
-      dispatch(couponRequest())
-    }, 5000)
-  }, [])
-
-  const redirectToHomeMaker = (item) => {
-    navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
-  }
-
-  const onFavorite = (item) => {
-
-    
-    const data = {
-      userid: user?._id,
-      restro_id: item?._id,
-     
-    }
-     dispatch(addfavouriteRequest(data))
-     alert('Added to favourite list successfully')
-  }
-  const onBack = res => {
-    
-   setdata({
-      ...data,
-      restroList: res.restro,
-    
-    })
-    
-  };
-  const redirectToFilter = () => {
-    
-    navigate("Filter", { onBack: (data) => onBack(data)});
-  }
-  const redirectToSortBy = () => {
-    navigate('SortBy')
-  }
-  const redirectToNotification = () => {
-    navigate('Notification')
-  }
-
   const dispatch = useDispatch()
+  const [location, setLocation] = useState(null)
+
+  const addAddressStatus = useSelector((state) => state.Setting.addAddressStatus)
+  
 
   useEffect(() => {
-   
-      dispatch(offercardRequest())
-      
-     
-  
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation()
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            getOneTimeLocation()
+          } else {
+          }
+        } catch (err) {}
+      }
+    }
+    requestLocationPermission()
+    return () => {
+      Geolocation.clearWatch()
+    }
   }, [])
 
-  const renderItems = ({item}) => (
-    <View style={styles.cardStyle}>
-      <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
-        <ImageBackground
-          source={{uri: item?.building_front_img}}
-          style={styles.backgroundStyle}>
-          <View style={{justifyContent: 'flex-end', flex: 1}}>
-          <LoadWheel visible={isLoading} />
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingBottom: Scale(10),
-                alignItems: 'center',
-                paddingHorizontal: Scale(10),
-              }}>
-              <Text
-                style={{
-                  fontSize: Scale(12),
-                  color: Colors.WHITE,
-                  marginLeft: Scale(7),
-                  paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(5),
-                  backgroundColor: 'green',
-                }}>
-                {item?.rating_from_user}
-              </Text>
+  const getOneTimeLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setLocation(position.coords)
+        Geocoder.from(position.coords.latitude, position.coords.longitude).then(
+          (json) => {
+            var addressComponent =
+              json.results[0].address_components[1].long_name +
+              ' ' +
+              json.results[0].address_components[2].long_name
+            setAddress(addressComponent)
+          },
+        )
+      },
+      (error) => {},
+      {
+        timeout: 30000,
+        maximumAge: 1000,
+      },
+    )
+  }
+  const checked = () => setValue(!value)
 
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {color: Colors.WHITE}]}
-              />
+  const onSubmit = async () => {
+    if (house_name_and_no == '') {
+      alert('Please enter House No')
+    } else if (area_name == '') {
+      alert('Please enter area')
+    } else {
+      let data = {
+        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+        address_type: activeTab+"",
+        lng: location?.latitude,
+        lat: location?.longitude,
+        house_name_and_no: house_name_and_no,
+        area_name: area_name,
+        nearby: nearby == '' ? 'null' : nearby,
+        created_by: user?._id,
+      }
 
-              <View style={{justifyContent: 'flex-end', flex: 1}}>
-                <Text
-                  style={{
-                    color: '#fff',
-                    textAlign: 'right',
-                    fontSize: Scale(16),
-                  }}>
-                  1.5 km
-                </Text>
-              </View>
-            </View>
-          </View>
-        </ImageBackground>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingTop: Scale(15),
-              alignItems: 'center',
-              paddingHorizontal: Scale(10),
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{fontSize: Scale(15), fontWeight: 'bold', width: '40%'}}>
-              {item?.restro_name}
-            </Text>
-            <Text
-              style={{
-                color: '#AB8F8E',
-                fontSize: Scale(12),
-                fontWeight: 'normal',
-                marginRight: Scale(25),
-              }}>
-              {' '}
-              (11:00 am - 10:00 pm)
-            </Text>
-            {addFavouriteStatus == true ? (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: Colors.DARK_RED,
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              flex: 1,
-              marginTop: 5,
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                fontSize: Scale(12.5),
-                fontWeight: 'normal',
-                paddingBottom: 20,
-                paddingLeft: 12,
-              }}>
-              {item?.categoryNameArray}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )
-  const renderItem = ({item, index}) => (
-    <View
-      style={{
-        width: Scale(310),
-        height: Scale(150),
-        backgroundColor: '#ffffff',
-        borderWidth: 2,
-        borderColor: '#E0E0E0',
-        marginVertical: Scale(15),
-        marginHorizontal: Scale(10),
-        alignSelf: 'center',
-        borderRadius: Scale(10),
-      }}>
-      <ImageBackground
-        source={{uri: item.image}}
-        style={[styles.backgroundStyle, {borderRadius: Scale(10)}]}>
-        <View style={{justifyContent: 'flex-end', flex: 1}}>
-          <View
-            style={{
-              paddingBottom: Scale(10),
-              alignItems: 'flex-start',
-              paddingHorizontal: Scale(10),
-            }}>
-            <Text
-              style={{
-                fontSize: Scale(12),
-                color: Colors.WHITE,
-                marginLeft: Scale(7),
-                paddingHorizontal: Scale(7),
-                paddingVertical: Scale(5),
-                backgroundColor: 'green',
-              }}>
-               {item?.price}
-            </Text>
-            <Text
-              style={{
-                textShadowColor: 'rgb(255,255,255)',
-                textShadowOffset: {width: 0.1, height: 0.1},
-                textShadowRadius: 5,
-                fontSize: Scale(18),
-                color: Colors.WHITE,
-                marginLeft: Scale(7),
-                paddingVertical: Scale(5),
-              }}>
-              {item?.baneer_title}
-            </Text>
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
-  )
-  const renderItem1 = ({item, index}) => (
-    <View
-      style={{
-        width: Scale(170),
-        height: Scale(55),
-        marginVertical: Scale(15),
-        alignSelf: 'center',
-      }}>
-      <TouchableOpacity onPress={() => navigate('Coupon', {couponId: item?._id, couponDetails: item}) }>
-        <ImageBackground
-          source={ImagesPath.coupon}
-          style={{
-            width: '95%',
-            height: Scale(55),
-            resizeMode: 'cover',
-            borderTopLeftRadius: Scale(30),
-            borderTopRightRadius: Scale(30),
-          }}>
-          <View
-            style={{
-              paddingBottom: Scale(10),
-              alignItems: 'flex-start',
-              paddingHorizontal: Scale(10),
-            }}>
-            <Text
-              style={{
-                fontSize: Scale(15),
-                color: 'grey',
-                fontWeight: 'bold',
-                paddingTop: Scale(5),
-              }}>
-              {item?.title}
-            </Text>
-            <Text
-              style={{
-                fontSize: Scale(14),
-                color: Colors.WHITE,
-                marginTop: Scale(3),
-                fontWeight: 'bold',
-              }}>
-              {item?.coupon_discount_in_percentage}% OFF{' '}
-              <Text
-                style={{
-                  fontSize: Scale(12),
-                  color: 'grey',
-                  marginLeft: Scale(30),
-                }}>
-                {' '}
-                All Items
-              </Text>
-            </Text>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-    </View>
-  )
+      if (!nearby) {
+        data = {
+          // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+          address_type: activeTab+"",
+          lng: location?.latitude,
+          lat: location?.longitude,
+          house_name_and_no,
+          area_name,
+          created_by: user?._id,
+        }
+        if (addAddressStatus){
+          const data = {
+            created_by: user?._id,
+          } 
+          navigate('ManageAddress')
+          alert('Address added succesfully')
+          dispatch(AddressListLoader(true))
+          dispatch(AddressListRequest(data))
+          }
+        
+      }
+
+      
+      dispatch(AddAddressRequest(data))
+      if (addAddressStatus){
+        const data = {
+          created_by: user?._id,
+        } 
+        navigate('ManageAddress')
+        alert('Address added succesfully')
+        dispatch(AddressListLoader(true))
+        dispatch(AddressListRequest(data))
+        }
+    }
+  }
+
 
   return (
     <View style={styles.container}>
       <StatusBar
         translucent={true}
-        inputStyle={{fontSize: Scale(12), marginLeft: Scale(-15)}}
         backgroundColor={Colors.APPCOLOR}
         barStyle="light-content"
       />
-
-      <View
-        style={{
-          paddingVertical: Scale(12),
-          paddingHorizontal: Scale(20),
-          alignItems: 'center',
-          backgroundColor: Colors.APPCOLOR,
-        }}>
-        <Searchbar
-          style={styles.searchView}
-          onIconPress={clearImmediate}
-          inputStyle={{fontSize: Scale(14), marginLeft: Scale(-15)}}
-          placeholder="Search restaurant, dishes(or food) here..."
-          onChangeText={(text) => setSearch(text)}
-          value={search}
+      <View style={styles.headerContainer}>
+        <Icon
+          onPress={() => navigation.goBack()}
+          name="arrowleft"
+          type="AntDesign"
+          style={styles.logoStyle}
         />
       </View>
-      <ScrollView>
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          style={{
-            marginHorizontal: Scale(10),
-            paddingHorizontal: Scale(10),
-          }}
-          data={couponResponse?.data}
-          keyExtractor={(item, i) => `${i}`}
-          renderItem={renderItem1}
-        />
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          style={{marginHorizontal: Scale(12)}}
-          data={offercard}
-          renderItem={renderItem}
-        />
-        <View style={styles.filterContainer}>
-          <TouchableOpacity
-            style={styles.leftContainer}
-            onPress={redirectToSortBy}>
-            <Text style={styles.normalText}>Sort By</Text>
-            <Image source={ImagesPath.up} style={styles.UP} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.leftContainer}
-            onPress={redirectToFilter}>
-            <Text style={styles.normalText}>Filters</Text>
-            <Image source={ImagesPath.filter} style={styles.Filter} />
-          </TouchableOpacity>
-        </View>
-        
-        <FlatList
-          data={data?.restroList}
-          renderItem={renderItems}
-          keyExtractor={(item, i) => `${i}`}
-          ListEmptyComponent={() => {
-            return <Text style={{textAlign:'center'}}>No data found</Text>
-          }}
-        />
-      </ScrollView>
+      <Text style={styles.headerText}>Add New Address </Text>
+      <ImageBackground
+        source={ImagesPath.background}
+        style={styles.loginInputCont}>
+        <KeyboardAvoidingView
+          style={styles.keyboardStyle}
+          behavior={Platform.OS == 'android' ? '' : 'padding'}
+          enabled>
+          <ScrollView indicatorStyle="white">
+           <LocationInput
+              placeholder="Current Location"
+              autoCapitalize="none"
+              value={currentAddress}
+              onChangeText={(val) => setAddress(val)}
+              maxLength={30}
+            />
+            <Text
+              style={{
+                fontSize: Scale(16),
+                textAlign: 'center',
+                color: Colors.BORDERCOLOR,
+                marginVertical: Scale(10),
+              }}>
+              or
+            </Text>
+            <FormInput
+              placeholder="House No/Flat No"
+              autoCapitalize="words"
+              maxLength={30}
+              value={house_name_and_no}
+              onChangeText={(text) => setHouseName(text)}
+            />
+            <FormInput
+              placeholder="Area"
+              autoCapitalize="words"
+              maxLength={30}
+              value={area_name}
+              onChangeText={(text) => setAreaName(text)}
+            />
+            <FormInput
+              placeholder="Nearby"
+              autoCapitalize="words"
+              maxLength={30}
+              value={nearby}
+              onChangeText={(text) => setNearby(text)}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: Scale(10),
+              }}>
+              <TouchableOpacity onPress={() => setActiveTab('HOME')}>
+                <View
+                  style={
+                    activeTab == 'HOME'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'HOME'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Home
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab('WORK')}>
+                <View
+                  style={
+                    activeTab == 'WORK'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'WORK'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Work
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab('OTHER')}>
+                <View
+                  style={
+                    activeTab == 'OTHER'
+                      ? styles.forgotButton1
+                      : styles.forgotButton
+                  }>
+                  <Text
+                    style={
+                      activeTab == 'OTHER'
+                        ? styles.forgotButton2
+                        : styles.forgotButton3
+                    }>
+                    Other
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: Scale(20)}}>
+              <CustomButton
+                title="Save"
+                isSecondary={true}
+                onSubmit={onSubmit}
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     </View>
   )
 }
-
-const mapStateToProps = ({Auth: {user}}) => {
-  return {
-    user,
-  }
-}
-
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NearMe)
+export default AddNewAddress
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.APPCOLOR,
   },
-  searchView: {
-    borderRadius: 10,
-    height: 50,
-    borderColor: Colors.GRAY_LINES,
-    borderWidth: 0,
-    width: '100%',
-    fontSize: 12,
-    marginTop: -12,
+  textStyle: {
+    color: Colors.BORDERCOLOR,
+    fontSize: Scale(14),
+    marginTop: Scale(10),
+  },
+  forgotButton: {
+    paddingHorizontal: Scale(30),
+    paddingVertical: Scale(14),
+    borderRadius: Scale(25),
+    fontSize: Scale(16),
+    borderWidth: 1,
+    borderColor: Colors.BORDERCOLOR,
+    color: Colors.BORDERCOLOR,
+    fontWeight: '700',
+  },
+  forgotButton1: {
+    backgroundColor: Colors.DARK_RED,
+    paddingHorizontal: Scale(30),
+    paddingVertical: Scale(14),
+    borderRadius: Scale(25),
+    fontSize: Scale(16),
+    color: Colors.BORDERCOLOR,
+    fontWeight: '700',
+  },
+  forgotButton2: {
+    color: Colors.WHITE,
+    fontWeight: '700',
+  },
+  forgotButton3: {
+    color: Colors.BORDERCOLOR,
+    fontWeight: '700',
+  },
+
+  loginInputCont: {
+    flex: 1,
+    paddingBottom: Scale(10),
+    paddingHorizontal: Scale(30),
+    borderTopLeftRadius: Scale(25),
+    borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
   },
-  UP: {
-    height: Scale(25),
-    width: Scale(25),
-  },
-  Filter: {
-    height: Scale(25),
-    width: Scale(25),
-  },
-  backgroundStyle: {
-    width: '100%',
-    height: Scale(150),
-    resizeMode: 'stretch',
-    borderTopLeftRadius: Scale(10),
-    borderTopRightRadius: Scale(10),
-    overflow: 'hidden',
-  },
-  normalText: {
-    fontSize: Scale(14),
-    color: Colors.BORDERCOLOR,
-    fontWeight: 'bold',
-  },
-  filterContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: Scale(10),
-    width: '90%',
-    alignSelf: 'center',
-  },
-  leftContainer: {
-    paddingHorizontal: Scale(10),
-    borderRadius: Scale(5),
-    borderColor: 'grey',
-    flexDirection: 'row',
-    borderWidth: 1,
-    height: Scale(45),
-    width: '45%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  notificationStyle: {
-    width: Scale(25),
-    height: Scale(25),
-    resizeMode: 'contain',
-    tintColor: Colors.WHITE,
-    alignSelf: 'flex-end',
-  },
-  bottomHeader: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    flex: 1,
+  headerText: {
+    fontSize: Scale(20),
+    marginHorizontal: Scale(25),
+    marginBottom: Scale(25),
+    color: Colors.WHITE,
   },
   headerContainer: {
+    height: Scale(80),
+    alignItems: 'center',
+    paddingTop: Scale(20),
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
-    paddingVertical: Scale(35),
     paddingHorizontal: Scale(25),
   },
-  location: {
-    marginRight: Scale(10),
-    width: Scale(25),
-    height: Scale(25),
-    resizeMode: 'contain',
-    tintColor: Colors.WHITE,
-  },
-  cardStyle: {
-    elevation: 3,
-    shadowOpacity: 3,
-    height: Scale(225),
-    width: '90%',
-    backgroundColor: '#ffffff',
-    borderWidth: 2,
-    borderColor: '#E0E0E0',
-    marginVertical: Scale(15),
-    alignSelf: 'center',
-    borderRadius: Scale(10),
-  },
-  iconStyle: {
-    color: '#FFBB00',
-    fontSize: Scale(15),
-    marginLeft: Scale(8),
+
+  logoStyle: {
+    marginTop: Scale(15),
+    fontSize: Scale(25),
+    color: Colors.WHITE,
   },
 })
+//sdjkshhkhk
