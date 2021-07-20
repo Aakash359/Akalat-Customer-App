@@ -21,7 +21,7 @@ import {
   ADDRESSLIST_SUCCESS,
   ADDRESSLIST_FAILED,
   SET_ADDRESS_LIST_LOADER,
-  EDIT_PROFILE_REQUEST,
+  
   MYORDER_LIST_REQUEST,
   MYORDER_LIST_SUCCESS,
   MYORDER_LIST_FAILED,
@@ -40,10 +40,6 @@ import Request from '../../apiServices/Request'
 import {
   deleteAddressFailed,
   deleteAddressSuccess,
-  editProfileFailed,
-  editProfileSuccess,
-  setEditProfileLoader,
-  setUserDetails,
   AddressListRequest,
   makeSignUpSuccess,
   signUpLogin,
@@ -235,34 +231,7 @@ export const AddressListSaga = function* AddressListSaga({data}) {
   }
 }
 
-// ====================== Edit Profie POST ======================
 
-function* EditProfileSaga({data}) {
-  yield put(setEditProfileLoader(true))
-  yield put(editProfileFailed(''))
-  try {
-    const response = yield call(Request, {
-      url: '/editUser',
-      method: 'POST',
-      data,
-    })
-
-    if (response?.error) {
-      yield put(setEditProfileLoader(false))
-      yield put(editProfileFailed(response?.message))
-      global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
-    } else {
-      yield put(setEditProfileLoader(false))
-      yield put(editProfileFailed(''))
-      yield put(editProfileSuccess(response.data))
-      let ud = {...response.data}
-      yield put(setUserDetails(ud))
-    }
-  } catch (e) {
-    yield put(setEditProfileLoader(false))
-    yield put(editProfileFailed(e.message))
-  }
-}
 
 // ====================== My Order List POST ======================
 export const MyOrderListSaga = function* MyOrderListSaga({data}) {
@@ -403,7 +372,6 @@ export function* settingSaga() {
   yield takeEvery(HELP_REQUEST, HelpSaga)
   yield takeEvery(ADDADDRESS_REQUEST, AddAddressSaga)
   yield takeEvery(ADDRESSLIST_REQUEST, AddressListSaga)
-  yield takeEvery(EDIT_PROFILE_REQUEST, EditProfileSaga)
   yield takeEvery(MYORDER_LIST_REQUEST, MyOrderListSaga)
   yield takeEvery(DELETE_ADDRESS_REQUEST, deleteAddress)
   yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList)

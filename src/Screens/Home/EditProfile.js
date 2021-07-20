@@ -105,7 +105,7 @@ function Profile(props) {
               placeholder="Mobile Number"
               autoCapitalize = 'none'
               keyboardType={'numeric'}
-              maxLength={30}
+              maxLength={10}
               value={phone}
               onChangeText={(text) => setphone(text)}
             />

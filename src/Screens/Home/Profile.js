@@ -19,7 +19,7 @@ function Profile(props) {
       profileDetails: user,
     })
   }
-  const user = useSelector((state) => state.Auth.user)
+  const user = useSelector((state) => state.Auth.userProfile)
 
   useEffect(() => {
     navigation.addListener('focus', () => {

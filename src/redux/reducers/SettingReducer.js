@@ -33,11 +33,7 @@ import {
   CHANGE_PASSWORD_REQUEST,
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILED,
-  EDIT_PROFILE_REQUEST,
-  EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAILED,
-  SET_EDIT_PROFILE_LOADER,
-  SET_EDIT_PROFILE_STATUS,
+  
 } from '../Types/type'
 
 const initialState = {
@@ -57,10 +53,6 @@ const initialState = {
   addressListResponse: {},
   setaddressListLoader: false,
   addressListStatus: false,
-  editProfileResponse: {},
-  editProfileStatus: false,
-  editProfileError: '',
-  editProfileLoader: false,
   myOrderListResponse: {},
   myOrderListStatus: false,
   error: '',
@@ -172,33 +164,7 @@ export default function SettingReducer(state = initialState, action) {
       }
     case SET_ADDRESS_LIST_LOADER:
       return {...state, setaddressListLoader: action.payload}
-    case EDIT_PROFILE_REQUEST:
-      return {
-        ...state,
-        editProfileStatus: false,
-        editProfileResponse: action.payload,
-      }
-    case SET_EDIT_PROFILE_LOADER:
-      return {
-        ...state,
-        editProfileLoader: action.payload,
-      }
-    case EDIT_PROFILE_SUCCESS:
-      return {
-        ...state,
-        editProfileStatus: true,
-        editProfileResponse: action.payload,
-      }
-    case EDIT_PROFILE_FAILED:
-      return {
-        ...state,
-        editProfileError: action.payload,
-      }
-    case SET_EDIT_PROFILE_STATUS:
-      return {
-        ...state,
-        editProfileStatus: action?.data,
-      }
+   
     case MYORDER_LIST_REQUEST:
       return {
         ...state,

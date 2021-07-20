@@ -218,9 +218,7 @@ function NearMe(props) {
         console.log('Error', error)
       }
     } else {
-      console.log('====================================')
-      console.log('Error')
-      console.log('====================================')
+      
 
       const url = `${API_BASE}/restro/sortByAndSearch`
       const payload = {
@@ -342,7 +340,7 @@ function NearMe(props) {
                 marginRight: Scale(25),
               }}>
               {' '}
-              (11:00 am - 10:00 pm)
+              {item?.opening_time} - {item?.closing_time}
             </Text>
             {addFavouriteStatus == true ? (
               <TouchableOpacity onPress={() => onFavorite(item)}>
@@ -782,7 +780,7 @@ function NearMe(props) {
             <Slider
               style={{marginTop: Scale(20)}}
               minimumValue={0}
-              maximumValue={10}
+              maximumValue={5}
               value={value1}
               step={0.5}
               onValueChange={(value) => setValue1(value)}
@@ -819,8 +817,9 @@ function NearMe(props) {
             </View>
             <Slider
               style={{marginTop: Scale(20)}}
+              
               minimumValue={0}
-              maximumValue={10}
+              maximumValue={5}
               value={value}
               step={0.5}
               onValueChange={(value) => setValue(value)}
