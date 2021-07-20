@@ -19,6 +19,7 @@ import {orderList} from '../../redux/actions/OrderAction'
 import moment from 'moment'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {changeOrderStatusRequest} from '../../redux/actions/SettingActions'
+import {reOrder} from '../../redux/actions/CartActions'
 import {LogoutAlert} from '../../CommonConfig'
 
 function MyOrders(props) {
@@ -117,7 +118,6 @@ function MyOrders(props) {
             paddingHorizontal: 25,
             paddingVertical: 10,
             borderRadius: 25,
-            marginLeft: 10,
           }}>
           <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
             Cancel Order
@@ -133,6 +133,7 @@ function MyOrders(props) {
             paddingVertical: 10,
             borderRadius: 25,
             marginRight: 10,
+            marginLeft: 10,
           }}>
           <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
             Track Order
@@ -141,47 +142,61 @@ function MyOrders(props) {
       </View>
     </View>
   )
-  const renderItemPast = ({item, index}) => (
-    <View style={styles.cardStyle}>
-      <View style={{flexDirection: 'row'}}>
-        <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
-        <View>
-          <Text style={styles.primaryText}>
-            {item?.restro_detail.restro_name}
-          </Text>
-          <Text style={styles.normatText}>
-            {item?.restro_detail.street_name}, {item?.restro_detail.area_name},
-            {'\n'}
-            {item?.restro_detail.region}, {item?.restro_detail.state}...
-          </Text>
+  const renderItemPast = ({item, index}) => {
+    console.log('====================================')
+    console.log(item)
+    console.log('====================================')
+    return (
+      <View style={styles.cardStyle}>
+        <View style={{flexDirection: 'row'}}>
+          <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+          <View>
+            <Text style={styles.primaryText}>
+              {item?.restro_detail.restro_name}
+            </Text>
+            <Text style={styles.normatText}>
+              {item?.restro_detail.street_name}, {item?.restro_detail.area_name}
+              ,{'\n'}
+              {item?.restro_detail.region}, {item?.restro_detail.state}...
+            </Text>
+          </View>
+        </View>
+        <View style={styles.borderStyle} />
+        <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>
+          Items
+        </Text>
+        {productRender(item?.product_list)}
+        <Text style={styles.seconderyText}>Ordered on</Text>
+        <Text style={styles.itemText}>
+          {moment(item?.order_date_placed).format('MMM D, LT')}
+        </Text>
+        <Text style={styles.seconderyText}>Total Amount</Text>
+        <Text style={styles.itemText}>$ {item?.total_price}</Text>
+        <View style={styles.heading}>
+          <TouchableOpacity
+            onPress={() => {
+              props.reOrder({
+                restroDetails: item?.restro_detail,
+                products: item?.product_list,
+              })
+              navigate('Card')
+            }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: Colors.APPCOLOR,
+              paddingHorizontal: 35,
+              paddingVertical: 10,
+              borderRadius: 25,
+            }}>
+            <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
+              Re-Order
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.borderStyle} />
-      <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>Items</Text>
-      {productRender(item?.product_list)}
-      <Text style={styles.seconderyText}>Ordered on</Text>
-      <Text style={styles.itemText}>
-        {moment(item?.order_date_placed).format('MMM D, LT')}
-      </Text>
-      <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>$ {item?.total_price}</Text>
-      <View style={styles.heading}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: Colors.APPCOLOR,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            borderRadius: 25,
-          }}>
-          <Text style={{color: 'white', fontWeight: '600', fontSize: 20}}>
-            Re-Order
-          </Text>
-        </View>
-      </View>
-    </View>
-  )
+    )
+  }
 
   let active = ['P', 'RPL', 'OPU', 'AD', 'RCH', 'PR', 'PRD']
   let past = ['RC', 'OD']
@@ -259,6 +274,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   getOrderList: orderList,
   changeOrderStatusRequest,
+  reOrder,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyOrders)

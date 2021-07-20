@@ -99,7 +99,7 @@ function AddNewAddress(props) {
     } else {
       let data = {
         // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-        address_type: activeTab ,
+        address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
@@ -111,7 +111,7 @@ function AddNewAddress(props) {
       if (!nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-          address_type: activeTab ,
+          address_type: activeTab,
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
@@ -150,7 +150,7 @@ function AddNewAddress(props) {
           behavior={Platform.OS == 'android' ? '' : 'padding'}
           enabled>
           <ScrollView indicatorStyle="white">
-           <LocationInput
+            <LocationInput
               placeholder="Current Location"
               autoCapitalize="none"
               value={currentAddress}
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     marginTop: Scale(10),
   },
   forgotButton: {
-    paddingHorizontal: Scale(30),
+    paddingHorizontal: Scale(25),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
     fontSize: Scale(16),
@@ -282,10 +282,10 @@ const styles = StyleSheet.create({
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
-    paddingHorizontal: Scale(30),
+    paddingHorizontal: Scale(25),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
-    fontSize: Scale(16),
+    fontSize: Scale(10),
     color: Colors.BORDERCOLOR,
     fontWeight: '700',
   },

@@ -54,17 +54,19 @@ function Payment(props) {
       transaction_id: '123',
     }
     if (check) {
-      props?.createOrder(payload)
+      props?.createOrder(payload, (res) => {
+        navigate('PlaceOrder', res?.data)
+      })
     } else {
       Alert.alert('', 'Select payment method')
     }
   }
 
-  useEffect(() => {
-    if (props?.restroDetails === !null) {
-      navigate('PlaceOrder')
-    }
-  }, [props?.restroDetails])
+  // useEffect(() => {
+  //   if (props?.restroDetails === null) {
+  //     navigate('PlaceOrder')
+  //   }
+  // }, [props?.restroDetails])
 
   // useEffect(() => {
 
