@@ -22,7 +22,11 @@ import {CustomButton, FormInput, LocationInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
-import {AddAddressRequest,AddressListLoader,AddressListRequest} from '../../redux/actions'
+import {
+  AddAddressRequest,
+  AddressListLoader,
+  AddressListRequest,
+} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {withTranslation, useTranslation} from 'react-i18next'
@@ -42,8 +46,9 @@ function AddNewAddress(props) {
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
 
-  const addAddressStatus = useSelector((state) => state.Setting.addAddressStatus)
-  
+  const addAddressStatus = useSelector(
+    (state) => state.Setting.addAddressStatus,
+  )
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -102,7 +107,7 @@ function AddNewAddress(props) {
     } else {
       let data = {
         // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-        address_type: activeTab+"",
+        address_type: `${activeTab}`,
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no: house_name_and_no,
@@ -114,7 +119,7 @@ function AddNewAddress(props) {
       if (!nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-          address_type: activeTab+"",
+          address_type: `${activeTab}`,
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
@@ -123,20 +128,18 @@ function AddNewAddress(props) {
         }
       }
 
-      
       dispatch(AddAddressRequest(data))
-      if (addAddressStatus){
+      if (addAddressStatus) {
         const data = {
           created_by: user?._id,
-        } 
+        }
         navigate('ManageAddress')
         alert('Address added succesfully')
         dispatch(AddressListLoader(true))
         dispatch(AddressListRequest(data))
-        }
+      }
     }
   }
-
 
   return (
     <View style={styles.container}>
@@ -162,7 +165,7 @@ function AddNewAddress(props) {
           behavior={Platform.OS == 'android' ? '' : 'padding'}
           enabled>
           <ScrollView indicatorStyle="white">
-           <LocationInput
+            <LocationInput
               placeholder="Current Location"
               autoCapitalize="none"
               value={currentAddress}
@@ -283,7 +286,7 @@ const styles = StyleSheet.create({
     marginTop: Scale(10),
   },
   forgotButton: {
-    paddingHorizontal: Scale(30),
+    paddingHorizontal: Scale(25),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
     fontSize: Scale(16),
@@ -294,10 +297,10 @@ const styles = StyleSheet.create({
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
-    paddingHorizontal: Scale(30),
+    paddingHorizontal: Scale(25),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
-    fontSize: Scale(16),
+    fontSize: Scale(10),
     color: Colors.BORDERCOLOR,
     fontWeight: '700',
   },
