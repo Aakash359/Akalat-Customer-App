@@ -12,7 +12,7 @@ import {
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath, LogoutAlert} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
-import {AddressListRequest, deleteAddressRequest,AddressListLoader} from '../../redux/actions'
+import {AddressListRequest, deleteAddressRequest,AddressListLoader,} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
 

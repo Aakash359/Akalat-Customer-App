@@ -128,12 +128,7 @@ export const OtpVerifySaga = function* OtpVerifySaga({data}) {
       method: 'POST',
       data,
     })
-
-    console.log('====================================')
-    console.log(response)
-    console.log('====================================')
-
-    if (response?.error == true) {
+   if (response?.error == true) {
       yield put({type: OTP_VERIFY_FAILED, payload: response})
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
     } else {
@@ -193,8 +188,8 @@ export const countryListSaga = function* getUserDetails({data}) {
         yield put(setEditProfileLoader(false))
         yield put(editProfileFailed(''))
         yield put(editProfileSuccess(response.data))
-        let ud = {...response.data}
-        yield put(setUserDetails(ud))
+        // let ud = {...response.data}
+        // yield put(setUserDetails(ud))
       }
     } catch (e) {
       yield put(setEditProfileLoader(false))

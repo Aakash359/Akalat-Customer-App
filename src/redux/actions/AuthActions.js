@@ -12,7 +12,12 @@ import {
   SET_USER_DETAILS,
   COUNTRY_LIST_REQUEST,
   SET_OTP_VERIFY_STATUS,
-  SET_INTRO_COMPLETE
+  SET_INTRO_COMPLETE,
+  EDIT_PROFILE_REQUEST,
+  SET_EDIT_PROFILE_LOADER,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAILED,
+  SET_EDIT_PROFILE_STATUS,
 } from '../Types/type'
 
 //================= SIGNUP POST REQUEST =================
@@ -109,6 +114,44 @@ export const countryListRequest = (data) => {
     data,
   }
 }
+
+// =================Edit Profile REQUEST =================
+export const EditProfileRequest = (data) => {
+  return {
+    type: EDIT_PROFILE_REQUEST,
+    data,
+  }
+}
+// =================Set Edit Profile LOADER =================
+export const setEditProfileLoader = (payload) => {
+  return {
+    type: SET_EDIT_PROFILE_LOADER,
+    payload,
+  }
+}
+// =================Edit Profile SUCCUSS =================
+export const editProfileSuccess = (data) => {
+  return {
+    type: EDIT_PROFILE_SUCCESS,
+    data,
+  }
+}
+
+// =================Edit Profile FAILED =================
+export const editProfileFailed = (data) => {
+  return {
+    type: EDIT_PROFILE_FAILED,
+    data,
+  }
+}
+// =================SET edit Profile status =================
+export const SetEditProfileStatus = (data) => {
+  return {
+    type: SET_EDIT_PROFILE_STATUS,
+    data,
+  }
+}
+
 
 export const setUserDetails = (payload) => ({type: SET_USER_DETAILS, payload})
 

@@ -7,13 +7,15 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
+  TextInput
 } from 'react-native'
-import {Icon} from 'native-base'
-import {Colors, Scale, ImagesPath} from '../../CommonConfig'
+import Icon from 'react-native-vector-icons/AntDesign'
+import {Colors, Scale, ImagesPath,COUNTRY} from '../../CommonConfig'
 import {CustomButton, FormInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
-import {useDispatch, connect} from 'react-redux'
+import {useDispatch, connect,useSelector} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
+import ModalDropdown from 'react-native-modal-dropdown'
 import {
   EditProfileRequest,
 } from '../../redux/actions'
@@ -25,7 +27,11 @@ function Profile(props) {
   const [last_name, setlast_name] = useState(profileDetails?.last_name || '')
   const [phone, setphone] = useState(profileDetails?.phone || '')
   const [email, setemail] = useState(profileDetails?.email || '')
-
+  const [country_Code, setCountryCode] = useState('')
+  const counrtryListResponse = useSelector(
+    (state) => state.Auth.counrtryListResponse,
+  )
+  const countryList = counrtryListResponse?.data || []
   const {navigate} = useNavigation()
   const navigation = useNavigation()
 
@@ -49,16 +55,20 @@ function Profile(props) {
         phone: phone,
         email: email,
         _id: profileDetails?._id != undefined ? profileDetails?._id : 0,
+        // country_code: COUNTRY == 'IN' ? '91' : '971',
       }
 
       dispatch(EditProfileRequest(data))
+      if (props.editProfileStatus) {
+        navigate('Profile') 
+      }
     }
-    navigate('Profile')
+   
   }
 
   useEffect(() => {
     if (props.editProfileStatus) {
-       
+      navigate('Profile') 
     }
   }, [props?.editProfileStatus])
 
@@ -101,14 +111,40 @@ function Profile(props) {
               value={last_name}
               onChangeText={(text) => setlast_name(text)}
             />
-            <FormInput
-              placeholder="Mobile Number"
-              autoCapitalize = 'none'
-              keyboardType={'numeric'}
-              maxLength={10}
-              value={phone}
-              onChangeText={(text) => setphone(text)}
-            />
+      
+            <Text style={styles.mobile}>Mobile Number</Text>
+            <View style={styles.textInputView}>
+            <View style={{ flexDirection:'row', alignItems:'center' }}>
+              <ModalDropdown 
+              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
+              onSelect={(country_Code) => setCountryCode(country_Code)}
+              defaultIndex={0}
+              defaultValue={countryList.dial_code || '+91'}
+              style={styles.modal}
+              textStyle={styles.modalText}
+              dropdownStyle={styles.modalDropDown}
+              dropdownTextStyle={styles.modalDropDownText}
+              dropdownTextHighlightStyle={
+                  styles.modalDropDownHighlightedText
+              }
+              />
+              
+              <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />
+              </View>
+              <TextInput
+                style={styles.textInputContainer}
+                value={phone}
+                maxLength={10}
+                autoCapitalize="none"
+                placeholder="Mobile Number"
+                keyboardType={'number-pad'}
+                onChangeText={(text) => setphone(text)}
+                placeholderTextColor={Colors.BORDERCOLOR}
+                placeholderStyle={{fontWeight: 'bold'}}
+                underlineColorAndroid="transparent"
+              />
+            </View>
+
             <FormInput
               placeholder="Email Address"
               keyboardType="email-address"
@@ -136,7 +172,7 @@ function Profile(props) {
 }
 
 const mapStateToProps = ({
-  Setting: {editProfileLoader, editProfileStatus},
+  Auth: {editProfileLoader, editProfileStatus},
 }) => ({
   editProfileLoader,
   editProfileStatus,
@@ -149,10 +185,67 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.APPCOLOR,
   },
+  textInputView: {
+    flexDirection: 'row',
+    marginVertical: Scale(8),
+    height: Scale(50),
+    fontSize: Scale(16),
+    color: Colors.BLACK,
+    fontWeight: '500',
+    borderWidth: Scale(1),
+    borderColor: '#AB8F8E',
+    width: '100%',
+    alignSelf: 'center',
+    borderRadius: Scale(5),
+  },
+  mobile: {
+    fontSize: Scale(14),
+    marginBottom: Scale(5),
+    color: Colors.BORDERCOLOR,
+    textAlign: 'left',
+    marginTop: Scale(5),
+    marginLeft: Scale(2),
+  },
+  modal: {
+    justifyContent: 'center',
+    backgroundColor: Colors.TRANSPARENT,
+    maxWidth: Scale(100),
+  },
+  modalText: {
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    marginLeft: Scale(10),
+    fontWeight: '500',
+  },
+  modalDropDown: {
+    backgroundColor: Colors.WHITE,
+    overflow: 'hidden',
+    marginTop: Scale(-30),
+    height: Scale(80),
+  },
+  modalDropDownText: {
+    backgroundColor: Colors.TRANSPARENT,
+    color: Colors.BLACK,
+    fontSize: Scale(14),
+    paddingHorizontal: Scale(15),
+  },
+  modalDropDownHighlightedText: {
+    color: Colors.BLACK,
+  },
   textStyle: {
     color: Colors.BORDERCOLOR,
     fontSize: Scale(14),
     marginTop: Scale(10),
+  },
+  textInputContainer: {
+    fontWeight: '500',
+    fontSize: Scale(16),
+    color: Colors.BLACK,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: Scale(280),
+    height: Scale(50),
+    paddingHorizontal: Scale(10),
   },
   inputStyle: {
     color: Colors.BLACK,
