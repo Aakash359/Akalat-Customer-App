@@ -27,6 +27,7 @@ import {
   subToCart,
   setAddressId,
   setSelectedAddress,
+  createOrderSuccess,
 } from '../../redux/actions/CartActions'
 import axios from 'axios'
 import {API_BASE} from '../../apiServices/ApiService'
@@ -115,21 +116,6 @@ function Card(props) {
     0,
   )
 
-  if (!cartProducts?.length) {
-    return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-        }}>
-        <Text style={{fontSize: 20, fontWeight: '500'}}>
-          Your cart is empty !
-        </Text>
-      </View>
-    )
-  }
-
   const apply = () => {
     if (coupon) {
       dispatch(
@@ -195,202 +181,32 @@ function Card(props) {
     </TouchableOpacity>
   )
 
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        translucent={true}
-        backgroundColor={Colors.APPCOLOR}
-        barStyle="light-content"
-      />
+  if (!cartProducts?.length) {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1,
+        }}>
+        <Text style={{fontSize: 20, fontWeight: '500'}}>
+          Your cart is empty !
+        </Text>
+      </View>
+    )
+  } else {
+    return (
+      <View style={styles.container}>
+        <StatusBar
+          translucent={true}
+          backgroundColor={Colors.APPCOLOR}
+          barStyle="light-content"
+        />
 
-      <ImageBackground
-        source={ImagesPath.background}
-        style={styles.loginInputCont}>
-        <ScrollView>
-          <View
-            style={[
-              styles.cardStyle,
-              {
-                justifyContent: 'center',
-              },
-            ]}>
-            <View style={{flexDirection: 'row'}}>
-            <Image source={{uri: cartRestroDetails?.building_front_img}}style={styles.backgroundStyle} />
-              <View>
-                <Text style={styles.primaryText2}>
-                  {cartRestroDetails?.restro_name}
-                </Text>
-                <Text style={styles.normatText}>
-                  {cartRestroDetails?.street_name},{' '}
-                  {cartRestroDetails?.area_name}, {'\n'}
-                  {cartRestroDetails?.region},{cartRestroDetails?.state}...
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View
-            style={[
-              styles.cardStyle,
-              {
-                justifyContent: 'space-between',
-              },
-            ]}>
-            {cartProducts?.map((item, i) => {
-              return (
-                <>
-                  <View style={styles.itemContainer} key={`${i}`}>
-                    <Text style={styles.itemText}>{item?.name}</Text>
-                    <View style={styles.rightContainer}>
-                      <Icon
-                        onPress={() => subToCart(item)}
-                        type="AntDesign"
-                        name="minussquareo"
-                        style={styles.iconStyles}
-                      />
-                      <Text style={styles.countText}>{item?.qty}</Text>
-                      <Icon
-                        onPress={() => addToCart(item)}
-                        type="AntDesign"
-                        name="plussquareo"
-                        style={styles.iconStyles}
-                      />
-                    </View>
-                  </View>
-                  {i < cartProducts?.length - 1 && (
-                    <View
-                      style={{
-                        height: Scale(2),
-                        backgroundColor: '#E0E0E0',
-                        marginVertical: 17,
-                      }}
-                    />
-                  )}
-                </>
-              )
-            })}
-          </View>
-          <View
-            style={{
-              marginHorizontal: scale(20),
-              marginVertical: -20,
-            }}>
-            <FormArea
-              placeholder="Any Instructions..."
-              autoCapitalize="none"
-              value={props?.instruction}
-              onChangeText={(instruction) => props.setInstruction(instruction)}
-              height={100}
-              style={{paddingTop: 10}}
-    
-            />
-          </View>
-          <View
-            style={{
-              height: Scale(50),
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginVertical: Scale(10),
-              width: '90%',
-              borderWidth: Scale(1),
-              alignSelf: 'center',
-              borderRadius: Scale(30),
-              borderColor: Colors.GRAY,
-              marginTop: 30,
-            }}>
-            <TextInput
-              style={{
-                marginVertical: Scale(10),
-                height: Scale(50),
-                fontSize: Scale(18),
-                color: Colors.BORDERCOLOR,
-                paddingLeft: Scale(20),
-                flex: 1,
-                justifyContent: 'center',
-                alignSelf: 'center',
-              }}
-              placeholder="Coupon code"
-              value={coupon}
-              onChangeText={(text) => setCoupon(text)}
-            />
-            <TouchableOpacity
-              onPress={() => (props.couponCode ? remove() : apply())}>
-              <View
-                style={[
-                  styles.addButton,
-                  props.couponCode && {backgroundColor: 'red'},
-                ]}>
-                <Text
-                  style={{
-                    fontSize: Scale(16),
-                    color: Colors.WHITE,
-                    fontWeight: '600',
-                  }}>
-                  {props.couponCode ? 'Remove' : 'Apply'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={[
-              styles.cardStyle,
-              {
-                height: Scale(330),
-              },
-            ]}>
-            <Text style={[styles.primaryText,{marginLeft:Scale(-5)}]}>
-              {cartRestroDetails?.restro_name}
-            </Text>
-            <View style={[styles.bottomContainer, {marginTop: Scale(20)}]}>
-              <Text style={styles.itemText1}>Item Total</Text>
-              <Text style={styles.normatText1}>${totalCartAmt}</Text>
-            </View>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Total Discount</Text>
-              <Text style={styles.normatText1}>-${det?.dis}</Text>
-            </View>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Tax</Text>
-              <Text style={styles.normatText1}>${det?.tax}</Text>
-            </View>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Delivery charges</Text>
-              <Text style={styles.normatText1}>
-                {det?.delivery ? `$${det?.delivery}` : `free`}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginVertical: Scale(10),
-                borderStyle: 'dotted',
-                borderWidth: 1,
-                borderRadius: 1,
-              }}
-            />
-            <View style={styles.bottomContainer}>
-              <Text style={styles.primaryText1}>Total Amount</Text>
-              <Text
-                style={[
-                  styles.normatText1,
-                  {color: Colors.BLACK, fontWeight: '700'},
-                ]}>
-                ${totalCartAmt - det?.dis + det?.tax}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginVertical: Scale(10),
-                borderStyle: 'dotted',
-                borderWidth: 1,
-                borderRadius: 1,
-              }}
-            />
-            {det?.dis ? (
-              <Text style={[styles.itemText, {color: 'green'}]}>
-                You have saved ${det?.dis} on this order
-              </Text>
-            ) : null}
-          </View>
-          { props?.addressList && props?.addressList?.length ? (
+        <ImageBackground
+          source={ImagesPath.background}
+          style={styles.loginInputCont}>
+          <ScrollView>
             <View
               style={[
                 styles.cardStyle,
@@ -398,89 +214,282 @@ function Card(props) {
                   justifyContent: 'center',
                 },
               ]}>
-              <View style={styles.bottomContainer}>
-                <Text style={styles.itemText3}>Delivery Address</Text>
-                <TouchableOpacity onPress={() => setModal(true)}>
-                  <Text style={[styles.countText,{fontWeight:'bold'}]}>Change</Text>
-                </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
+                <Image
+                  source={{uri: cartRestroDetails?.building_front_img}}
+                  style={styles.backgroundStyle}
+                />
+                <View>
+                  <Text style={styles.primaryText2}>
+                    {cartRestroDetails?.restro_name}
+                  </Text>
+                  <Text style={styles.normatText}>
+                    {cartRestroDetails?.street_name},{' '}
+                    {cartRestroDetails?.area_name}, {'\n'}
+                    {cartRestroDetails?.region},{cartRestroDetails?.state}...
+                  </Text>
+                </View>
               </View>
-
-              <Text style={styles.itemText2}>
-                {props?.addressList[address?.selectedId]?.house_name_and_no},{''}
-                
-                {props?.addressList[address?.selectedId]?.area_name},{''}
-                {props?.addressList[address?.selectedId]?.nearby}
-              </Text>
             </View>
-          ) : (
+            <View
+              style={[
+                styles.cardStyle,
+                {
+                  justifyContent: 'space-between',
+                },
+              ]}>
+              {cartProducts?.map((item, i) => {
+                return (
+                  <>
+                    <View style={styles.itemContainer} key={`${i}`}>
+                      <Text style={styles.itemText}>{item?.name}</Text>
+                      <View style={styles.rightContainer}>
+                        <Icon
+                          onPress={() => subToCart(item)}
+                          type="AntDesign"
+                          name="minussquareo"
+                          style={styles.iconStyles}
+                        />
+                        <Text style={styles.countText}>{item?.qty}</Text>
+                        <Icon
+                          onPress={() => addToCart(item)}
+                          type="AntDesign"
+                          name="plussquareo"
+                          style={styles.iconStyles}
+                        />
+                      </View>
+                    </View>
+                    {i < cartProducts?.length - 1 && (
+                      <View
+                        style={{
+                          height: Scale(2),
+                          backgroundColor: '#E0E0E0',
+                          marginVertical: 17,
+                        }}
+                      />
+                    )}
+                  </>
+                )
+              })}
+            </View>
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
+                marginHorizontal: scale(20),
+                marginVertical: -20,
               }}>
-              <TouchableOpacity onPress={() => navigate('AddNewAddress')}>
-                <Text style={{marginTop:Scale(10) , fontSize:15}}>Add address</Text>
+              <FormArea
+                placeholder="Any Instructions..."
+                autoCapitalize="none"
+                value={props?.instruction}
+                onChangeText={(instruction) =>
+                  props.setInstruction(instruction)
+                }
+                height={100}
+                style={{paddingTop: 10}}
+              />
+            </View>
+            <View
+              style={{
+                height: Scale(50),
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginVertical: Scale(10),
+                width: '90%',
+                borderWidth: Scale(1),
+                alignSelf: 'center',
+                borderRadius: Scale(30),
+                borderColor: Colors.GRAY,
+                marginTop: 30,
+              }}>
+              <TextInput
+                style={{
+                  marginVertical: Scale(10),
+                  height: Scale(50),
+                  fontSize: Scale(18),
+                  color: Colors.BORDERCOLOR,
+                  paddingLeft: Scale(20),
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                }}
+                placeholder="Coupon code"
+                value={coupon}
+                onChangeText={(text) => setCoupon(text)}
+              />
+              <TouchableOpacity
+                onPress={() => (props.couponCode ? remove() : apply())}>
+                <View
+                  style={[
+                    styles.addButton,
+                    props.couponCode && {backgroundColor: 'red'},
+                  ]}>
+                  <Text
+                    style={{
+                      fontSize: Scale(16),
+                      color: Colors.WHITE,
+                      fontWeight: '600',
+                    }}>
+                    {props.couponCode ? 'Remove' : 'Apply'}
+                  </Text>
+                </View>
               </TouchableOpacity>
             </View>
-          )}
-          <View style={{paddingHorizontal: '5%'}}>
-            <CustomButton
-              title="Proceed to pay"
-              isSecondary={true}
-              onSubmit={redirectToPayment}
-            />
-          </View>
-        </ScrollView>
-      </ImageBackground>
-      <Modal visible={modal} transparent={true} animationType="slide">
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => setModal(false)}
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.2)',
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-          }}>
+            <View
+              style={[
+                styles.cardStyle,
+                {
+                  height: Scale(330),
+                },
+              ]}>
+              <Text style={[styles.primaryText, {marginLeft: Scale(-5)}]}>
+                {cartRestroDetails?.restro_name}
+              </Text>
+              <View style={[styles.bottomContainer, {marginTop: Scale(20)}]}>
+                <Text style={styles.itemText1}>Item Total</Text>
+                <Text style={styles.normatText1}>${totalCartAmt}</Text>
+              </View>
+              <View style={styles.bottomContainer}>
+                <Text style={styles.itemText1}>Total Discount</Text>
+                <Text style={styles.normatText1}>-${det?.dis}</Text>
+              </View>
+              <View style={styles.bottomContainer}>
+                <Text style={styles.itemText1}>Tax</Text>
+                <Text style={styles.normatText1}>${det?.tax}</Text>
+              </View>
+              <View style={styles.bottomContainer}>
+                <Text style={styles.itemText1}>Delivery charges</Text>
+                <Text style={styles.normatText1}>
+                  {det?.delivery ? `$${det?.delivery}` : `free`}
+                </Text>
+              </View>
+              <View
+                style={{
+                  marginVertical: Scale(10),
+                  borderStyle: 'dotted',
+                  borderWidth: 1,
+                  borderRadius: 1,
+                }}
+              />
+              <View style={styles.bottomContainer}>
+                <Text style={styles.primaryText1}>Total Amount</Text>
+                <Text
+                  style={[
+                    styles.normatText1,
+                    {color: Colors.BLACK, fontWeight: '700'},
+                  ]}>
+                  ${totalCartAmt - det?.dis + det?.tax}
+                </Text>
+              </View>
+              <View
+                style={{
+                  marginVertical: Scale(10),
+                  borderStyle: 'dotted',
+                  borderWidth: 1,
+                  borderRadius: 1,
+                }}
+              />
+              {det?.dis ? (
+                <Text style={[styles.itemText, {color: 'green'}]}>
+                  You have saved ${det?.dis} on this order
+                </Text>
+              ) : null}
+            </View>
+            {props?.addressList && props?.addressList?.length ? (
+              <View
+                style={[
+                  styles.cardStyle,
+                  {
+                    justifyContent: 'center',
+                  },
+                ]}>
+                <View style={styles.bottomContainer}>
+                  <Text style={styles.itemText3}>Delivery Address</Text>
+                  <TouchableOpacity onPress={() => setModal(true)}>
+                    <Text style={[styles.countText, {fontWeight: 'bold'}]}>
+                      Change
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <Text style={styles.itemText2}>
+                  {props?.addressList[address?.selectedId]?.house_name_and_no},
+                  {''}
+                  {props?.addressList[address?.selectedId]?.area_name},{''}
+                  {props?.addressList[address?.selectedId]?.nearby}
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <TouchableOpacity onPress={() => navigate('AddNewAddress')}>
+                  <Text style={{marginTop: Scale(10), fontSize: 15}}>
+                    Add address
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            <View style={{paddingHorizontal: '5%'}}>
+              <CustomButton
+                title="Proceed to pay"
+                isSecondary={true}
+                onSubmit={redirectToPayment}
+              />
+            </View>
+          </ScrollView>
+        </ImageBackground>
+        <Modal visible={modal} transparent={true} animationType="slide">
           <TouchableOpacity
             activeOpacity={1}
-            onPress={null}
+            onPress={() => setModal(false)}
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: 'rgba(0,0,0,0.2)',
               width: '100%',
-              height: Dimensions.get('screen').height / 1.5,
-              position: 'absolute',
-              bottom: 0,
-              paddingBottom: 20,
+              height: '100%',
+              position: 'relative',
             }}>
-            <View style={styles.headerContainer}>
-              <Icon
-                onPress={() => setModal(false)}
-                name="arrowleft"
-                type="AntDesign"
-                style={styles.logoStyle}
-              />
-              <Text
-                style={{
-                  fontSize: Scale(18),
-                  fontWeight: 'bold',
-                  marginHorizontal: Scale(25),
-                  color: Colors.WHITE,
-                }}>
-                Change Address
-              </Text>
-            </View>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={null}
+              style={{
+                backgroundColor: '#fff',
+                width: '100%',
+                height: Dimensions.get('screen').height / 1.5,
+                position: 'absolute',
+                bottom: 0,
+                paddingBottom: 20,
+              }}>
+              <View style={styles.headerContainer}>
+                <Icon
+                  onPress={() => setModal(false)}
+                  name="arrowleft"
+                  type="AntDesign"
+                  style={styles.logoStyle}
+                />
+                <Text
+                  style={{
+                    fontSize: Scale(18),
+                    fontWeight: 'bold',
+                    marginHorizontal: Scale(25),
+                    color: Colors.WHITE,
+                  }}>
+                  Change Address
+                </Text>
+              </View>
 
-            <FlatList
-              data={addressList}
-              renderItem={renderItems}
-              keyExtractor={(item, index) => index.toString()}
-            />
+              <FlatList
+                data={addressList}
+                renderItem={renderItems}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </TouchableOpacity>
           </TouchableOpacity>
-        </TouchableOpacity>
-      </Modal>
-    </View>
-  )
+        </Modal>
+      </View>
+    )
+  }
 }
 
 const mapStateToProps = ({
@@ -508,6 +517,7 @@ const mapDispatchToProps = {
   setAddressId,
   setSelectedAddress,
   AddressListRequest,
+  createOrderSuccess,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Card)
 

@@ -70,7 +70,6 @@ function EditAddress(props) {
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
       (position) => {
-
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
             let addressComponent = json.results[1].formatted_address
@@ -287,31 +286,31 @@ const styles = StyleSheet.create({
     marginTop: Scale(10),
   },
   forgotButton: {
-    paddingHorizontal: Scale(30),
+    paddingHorizontal: Scale(25),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
     fontSize: Scale(16),
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
+    fontWeight: '700',
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
-    paddingHorizontal: Scale(30),
+    paddingHorizontal: Scale(25),
     paddingVertical: Scale(14),
     borderRadius: Scale(25),
     fontSize: Scale(16),
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
+    fontWeight: '700',
   },
   forgotButton2: {
     color: Colors.WHITE,
-    fontWeight:'700'
+    fontWeight: '700',
   },
   forgotButton3: {
     color: Colors.BORDERCOLOR,
-    fontWeight:'700'
+    fontWeight: '700',
   },
 
   loginInputCont: {
