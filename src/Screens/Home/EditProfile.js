@@ -7,18 +7,16 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
-  TextInput
+  TextInput,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
-import {Colors, Scale, ImagesPath,COUNTRY} from '../../CommonConfig'
+import {Colors, Scale, ImagesPath, COUNTRY} from '../../CommonConfig'
 import {CustomButton, FormInput} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
-import {useDispatch, connect,useSelector} from 'react-redux'
+import {useDispatch, connect, useSelector} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import ModalDropdown from 'react-native-modal-dropdown'
-import {
-  EditProfileRequest,
-} from '../../redux/actions'
+import {EditProfileRequest} from '../../redux/actions'
 
 function Profile(props) {
   const dispatch = useDispatch()
@@ -58,17 +56,19 @@ function Profile(props) {
         // country_code: COUNTRY == 'IN' ? '91' : '971',
       }
 
-      dispatch(EditProfileRequest(data))
-      if (props.editProfileStatus) {
-        navigate('Profile') 
-      }
+      dispatch(
+        EditProfileRequest(data, (res) => {
+          console.log('====================================')
+          console.log(res)
+          console.log('====================================')
+        }),
+      )
     }
-   
   }
 
   useEffect(() => {
     if (props.editProfileStatus) {
-      navigate('Profile') 
+      navigate('Profile')
     }
   }, [props?.editProfileStatus])
 
@@ -99,37 +99,43 @@ function Profile(props) {
           <ScrollView indicatorStyle="white">
             <FormInput
               placeholder="First Name"
-              autoCapitalize = 'words'
+              autoCapitalize="words"
               maxLength={30}
               value={first_name}
               onChangeText={(text) => setfirst_name(text)}
             />
             <FormInput
               placeholder="Last Name"
-              autoCapitalize = 'words'
+              autoCapitalize="words"
               maxLength={30}
               value={last_name}
               onChangeText={(text) => setlast_name(text)}
             />
-      
+
             <Text style={styles.mobile}>Mobile Number</Text>
             <View style={styles.textInputView}>
-            <View style={{ flexDirection:'row', alignItems:'center' }}>
-              <ModalDropdown 
-              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
-              onSelect={(country_Code) => setCountryCode(country_Code)}
-              defaultIndex={0}
-              defaultValue={countryList.dial_code || '+91'}
-              style={styles.modal}
-              textStyle={styles.modalText}
-              dropdownStyle={styles.modalDropDown}
-              dropdownTextStyle={styles.modalDropDownText}
-              dropdownTextHighlightStyle={
-                  styles.modalDropDownHighlightedText
-              }
-              />
-              
-              <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <ModalDropdown
+                  options={[
+                    ...new Set(countryList.map((i) => `${i?.dial_code}`)),
+                  ]}
+                  onSelect={(country_Code) => setCountryCode(country_Code)}
+                  defaultIndex={0}
+                  defaultValue={countryList.dial_code || '+91'}
+                  style={styles.modal}
+                  textStyle={styles.modalText}
+                  dropdownStyle={styles.modalDropDown}
+                  dropdownTextStyle={styles.modalDropDownText}
+                  dropdownTextHighlightStyle={
+                    styles.modalDropDownHighlightedText
+                  }
+                />
+
+                <Icon
+                  name="caretdown"
+                  size={Scale(10)}
+                  style={{marginLeft: Scale(8)}}
+                />
               </View>
               <TextInput
                 style={styles.textInputContainer}
@@ -171,9 +177,7 @@ function Profile(props) {
   )
 }
 
-const mapStateToProps = ({
-  Auth: {editProfileLoader, editProfileStatus},
-}) => ({
+const mapStateToProps = ({Auth: {editProfileLoader, editProfileStatus}}) => ({
   editProfileLoader,
   editProfileStatus,
 })

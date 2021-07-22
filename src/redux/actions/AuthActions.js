@@ -116,10 +116,11 @@ export const countryListRequest = (data) => {
 }
 
 // =================Edit Profile REQUEST =================
-export const EditProfileRequest = (data) => {
+export const EditProfileRequest = (data, callback = null) => {
   return {
     type: EDIT_PROFILE_REQUEST,
     data,
+    callback,
   }
 }
 // =================Set Edit Profile LOADER =================
@@ -152,7 +153,6 @@ export const SetEditProfileStatus = (data) => {
   }
 }
 
-
 export const setUserDetails = (payload) => ({type: SET_USER_DETAILS, payload})
 
 export const setOtpVerifyStatus = (payload) => ({
@@ -161,6 +161,5 @@ export const setOtpVerifyStatus = (payload) => ({
 })
 
 export function setIntroComplete() {
-  return ({type: SET_INTRO_COMPLETE})
-  
+  return {type: SET_INTRO_COMPLETE}
 }

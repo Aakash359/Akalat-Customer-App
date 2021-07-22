@@ -25,10 +25,13 @@ import {
 } from '../Types/type'
 import {put, call, takeEvery, takeLatest} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
-import {OTPRequest,editProfileFailed,
+import {
+  OTPRequest,
+  editProfileFailed,
   editProfileSuccess,
   setEditProfileLoader,
-  setUserDetails,} from '../actions'
+  setUserDetails,
+} from '../actions'
 
 // ====================== Sign-Up POST ======================
 export const SignUpSaga = function* SignUpSaga({params}) {
@@ -128,7 +131,7 @@ export const OtpVerifySaga = function* OtpVerifySaga({data}) {
       method: 'POST',
       data,
     })
-   if (response?.error == true) {
+    if (response?.error == true) {
       yield put({type: OTP_VERIFY_FAILED, payload: response})
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
     } else {
@@ -168,34 +171,37 @@ export const countryListSaga = function* getUserDetails({data}) {
   }
 }
 
-  // ====================== Edit Profie POST ======================
+// ====================== Edit Profie POST ======================
 
-  function* EditProfileSaga({data}) {
-    yield put(setEditProfileLoader(true))
-    yield put(editProfileFailed(''))
-    try {
-      const response = yield call(Request, {
-        url: '/editUser',
-        method: 'POST',
-        data,
-      })
+function* EditProfileSaga({data, callback}) {
+  yield put(setEditProfileLoader(true))
+  yield put(editProfileFailed(''))
+  try {
+    const response = yield call(Request, {
+      url: '/editUser',
+      method: 'POST',
+      data,
+    })
 
-      if (response?.error) {
-        yield put(setEditProfileLoader(false))
-        yield put(editProfileFailed(response?.message))
-        global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
-      } else {
-        yield put(setEditProfileLoader(false))
-        yield put(editProfileFailed(''))
-        yield put(editProfileSuccess(response.data))
-        // let ud = {...response.data}
-        // yield put(setUserDetails(ud))
-      }
-    } catch (e) {
+    if (response?.error) {
       yield put(setEditProfileLoader(false))
-      yield put(editProfileFailed(e.message))
+      yield put(editProfileFailed(response?.message))
+      global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
+    } else {
+      yield put(setEditProfileLoader(false))
+      yield put(editProfileFailed(''))
+      yield put(editProfileSuccess(response.data))
+      // let ud = {...response.data}
+      // yield put(setUserDetails(ud))
+      if (callback) {
+        callback(response)
+      }
     }
+  } catch (e) {
+    yield put(setEditProfileLoader(false))
+    yield put(editProfileFailed(e.message))
   }
+}
 
 export function* authSaga() {
   yield takeEvery(SIGNUP_REQUEST, SignUpSaga)

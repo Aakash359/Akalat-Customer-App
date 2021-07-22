@@ -29,7 +29,6 @@ import {
 } from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
-
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function AddNewAddress(props) {
@@ -106,7 +105,7 @@ function AddNewAddress(props) {
     } else {
       let data = {
         // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-        address_type: `${activeTab}`,
+        address_type: activeTab + '',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
@@ -117,23 +116,22 @@ function AddNewAddress(props) {
       if (!nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-          address_type: `${activeTab}`,
+          address_type: activeTab + '',
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
           area_name,
           created_by: user?._id,
         }
-        dispatch(AddressListRequest(data))
-        if (addAddressStatus){
+
+        if (addAddressStatus) {
           const data = {
             created_by: user?._id,
-          } 
+          }
           navigate('ManageAddress')
           alert('Address added succesfully')
           dispatch(AddressListRequest(data))
-          }
-        
+        }
       }
 
       dispatch(AddAddressRequest(data))
