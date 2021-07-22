@@ -114,6 +114,9 @@ function AddNewAddress(props) {
         nearby,
         created_by: user?._id,
       }
+      console.log('====================================');
+      console.log("Aakash=>>>>",data);
+      console.log('====================================');
       if (!nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',

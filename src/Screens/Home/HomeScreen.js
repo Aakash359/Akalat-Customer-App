@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
-import {Searchbar} from 'react-native-paper'
 import {useNavigation} from '@react-navigation/native'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
@@ -30,7 +29,8 @@ function HomeScreen(props) {
   const redirectToNotification = () => {
     navigate('Notification')
   }
-
+  const { viewallData } = props.route.params
+ 
   const dispatch = useDispatch()
 
   const restroResponse = useSelector((state) => state.Home.restroResponse)
@@ -44,31 +44,6 @@ function HomeScreen(props) {
     restroList: [],
     isLoading: true,
   })
-
-  const [search, setSearch] = React.useState('')
-
-  const onSearch = async () => {
-    setdata({...data, isLoading: true})
-    const url = `${API_BASE}/restro/search`
-    const payload = {
-      searchKey: search,
-    }
-    try {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restro,
-        isLoading: false,
-      })
-    } catch (error) {}
-  }
-  React.useEffect(() => {
-    onSearch()
-  }, [])
-
-  React.useEffect(() => {
-    onSearch()
-  }, [search])
 
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
@@ -225,14 +200,14 @@ function HomeScreen(props) {
         source={ImagesPath.background}
         style={styles.loginInputCont}>
         <FlatList
-          data={data?.restroList}
+          data={viewallData}
           renderItem={renderItems}
           keyExtractor={(item, i) => `${i}`}
           ListEmptyComponent={() => {
             return <Text style={{textAlign: 'center'}}>No data found</Text>
           }}
         />
-        <LoadWheel visible={data?.isLoading} />
+        {/* <LoadWheel visible={data?.isLoading} /> */}
       </ImageBackground>
     </View>
   )
