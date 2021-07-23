@@ -193,13 +193,24 @@ function MyOrders(props) {
               Re-Order
             </Text>
           </TouchableOpacity>
+          {['CC', 'RC'].includes(item?.status) && (
+            <Text
+              style={{
+                color: 'red',
+                marginRight: 10,
+                fontSize: 20,
+                marginTop: 5,
+              }}>
+              Cancelled
+            </Text>
+          )}
         </View>
       </View>
     )
   }
 
   let active = ['P', 'RPL', 'OPU', 'AD', 'RCH', 'PR', 'PRD']
-  let past = ['RC', 'OD']
+  let past = ['RC', 'OD', 'CC']
   let activeOrders = props?.orderList.filter((i) => active.includes(i.status))
   let pastOrders = props?.orderList.filter((i) => past.includes(i.status))
 

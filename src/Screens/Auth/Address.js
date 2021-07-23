@@ -33,7 +33,10 @@ import Geocoder from 'react-native-geocoding'
 import {AddAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
-Geolocation.setRNConfiguration({authorizationLevel: 'whenInUse'})
+Geolocation.setRNConfiguration({
+  authorizationLevel: 'whenInUse',
+  skipPermissionRequests: false,
+})
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function Address() {
@@ -131,20 +134,17 @@ function Address() {
         created_by: user?._id,
         signUp: true,
       }
-      if(!nearby){
-        data={
-
-        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
-        address_type: activeTab,
-        lng: location?.latitude,
-        lat: location?.longitude,
-        house_name_and_no,
-        area_name,
-        created_by: user?._id,
-        signUp: true,
-
+      if (!nearby) {
+        data = {
+          // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
+          address_type: activeTab,
+          lng: location?.latitude,
+          lat: location?.longitude,
+          house_name_and_no,
+          area_name,
+          created_by: user?._id,
+          signUp: true,
         }
-
       }
       dispatch(AddAddressRequest(data))
       navigate('NearMe')

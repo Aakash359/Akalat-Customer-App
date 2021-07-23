@@ -14,12 +14,22 @@ import {
   PermissionsAndroid,
 } from 'react-native'
 import {Icon} from 'native-base'
-import {Colors, Scale, ImagesPath,iOSMapAPIKey,androidMapAPIKey,} from '../../CommonConfig'
+import {
+  Colors,
+  Scale,
+  ImagesPath,
+  iOSMapAPIKey,
+  androidMapAPIKey,
+} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import Slider from '@react-native-community/slider'
 import {useSelector, useDispatch, connect} from 'react-redux'
-import {offercardRequest,couponRequest,addfavouriteRequest} from '../../redux/actions'
+import {
+  offercardRequest,
+  couponRequest,
+  addfavouriteRequest,
+} from '../../redux/actions'
 import {CustomButton} from '../../Component'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
@@ -28,7 +38,6 @@ import Geocoder from 'react-native-geocoding'
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function NearMe(props) {
- 
   const [activeTab, setActiveTab] = useState(0)
   const [currentAddress, setAddress] = useState('')
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
@@ -90,14 +99,14 @@ function NearMe(props) {
     Geolocation.getCurrentPosition(
       (position) => {
         setLocation(position.coords)
-       
+
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
-            var addressComponent = json.results[0].address_components[1].long_name +
+            var addressComponent =
+              json.results[0].address_components[1].long_name +
               ' ' +
               json.results[0].address_components[2].long_name
             setAddress(addressComponent)
-            
           },
         )
       },
@@ -120,80 +129,46 @@ function NearMe(props) {
     }
     var data = search
     if ((data = !search)) {
-
-    setdata({...data, isLoading: true})
-   
-    const url = `${API_BASE}/restro/combinedSearchSortFilter`
-    var payload = {};
-    if(activeTab == 0){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        relevance:true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-    } else if(activeTab == 1){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        rating_high_to_low : true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-    } else if(activeTab == 2){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        rating_low_to_high:true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-      
-    } else if(activeTab == 3){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        delivery_time:true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-    }
-    try {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNearMe,
-      })
-      setModal2(false)
-      setModal(false)
-      navigate('NearMe')
-    } catch (error) {
-      console.log("Error",error);
-      alert("Error",error);
-    }
-      
-    }
-    else if(search){
       setdata({...data, isLoading: true})
-     
+
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
-      const payload = {
-        searchKey: search,
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        is_sort: `${false}`,
-        is_filter:`${false}`,
-  
+      var payload = {}
+      if (activeTab == 0) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          relevance: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
+      } else if (activeTab == 1) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          rating_high_to_low: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
+      } else if (activeTab == 2) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          rating_low_to_high: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
+      } else if (activeTab == 3) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          delivery_time: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
       }
       try {
         const res = await axios.post(url, payload)
@@ -204,18 +179,38 @@ function NearMe(props) {
         setModal2(false)
         setModal(false)
         navigate('NearMe')
-      } 
-      catch (error) {
-        console.log("Error",error);
-        alert("Error",error);
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
       }
-    
-
-     }
-    else {
-
+    } else if (search) {
       setdata({...data, isLoading: true})
-     
+
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      const payload = {
+        searchKey: search,
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        is_sort: `${false}`,
+        is_filter: `${false}`,
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
+      }
+    } else {
+      setdata({...data, isLoading: true})
+
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
 
       const payload = {
@@ -223,33 +218,23 @@ function NearMe(props) {
         lat: 28.4922,
         lng: 77.0966,
         is_sort: `${false}`,
-        is_filter:`${false}`,
-       
+        is_filter: `${false}`,
       }
-      console.log('====================================');
-      console.log("Default ====>",payload);
-      console.log('====================================');
+      console.log('====================================')
+      console.log('Default ====>', payload)
+      console.log('====================================')
       try {
         const res = await axios.post(url, payload)
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================');
-        console.log("Aakash====>",res?.data?.data?.restroNearMe);
-        console.log('====================================');
+        console.log('====================================')
+        console.log('Aakash====>', res?.data?.data?.restroNearMe)
+        console.log('====================================')
       } catch (error) {}
-  
     }
-   
-    
   }
-
-
-
- 
-
-
 
   React.useEffect(() => {
     onSearch()
@@ -274,19 +259,17 @@ function NearMe(props) {
   }
 
   const onFavorite = (item) => {
-    const data = {
+    const restro = [...data?.restroList]
+    const index = restro.findIndex((i) => i?._id === item?._id)
+    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    setdata({...data, restroList: restro})
+    const payload = {
       userid: user?._id,
       restro_id: item?._id,
-      is_favourited_restro: true,
+      is_favourited_restro: !item?.is_favourited,
     }
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list successfully')
-
+    dispatch(addfavouriteRequest(payload))
   }
-
-
- 
-  
 
   const onResetFilter = async () => {
     const url = `${API_BASE}/restro/combinedSearchSortFilter`
@@ -312,8 +295,6 @@ function NearMe(props) {
     }
   }
 
-  
-
   const onSortByReset = async () => {
     const url = `${API_BASE}/restro/combinedSearchSortFilter`
     const payload = {
@@ -336,211 +317,197 @@ function NearMe(props) {
     }
   }
 
-   const onFilter = async () => {
-
+  const onFilter = async () => {
     var restro_type = ''
     if (isEnabled) {
       restro_type = 'non_veg'
     } else {
       restro_type = 'veg'
     }
-    if(value1)
-    {
-     setdata({...data, isLoading: true})
-      var payload = {};
+    if (value1) {
+      setdata({...data, isLoading: true})
+      var payload = {}
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
       payload = {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance:value1+"",
-        rating_from_user:undefined,
+        distance: value1 + '',
+        rating_from_user: undefined,
         is_sort: `${false}`,
-        is_filter:`${true}`,
-        restaurent_type:restro_type,
-
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
       }
-  console.log('====================================');
-  console.log("DistanceLoad===>",payload);
-  console.log('====================================');
-  
-  try {
-    const res = await axios.post(url, payload)
-    setdata({
-      ...data,
-      restroList: res?.data?.data?.restroNearMe,
-    })
-   console.log('====================================');
-   console.log("Datata===>",res);
-   console.log('====================================');
-    
-    setModal2(false)
-    setModal(false)
-    navigate('NearMe')
-  } catch (error) {
-    console.log("Error",error);
-    alert("Error",error);
-  }
-  }
-  
-  else if (value) {
-   
-  setdata({...data, isLoading: true})
-  var payload = {};
-  const url = `${API_BASE}/restro/combinedSearchSortFilter`
-  payload = {
-   userid: user?._id,
-   lat: 28.4922,
-   lng: 77.0966,
-   distance:undefined,
-   rating_from_user:value+"",
-   is_sort: `${false}`,
-   is_filter:`${true}`,
-   restaurent_type:restro_type,
+      console.log('====================================')
+      console.log('DistanceLoad===>', payload)
+      console.log('====================================')
 
- }
- console.log('====================================');
- console.log("RatimngPayLoad===>",payload);
- console.log('====================================');
- 
- try {
-   const res = await axios.post(url, payload)
-   setdata({
-     ...data,
-     restroList: res?.data?.data?.restroNearMe,
-   })
- console.log('====================================');
- console.log("RatingData===>",res?.data?.data?.restroNearMe);
- console.log('====================================');
-   setModal2(false)
-   setModal(false)
-   navigate('NearMe')
- } catch (error) {
-   console.log("Error",error);
-   alert("Error",error);
- }
-  }
-}
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        console.log('====================================')
+        console.log('Datata===>', res)
+        console.log('====================================')
 
-  const renderItems = ({item}) => (
-    <View style={styles.cardStyle}>
-      <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
-        <ImageBackground
-          source={{uri: item?.building_front_img}}
-          style={styles.backgroundStyle}>
-          <View style={{justifyContent: 'flex-end', flex: 1}}>
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
+      }
+    } else if (value) {
+      setdata({...data, isLoading: true})
+      var payload = {}
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        distance: undefined,
+        rating_from_user: value + '',
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+      }
+      console.log('====================================')
+      console.log('RatimngPayLoad===>', payload)
+      console.log('====================================')
+
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        console.log('====================================')
+        console.log('RatingData===>', res?.data?.data?.restroNearMe)
+        console.log('====================================')
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
+      }
+    }
+  }
+
+  const renderItems = ({item}) => {
+    console.log('====================================')
+    console.log(item)
+    console.log('====================================')
+    return (
+      <View style={styles.cardStyle}>
+        <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
+          <ImageBackground
+            source={{uri: item?.building_front_img}}
+            style={styles.backgroundStyle}>
+            <View style={{justifyContent: 'flex-end', flex: 1}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingBottom: Scale(10),
+                  alignItems: 'center',
+                  paddingHorizontal: Scale(10),
+                }}>
+                <Text
+                  style={{
+                    fontSize: Scale(12),
+                    color: Colors.WHITE,
+                    marginLeft: Scale(7),
+                    paddingHorizontal: Scale(7),
+                    paddingVertical: Scale(5),
+                    backgroundColor: 'green',
+                  }}>
+                  {item?.rating_from_user}
+                </Text>
+
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon
+                  name="star"
+                  type="FontAwesome"
+                  style={[styles.iconStyle, {color: Colors.WHITE}]}
+                />
+
+                <View style={{justifyContent: 'flex-end', flex: 1}}>
+                  <Text
+                    style={{
+                      color: '#fff',
+                      textAlign: 'right',
+                      fontSize: Scale(16),
+                      fontWeight: 'bold',
+                    }}>
+                    {item?.distance}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </ImageBackground>
+          <View>
             <View
               style={{
                 flexDirection: 'row',
-                paddingBottom: Scale(10),
+                paddingTop: Scale(15),
                 alignItems: 'center',
                 paddingHorizontal: Scale(10),
+                justifyContent: 'space-between',
               }}>
               <Text
+                numberOfLines={1}
+                style={{fontSize: Scale(15), fontWeight: 'bold', width: '40%'}}>
+                {item?.restro_name}
+              </Text>
+              <Text
                 style={{
+                  color: '#AB8F8E',
                   fontSize: Scale(12),
-                  color: Colors.WHITE,
-                  marginLeft: Scale(7),
-                  paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(5),
-                  backgroundColor: 'green',
+                  fontWeight: 'normal',
+                  marginRight: Scale(25),
                 }}>
-                {item?.rating_from_user}
+                {' '}
+                {item?.opening_time} - {item?.closing_time}
               </Text>
 
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {color: Colors.WHITE}]}
-              />
-
-              <View style={{justifyContent: 'flex-end', flex: 1}}>
-                <Text
+              <TouchableOpacity onPress={() => onFavorite(item)}>
+                <Icon
+                  name="heart"
+                  type="FontAwesome"
                   style={{
-                    color: '#fff',
-                    textAlign: 'right',
+                    color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
                     fontSize: Scale(16),
-                    fontWeight:'bold'
-                  }}>
-                  {item?.distance}
-                </Text>
-              </View>
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                flex: 1,
+                marginTop: 5,
+              }}>
+              <Text
+                numberOfLines={1}
+                style={{
+                  fontSize: Scale(12.5),
+                  fontWeight: 'normal',
+                  paddingBottom: 20,
+                  paddingLeft: 12,
+                }}>
+                {item?.categoryNameArray}
+              </Text>
             </View>
           </View>
-        </ImageBackground>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingTop: Scale(15),
-              alignItems: 'center',
-              paddingHorizontal: Scale(10),
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{fontSize: Scale(15), fontWeight: 'bold', width: '40%'}}>
-              {item?.restro_name}
-            </Text>
-            <Text
-              style={{
-                color: '#AB8F8E',
-                fontSize: Scale(12),
-                fontWeight: 'normal',
-                marginRight: Scale(25),
-              }}>
-              {' '}
-              {item?.opening_time} - {item?.closing_time}
-            </Text>
-            {addFavouriteStatus == true ? (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: Colors.DARK_RED,
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              flex: 1,
-              marginTop: 5,
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                fontSize: Scale(12.5),
-                fontWeight: 'normal',
-                paddingBottom: 20,
-                paddingLeft: 12,
-              }}>
-              {item?.categoryNameArray}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )
+        </TouchableOpacity>
+      </View>
+    )
+  }
   const renderItem = ({item, index}) => (
     <View
       style={{
@@ -971,7 +938,6 @@ function NearMe(props) {
             </View>
             <Slider
               style={{marginTop: Scale(20)}}
-              
               minimumValue={0}
               maximumValue={5}
               value={value}

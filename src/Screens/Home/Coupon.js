@@ -40,8 +40,8 @@ function Coupon(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      
-     if (res?.data?.data) {
+
+      if (res?.data?.data) {
         setRestro({
           ...restro,
           restroList: res?.data?.data?.restroNewArrayList,
@@ -94,12 +94,19 @@ function Coupon(props) {
   const dispatch = useDispatch()
 
   const onFavorite = (item) => {
-    const data = {
+    console.log('====================================')
+    console.log(item, restro?.restroList)
+    console.log('====================================')
+    // const restro = [...restro?.restroList]
+    // const index = restro.findIndex((i) => i?._id === item?._id)
+    // restro[index] = {...restro[index], is_favourited: !item?.is_favourited || false}
+    // setRestro({...restro, restroList: restro})
+    const payload = {
       userid: user?._id,
       restro_id: item?._id,
+      is_favourited_restro: !item?.is_favourited,
     }
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list successfully')
+    dispatch(addfavouriteRequest(payload))
   }
 
   const renderItems = ({item, index}) => (
@@ -108,7 +115,6 @@ function Coupon(props) {
         <ImageBackground
           source={{uri: item?.profile_image}}
           style={styles.backgroundStyle}>
-           
           <View style={{justifyContent: 'flex-end', flex: 1}}>
             <View
               style={{
@@ -191,29 +197,16 @@ function Coupon(props) {
               (11:00am - 10:00pm)
             </Text>
 
-            {addFavouriteStatus == true ? (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: Colors.DARK_RED,
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity onPress={() => onFavorite(item)}>
+              <Icon
+                name="heart"
+                type="FontAwesome"
+                style={{
+                  color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
+                  fontSize: Scale(16),
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -237,7 +230,7 @@ function Coupon(props) {
     </View>
   )
   const {couponDetails = {}} = props.route.params || {}
-  
+
   // const {restroDetails: couDet} = list
   return (
     <View style={styles.container}>
@@ -279,7 +272,7 @@ function Coupon(props) {
               </TouchableOpacity>
             </View>
             <FlatList data={restro?.restroList} renderItem={renderItems} />
-            <LoadWheel visible={restro.isLoading}/>
+            <LoadWheel visible={restro.isLoading} />
           </ScrollView>
         </ImageBackground>
       </ImageBackground>
@@ -350,7 +343,7 @@ const styles = StyleSheet.create({
   normalText: {
     fontSize: Scale(16),
     color: Colors.BORDERCOLOR,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
   filterContainer: {
     flexDirection: 'row',
