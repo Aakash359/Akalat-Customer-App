@@ -14,9 +14,9 @@ else if(value1){
    restaurent_type:restro_type,
 
  }
- console.log('====================================');
- console.log("DistanceLoad===>",payload);
- console.log('====================================');
+ 
+ 
+ 
  
  try {
    const res = await axios.post(url, payload)
@@ -24,13 +24,15 @@ else if(value1){
      ...data,
      restroList: res?.data?.data?.restroNearMe,
    })
- console.log('====================================');
- console.log("Datata===>",res);
- console.log('====================================');
+ 
+ 
+ 
    setModal2(false)
    setModal(false)
    navigate('NearMe')
  } catch (error) {
-   console.log("Error",error);
+   
    alert("Error",error);
  }
+
+ {(value1).toFixed(1)} Miles

@@ -143,9 +143,9 @@ function MyOrders(props) {
     </View>
   )
   const renderItemPast = ({item, index}) => {
-    console.log('====================================')
-    console.log(item)
-    console.log('====================================')
+    
+    
+    
     return (
       <View style={styles.cardStyle}>
         <View style={{flexDirection: 'row'}}>

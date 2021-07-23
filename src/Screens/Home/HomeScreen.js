@@ -17,6 +17,7 @@ import {useSelector, useDispatch, connect} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
+import {addfavouriteRequest} from '../../redux/actions'
 
 function HomeScreen(props) {
   const user = useSelector((state) => state.Auth.user)
@@ -107,7 +108,7 @@ function HomeScreen(props) {
                     textAlign: 'right',
                     fontSize: Scale(16),
                   }}>
-                  1.5 km
+                   {item?.distance} Km
                 </Text>
               </View>
             </View>
@@ -207,7 +208,7 @@ function HomeScreen(props) {
             return <Text style={{textAlign: 'center'}}>No data found</Text>
           }}
         />
-        {/* <LoadWheel visible={data?.isLoading} /> */}
+        {/* <LoadWheel visible={viewallData.isLoading} /> */}
       </ImageBackground>
     </View>
   )

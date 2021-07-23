@@ -94,8 +94,18 @@ function EditAddress(props) {
       alert('Please enter area')
     } else {
        let data = {
-            address_type: activeTab,
+            address_type: `${activeTab}`,
             lng:address?.lng,
+            lat: address?.lat,
+            house_name_and_no,
+            area_name,
+            created_by: user?._id,
+            _id: address?._id,
+          }
+        if (nearby){
+          const data = {
+            address_type: `${activeTab}`,
+            lng: address?.lng,
             lat: address?.lat,
             house_name_and_no,
             area_name,
@@ -103,33 +113,29 @@ function EditAddress(props) {
             created_by: user?._id,
             _id: address?._id,
           }
-        if (!nearby){
-          const data = {
-            address_type: activeTab,
-            lng: address?.lng,
-            lat: address?.lat,
-            house_name_and_no,
-            area_name,
-            created_by: user?._id,
-            _id: address?._id,
-          }
+          
          dispatch(AddressListRequest(data))
           if (addAddressStatus){
             const data = {
               created_by: user?._id,
             } 
-            navigate('ManageAddress')
-            alert('Address updated succesfully')
-            dispatch(AddressListRequest(data))
+            setTimeout(() => {
+              navigate('ManageAddress')
+            }, 1000)
+            
+            
             }
         }
         dispatch(AddAddressRequest(data))
+       
       if (addAddressStatus){
         const data = {
           created_by: user?._id,
         } 
-        navigate('ManageAddress')
-        alert('Address updated succesfully')
+        setTimeout(() => {
+          navigate('ManageAddress')
+        }, 1000)
+       
         dispatch(AddressListRequest(data))
         }
     }

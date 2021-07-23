@@ -111,13 +111,10 @@ function AddNewAddress(props) {
         lat: location?.longitude,
         house_name_and_no,
         area_name,
-        nearby,
         created_by: user?._id,
       }
-      console.log('====================================');
-      console.log("Aakash=>>>>",data);
-      console.log('====================================');
-      if (!nearby) {
+     
+      if (nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
           address_type: `${activeTab}`,
@@ -125,6 +122,8 @@ function AddNewAddress(props) {
           lat: location?.longitude,
           house_name_and_no,
           area_name,
+          nearby,
+
           created_by: user?._id,
         }
         dispatch(AddressListRequest(data))
@@ -132,10 +131,10 @@ function AddNewAddress(props) {
           const data = {
             created_by: user?._id,
           } 
-          navigate('ManageAddress')
-          alert('Address added succesfully')
-          dispatch(AddressListRequest(data))
-          }
+          setTimeout(() => {
+            navigate('ManageAddress')
+          }, 1000)
+         }
         
       }
 
@@ -145,7 +144,9 @@ function AddNewAddress(props) {
           created_by: user?._id,
         }
         navigate('ManageAddress')
-        alert('Address added succesfully')
+         setTimeout(() => {
+            navigate('ManageAddress')
+          }, 1000)
         dispatch(AddressListRequest(data))
       }
     }

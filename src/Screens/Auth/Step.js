@@ -40,11 +40,11 @@ export class Step extends Component {
         );
     };
     onViewableItemsChanged = ({ viewableItems, changed }) => {
-        console.log('Visible items are', viewableItems[0].index);
+        
         this.setState({
             selectedIndex: viewableItems[0].index,
         });
-        console.log('Changed in this iteration', changed);
+        
     };
 
     onPressSubmit() {

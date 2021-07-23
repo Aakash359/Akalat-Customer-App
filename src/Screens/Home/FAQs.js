@@ -28,12 +28,6 @@ function FAQs() {
     dispatch(FAQRequest())
   }, [])
 
-  // const renderItems = ({item, title}) => <Text>hello</Text>
-
-  console.log('====================================')
-  console.log('Aakash====>', faqsList)
-  console.log('====================================')
-
   const SECTIONS = [
     {
       title: 'First',

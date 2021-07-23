@@ -177,7 +177,7 @@ function NearMe(props) {
       setModal(false)
       navigate('NearMe')
     } catch (error) {
-      console.log("Error",error);
+      
       alert("Error",error);
     }
       
@@ -206,7 +206,7 @@ function NearMe(props) {
         navigate('NearMe')
       } 
       catch (error) {
-        console.log("Error",error);
+        
         alert("Error",error);
       }
     
@@ -226,18 +226,14 @@ function NearMe(props) {
         is_filter:`${false}`,
        
       }
-      console.log('====================================');
-      console.log("Default ====>",payload);
-      console.log('====================================');
+  
       try {
         const res = await axios.post(url, payload)
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================');
-        console.log("Aakash====>",res?.data?.data?.restroNearMe);
-        console.log('====================================');
+        
       } catch (error) {}
   
     }
@@ -245,13 +241,7 @@ function NearMe(props) {
     
   }
 
-
-
- 
-
-
-
-  React.useEffect(() => {
+ React.useEffect(() => {
     onSearch()
   }, [])
 
@@ -308,7 +298,7 @@ function NearMe(props) {
       navigate('NearMe')
       setModal2(false)
     } catch (error) {
-      console.log('Error', error)
+      
     }
   }
 
@@ -332,7 +322,7 @@ function NearMe(props) {
       setModal(false)
       navigate('NearMe')
     } catch (error) {
-      console.log('Error', error)
+      
     }
   }
 
@@ -353,16 +343,14 @@ function NearMe(props) {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance:value1+"",
+        distance:value1.toFixed(1)+"",
         rating_from_user:undefined,
         is_sort: `${false}`,
         is_filter:`${true}`,
         restaurent_type:restro_type,
 
       }
-  console.log('====================================');
-  console.log("DistanceLoad===>",payload);
-  console.log('====================================');
+   
   
   try {
     const res = await axios.post(url, payload)
@@ -370,15 +358,12 @@ function NearMe(props) {
       ...data,
       restroList: res?.data?.data?.restroNearMe,
     })
-   console.log('====================================');
-   console.log("Datata===>",res);
-   console.log('====================================');
     
     setModal2(false)
     setModal(false)
     navigate('NearMe')
   } catch (error) {
-    console.log("Error",error);
+    
     alert("Error",error);
   }
   }
@@ -393,30 +378,26 @@ function NearMe(props) {
    lat: 28.4922,
    lng: 77.0966,
    distance:undefined,
-   rating_from_user:value+"",
+   rating_from_user:value.toFixed(1)+"",
    is_sort: `${false}`,
    is_filter:`${true}`,
    restaurent_type:restro_type,
 
  }
- console.log('====================================');
- console.log("RatimngPayLoad===>",payload);
- console.log('====================================');
- 
- try {
+     
+      
+try {
    const res = await axios.post(url, payload)
    setdata({
      ...data,
      restroList: res?.data?.data?.restroNearMe,
    })
- console.log('====================================');
- console.log("RatingData===>",res?.data?.data?.restroNearMe);
- console.log('====================================');
+     
    setModal2(false)
    setModal(false)
    navigate('NearMe')
  } catch (error) {
-   console.log("Error",error);
+   
    alert("Error",error);
  }
   }
@@ -466,7 +447,7 @@ function NearMe(props) {
                     fontSize: Scale(16),
                     fontWeight:'bold'
                   }}>
-                  {item?.distance}
+                  {item?.distance} Km
                 </Text>
               </View>
             </View>
@@ -928,20 +909,25 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {value1 + ' Miles'}
+                {(value1).toFixed(1)} Miles
               </Text>
             </View>
+           
+
             <Slider
               style={{marginTop: Scale(20)}}
               minimumValue={0}
               maximumValue={5}
               value={value1}
-              step={0.5}
+              step={0.1}
               onValueChange={(value) => setValue1(value)}
               thumbTintColor={Colors.APPCOLOR}
               minimumTrackTintColor={Colors.APPCOLOR}
               maximumTrackTintColor="#000000"
             />
+
+         
+            
           </View>
           <View
             style={{
@@ -966,7 +952,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {value + ' Miles'}
+                {(value).toFixed(1) + ' Miles'}
               </Text>
             </View>
             <Slider
@@ -975,7 +961,7 @@ function NearMe(props) {
               minimumValue={0}
               maximumValue={5}
               value={value}
-              step={0.5}
+              step={0.1}
               onValueChange={(value) => setValue(value)}
               thumbTintColor={Colors.APPCOLOR}
               minimumTrackTintColor={Colors.APPCOLOR}
@@ -998,15 +984,13 @@ function NearMe(props) {
                 justifyContent: 'space-between',
                 marginHorizontal: Scale(15),
               }}>
-              <Text style={{fontSize: 18}}>Veg only</Text>
+              <Text style={{fontSize: 18,alignSelf:'center'}}>Veg only</Text>
               <Switch
                 trackColor={{
                   false: Colors.GRAY,
                   true: Colors.RED,
                 }}
-                style={{
-                  transform: [{scaleX: 1.1}, {scaleY: 1.1}],
-                }}
+                style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
                 ios_backgroundColor={Colors.GREEN}
                 onValueChange={setCheckedSwitch}

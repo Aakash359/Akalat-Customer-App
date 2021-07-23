@@ -118,7 +118,7 @@ function Explore() {
       })
       
     } catch (error) {
-      console.log("Error===>",error)
+      
     }
   }
   const redirectToHomeMaker = (item) => {
@@ -167,7 +167,7 @@ function Explore() {
         isLoading: false,
       })
     } catch (error) {
-      console.log("Error===>",error)
+      
     }
 
     }
@@ -195,7 +195,7 @@ function Explore() {
           isLoading: false,
         })
       } catch (error) {
-        console.log("Error===>",error)
+        
       }
   
       }
@@ -255,7 +255,7 @@ function Explore() {
                     textAlign: 'right',
                     fontSize: Scale(16),
                   }}>
-                  1.5 km
+                  {item?.distance} Km
                 </Text>
               </View>
             </View>

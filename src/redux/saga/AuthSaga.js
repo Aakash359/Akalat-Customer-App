@@ -188,8 +188,8 @@ export const countryListSaga = function* getUserDetails({data}) {
         yield put(setEditProfileLoader(false))
         yield put(editProfileFailed(''))
         yield put(editProfileSuccess(response.data))
-        // let ud = {...response.data}
-        // yield put(setUserDetails(ud))
+        let ud = {...response.data}
+        yield put(setUserDetails(ud))
       }
     } catch (e) {
       yield put(setEditProfileLoader(false))
