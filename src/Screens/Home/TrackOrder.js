@@ -27,12 +27,7 @@ const mapScreen = (props) => {
     const dispatch = useDispatch();
     
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
-    // const orderDetails
-    console.log('====================================');
-    console.log("OrderDetails===>",orderDetails?.payment_mode);
-    console.log('====================================');
-
-    
+   
     return (
 
         <SafeAreaInsetsContext.Consumer>
@@ -86,7 +81,7 @@ const mapScreen = (props) => {
                                  style={styles.imageStyle}
                                  />:null
                                 }
-                                <Image
+                                      <Image
                                             source={ImagesPath.check2x}
                                          style={styles.imageStyle}
                                          />
