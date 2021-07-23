@@ -132,7 +132,7 @@ function Explore() {
     const index = restro.findIndex((i) => i?._id === item?._id)
     restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
     setdata({...data, restroList: restro})
-    const data = {
+    const payload = {
       userid: user?._id,
       restro_id: item?._id,
       is_favourited_restro: !item?.is_favourited,

@@ -9,6 +9,7 @@ import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import RootStack from './navigation'
 import AsyncStorage from '@react-native-community/async-storage'
+import Geolocation from '@react-native-community/geolocation'
 
 LogBox.ignoreLogs(['Warning: ...'])
 LogBox.ignoreAllLogs()
@@ -27,6 +28,11 @@ export class App extends Component {
       }
       global.isNetConnected = state.isConnected
     })
+    Geolocation.setRNConfiguration({
+      authorizationLevel: 'whenInUse',
+      skipPermissionRequests: false,
+    })
+    Geolocation.requestAuthorization()
   }
 
   render() {

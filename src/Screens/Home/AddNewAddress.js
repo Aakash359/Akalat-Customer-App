@@ -51,6 +51,7 @@ function AddNewAddress(props) {
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
+        Geolocation.requestAuthorization('whenInUse')
         getOneTimeLocation()
       } else {
         try {
@@ -88,10 +89,10 @@ function AddNewAddress(props) {
           },
         )
       },
-      (error) => {},
-      {
-        timeout: 30000,
-        maximumAge: 1000,
+      (error) => {
+        console.log('====================================')
+        console.log(error)
+        console.log('====================================')
       },
     )
   }
@@ -113,9 +114,9 @@ function AddNewAddress(props) {
         nearby,
         created_by: user?._id,
       }
-      console.log('====================================');
-      console.log("Aakash=>>>>",data);
-      console.log('====================================');
+      console.log('====================================')
+      console.log('Aakash=>>>>', data)
+      console.log('====================================')
       if (!nearby) {
         data = {
           // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
