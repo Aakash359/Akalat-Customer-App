@@ -19,10 +19,14 @@ import {API_BASE} from '../../apiServices/ApiService'
 import {addfavouriteRequest} from '../../redux/actions'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import axios from 'axios'
+import Geolocation from 'react-native-geolocation-service'
+import Geocoder from 'react-native-geocoding'
 
 function Explore() {
   const [check, setChecked] = useState(false)
   const [search, setSearch] = React.useState('')
+  const [currentAddress, setAddress] = useState('')
+  const [location, setLocation] = useState(null)
   const user = useSelector((state) => state.Auth.user)
   const addFavouriteStatus = useSelector(
     (state) => state.Home.addFavouriteStatus,
@@ -33,7 +37,57 @@ function Explore() {
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
+    resetStatus: false,
   })
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation()
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            getOneTimeLocation()
+          } else {
+          }
+        } catch (err) {}
+      }
+    }
+    requestLocationPermission()
+    return () => {
+      Geolocation.clearWatch()
+    }
+  }, [])
+
+  const getOneTimeLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setLocation(position.coords)
+
+        Geocoder.from(position.coords.latitude, position.coords.longitude).then(
+          (json) => {
+            var addressComponent =
+              json.results[0].address_components[1].long_name +
+              ' ' +
+              json.results[0].address_components[2].long_name
+            setAddress(addressComponent)
+          },
+        )
+      },
+      (error) => {},
+      {
+        timeout: 30000,
+        maximumAge: 1000,
+      },
+    )
+  }
   const redirectTocheck = async () => {
     setChecked(!check)
     let Datatype = ''
@@ -44,11 +98,14 @@ function Explore() {
     }
 
     setdata({...data, isLoading: true})
-    const url = `${API_BASE}/restro/search`
+    const url = `${API_BASE}/restro/combinedSearchSortFilter`
 
     const payload = {
       searchKey: search,
-      type: Datatype,
+      search_type: Datatype,
+      userid: user?._id,
+      lat: 28.4922,
+      lng: 77.0966,
     }
 
     try {
@@ -56,46 +113,82 @@ function Explore() {
 
       setdata({
         ...data,
-        restroList: res?.data?.data?.restro,
+        restroList: res?.data?.data?.restroNearMe,
         isLoading: false,
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log('Error===>', error)
+    }
   }
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
-  const redirectToRating = (item) => {
-    navigate('HomeScreen')
+  const redirectToHomeScreen = (item) => {
+    navigate('HomeScreen', {viewallData: data?.restroList})
   }
 
   const onFavorite = (item) => {
+    const restro = [...data?.restroList]
+    const index = restro.findIndex((i) => i?._id === item?._id)
+    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    setdata({...data, restroList: restro})
     const data = {
       userid: user?._id,
       restro_id: item?._id,
-      is_favourited_restro: true,
+      is_favourited_restro: !item?.is_favourited,
     }
 
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list succesfully')
+    dispatch(addfavouriteRequest(payload))
   }
 
   const onSearch = async () => {
-    setdata({...data, isLoading: true})
-    const url = `${API_BASE}/restro/search`
+    var data = search
+    if ((data = !search)) {
+      setdata({...data, isLoading: true})
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
 
-    const payload = {
-      searchKey: search,
+      const payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+      }
+
+      try {
+        const res = await axios.post(url, payload)
+
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.log('Error===>', error)
+      }
+    } else {
+      setdata({...data, isLoading: true})
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+
+      const payload = {
+        searchKey: search,
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        is_sort: `${false}`,
+        is_filter: `${false}`,
+      }
+
+      try {
+        const res = await axios.post(url, payload)
+
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.log('Error===>', error)
+      }
     }
-
-    try {
-      const res = await axios.post(url, payload)
-
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restro,
-        isLoading: false,
-      })
-    } catch (error) {}
   }
 
   React.useEffect(() => {
@@ -179,29 +272,16 @@ function Explore() {
               {' '}
               {item?.opening_time} - {item?.closing_time}
             </Text>
-            {addFavouriteStatus == true ? (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: Colors.DARK_RED,
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity onPress={() => onFavorite(item)}>
+              <Icon
+                name="heart"
+                type="FontAwesome"
+                style={{
+                  color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
+                  fontSize: Scale(16),
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -283,7 +363,7 @@ function Explore() {
               }}>
               Near By
             </Text>
-            <TouchableOpacity onPress={redirectToRating}>
+            <TouchableOpacity onPress={redirectToHomeScreen}>
               <Text
                 style={{
                   color: Colors.DARK_RED,
