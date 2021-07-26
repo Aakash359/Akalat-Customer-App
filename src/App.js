@@ -32,7 +32,6 @@ export class App extends Component {
       authorizationLevel: 'whenInUse',
       skipPermissionRequests: false,
     })
-    Geolocation.requestAuthorization()
   }
 
   render() {
