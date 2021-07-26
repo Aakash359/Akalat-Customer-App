@@ -6370,11 +6370,6 @@ react-native-restart@^0.0.20:
   resolved "https://registry.npmjs.org/react-native-restart/-/react-native-restart-0.0.20.tgz"
   integrity sha512-lpWqKvfKaCfolosRHHH9+hDdjqMntEedRiLdVqmwNJejjfA4gUH+VEn0uhSaVueBgQJl5525X6B/0bSP55g+iQ==
 
-react-native-root-view-background-color@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-root-view-background-color/-/react-native-root-view-background-color-1.0.2.tgz#5747e1bbb0b1894d6b0458a561716f278ac1f93c"
-  integrity sha512-Vn6Qwd34RvL63UmBmq0ES31p8AcNj30xRhOqajoxgkF5iABT1tnHtiSNp+zpcigVNJ9FZurbDnmWzIV9douLXg==
-
 react-native-safe-area-context@^3.1.9:
   version "3.2.0"
   resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz"

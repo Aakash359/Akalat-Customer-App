@@ -18,7 +18,6 @@ import {
   setOtpVerifyStatus,
 } from '../../redux/actions'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
-import RootViewBackgroundColor from 'react-native-root-view-background-color'
 import ModalDropdown from 'react-native-modal-dropdown'
 import {FormInput, CustomButton} from '../../Component'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
@@ -28,7 +27,6 @@ import {
   SafeAreaView,
   SafeAreaInsetsContext,
 } from 'react-native-safe-area-context'
-
 
 function SignUp(props) {
   const {navigate} = useNavigation()
@@ -105,11 +103,8 @@ function SignUp(props) {
 
   return (
     <KeyboardAvoidingView
-    
       showsVerticalScrollIndicator={false}
-      style={styles.keyboardStyle}
-    
-      >
+      style={styles.keyboardStyle}>
       <ImageBackground
         source={ImagesPath.background}
         style={styles.imageBachgroundStyle}>
@@ -142,22 +137,28 @@ function SignUp(props) {
             <Text style={styles.mobile}>Mobile Number</Text>
 
             <View style={styles.textInputView}>
-            <View style={{ flexDirection:'row', alignItems:'center' }}>
-              <ModalDropdown 
-              options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
-              onSelect={(country_Code) => setCountryCode(country_Code)}
-              defaultIndex={0}
-              defaultValue={countryList.dial_code || '+91'}
-              style={styles.modal}
-              textStyle={styles.modalText}
-              dropdownStyle={styles.modalDropDown}
-              dropdownTextStyle={styles.modalDropDownText}
-              dropdownTextHighlightStyle={
-                  styles.modalDropDownHighlightedText
-              }
-              />
-              
-              <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <ModalDropdown
+                  options={[
+                    ...new Set(countryList.map((i) => `${i?.dial_code}`)),
+                  ]}
+                  onSelect={(country_Code) => setCountryCode(country_Code)}
+                  defaultIndex={0}
+                  defaultValue={countryList.dial_code || '+91'}
+                  style={styles.modal}
+                  textStyle={styles.modalText}
+                  dropdownStyle={styles.modalDropDown}
+                  dropdownTextStyle={styles.modalDropDownText}
+                  dropdownTextHighlightStyle={
+                    styles.modalDropDownHighlightedText
+                  }
+                />
+
+                <Icon
+                  name="caretdown"
+                  size={Scale(10)}
+                  style={{marginLeft: Scale(8)}}
+                />
               </View>
               <TextInput
                 style={styles.textInputContainer}
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: Scale(5),
   },
-  
+
   imageBachgroundStyle: {
     height: '100%',
     width: '100%',

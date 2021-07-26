@@ -8,6 +8,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
+  Platform,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath, LogoutAlert} from '../../CommonConfig'
@@ -44,7 +45,9 @@ function ManageAddress() {
     dispatch(AddressListLoader(true))
     dispatch(AddressListRequest(data))
 
-    Geolocation.requestAuthorization()
+    if (Platform.OS === 'ios') {
+      Geolocation.requestAuthorization('whenInUse')
+    }
   }, [])
 
   const delAdd = () => {

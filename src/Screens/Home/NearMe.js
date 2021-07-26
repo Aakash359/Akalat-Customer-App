@@ -89,7 +89,7 @@ function NearMe(props) {
         } catch (err) {}
       }
     }
-    requestLocationPermission()
+    requestLocationPermission('whenInUse')
     return () => {
       Geolocation.clearWatch()
     }

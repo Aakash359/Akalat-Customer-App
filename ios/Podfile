@@ -14,7 +14,7 @@ target 'ResturantCustomer' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
-  pod 'react-native-root-view-background-color', :path => '../node_modules/react-native-root-view-background-color'
+  
 
   target 'ResturantCustomerTests' do
     inherit! :complete

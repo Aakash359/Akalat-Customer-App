@@ -40,10 +40,8 @@ function index() {
       {UserID ? (
         <Home />
       ) : (
-       
-        <Stack.Navigator initialRouteName={isIntro? "SelectLoginSignup" : "SelectLanguage" }
-        >
-          
+        <Stack.Navigator
+          initialRouteName={isIntro ? 'SelectLoginSignup' : 'SelectLanguage'}>
           <Stack.Screen
             name="Login"
             component={Login}
