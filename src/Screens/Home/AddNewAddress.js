@@ -51,6 +51,7 @@ function AddNewAddress(props) {
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
+        Geolocation.requestAuthorization('whenInUse')
         getOneTimeLocation()
       } else {
         try {
@@ -88,10 +89,10 @@ function AddNewAddress(props) {
           },
         )
       },
-      (error) => {},
-      {
-        timeout: 30000,
-        maximumAge: 1000,
+      (error) => {
+        console.log('====================================')
+        console.log(error)
+        console.log('====================================')
       },
     )
   }

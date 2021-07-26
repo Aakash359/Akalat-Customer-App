@@ -1,52 +1,81 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, StatusBar, Image, FlatList, ImageBackground } from 'react-native';
-import { Icon } from 'native-base';
-import { Colors, Scale, ImagesPath } from '../../CommonConfig';
-import { useNavigation } from '@react-navigation/native';
-import { favouriteListRequest,favouriteListLoader } from '../../redux/actions'
-import { useSelector, useDispatch } from 'react-redux';
-import { LoadWheel } from '../../CommonConfig/LoadWheel'
+import React, {useState, useEffect} from 'react'
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  Image,
+  FlatList,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
+import {Icon} from 'native-base'
+import {Colors, Scale, ImagesPath} from '../../CommonConfig'
+import {useNavigation} from '@react-navigation/native'
+import {favouriteListRequest, favouriteListLoader} from '../../redux/actions'
+import {useSelector, useDispatch} from 'react-redux'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
+import {addfavouriteRequest} from '../../redux/actions'
 
 function Favorites() {
   const [checked, setChecked] = useState(false)
-  const { navigate } = useNavigation();
-  const navigation = useNavigation();  
-  const dispatch = useDispatch();
-  const  favouriteListResponse = useSelector((state) => state.Setting.favouriteListResponse);
-  const  favouriteList = favouriteListResponse?.data?.restroList || []
-  const  user = useSelector((state) => state.Auth.user);
-  const  {setFavouriteListLoader} = useSelector((state) => state.Setting);
+  const {navigate} = useNavigation()
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const favouriteListResponse = useSelector(
+    (state) => state.Setting.favouriteListResponse,
+  )
+  const favouriteList = favouriteListResponse?.data?.restroList || []
+  const user = useSelector((state) => state.Auth.user)
+  const {setFavouriteListLoader} = useSelector((state) => state.Setting)
   const onPressChecked = () => {
-    setChecked(!checked);
-  };
+    setChecked(!checked)
+  }
 
   useEffect(() => {
+    const data = {
+      userid: user?._id,
+    }
+    dispatch(favouriteListLoader(true))
+    setTimeout(() => {
+      dispatch(favouriteListRequest(data))
+    })
+  }, [])
 
-    const data = { 
-         "userid": user?._id
-         }
-         dispatch(favouriteListLoader(true))
-        setTimeout(() => {
-          dispatch(favouriteListRequest(data));
-         
-        },)
-     },[]
-     ); 
-  const renderItems = ({ item, index }) => (
-    
+  const onFavorite = (item) => {
+    const payload = {
+      userid: user?._id,
+      restro_id: item?._id,
+      is_favourited_restro: false,
+    }
+    dispatch(addfavouriteRequest(payload))
+  }
+
+  const renderItems = ({item, index}) => (
     <View style={styles.cardStyle}>
-      
       <View style={styles.imageContainer}>
-      
-        <Image  source={{ uri: item?.building_front_img }} style={styles.backgroundStyle1} />
+        <Image
+          source={{uri: item?.building_front_img}}
+          style={styles.backgroundStyle1}
+        />
         <View style={styles.heading}>
           <View style={styles.textContainer}>
             <Text style={styles.primaryText}>{item?.restro_name}</Text>
-            <Icon onPress={onPressChecked} type="FontAwesome" name={checked ? "heart" : 'heart-o'}
-              style={styles.heartIconStyle} />
+            <TouchableOpacity onPress={() => onFavorite(item)}>
+              <Icon
+                name="heart"
+                type="FontAwesome"
+                style={{
+                  color: Colors.DARK_RED,
+                  fontSize: Scale(16),
+                }}
+              />
+            </TouchableOpacity>
           </View>
-          <Text style={styles.normatText}>{item?.street_name}, {item?.area_name},{' '}
-                            {item?.region}, {item?.state}...</Text>
+          <Text style={styles.normatText}>
+            {item?.street_name}, {item?.area_name}, {item?.region},{' '}
+            {item?.state}...
+          </Text>
         </View>
       </View>
       <View style={styles.ratingContainer}>
@@ -62,11 +91,9 @@ function Favorites() {
           <Text style={styles.textStyle1}>2.7 km</Text>
           <Text style={styles.normalText}>Distance</Text>
         </View>
-        
       </View>
-      
     </View>
-  );
+  )
 
   return (
     <View style={styles.container}>
@@ -76,55 +103,54 @@ function Favorites() {
         barStyle="light-content"
       />
       <View style={styles.headerContainer}>
-        <Icon onPress={() => navigation.goBack()} name="arrowleft" type="AntDesign"
-          style={styles.logoStyle} />
+        <Icon
+          onPress={() => navigation.goBack()}
+          name="arrowleft"
+          type="AntDesign"
+          style={styles.logoStyle}
+        />
       </View>
-      <View style={{
-        marginBottom: Scale(20),
-        marginHorizontal: Scale(25),
-      }}>
+      <View
+        style={{
+          marginBottom: Scale(20),
+          marginHorizontal: Scale(25),
+        }}>
         <Text style={styles.headerText}>Favorites </Text>
       </View>
-      <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
-     
+      <ImageBackground
+        source={ImagesPath.background}
+        style={styles.loginInputCont}>
         <FlatList
           data={favouriteList}
           renderItem={renderItems}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => {
             return (
-                
-                <Text style={{ alignSelf: 'center' }}>
-                  
-                    You don't have any favourite list
-                </Text>
+              <Text style={{alignSelf: 'center'}}>
+                You don't have any favourite list
+              </Text>
             )
-        }}
+          }}
         />
-    
-      <LoadWheel visible={setFavouriteListLoader} />
-    
+
+        <LoadWheel visible={setFavouriteListLoader} />
       </ImageBackground>
-     
-     
     </View>
-   
-     
-  );
+  )
 }
-export default Favorites;
+export default Favorites
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.APPCOLOR
+    backgroundColor: Colors.APPCOLOR,
   },
   imageContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   heading: {
     flex: 1,
-    marginTop: Scale(-10)
+    marginTop: Scale(-10),
   },
   backgroundStyle1: {
     width: Scale(100),
@@ -132,17 +158,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     resizeMode: 'stretch',
     borderRadius: Scale(20),
-    marginRight: Scale(10)
+    marginRight: Scale(10),
   },
-  primaryText: { 
-    color: Colors.BLACK, 
-    fontSize: Scale(18), 
-    fontWeight: 'bold' 
+  primaryText: {
+    color: Colors.BLACK,
+    fontSize: Scale(18),
+    fontWeight: 'bold',
   },
   ratingContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: Scale(15)
+    paddingTop: Scale(15),
   },
   buttonStyle1: {
     height: Scale(50),
@@ -151,16 +177,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  textStyle1: { 
-    color: Colors.BLACK, 
-    fontSize: Scale(16), 
-    fontWeight: 'bold' 
+  textStyle1: {
+    color: Colors.BLACK,
+    fontSize: Scale(16),
+    fontWeight: 'bold',
   },
-  normalText: { 
-    color: 'grey', 
-    fontSize: Scale(12) 
+  normalText: {
+    color: 'grey',
+    fontSize: Scale(12),
   },
   cardStyle: {
     width: '90%',
@@ -171,12 +197,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: Scale(10),
     paddingVertical: Scale(15),
     alignSelf: 'center',
-    borderRadius: Scale(10)
+    borderRadius: Scale(10),
   },
-  normatText: { 
-    color: Colors.BLACK, 
-    fontSize: Scale(16), 
-    marginTop: Scale(7) 
+  normatText: {
+    color: Colors.BLACK,
+    fontSize: Scale(16),
+    marginTop: Scale(7),
   },
   buttonStyle: {
     borderRadius: Scale(20),
@@ -184,18 +210,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.WHITE,
     borderRadius: Scale(30),
-    paddingHorizontal: Scale(15)
+    paddingHorizontal: Scale(15),
   },
   activeButton: {
     borderRadius: Scale(20),
     height: Scale(40),
     justifyContent: 'center',
     borderRadius: Scale(30),
-    paddingHorizontal: Scale(15)
+    paddingHorizontal: Scale(15),
   },
   heartIconStyle: {
     fontSize: Scale(25),
-    color: Colors.DARK_RED
+    color: Colors.DARK_RED,
   },
   textContainer: {
     flexDirection: 'row',
@@ -205,12 +231,12 @@ const styles = StyleSheet.create({
   textStyle: {
     color: Colors.APPCOLOR,
     fontSize: Scale(15),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   inActiveStyle: {
     color: Colors.WHITE,
     fontSize: Scale(15),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   loginInputCont: {
     flex: 1,
@@ -223,7 +249,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: Scale(20),
     fontWeight: 'bold',
-    color: Colors.WHITE
+    color: Colors.WHITE,
   },
   notificationStyle: {
     width: Scale(25),
@@ -232,8 +258,8 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE,
     alignSelf: 'flex-end',
   },
-  headerContainer: {    
-    paddingTop:Scale(20),
+  headerContainer: {
+    paddingTop: Scale(20),
     height: Scale(80),
     alignItems: 'center',
     flexDirection: 'row',
@@ -246,4 +272,4 @@ const styles = StyleSheet.create({
     fontSize: Scale(25),
     color: Colors.WHITE,
   },
-});
+})

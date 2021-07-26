@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import {Icon} from 'native-base'
 import {useSelector, useDispatch} from 'react-redux'
-import {Colors, Scale, ImagesPath,} from '../../CommonConfig'
+import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
 import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
@@ -37,6 +37,7 @@ function Explore() {
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
+    resetStatus: false,
   })
 
   useEffect(() => {
@@ -69,14 +70,14 @@ function Explore() {
     Geolocation.getCurrentPosition(
       (position) => {
         setLocation(position.coords)
-       
+
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
-            var addressComponent = json.results[0].address_components[1].long_name +
+            var addressComponent =
+              json.results[0].address_components[1].long_name +
               ' ' +
               json.results[0].address_components[2].long_name
             setAddress(addressComponent)
-            
           },
         )
       },
@@ -102,11 +103,10 @@ function Explore() {
     const payload = {
       searchKey: search,
       search_type: Datatype,
-      userid:user?._id,
-      lat:28.4922,
-      lng:77.0966,
+      userid: user?._id,
+      lat: 28.4922,
+      lng: 77.0966,
     }
-    
 
     try {
       const res = await axios.post(url, payload)
@@ -116,7 +116,6 @@ function Explore() {
         restroList: res?.data?.data?.restroNearMe,
         isLoading: false,
       })
-      
     } catch (error) {
       
     }
@@ -125,22 +124,24 @@ function Explore() {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
   const redirectToHomeScreen = (item) => {
-    navigate('HomeScreen', {viewallData : data?.restroList})
+    navigate('HomeScreen', {viewallData: data?.restroList})
   }
 
   const onFavorite = (item) => {
-    const data = {
+    const restro = [...data?.restroList]
+    const index = restro.findIndex((i) => i?._id === item?._id)
+    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    setdata({...data, restroList: restro})
+    const payload = {
       userid: user?._id,
       restro_id: item?._id,
-      is_favourited_restro: true,
+      is_favourited_restro: !item?.is_favourited,
     }
 
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list succesfully')
+    dispatch(addfavouriteRequest(payload))
   }
 
-
-
+  
   const onSearch = async () => {
 
     var data = search
@@ -202,7 +203,7 @@ function Explore() {
 
     }
     
-  
+
 
   React.useEffect(() => {
     onSearch()
@@ -285,29 +286,16 @@ function Explore() {
               {' '}
               {item?.opening_time} - {item?.closing_time}
             </Text>
-            {addFavouriteStatus == true ? (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: Colors.DARK_RED,
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity onPress={() => onFavorite(item)}>
+              <Icon
+                name="heart"
+                type="FontAwesome"
+                style={{
+                  color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
+                  fontSize: Scale(16),
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View
             style={{

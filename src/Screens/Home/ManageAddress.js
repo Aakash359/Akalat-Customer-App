@@ -19,6 +19,7 @@ import {
 } from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
+import Geolocation from '@react-native-community/geolocation'
 
 function ManageAddress() {
   const addressListResponse = useSelector(
@@ -42,6 +43,8 @@ function ManageAddress() {
     }
     dispatch(AddressListLoader(true))
     dispatch(AddressListRequest(data))
+
+    Geolocation.requestAuthorization()
   }, [])
 
   const delAdd = () => {

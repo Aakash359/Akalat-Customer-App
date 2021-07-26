@@ -17,7 +17,8 @@ import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath,iOSMapAPIKey,androidMapAPIKey,} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
 import {useNavigation, useRoute} from '@react-navigation/native'
-import Slider from '@react-native-community/slider'
+// import Slider from '@react-native-community/slider'
+import { SliderPicker } from 'react-native-slider-picker';
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {offercardRequest,couponRequest,addfavouriteRequest} from '../../redux/actions'
 import {CustomButton} from '../../Component'
@@ -90,14 +91,14 @@ function NearMe(props) {
     Geolocation.getCurrentPosition(
       (position) => {
         setLocation(position.coords)
-       
+
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
-            var addressComponent = json.results[0].address_components[1].long_name +
+            var addressComponent =
+              json.results[0].address_components[1].long_name +
               ' ' +
               json.results[0].address_components[2].long_name
             setAddress(addressComponent)
-            
           },
         )
       },
@@ -264,15 +265,18 @@ function NearMe(props) {
   }
 
   const onFavorite = (item) => {
-    const data = {
+    const restro = [...data?.restroList]
+    const index = restro.findIndex((i) => i?._id === item?._id)
+    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    setdata({...data, restroList: restro})
+    const payload = {
       userid: user?._id,
       restro_id: item?._id,
-      is_favourited_restro: true,
+      is_favourited_restro: !item?.is_favourited,
     }
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list successfully')
-
+    dispatch(addfavouriteRequest(payload))
   }
+
 
 
  
@@ -477,29 +481,16 @@ try {
               {' '}
               {item?.opening_time} - {item?.closing_time}
             </Text>
-            {addFavouriteStatus == true ? (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
+            <TouchableOpacity onPress={() => onFavorite(item)}>
                 <Icon
                   name="heart"
                   type="FontAwesome"
                   style={{
-                    color: Colors.DARK_RED,
+                    color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
                     fontSize: Scale(16),
                   }}
                 />
               </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => onFavorite(item)}>
-                <Icon
-                  name="heart"
-                  type="FontAwesome"
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
           </View>
           <View
             style={{
@@ -955,9 +946,9 @@ try {
                 {(value).toFixed(1) + ' Miles'}
               </Text>
             </View>
-            <Slider
+            <SliderPicker
               style={{marginTop: Scale(20)}}
-              
+              showSeparatorScale={true}
               minimumValue={0}
               maximumValue={5}
               value={value}
