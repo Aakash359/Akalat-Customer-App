@@ -44,7 +44,7 @@ function ManageAddress() {
     dispatch(AddressListLoader(true))
     dispatch(AddressListRequest(data))
 
-    Geolocation.requestAuthorization()
+    Geolocation.requestAuthorization('whenInUse')
   }, [])
 
   const delAdd = () => {
