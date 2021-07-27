@@ -33,6 +33,10 @@ import {
   CHANGE_PASSWORD_FAILED,
   SET_FAVOURITE_LIST_LOADER,
   CHANGE_ORDER_STATUS_REQUEST,
+  OFFER_LIST_REQUEST,
+  OFFER_LIST_SUCCESS,
+  OFFER_LIST_FAILED,
+  OFFER_LIST_LOADER
 } from '../Types/type'
 import {put, call, takeEvery, select} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
@@ -132,9 +136,9 @@ export const FaqSaga = function* FaqSaga({data = {}}) {
       data,
     })
 
-    console.log('====================================')
-    console.log('FAQ RESPONSE: ', response)
-    console.log('====================================')
+    
+    
+    
 
     if (response?.data?.error == true) {
       yield put({type: FAQ_FAILED, payload: response?.data})
@@ -311,7 +315,7 @@ export const favouriteList = function* favouriteList({data}) {
 // ====================== Change Password POST ======================
 
 export const changePassword = function* changePassword({data}) {
-  console.log('Data', data)
+  
   try {
     const response = yield call(Request, {
       url: 'changePassword',
@@ -362,6 +366,35 @@ function* changeOrderStatus({data, callback}) {
     }
   }
 }
+// ====================== Offer List Request ======================
+
+export const offerList = function* offerList({data}) {
+  
+  yield put({type: OFFER_LIST_LOADER, payload: true})
+  try {
+    const response = yield call(Request, {
+      url: 'restro/listFavouritedRestro',
+      method: 'POST',
+      data,
+    })
+
+    if (response?.data?.error == true) {
+      yield put({type: OFFER_LIST_FAILED, payload: response?.data})
+      yield put({type: OFFER_LIST_LOADER, payload: false})
+      global.dropDownAlertRef.alertWithType(
+        'error',
+        'Error',
+        response?.data?.message,
+      )
+    } else {
+      yield put({type: OFFER_LIST_SUCCESS, payload: response})
+      yield put({type: OFFER_LIST_LOADER, payload: false})
+    }
+  } catch (e) {
+    yield put({type: OFFER_LIST_FAILED, payload: e})
+    yield put({type: OFFER_LIST_LOADER, payload: false})
+  }
+}
 
 export function* settingSaga() {
   yield takeEvery(ABOUTUS_REQUEST, AboutUsSaga)
@@ -376,5 +409,6 @@ export function* settingSaga() {
   yield takeEvery(FAVOURITE_LIST_REQUEST, favouriteList)
   yield takeEvery(CHANGE_PASSWORD_REQUEST, changePassword)
   yield takeEvery(CHANGE_ORDER_STATUS_REQUEST, changeOrderStatus)
+  yield takeEvery(OFFER_LIST_REQUEST, offerList)
 }
 export default settingSaga

@@ -19,12 +19,29 @@ import {
   CHANGE_ORDER_STATUS_SUCCESS,
   CHANGE_ORDER_STATUS_FAILED,
   CHANGE_ORDER_STATUS_LOADER,
+  OFFER_LIST_REQUEST,
+  OFFER_LIST_LOADER,
 } from '../Types/type'
 
 // =================About Us GET REQUEST =================
 export const AboutUsRequest = (data) => {
   return {
     type: ABOUTUS_REQUEST,
+    data,
+  }
+}
+// =================Offer List  REQUEST =================
+export const OfferListRequest = (data) => {
+  return {
+    type: OFFER_LIST_REQUEST,
+    data,
+  }
+}
+
+// =================Offer List Loader REQUEST =================
+export const OfferListLoader = (data) => {
+  return {
+    type: OFFER_LIST_LOADER,
     data,
   }
 }
@@ -147,6 +164,7 @@ export const changeOrderStatusFailed = (data) => {
     data,
   }
 }
+
 
 // =================Delete Address =================
 export const changePasswordRequest = (data) => {

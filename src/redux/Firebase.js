@@ -22,9 +22,9 @@ export async function requestUserPermission() {
 
 export const getToken = async () => {
     const fcmToken = await messaging().getToken()
-    console.log('====================================')
+    
     console.log(fcmToken)
-    console.log('====================================')
+    
     await setFcmToken(fcmToken)
 }
 

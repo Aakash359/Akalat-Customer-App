@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView,TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView,TouchableOpacity, Image, ImageBackground, Alert } from 'react-native';
 import { Colors, Scale, ImagesPath ,Fonts} from '../../CommonConfig';
 import { Icon } from 'native-base';
 import {useSelector, useDispatch,connect} from 'react-redux'
@@ -14,9 +14,7 @@ function HungryNow(props) {
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
-    console.log('====================================');
-    console.log("Aakash==>",product_list);
-    console.log('====================================');
+
     
     useEffect(() => {
         dispatch(hungryNowListLoader(true));
@@ -25,13 +23,14 @@ function HungryNow(props) {
       }, [])
 
       const addToCart = (item) => {
+        
         const {cartRestroDetails, addToCart} = props
         const {restroDetails = {}} = props.route?.params || {}
-        if(cartRestroDetails && cartRestroDetails?._id !== restroDetails?._id ) {
+        if(cartRestroDetails && cartRestroDetails?._id !== item?.restro_details?._id) {
           return Alert.alert('You have another other in your cart')
         }
         else {
-            addToCart({restroDetails, product: item})
+            addToCart({restroDetails: item?.restro_details, product: item, })
         }
       } 
       const increment = () => {
@@ -66,7 +65,7 @@ function HungryNow(props) {
         <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
                 <Text style={styles.headingText}>{item.restro_name}</Text>
-                <Text style={styles.headingText}>1.5 km</Text>
+                <Text style={styles.headingText}>{item?.distance} Km</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
                 <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
@@ -108,7 +107,7 @@ function HungryNow(props) {
                                     <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Regular }}>{`$ ${totalCartAmt}`}</Text>
                                     <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Regular }}>{cartProducts?.length +' items in cart'}</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => props.navigation.navigate('Card')}
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Card',product_list)}
                                 
                                 style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(5) }}>
                                     <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go To Cart'}</Text>
@@ -129,7 +128,7 @@ const mapStateToProps = ({Cart: {restroDetails, products}}) => {
     cartProducts: products
     }
 }
-//hdshskhkh
+
 const mapDispatchToProps = {
     addToCart: addToCart,
     subToCart: subToCart

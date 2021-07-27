@@ -17,7 +17,7 @@ import { homeStyle } from './homeStyles';
 import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { MapScreen } from "../../Component/MapScreen";
-import { orderDetailsRequest } from '../../redux/actions'
+
 import { useSelector, useDispatch } from 'react-redux';
 
 const mapScreen = (props) => {
@@ -25,25 +25,9 @@ const mapScreen = (props) => {
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const  orderDetailsResponse = useSelector((state) => state.Home.orderDetailsResponse);
-    const orderDetails = orderDetailsResponse?.data
-    const  { Restro_id } = props.route.params
-    console.log('====================================');
-    console.log("Aakash===>",orderDetailsResponse);
-    console.log('====================================');
-    useEffect(() => {
-
-        const data = { 
-             "_id": Restro_id+''
-             }
-       
-             setTimeout(() => {
-
-                dispatch(orderDetailsRequest(data));
-
-              }, 5000);
-            }, 
-      []);
+    
+    const [orderDetails,setOrderDetails]= useState(props?.route?.params)
+   
     return (
 
         <SafeAreaInsetsContext.Consumer>
@@ -63,12 +47,10 @@ const mapScreen = (props) => {
                     ,paddingBottom:Scale(0), 
                     borderBottomColor:Colors.GRAY,borderBottomWidth:0, }]}>
                                 <Text style={styles.primaryText}
-                                numberOfLines={1}>Order ID {orderDetails?.[0]?._id}</Text>
-                                <Icon
-                                    type="FontAwesome"
-                                    name='phone-square'
-                                    style={styles.buttonImage}
-                                />
+                                numberOfLines={1}>Order  ID {orderDetails?._id}</Text>
+                               <Image
+                                source={ImagesPath.phonecall}
+                                style={styles.phonecall} />
                             </View>
                         <View style={[styles.cardStyle, {
                             justifyContent: 'center',
@@ -79,7 +61,7 @@ const mapScreen = (props) => {
                                 <Text style={styles.normalText}>Order Received </Text>
 
                                 {
-                                    orderDetailsResponse?.data?.[0]?.status=='P'? <Image
+                                    orderDetails?.status=='P'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
@@ -92,12 +74,12 @@ const mapScreen = (props) => {
                                 <Text style={[styles.normalText,{marginTop:8}]}>Order Confirmed</Text>
                                 
                                 {
-                                    orderDetailsResponse?.data?.[0]?.status=='PR'? <Image
+                                    orderDetails?.status=='PR'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
                                 }
-                                <Image
+                                      <Image
                                             source={ImagesPath.check2x}
                                          style={styles.imageStyle}
                                          />
@@ -106,7 +88,7 @@ const mapScreen = (props) => {
                             <View style={styles.bottomContainer}>
                                 <Text style={styles.normalText}>Order Picked up</Text>
                                 {
-                                    orderDetailsResponse?.data?.[0]?.status=='OPU'? <Image
+                                    orderDetails?.status=='OPU'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
@@ -120,7 +102,7 @@ const mapScreen = (props) => {
                             <View style={styles.bottomContainer}>
                                 <Text style={[styles.normalText,{marginTop:8}]}>Order Delivered</Text>
                                 {
-                                    orderDetailsResponse?.data?.[0]?.status=='OD'? <Image
+                                    orderDetails?.status=='OD'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
@@ -155,6 +137,13 @@ const styles = StyleSheet.create({
         marginTop: Scale(20),
         resizeMode: 'contain',
     },
+    phonecall: {
+        color: Colors.APPCOLOR,
+        width: Scale(50),
+        height: Scale(50),
+        marginTop: Scale(10),
+        resizeMode: 'contain',
+    },
     imageStyle:{
         tintColor:'green',
         marginRight: Scale(5),
@@ -165,7 +154,8 @@ const styles = StyleSheet.create({
     buttonImage: {
         fontSize:Scale(40),
         borderRadius:Scale(20),
-        color: Colors.APPCOLOR
+        color: Colors.APPCOLOR,
+        borderRadius: 2
     },
     cardStyle: {
         height: Scale(240),
@@ -201,6 +191,7 @@ const styles = StyleSheet.create({
         fontSize: Scale(18), 
         fontWeight: 'bold',
         width:Scale(250),
+       
         
     },
     bottomContainer: {

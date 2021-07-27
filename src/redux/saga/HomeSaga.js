@@ -26,9 +26,8 @@ import Request from '../../apiServices/Request';
 
 
 //====================== Sign-Up POST =======================
-export const HomeSaga = function* HomeSaga({params}) {
-    let data = params
-    // 
+export const OfferSaga = function* OfferSaga(data) {
+    
     try {
         const response = yield call(Request, {
             url: '/banner/bannerList',
@@ -214,7 +213,7 @@ export const OrderDetailsSaga = function* OrderDetailsSaga({data}) {
 
 
 export function* homeSaga() {
-    yield takeEvery(OFFER_CARD_REQUEST, HomeSaga);
+    yield takeEvery(OFFER_CARD_REQUEST, OfferSaga);
     yield takeEvery(COUPON_REQUEST, CouponSaga);
     yield takeEvery(SEARCH_REQUEST, SearchSaga);
     yield takeEvery(ADD_FAVOURITE_REQUEST, AddFavouriteSaga);

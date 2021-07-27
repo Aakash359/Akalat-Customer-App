@@ -33,16 +33,16 @@ export class Step1 extends Component {
     renderItem = ({ item, index }) => {
         return (
             <View style={{ alignItems: 'center' }}>
-                <Image resizeMode='stretch' source={item.image} style={{ width: screenWidth, flex: 1 }} />
+                <Image resizeMode='cover' source={item.image} style={{ width: screenWidth, flex: 1 }} />
             </View>
         );
     };
     onViewableItemsChanged = ({ viewableItems, changed }) => {
-        console.log('Visible items are', viewableItems[0].index);
+        
         this.setState({
             selectedIndex: viewableItems[0].index,
         });
-        console.log('Changed in this iteration', changed);
+        
     };
 
     onPressSubmit() {

@@ -43,6 +43,7 @@ function Card(props) {
   const [count, setIsPopupVisible] = useState(1)
   const [coupon, setCoupon] = useState(props?.couponCode || '')
   const [modal, setModal] = React.useState(false)
+  const product_list = props.route.params
 
   const [det, setDet] = useState({
     dis: props?.applyCoupon?.discount_amount || 0,
@@ -110,7 +111,6 @@ function Card(props) {
   }
 
   const {cartRestroDetails, cartProducts} = props
-
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
     0,
@@ -359,7 +359,7 @@ function Card(props) {
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText1}>Delivery charges</Text>
                 <Text style={styles.normatText1}>
-                  {det?.delivery ? `$${det?.delivery}` : `free`}
+                  {det?.delivery ? `$${det?.delivery}` : `Free`}
                 </Text>
               </View>
               <View
@@ -582,7 +582,6 @@ const styles = StyleSheet.create({
   loginInputCont: {
     flex: 1,
     paddingTop: Scale(10),
-    paddingBottom: Scale(50),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,

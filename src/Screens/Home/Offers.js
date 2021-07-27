@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   Text,
   View,
@@ -10,16 +10,36 @@ import {
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
+import {OfferListRequest,OfferListLoader} from '../../redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
+
 function Offers() {
   const [checked, setChecked] = useState(false)
+  const  offerListResponse = useSelector((state) => state.Setting.offerListResponse);
+  const  offerList = offerListResponse?.data?.restroList || []
+  const  user = useSelector((state) => state.Auth.user);
   const {navigate} = useNavigation()
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const redirectToEditProfile = () => {
     navigate('EditProfile')
   }
   const onPressChecked = () => {
     setChecked(!checked)
   }
+  useEffect(() => {
+
+    const data = { 
+         "userid": user?._id
+         }
+         dispatch(OfferListLoader(true))
+        setTimeout(() => {
+          dispatch(OfferListRequest(data));
+         
+        },)
+     },[]
+  ); 
+  
   const renderItemStore = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>

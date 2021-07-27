@@ -60,15 +60,6 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
-        console.log('====================================')
-        console.log('Aakash===>', res?.data?.data?.product_list)
-        console.log('====================================')
-        console.log('====================================')
-        console.log(
-          'ProductList===>',
-          res?.data?.data?.product_list?.[0]?.product_categories,
-        )
-        console.log('====================================')
       } else {
         setList({...list, isLoading: false, error: res?.data?.message})
       }
@@ -568,6 +559,7 @@ function HomeMaker(props) {
                     color: Colors.WHITE,
                     fontSize: Scale(11),
                     fontFamily: Fonts.Regular,
+                    
                   }}>
                   {cartProducts?.length + ' items in cart'}
                 </Text>

@@ -105,46 +105,45 @@ function AddNewAddress(props) {
       alert('Please enter area')
     } else {
       let data = {
-        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         address_type: activeTab + '',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
         area_name,
-        nearby,
         created_by: user?._id,
       }
-      console.log('====================================')
-      console.log('Aakash=>>>>', data)
-      console.log('====================================')
-      if (!nearby) {
+     
+      if (nearby) {
         data = {
-          // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
           address_type: activeTab + '',
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
           area_name,
+          nearby,
           created_by: user?._id,
         }
-
+        dispatch(AddAddressRequest(data))
         if (addAddressStatus) {
           const data = {
             created_by: user?._id,
-          }
-          navigate('ManageAddress')
-          alert('Address added succesfully')
-          dispatch(AddressListRequest(data))
-        }
+          } 
+          setTimeout(() => {
+            navigate('ManageAddress')
+          }, 1000)
+         }
+        
       }
 
-      dispatch(AddAddressRequest(data))
+      
       if (addAddressStatus) {
         const data = {
           created_by: user?._id,
         }
         navigate('ManageAddress')
-        alert('Address added succesfully')
+         setTimeout(() => {
+            navigate('ManageAddress')
+          }, 1000)
         dispatch(AddressListRequest(data))
       }
     }

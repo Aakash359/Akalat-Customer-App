@@ -20,7 +20,7 @@ const ImagesPath = {
   right_new: require('../Assets/Images/right_new.png'),
   us: require('../Assets/Images/uk1.png'),
   loginBg: require('../Assets/Images/Group_3350.jpg'),
-  loginBg1: require('../Assets/Images/Slide1.jpg'),
+  loginBg1: require('../Assets/Images/Slide1.png'),
   loginBg2: require('../Assets/Images/slide2.png'),
   imagePlaceholder: require('../Assets/Images/Untitled-19.png'),
   drawerPlaceholder: require('../Assets/Images/drawerPlaceholder.png'),
@@ -70,10 +70,13 @@ const ImagesPath = {
   fb: require('../Assets/Images/fb.png'),
   Insta: require('../Assets/Images/Insta.png'),
   Sms: require('../Assets/Images/Sms.png'),
+  phonecall: require('../Assets/Images/phonecall.png'),
   locActive: require('../Assets/Images/location-active.png'),
   userActive: require('../Assets/Images/user-active.png'),
   cartActive: require('../Assets/Images/cart-active.png'),
   searchActive: require('../Assets/Images/search-active.png'),
-}
+};
+ 
+
 
 export default ImagesPath

@@ -6,7 +6,6 @@ const client = axios.create({
 })
 
 const Request = function (options) {
-  console.log('=================================options', options)
   const onSuccess = (response) => {
     return response.data
   }

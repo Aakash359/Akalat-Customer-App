@@ -35,16 +35,16 @@ export class Step extends Component {
     renderItem = ({ item, index }) => {
         return (
             <View style={{ alignItems: 'center', }}>
-                <ImageBackground source={item.image} style={{ width: screenWidth,  flex: 1  }} resizeMode='stretch' />
+                <ImageBackground source={item.image} style={{ width: screenWidth, height:'auto',  flex: 1  }} resizeMode='cover' />
             </View>
         );
     };
     onViewableItemsChanged = ({ viewableItems, changed }) => {
-        console.log('Visible items are', viewableItems[0].index);
+        
         this.setState({
             selectedIndex: viewableItems[0].index,
         });
-        console.log('Changed in this iteration', changed);
+        
     };
 
     onPressSubmit() {

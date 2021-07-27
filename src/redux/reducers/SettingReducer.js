@@ -33,7 +33,10 @@ import {
   CHANGE_PASSWORD_REQUEST,
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILED,
-  
+  OFFER_LIST_REQUEST,
+  OFFER_LIST_SUCCESS,
+  OFFER_LIST_FAILED,
+  OFFER_LIST_LOADER
 } from '../Types/type'
 
 const initialState = {
@@ -63,6 +66,8 @@ const initialState = {
   setFavouriteListLoader: false,
   changePasswordResponse: {},
   changePasswordStatus: false,
+  offerListResponse: false,
+  offerListLoader:false,
   
 }
 
@@ -221,6 +226,26 @@ export default function SettingReducer(state = initialState, action) {
         changePasswordStatus: false,
         changePasswordResponse: action.payload,
       }
+    case OFFER_LIST_REQUEST:
+        return {
+          ...state,
+          changePasswordStatus: false,
+          changePasswordResponse: action.payload,
+        }
+    case OFFER_LIST_SUCCESS:
+        return {
+          ...state,
+          changePasswordStatus: true,
+          changePasswordResponse: action.payload,
+        }
+    case OFFER_LIST_FAILED:
+        return {
+          ...state,
+          changePasswordStatus: false,
+          changePasswordResponse: action.payload,
+        }  
+    case OFFER_LIST_LOADER:
+          return {...state, offerListLoader: action.payload}   
 
     default:
       return state

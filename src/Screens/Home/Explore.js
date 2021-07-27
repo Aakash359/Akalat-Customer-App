@@ -117,7 +117,7 @@ function Explore() {
         isLoading: false,
       })
     } catch (error) {
-      console.log('Error===>', error)
+      
     }
   }
   const redirectToHomeMaker = (item) => {
@@ -141,55 +141,69 @@ function Explore() {
     dispatch(addfavouriteRequest(payload))
   }
 
+  
   const onSearch = async () => {
+
     var data = search
     if ((data = !search)) {
-      setdata({...data, isLoading: true})
-      const url = `${API_BASE}/restro/combinedSearchSortFilter`
 
-      const payload = {
+      setdata({...data, isLoading: true})
+    const url = `${API_BASE}/restro/combinedSearchSortFilter`
+
+    const payload = {
+       
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-      }
 
-      try {
-        const res = await axios.post(url, payload)
+        
+    }
 
-        setdata({
-          ...data,
-          restroList: res?.data?.data?.restroNearMe,
-          isLoading: false,
-        })
-      } catch (error) {
-        console.log('Error===>', error)
-      }
-    } else {
+    try {
+      const res = await axios.post(url, payload)
+
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restroNearMe,
+        isLoading: false,
+      })
+    } catch (error) {
+      
+    }
+
+    }
+    else {
+
       setdata({...data, isLoading: true})
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
-
+  
       const payload = {
+         
         searchKey: search,
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
         is_sort: `${false}`,
-        is_filter: `${false}`,
-      }
-
+        is_filter:`${false}`,
+       }
+  
       try {
         const res = await axios.post(url, payload)
-
+  
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
           isLoading: false,
         })
       } catch (error) {
-        console.log('Error===>', error)
+        
       }
+  
+      }
+
     }
-  }
+    
+
 
   React.useEffect(() => {
     onSearch()
@@ -242,7 +256,7 @@ function Explore() {
                     textAlign: 'right',
                     fontSize: Scale(16),
                   }}>
-                  1.5 km
+                  {item?.distance} Km
                 </Text>
               </View>
             </View>
@@ -347,9 +361,11 @@ function Explore() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        <ScrollView style={{marginBottom: Scale(10)}}>
+        <ScrollView 
+        style={{height:Scale(600),}}>
           <View
             style={{
+              
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingHorizontal: Scale(25),
@@ -376,13 +392,14 @@ function Explore() {
           </View>
           <FlatList
             data={data?.restroList}
+            
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
               return <Text style={{textAlign: 'center'}}>No data found</Text>
             }}
           />
-          {/* <LoadWheel visible={data.isLoading} /> */}
+          
         </ScrollView>
       </ImageBackground>
     </View>
@@ -399,10 +416,11 @@ const styles = StyleSheet.create({
   loginInputCont: {
     top: Scale(-20),
     paddingTop: Scale(10),
-    paddingBottom: Scale(50),
+    paddingBottom: Scale(150),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
+   
   },
   searchView: {
     borderRadius: 10,

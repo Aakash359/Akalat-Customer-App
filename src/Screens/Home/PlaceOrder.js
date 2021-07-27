@@ -10,16 +10,20 @@ import {round} from 'react-native-reanimated'
 function PlaceOrder(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
+  
 
-  const order = props?.route?.params
+ 
+ 
   const redirectToHome = () => {
     navigate('NearMe')
   }
   const redirectToTrackOrder = () => {
-    navigate('TrackOrder', order)
+    const orderDetails= props?.route?.params || ''
+    navigate('TrackOrder',orderDetails)
   }
 
   return (
+  
     <ImageBackground
       source={ImagesPath.background}
       style={styles.imageBachgroundStyle}>
