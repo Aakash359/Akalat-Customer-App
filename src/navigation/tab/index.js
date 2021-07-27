@@ -11,7 +11,7 @@ import {Scale, Colors, ImagesPath} from '../../CommonConfig'
 const getOptions = ({tabBarLabel, icon, tint = true}) => {
   return {
     tabBarIcon: ({color}) => (
-      <ImageIcon src={icon} tintColor={Colors.BORDERCOLOR} tint={tint} />
+      <ImageIcon src={icon} tintColor={color} tint={tint} />
     ),
     tabBarLabel,
     headerBackTitle: ' ',
@@ -41,28 +41,36 @@ function index() {
       <Tab.Screen
         name="NearMe"
         component={NearMe}
-        options={{
-          ...getOptions({
-            tabBarLabel: 'Near Me',
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons
-                name="ios-home"
-                color={color}
-                size={size}
-              />
-            ),
-            icon: ImagesPath.location,
-          }),
+        options={({navigation: {isFocused}}) => {
+          const focus = isFocused()
+
+          return {
+            ...getOptions({
+              tabBarLabel: 'Near Me',
+              tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons
+                  name="ios-home"
+                  color={color}
+                  size={size}
+                />
+              ),
+              icon: focus ? ImagesPath.locActive : ImagesPath.location,
+            }),
+          }
         }}
       />
       <Tab.Screen
         name="Explore"
         component={Explore}
-        options={{
-          ...getOptions({
-            tabBarLabel: 'Explore',
-            icon: ImagesPath.search,
-          }),
+        options={({navigation: {isFocused}}) => {
+          const focus = isFocused()
+
+          return {
+            ...getOptions({
+              tabBarLabel: 'Explore',
+              icon: focus ? ImagesPath.searchActive : ImagesPath.search,
+            }),
+          }
         }}
       />
       <Tab.Screen
@@ -79,21 +87,29 @@ function index() {
       <Tab.Screen
         name="Card"
         component={Card}
-        options={{
-          ...getOptions({
-            tabBarLabel: 'Cart',
-            icon: ImagesPath.card,
-          }),
+        options={({navigation: {isFocused}}) => {
+          const focus = isFocused()
+
+          return {
+            ...getOptions({
+              tabBarLabel: 'Cart',
+              icon: focus ? ImagesPath.cartActive : ImagesPath.card,
+            }),
+          }
         }}
       />
       <Tab.Screen
         name="MyAccount"
         component={MyAccount}
-        options={{
-          ...getOptions({
-            tabBarLabel: 'My Account',
-            icon: ImagesPath.user,
-          }),
+        options={({navigation: {isFocused}}) => {
+          const focus = isFocused()
+
+          return {
+            ...getOptions({
+              tabBarLabel: 'My Account',
+              icon: focus ? ImagesPath.userActive : ImagesPath.user,
+            }),
+          }
         }}
       />
     </Tab.Navigator>

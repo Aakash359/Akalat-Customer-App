@@ -33,10 +33,10 @@ import Geocoder from 'react-native-geocoding'
 import {AddAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
-Geolocation.setRNConfiguration({
-  authorizationLevel: 'whenInUse',
-  skipPermissionRequests: false,
-})
+// Geolocation.setRNConfiguration({
+//   authorizationLevel: 'whenInUse',
+//   skipPermissionRequests: false,
+// })
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function Address() {
@@ -62,30 +62,33 @@ function Address() {
     navigate('SavedCard')
   }
 
-  const requestLocationPermission = async () => {
-    if (Platform.OS === 'ios') {
-      // Geolocation.requestAuthorization()
-      getOneTimeLocation()
-      // //subscribeLocationLocation();
-    } else {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Access Required',
-            message: 'This App needs to Access your location',
-          },
-        )
-
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getOneTimeLocation()
-        } else {
-        }
-      } catch (err) {}
-    }
-  }
-
   useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        const grant = await Geolocation.requestAuthorization('whenInUse')
+
+        if (grant === 'granted') {
+          console.log('====================================')
+          console.log(grant)
+          console.log('====================================')
+          getOneTimeLocation()
+        }
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            getOneTimeLocation()
+          } else {
+          }
+        } catch (err) {}
+      }
+    }
     requestLocationPermission()
     return () => {
       Geolocation.clearWatch()
@@ -93,28 +96,28 @@ function Address() {
   }, [])
 
   const getOneTimeLocation = () => {
-    try {
-      Geolocation.getCurrentPosition(
-        (position) => {
-          setLocation(position.coords)
-
-          Geocoder.from(
-            position.coords.latitude,
-            position.coords.longitude,
-          ).then((json) => {
-            console.log(
-              '=============================================json data',
-              json.results[1].formatted_address,
-              '================================Flat no',
-            )
-            let addressComponent = json.results[1].formatted_address
-
+    Geolocation.getCurrentPosition(
+      (position) => {
+        console.log('====================================')
+        console.log(position)
+        console.log('====================================')
+        setLocation(position.coords)
+        Geocoder.from(position.coords.latitude, position.coords.longitude).then(
+          (json) => {
+            var addressComponent =
+              json.results[0].address_components[1].long_name +
+              ' ' +
+              json.results[0].address_components[2].long_name
             setAddress(addressComponent)
-          })
-        },
-        (error) => {},
-      )
-    } catch (error) {}
+          },
+        )
+      },
+      (error) => {
+        console.log('====================================')
+        console.log(error)
+        console.log('====================================')
+      },
+    )
   }
 
   const onSubmit = async () => {

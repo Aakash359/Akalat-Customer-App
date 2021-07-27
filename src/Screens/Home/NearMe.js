@@ -229,15 +229,14 @@ function NearMe(props) {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================')
-        console.log('Aakash====>', res?.data?.data?.restroNearMe)
-        console.log('====================================')
       } catch (error) {}
     }
   }
 
   React.useEffect(() => {
-    onSearch()
+    navigation.addListener('focus', () => {
+      onSearch()
+    })
   }, [])
 
   React.useEffect(() => {
@@ -472,7 +471,7 @@ function NearMe(props) {
                   marginRight: Scale(25),
                 }}>
                 {' '}
-                {item?.opening_time} - {item?.closing_time}
+                ({item?.opening_time} - {item?.closing_time})
               </Text>
 
               <TouchableOpacity onPress={() => onFavorite(item)}>
@@ -500,7 +499,7 @@ function NearMe(props) {
                   paddingBottom: 20,
                   paddingLeft: 12,
                 }}>
-                {item?.categoryNameArray}
+                {item?.categoryNameArray}...
               </Text>
             </View>
           </View>
@@ -592,7 +591,10 @@ function NearMe(props) {
                 color: 'grey',
                 fontWeight: 'bold',
                 paddingTop: Scale(5),
-              }}>
+                maxWidth: '95%',
+              }}
+              ellipsizeMode="tail"
+              numberOfLines={1}>
               {item?.title}
             </Text>
             <Text
