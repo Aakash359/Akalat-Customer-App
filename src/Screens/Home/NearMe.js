@@ -14,12 +14,22 @@ import {
   PermissionsAndroid,
 } from 'react-native'
 import {Icon} from 'native-base'
-import {Colors, Scale, ImagesPath,iOSMapAPIKey,androidMapAPIKey,} from '../../CommonConfig'
+import {
+  Colors,
+  Scale,
+  ImagesPath,
+  iOSMapAPIKey,
+  androidMapAPIKey,
+} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import Slider from '@react-native-community/slider'
 import {useSelector, useDispatch, connect} from 'react-redux'
-import {offercardRequest,couponRequest,addfavouriteRequest} from '../../redux/actions'
+import {
+  offercardRequest,
+  couponRequest,
+  addfavouriteRequest,
+} from '../../redux/actions'
 import {CustomButton} from '../../Component'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
@@ -28,7 +38,6 @@ import Geocoder from 'react-native-geocoding'
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function NearMe(props) {
- 
   const [activeTab, setActiveTab] = useState(0)
   const [currentAddress, setAddress] = useState('')
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
@@ -60,7 +69,31 @@ function NearMe(props) {
     isLoading: true,
     resetStatus: false,
   })
-
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation()
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            getOneTimeLocation()
+          } else {
+          }
+        } catch (err) {}
+      }
+    }
+    requestLocationPermission('whenInUse')
+    return () => {
+      Geolocation.clearWatch()
+    }
+  }, [])
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
@@ -96,80 +129,46 @@ function NearMe(props) {
     }
     var data = search
     if ((data = !search)) {
-
-    setdata({...data, isLoading: true})
-   
-    const url = `${API_BASE}/restro/combinedSearchSortFilter`
-    var payload = {};
-    if(activeTab == 0){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        relevance:true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-    } else if(activeTab == 1){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        rating_high_to_low : true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-    } else if(activeTab == 2){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        rating_low_to_high:true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-      
-    } else if(activeTab == 3){
-      payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        delivery_time:true,
-        is_sort: `${true}`,
-        is_filter:`${false}`,
-  
-      }
-    }
-    try {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNearMe,
-      })
-      setModal2(false)
-      setModal(false)
-      navigate('NearMe')
-    } catch (error) {
-      
-      alert("Error",error);
-    }
-      
-    }
-    else if(search){
       setdata({...data, isLoading: true})
-     
+
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
-      const payload = {
-        searchKey: search,
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        is_sort: `${false}`,
-        is_filter:`${false}`,
-  
+      var payload = {}
+      if (activeTab == 0) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          relevance: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
+      } else if (activeTab == 1) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          rating_high_to_low: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
+      } else if (activeTab == 2) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          rating_low_to_high: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
+      } else if (activeTab == 3) {
+        payload = {
+          userid: user?._id,
+          lat: 28.4922,
+          lng: 77.0966,
+          delivery_time: true,
+          is_sort: `${true}`,
+          is_filter: `${false}`,
+        }
       }
       try {
         const res = await axios.post(url, payload)
@@ -180,18 +179,38 @@ function NearMe(props) {
         setModal2(false)
         setModal(false)
         navigate('NearMe')
-      } 
-      catch (error) {
-        
-        alert("Error",error);
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
       }
-    
-
-     }
-    else {
-
+    } else if (search) {
       setdata({...data, isLoading: true})
-     
+
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      const payload = {
+        searchKey: search,
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        is_sort: `${false}`,
+        is_filter: `${false}`,
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
+      }
+    } else {
+      setdata({...data, isLoading: true})
+
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
 
       const payload = {
@@ -199,28 +218,25 @@ function NearMe(props) {
         lat: 28.4922,
         lng: 77.0966,
         is_sort: `${false}`,
-        is_filter:`${false}`,
-       
+        is_filter: `${false}`,
       }
-  
+      console.log('====================================')
+      console.log('Default ====>', payload)
+      console.log('====================================')
       try {
         const res = await axios.post(url, payload)
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        
-      } catch (error) {
-        
-      }
-  
+      } catch (error) {}
     }
-   
-    
   }
 
- React.useEffect(() => {
-    onSearch()
+  React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      onSearch()
+    })
   }, [])
 
   React.useEffect(() => {
@@ -254,11 +270,6 @@ function NearMe(props) {
     dispatch(addfavouriteRequest(payload))
   }
 
-
-
- 
-  
-
   const onResetFilter = async () => {
     const url = `${API_BASE}/restro/combinedSearchSortFilter`
     const payload = {
@@ -279,11 +290,9 @@ function NearMe(props) {
       navigate('NearMe')
       setModal2(false)
     } catch (error) {
-      
+      console.log('Error', error)
     }
   }
-
-  
 
   const onSortByReset = async () => {
     const url = `${API_BASE}/restro/combinedSearchSortFilter`
@@ -303,162 +312,169 @@ function NearMe(props) {
       setModal(false)
       navigate('NearMe')
     } catch (error) {
-      
+      console.log('Error', error)
     }
   }
 
-   const onFilter = async () => {
-
+  const onFilter = async () => {
     var restro_type = ''
     if (isEnabled) {
       restro_type = 'non_veg'
     } else {
       restro_type = 'veg'
     }
-    if(value1)
-    {
-     setdata({...data, isLoading: true})
-      var payload = {};
+    if (value1) {
+      setdata({...data, isLoading: true})
+      var payload = {}
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
       payload = {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance:value1.toFixed(1)+"",
-        rating_from_user:undefined,
+        distance: value1 + '',
+        rating_from_user: undefined,
         is_sort: `${false}`,
-        is_filter:`${true}`,
-        restaurent_type:restro_type,
-
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
       }
-   
-  
-  try {
-    const res = await axios.post(url, payload)
-    setdata({
-      ...data,
-      restroList: res?.data?.data?.restroNearMe,
-    })
-    
-    setModal2(false)
-    setModal(false)
-    navigate('NearMe')
-  } catch (error) {
-    
-    alert("Error",error);
-  }
-  }
-  
-  else if (value) {
-   
-  setdata({...data, isLoading: true})
-  var payload = {};
-  const url = `${API_BASE}/restro/combinedSearchSortFilter`
-  payload = {
-   userid: user?._id,
-   lat: 28.4922,
-   lng: 77.0966,
-   distance:undefined,
-   rating_from_user:value.toFixed(1)+"",
-   is_sort: `${false}`,
-   is_filter:`${true}`,
-   restaurent_type:restro_type,
+      console.log('====================================')
+      console.log('DistanceLoad===>', payload)
+      console.log('====================================')
 
- }
-     
-      
-try {
-   const res = await axios.post(url, payload)
-   setdata({
-     ...data,
-     restroList: res?.data?.data?.restroNearMe,
-   })
-     
-   setModal2(false)
-   setModal(false)
-   navigate('NearMe')
- } catch (error) {
-   
-   alert("Error",error);
- }
-  }
-}
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        console.log('====================================')
+        console.log('Datata===>', res)
+        console.log('====================================')
 
-  const renderItems = ({item}) => (
-    <View style={styles.cardStyle}>
-      <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
-        <ImageBackground
-          source={{uri: item?.building_front_img}}
-          style={styles.backgroundStyle}>
-          <View style={{justifyContent: 'flex-end', flex: 1}}>
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
+      }
+    } else if (value) {
+      setdata({...data, isLoading: true})
+      var payload = {}
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        distance: undefined,
+        rating_from_user: value + '',
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+      }
+      console.log('====================================')
+      console.log('RatimngPayLoad===>', payload)
+      console.log('====================================')
+
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        console.log('====================================')
+        console.log('RatingData===>', res?.data?.data?.restroNearMe)
+        console.log('====================================')
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+        alert('Error', error)
+      }
+    }
+  }
+
+  const renderItems = ({item}) => {
+    console.log('====================================')
+    console.log(item)
+    console.log('====================================')
+    return (
+      <View style={styles.cardStyle}>
+        <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
+          <ImageBackground
+            source={{uri: item?.building_front_img}}
+            style={styles.backgroundStyle}>
+            <View style={{justifyContent: 'flex-end', flex: 1}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingBottom: Scale(10),
+                  alignItems: 'center',
+                  paddingHorizontal: Scale(10),
+                }}>
+                <Text
+                  style={{
+                    fontSize: Scale(12),
+                    color: Colors.WHITE,
+                    marginLeft: Scale(7),
+                    paddingHorizontal: Scale(7),
+                    paddingVertical: Scale(5),
+                    backgroundColor: 'green',
+                  }}>
+                  {item?.rating_from_user}
+                </Text>
+
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
+                <Icon
+                  name="star"
+                  type="FontAwesome"
+                  style={[styles.iconStyle, {color: Colors.WHITE}]}
+                />
+
+                <View style={{justifyContent: 'flex-end', flex: 1}}>
+                  <Text
+                    style={{
+                      color: '#fff',
+                      textAlign: 'right',
+                      fontSize: Scale(16),
+                      fontWeight: 'bold',
+                    }}>
+                    {item?.distance}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </ImageBackground>
+          <View>
             <View
               style={{
                 flexDirection: 'row',
-                paddingBottom: Scale(10),
+                paddingTop: Scale(15),
                 alignItems: 'center',
                 paddingHorizontal: Scale(10),
+                justifyContent: 'space-between',
               }}>
               <Text
+                numberOfLines={1}
+                style={{fontSize: Scale(15), fontWeight: 'bold', width: '40%'}}>
+                {item?.restro_name}
+              </Text>
+              <Text
                 style={{
+                  color: '#AB8F8E',
                   fontSize: Scale(12),
-                  color: Colors.WHITE,
-                  marginLeft: Scale(7),
-                  paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(5),
-                  backgroundColor: 'green',
+                  fontWeight: 'normal',
+                  marginRight: Scale(25),
                 }}>
-                {item?.rating_from_user}
+                {' '}
+                ({item?.opening_time} - {item?.closing_time})
               </Text>
 
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {color: Colors.WHITE}]}
-              />
-
-              <View style={{justifyContent: 'flex-end', flex: 1}}>
-                <Text
-                  style={{
-                    color: '#fff',
-                    textAlign: 'right',
-                    fontSize: Scale(16),
-                    fontWeight:'bold'
-                  }}>
-                  {item?.distance} Km
-                </Text>
-              </View>
-            </View>
-          </View>
-        </ImageBackground>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingTop: Scale(15),
-              alignItems: 'center',
-              paddingHorizontal: Scale(10),
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{fontSize: Scale(15), fontWeight: 'bold', width: '40%'}}>
-              {item?.restro_name}
-            </Text>
-            <Text
-              style={{
-                color: '#AB8F8E',
-                fontSize: Scale(12),
-                fontWeight: 'normal',
-                marginRight: Scale(25),
-              }}>
-              {' '}
-              {item?.opening_time} - {item?.closing_time}
-            </Text>
-            <TouchableOpacity onPress={() => onFavorite(item)}>
+              <TouchableOpacity onPress={() => onFavorite(item)}>
                 <Icon
                   name="heart"
                   type="FontAwesome"
@@ -468,28 +484,29 @@ try {
                   }}
                 />
               </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              flex: 1,
-              marginTop: 5,
-            }}>
-            <Text
-              numberOfLines={1}
+            </View>
+            <View
               style={{
-                fontSize: Scale(12.5),
-                fontWeight: 'normal',
-                paddingBottom: 20,
-                paddingLeft: 12,
+                flexDirection: 'column',
+                flex: 1,
+                marginTop: 5,
               }}>
-              {item?.categoryNameArray}
-            </Text>
+              <Text
+                numberOfLines={1}
+                style={{
+                  fontSize: Scale(12.5),
+                  fontWeight: 'normal',
+                  paddingBottom: 20,
+                  paddingLeft: 12,
+                }}>
+                {item?.categoryNameArray}...
+              </Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )
+        </TouchableOpacity>
+      </View>
+    )
+  }
   const renderItem = ({item, index}) => (
     <View
       style={{
@@ -574,7 +591,10 @@ try {
                 color: 'grey',
                 fontWeight: 'bold',
                 paddingTop: Scale(5),
-              }}>
+                maxWidth: '95%',
+              }}
+              ellipsizeMode="tail"
+              numberOfLines={1}>
               {item?.title}
             </Text>
             <Text
@@ -877,25 +897,20 @@ try {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {(value1).toFixed(1)} Miles
+                {value1 + ' Miles'}
               </Text>
             </View>
-           
-
             <Slider
               style={{marginTop: Scale(20)}}
               minimumValue={0}
               maximumValue={5}
               value={value1}
-              step={0.1}
+              step={0.5}
               onValueChange={(value) => setValue1(value)}
               thumbTintColor={Colors.APPCOLOR}
               minimumTrackTintColor={Colors.APPCOLOR}
               maximumTrackTintColor="#000000"
             />
-
-         
-            
           </View>
           <View
             style={{
@@ -920,16 +935,15 @@ try {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {(value).toFixed(1) + ' Miles'}
+                {value + ' Miles'}
               </Text>
             </View>
             <Slider
               style={{marginTop: Scale(20)}}
-              
               minimumValue={0}
               maximumValue={5}
               value={value}
-              step={0.1}
+              step={0.5}
               onValueChange={(value) => setValue(value)}
               thumbTintColor={Colors.APPCOLOR}
               minimumTrackTintColor={Colors.APPCOLOR}
@@ -952,13 +966,15 @@ try {
                 justifyContent: 'space-between',
                 marginHorizontal: Scale(15),
               }}>
-              <Text style={{fontSize: 18,alignSelf:'center'}}>Veg only</Text>
+              <Text style={{fontSize: 18}}>Veg only</Text>
               <Switch
                 trackColor={{
                   false: Colors.GRAY,
                   true: Colors.RED,
                 }}
-                style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
+                style={{
+                  transform: [{scaleX: 1.1}, {scaleY: 1.1}],
+                }}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
                 ios_backgroundColor={Colors.GREEN}
                 onValueChange={setCheckedSwitch}

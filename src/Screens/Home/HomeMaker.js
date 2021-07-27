@@ -552,7 +552,7 @@ function HomeMaker(props) {
                     color: Colors.WHITE,
                     fontSize: Scale(14),
                     fontFamily: Fonts.Regular,
-                    fontWeight:'bold'
+                    fontWeight: 'bold',
                   }}>{`$${totalCartAmt}`}</Text>
                 <Text
                   style={{

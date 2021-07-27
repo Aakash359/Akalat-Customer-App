@@ -155,7 +155,7 @@ function Card(props) {
           alignItems: 'center',
         }}>
         <View style={{maxWidth: '70%'}}>
-          <View style={[styles.cardHeader, {maxWidth: '70%'}]}>
+          <View style={[styles.cardHeader, {maxWidth: '100%'}]}>
             <Text style={[styles.placeText, {marginBottom: 10}]}>
               {item?.address_type}
             </Text>

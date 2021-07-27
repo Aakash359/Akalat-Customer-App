@@ -284,7 +284,7 @@ function Explore() {
                 marginRight: Scale(25),
               }}>
               {' '}
-              {item?.opening_time} - {item?.closing_time}
+              ({item?.opening_time} - {item?.closing_time})
             </Text>
             <TouchableOpacity onPress={() => onFavorite(item)}>
               <Icon
@@ -311,7 +311,7 @@ function Explore() {
                 paddingBottom: 20,
                 paddingLeft: 12,
               }}>
-              {item?.categoryNameArray}
+              {item?.categoryNameArray}...
             </Text>
           </View>
         </View>

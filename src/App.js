@@ -1,5 +1,13 @@
 import React, {Component} from 'react'
-import {Text, View, StatusBar, Alert, Clipboard, LogBox} from 'react-native'
+import {
+  Text,
+  View,
+  StatusBar,
+  Alert,
+  Clipboard,
+  LogBox,
+  Platform,
+} from 'react-native'
 import {Colors} from './CommonConfig'
 import SplashScreen from 'react-native-splash-screen'
 import NetInfo from '@react-native-community/netinfo'
@@ -32,6 +40,9 @@ export class App extends Component {
       authorizationLevel: 'whenInUse',
       skipPermissionRequests: false,
     })
+    if (Platform.OS === 'ios') {
+      Geolocation.requestAuthorization()
+    }
   }
 
   render() {
