@@ -105,7 +105,6 @@ function AddNewAddress(props) {
       alert('Please enter area')
     } else {
       let data = {
-        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         address_type: activeTab + '',
         lng: location?.latitude,
         lat: location?.longitude,
@@ -116,17 +115,15 @@ function AddNewAddress(props) {
      
       if (nearby) {
         data = {
-          // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
           address_type: activeTab + '',
           lng: location?.latitude,
           lat: location?.longitude,
           house_name_and_no,
           area_name,
           nearby,
-
           created_by: user?._id,
         }
-
+        dispatch(AddAddressRequest(data))
         if (addAddressStatus) {
           const data = {
             created_by: user?._id,
@@ -138,7 +135,7 @@ function AddNewAddress(props) {
         
       }
 
-      dispatch(AddAddressRequest(data))
+      
       if (addAddressStatus) {
         const data = {
           created_by: user?._id,

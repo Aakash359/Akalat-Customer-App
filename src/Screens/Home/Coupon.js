@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
-import {Searchbar} from 'react-native-paper'
 import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import {useSelector, useDispatch, connect} from 'react-redux'
@@ -94,9 +93,7 @@ function Coupon(props) {
   const dispatch = useDispatch()
 
   const onFavorite = (item) => {
-    console.log('====================================')
-    console.log(item, restro?.restroList)
-    console.log('====================================')
+  
     // const restro = [...restro?.restroList]
     // const index = restro.findIndex((i) => i?._id === item?._id)
     // restro[index] = {...restro[index], is_favourited: !item?.is_favourited || false}

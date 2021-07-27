@@ -387,7 +387,7 @@ function HomeMaker(props) {
             <View style={styles.ratingContainer}>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>{resDet?.rating_from_user}</Text>
-                <Text style={styles.normalText}>Rating</Text>
+                <Text style={styles.normalText}>Ratings</Text>
               </View>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>

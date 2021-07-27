@@ -48,11 +48,9 @@ const mapScreen = (props) => {
                     borderBottomColor:Colors.GRAY,borderBottomWidth:0, }]}>
                                 <Text style={styles.primaryText}
                                 numberOfLines={1}>Order  ID {orderDetails?._id}</Text>
-                                <Icon
-                                    type="FontAwesome"
-                                    name='phone-square'
-                                    style={styles.buttonImage}
-                                />
+                               <Image
+                                source={ImagesPath.phonecall}
+                                style={styles.phonecall} />
                             </View>
                         <View style={[styles.cardStyle, {
                             justifyContent: 'center',
@@ -139,6 +137,13 @@ const styles = StyleSheet.create({
         marginTop: Scale(20),
         resizeMode: 'contain',
     },
+    phonecall: {
+        color: Colors.APPCOLOR,
+        width: Scale(50),
+        height: Scale(50),
+        marginTop: Scale(10),
+        resizeMode: 'contain',
+    },
     imageStyle:{
         tintColor:'green',
         marginRight: Scale(5),
@@ -149,7 +154,8 @@ const styles = StyleSheet.create({
     buttonImage: {
         fontSize:Scale(40),
         borderRadius:Scale(20),
-        color: Colors.APPCOLOR
+        color: Colors.APPCOLOR,
+        borderRadius: 2
     },
     cardStyle: {
         height: Scale(240),

@@ -17,8 +17,7 @@ import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath,iOSMapAPIKey,androidMapAPIKey,} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
 import {useNavigation, useRoute} from '@react-navigation/native'
-// import Slider from '@react-native-community/slider'
-import { SliderPicker } from 'react-native-slider-picker';
+import Slider from '@react-native-community/slider'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {offercardRequest,couponRequest,addfavouriteRequest} from '../../redux/actions'
 import {CustomButton} from '../../Component'
@@ -61,31 +60,7 @@ function NearMe(props) {
     isLoading: true,
     resetStatus: false,
   })
-  useEffect(() => {
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'ios') {
-        getOneTimeLocation()
-      } else {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Access Required',
-              message: 'This App needs to Access your location',
-            },
-          )
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            getOneTimeLocation()
-          } else {
-          }
-        } catch (err) {}
-      }
-    }
-    requestLocationPermission('whenInUse')
-    return () => {
-      Geolocation.clearWatch()
-    }
-  }, [])
+
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
@@ -235,7 +210,9 @@ function NearMe(props) {
           restroList: res?.data?.data?.restroNearMe,
         })
         
-      } catch (error) {}
+      } catch (error) {
+        
+      }
   
     }
    
@@ -946,9 +923,9 @@ try {
                 {(value).toFixed(1) + ' Miles'}
               </Text>
             </View>
-            <SliderPicker
+            <Slider
               style={{marginTop: Scale(20)}}
-              showSeparatorScale={true}
+              
               minimumValue={0}
               maximumValue={5}
               value={value}

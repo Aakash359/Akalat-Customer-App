@@ -60,7 +60,7 @@ function SavedCard() {
         </Text>
         <Switch
           trackColor={{false: Colors.LIGHTGREY, true: Colors.DARK_RED}}
-          style={{transform: [{scaleX: 1.1}, {scaleY: 1.1}]}}
+          style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
           thumbColor={switchValue ? Colors.WHITE : Colors.WHITE}
           ios_backgroundColor={Colors.GREEN}
           onValueChange={toggleSwitch}

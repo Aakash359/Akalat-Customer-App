@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  Linking
 } from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {
@@ -59,24 +60,30 @@ function SignUp(props) {
       navigation: {navigate},
       t: translate,
     } = props
-    let reg =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  
     if (first_name == '') {
       alert('Please enter First Name')
-    } else if (last_name == '') {
+    }else if (last_name == '') {
       alert('Please enter Last Name')
     } else if (phone == '') {
       alert('Please enter your Mobile Number')
+    } else if (phone.length<10) {
+      alert('Please enter 10 digit mobile number')
     } else if (email == '') {
       alert('Please enter your Email')
     } else if (reg.test(email) == false) {
       alert('Please enter valid email')
     } else if (password == '') {
       alert('Please enter Password')
+    } else if (password.length<8) {
+      alert('Please enter min 8 characters digit password')
     } else if (confirm_pass == '') {
       alert('Please enter Confirm Password')
     } else if (confirm_pass != password) {
       alert('Confirm password not matched ')
+    } else if (confirm_pass.length < 8) {
+      alert('Please enter min 8 characters digit in confirm password')
     } else if (checkBox == false) {
       alert('Please accept terms and conditions')
     } else {
@@ -221,8 +228,10 @@ function SignUp(props) {
               </TouchableOpacity>
               <Text style={styles.forgotButton}>
                 I accept{' '}
-                <Text style={{color: Colors.APPCOLOR}}>Privacy Policy</Text> and
-                <Text style={{color: Colors.APPCOLOR, marginLeft: Scale(5)}}>
+                <Text style={{color: Colors.APPCOLOR}}
+                onPress={() => Linking.openURL('http://google.com')}>Privacy Policy</Text> and
+                <Text style={{color: Colors.APPCOLOR, marginLeft: Scale(5)}}
+                onPress={() => Linking.openURL('http://google.com')}>
                   {' '}
                   Terms &{'\n'}Conditions{' '}
                 </Text>

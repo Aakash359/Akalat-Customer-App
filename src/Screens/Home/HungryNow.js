@@ -15,9 +15,6 @@ function HungryNow(props) {
     const product_list = hungryNowListResponse?.data?.product_list || []
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
 
-    console.log('====================================');
-    console.log("Aakash===>",product_list);
-    console.log('====================================');
     
     useEffect(() => {
         dispatch(hungryNowListLoader(true));
