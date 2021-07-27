@@ -396,7 +396,7 @@ function HomeMaker(props) {
             <View style={styles.ratingContainer}>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>{resDet?.rating_from_user}</Text>
-                <Text style={styles.normalText}>Rating</Text>
+                <Text style={styles.normalText}>Ratings</Text>
               </View>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>
@@ -561,7 +561,8 @@ function HomeMaker(props) {
                     color: Colors.WHITE,
                     fontSize: Scale(14),
                     fontFamily: Fonts.Regular,
-                  }}>{`$ ${totalCartAmt}`}</Text>
+                    fontWeight: 'bold',
+                  }}>{`$${totalCartAmt}`}</Text>
                 <Text
                   style={{
                     color: Colors.WHITE,

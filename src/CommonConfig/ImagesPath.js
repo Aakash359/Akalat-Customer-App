@@ -7,7 +7,7 @@ const ImagesPath = {
   background: require('../Assets/Images/app_bg.png'),
   veg: require('../Assets/Images/veg.png'),
   bug: require('../Assets/Images/bg3.png'),
-  non_veg: require('../Assets/Images/non_veg.png'),  
+  non_veg: require('../Assets/Images/non_veg.png'),
   checkmark: require('../Assets/Images/checkmark.png'),
   check1: require('../Assets/Images/check1.png'),
   uncheck: require('../Assets/Images/uncheck.png'),
@@ -26,7 +26,7 @@ const ImagesPath = {
   drawerPlaceholder: require('../Assets/Images/drawerPlaceholder.png'),
   star: require('../Assets/Images/star.png'),
   reset: require('../Assets/Images/reset.png'),
-  homeDrawer: require('../Assets/Images/home.png'),  
+  homeDrawer: require('../Assets/Images/home.png'),
   up: require('../Assets/Images/up.png'),
   filter: require('../Assets/Images/filter.png'),
   earningDrawer: require('../Assets/Images/earning.png'),
@@ -70,6 +70,10 @@ const ImagesPath = {
   fb: require('../Assets/Images/fb.png'),
   Insta: require('../Assets/Images/Insta.png'),
   Sms: require('../Assets/Images/Sms.png'),
-};
+  locActive: require('../Assets/Images/location-active.png'),
+  userActive: require('../Assets/Images/user-active.png'),
+  cartActive: require('../Assets/Images/cart-active.png'),
+  searchActive: require('../Assets/Images/search-active.png'),
+}
 
-export default ImagesPath;
+export default ImagesPath
