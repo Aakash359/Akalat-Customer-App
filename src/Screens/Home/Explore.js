@@ -393,7 +393,7 @@ function Explore() {
           </View>
           <FlatList
             data={data?.restroList}
-            contentContainerStyle={{paddingBottom:Scale(50)}}
+            contentContainerStyle={{paddingBottom:Scale(100)}}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
   loginInputCont: {
     top: Scale(-20),
     paddingTop: Scale(10),
-    paddingBottom:Scale(100),
+    paddingBottom:Scale(120),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,

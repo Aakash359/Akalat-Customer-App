@@ -27,6 +27,7 @@ import {
   AddAddressLoader,
   AddressListRequest,
 } from '../../redux/actions'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {useSelector, useDispatch} from 'react-redux'
 
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
@@ -41,12 +42,14 @@ function AddNewAddress(props) {
   const [area_name, setAreaName] = useState('')
   const [nearby, setNearby] = useState('')
   const user = useSelector((state) => state.Auth.user)
+  const setAddAddressLoader = useSelector((state) => state.Setting)
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
 
   const addAddressStatus = useSelector(
     (state) => state.Setting.addAddressStatus,
   )
+  
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -103,7 +106,33 @@ function AddNewAddress(props) {
       alert('Please enter House No')
     } else if (area_name == '') {
       alert('Please enter area')
-    } else {
+    } else if (nearby) {
+      let data = {
+        address_type: activeTab + '',
+        lng: location?.latitude,
+        lat: location?.longitude,
+        house_name_and_no,
+        area_name,
+        nearby,
+        created_by: user?._id,
+      }
+      dispatch(AddAddressRequest(data))
+      dispatch(AddAddressLoader(true))
+      navigate('ManageAddress')
+      if (addAddressStatus) {
+        const data = {
+          created_by: user?._id,
+        } 
+        console.log('====================================');
+        console.log("Aakash===>",addAddressStatus);
+        console.log('====================================');
+        dispatch(AddressListRequest(data))
+     
+        
+       }
+      
+    }
+     else {
       let data = {
         address_type: activeTab + '',
         lng: location?.latitude,
@@ -112,30 +141,8 @@ function AddNewAddress(props) {
         area_name,
         created_by: user?._id,
       }
-     
-      if (nearby) {
-        data = {
-          address_type: activeTab + '',
-          lng: location?.latitude,
-          lat: location?.longitude,
-          house_name_and_no,
-          area_name,
-          nearby,
-          created_by: user?._id,
-        }
-        dispatch(AddAddressRequest(data))
-        if (addAddressStatus) {
-          const data = {
-            created_by: user?._id,
-          } 
-          setTimeout(() => {
-            navigate('ManageAddress')
-          }, 1000)
-         }
-        
-      }
-
-      
+      dispatch(AddAddressRequest(data))
+      dispatch(AddAddressLoader(true))
       if (addAddressStatus) {
         const data = {
           created_by: user?._id,
@@ -276,6 +283,7 @@ function AddNewAddress(props) {
                 onSubmit={onSubmit}
               />
             </View>
+            <LoadWheel visible={setAddAddressLoader} />
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>
