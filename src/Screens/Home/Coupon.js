@@ -93,11 +93,13 @@ function Coupon(props) {
   const dispatch = useDispatch()
 
   const onFavorite = (item) => {
-  
     // const restro = [...restro?.restroList]
     // const index = restro.findIndex((i) => i?._id === item?._id)
-    // restro[index] = {...restro[index], is_favourited: !item?.is_favourited || false}
-    // setRestro({...restro, restroList: restro})
+    // restro[index] = {
+    //   ...restro[index],
+    //   is_favourited: !item?.is_favourited || false,
+    // }
+    setRestro({...restro, restroList: restro})
     const payload = {
       userid: user?._id,
       restro_id: item?._id,
