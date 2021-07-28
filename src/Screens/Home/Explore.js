@@ -369,6 +369,7 @@ function Explore() {
             </TouchableOpacity>
           </View>
           <FlatList
+            contentContainerStyle={{paddingBottom: Scale(100)}}
             data={data?.restroList}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
