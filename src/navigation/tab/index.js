@@ -7,6 +7,8 @@ import MyAccount from '../../Screens/Home/MyAccount'
 import Card from '../../Screens/Home/Card'
 import ImageIcon from '../../containers/ImageIcon'
 import {Scale, Colors, ImagesPath} from '../../CommonConfig'
+import {AddressListRequest} from '../../redux/actions'
+import {useSelector, useDispatch} from 'react-redux'
 
 const getOptions = ({tabBarLabel, icon, tint = true}) => {
   return {
@@ -20,6 +22,16 @@ const getOptions = ({tabBarLabel, icon, tint = true}) => {
 const Tab = createBottomTabNavigator()
 
 function index() {
+  const user = useSelector((state) => state.Auth.user)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    const data = {
+      created_by: user?._id,
+    }
+    dispatch(AddressListRequest(data))
+  }, [])
+
   return (
     <Tab.Navigator
       initialRouteName="Near Me"

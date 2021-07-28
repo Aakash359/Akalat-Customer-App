@@ -26,6 +26,7 @@ import Geocoder from 'react-native-geocoding'
 import {Searchbar} from 'react-native-paper'
 import {AddressListRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
+import {setAddressId, setSelectedAddress} from '../../redux/actions/CartActions'
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function SelectLocation(props) {
@@ -33,15 +34,18 @@ function SelectLocation(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
+  const selectedAddress = useSelector(
+    ({Cart: {selectedAddress}}) => selectedAddress,
+  )
   const [currentAddress, setAddress] = useState({
     d: null,
-    selectedId: props?.selectedAddress || 0,
+    selectedId: selectedAddress || 0,
   })
   const addressListResponse = useSelector(
     (state) => state.Setting.addressListResponse,
   )
   const addressList = addressListResponse?.data?.addressList || []
-  const user = useSelector((state) => state.Auth.user)
+  const user = useSelector(({Auth: {user}}) => user)
 
   const redirectToMyAccount = () => {
     navigate('HungryNow')
@@ -54,9 +58,7 @@ function SelectLocation(props) {
       created_by: user?._id,
     }
 
-    setTimeout(() => {
-      dispatch(AddressListRequest(data))
-    }, 5000)
+    dispatch(AddressListRequest(data))
   }, [])
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -111,23 +113,22 @@ function SelectLocation(props) {
   const renderItems = ({item, index}) => (
     <TouchableOpacity
       style={styles.cardStyle}
-      onPress={() => setAddress({...currentAddress, selectedId: index})}>
+      onPress={() => {
+        setAddress({...currentAddress, selectedId: index})
+        dispatch(setAddressId(item?._id))
+        dispatch(setSelectedAddress(index))
+      }}>
       <View style={styles.cardHeader}>
         <Text style={styles.placeText}>{item?.address_type}</Text>
         <Icon
           type="FontAwesome"
           style={[
             {
-              color:
-                currentAddress?.selectedId === index
-                  ? Colors.RED
-                  : Colors.LIGHT_GRAY,
+              color: selectedAddress === index ? Colors.RED : Colors.LIGHT_GRAY,
             },
             {fontSize: 23},
           ]}
-          name={
-            currentAddress?.selectedId === index ? 'dot-circle-o' : 'circle-o'
-          }
+          name={selectedAddress === index ? 'dot-circle-o' : 'circle-o'}
         />
       </View>
       <Text style={styles.placeText}>
@@ -184,11 +185,11 @@ function SelectLocation(props) {
           </View>
           <FlatList data={addressList} renderItem={renderItems} />
           <View style={{marginTop: Scale(80)}}>
-            <CustomButton
+            {/* <CustomButton
               title="Save"
               isSecondary={true}
               onSubmit={redirectToMyAccount}
-            />
+            /> */}
           </View>
         </ScrollView>
       </ImageBackground>
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     padding: 14,
     paddingLeft: 18,
-    alignSelf:'center'
+    alignSelf: 'center',
   },
   textStyle: {
     color: Colors.BORDERCOLOR,
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     fontSize: Scale(12),
     color: Colors.WHITE,
     width: Scale(150),
-    justifyContent:'center',
+    justifyContent: 'center',
     height: Scale(45),
     textAlignVertical: 'center',
     backgroundColor: Colors.APPCOLOR,

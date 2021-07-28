@@ -68,9 +68,6 @@ function Address() {
         const grant = await Geolocation.requestAuthorization('whenInUse')
 
         if (grant === 'granted') {
-          console.log('====================================')
-          console.log(grant)
-          console.log('====================================')
           getOneTimeLocation()
         }
       } else {
