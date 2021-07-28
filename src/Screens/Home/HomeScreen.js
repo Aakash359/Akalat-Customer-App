@@ -30,8 +30,8 @@ function HomeScreen(props) {
   const redirectToNotification = () => {
     navigate('Notification')
   }
-  const { viewallData } = props.route.params
- 
+  const {viewallData} = props.route.params
+
   const dispatch = useDispatch()
 
   const restroResponse = useSelector((state) => state.Home.restroResponse)
@@ -44,6 +44,7 @@ function HomeScreen(props) {
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
+    resetStatus: false,
   })
 
   const redirectToHomeMaker = (item) => {
@@ -51,14 +52,16 @@ function HomeScreen(props) {
   }
 
   const onFavorite = (item) => {
-    const data = {
+    const restro = [...data?.restroList]
+    const index = restro.findIndex((i) => i?._id === item?._id)
+    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    const payload = {
       userid: user?._id,
       restro_id: item?._id,
-      is_favourited_restro: true,
+      is_favourited_restro: !item?.is_favourited,
     }
 
-    dispatch(addfavouriteRequest(data))
-    alert('Added to favourite list succesfully')
+    dispatch(addfavouriteRequest(payload))
   }
   const onBack = (res) => {
     setdata({
@@ -108,7 +111,7 @@ function HomeScreen(props) {
                     textAlign: 'right',
                     fontSize: Scale(16),
                   }}>
-                   {item?.distance} Km
+                  {item?.distance} Km
                 </Text>
               </View>
             </View>
@@ -134,31 +137,18 @@ function HomeScreen(props) {
               fontWeight: 'normal',
             }}>
             {' '}
-            {item?.opening_time} - {item?.closing_time}
+            ({item?.opening_time} - {item?.closing_time})
           </Text>
-          {addFavouriteStatus == true ? (
-            <TouchableOpacity onPress={() => onFavorite(item)}>
-              <Icon
-                name="heart"
-                type="FontAwesome"
-                style={{
-                  color: Colors.DARK_RED,
-                  fontSize: Scale(16),
-                }}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => onFavorite(item)}>
-              <Icon
-                name="heart"
-                type="FontAwesome"
-                style={{
-                  color: '#AB8F8E',
-                  fontSize: Scale(16),
-                }}
-              />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity onPress={() => onFavorite(item)}>
+            <Icon
+              name="heart"
+              type="FontAwesome"
+              style={{
+                color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
+                fontSize: Scale(16),
+              }}
+            />
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -276,7 +266,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
     paddingHorizontal: Scale(25),
-},
+  },
   location: {
     marginRight: Scale(10),
     width: Scale(25),
