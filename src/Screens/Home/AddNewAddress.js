@@ -24,9 +24,10 @@ import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
 import {
   AddAddressRequest,
-  AddressListLoader,
+  AddAddressLoader,
   AddressListRequest,
 } from '../../redux/actions'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import {useSelector, useDispatch} from 'react-redux'
 
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
@@ -41,12 +42,14 @@ function AddNewAddress(props) {
   const [area_name, setAreaName] = useState('')
   const [nearby, setNearby] = useState('')
   const user = useSelector((state) => state.Auth.user)
+  const setAddAddressLoader = useSelector((state) => state.Setting)
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
 
   const addAddressStatus = useSelector(
     (state) => state.Setting.addAddressStatus,
   )
+  
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -113,20 +116,23 @@ function AddNewAddress(props) {
         nearby,
         created_by: user?._id,
       }
-      alert('Near By Exist')
-
       dispatch(AddAddressRequest(data))
+      dispatch(AddAddressLoader(true))
+      navigate('ManageAddress')
       if (addAddressStatus) {
         const data = {
           created_by: user?._id,
-        }
-
-        navigate('ManageAddress')
-
-        navigate('ManageAddress')
+        } 
+        console.log('====================================');
+        console.log("Aakash===>",addAddressStatus);
+        console.log('====================================');
         dispatch(AddressListRequest(data))
-      }
-    } else {
+     
+        
+       }
+      
+    }
+     else {
       let data = {
         address_type: activeTab + '',
         lng: location?.latitude,
@@ -135,11 +141,8 @@ function AddNewAddress(props) {
         area_name,
         created_by: user?._id,
       }
-      console.log('====================================')
-      console.log('Aakash===>', data)
-      console.log('====================================')
-      alert('Near By Does not Exist')
       dispatch(AddAddressRequest(data))
+      dispatch(AddAddressLoader(true))
       if (addAddressStatus) {
         const data = {
           created_by: user?._id,
@@ -305,6 +308,7 @@ function AddNewAddress(props) {
                 onSubmit={onSubmit}
               />
             </View>
+            <LoadWheel visible={setAddAddressLoader} />
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>

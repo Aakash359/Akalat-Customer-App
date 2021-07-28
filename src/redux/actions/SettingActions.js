@@ -5,6 +5,7 @@ import {
   FAQ_REQUEST,
   HELP_REQUEST,
   ADDADDRESS_REQUEST,
+  ADDADDRESS_LOADER,
   ADDRESSLIST_REQUEST,
   SET_ADDRESS_LIST_LOADER,
   MYORDER_LIST_REQUEST,
@@ -91,6 +92,14 @@ export const myOrderListRequest = (data) => {
 export const AddAddressRequest = (data) => {
   return {
     type: ADDADDRESS_REQUEST,
+    data,
+  }
+}
+
+// =================Add Address Loader  =================
+export const AddAddressLoader = (data) => {
+  return {
+    type: ADDADDRESS_LOADER,
     data,
   }
 }

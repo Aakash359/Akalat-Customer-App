@@ -323,7 +323,7 @@ function NearMe(props) {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance: value1 + '',
+        distance:value1.toFixed(1)+"",
         rating_from_user: undefined,
         is_sort: `${false}`,
         is_filter: `${true}`,
@@ -352,7 +352,7 @@ function NearMe(props) {
         lat: 28.4922,
         lng: 77.0966,
         distance: undefined,
-        rating_from_user: value + '',
+        rating_from_user:value.toFixed(1)+"",
         is_sort: `${false}`,
         is_filter: `${true}`,
         restaurent_type: restro_type,
@@ -665,6 +665,7 @@ function NearMe(props) {
           }}
         />
       </ScrollView>
+    
       <Modal visible={modal} animationType="slide">
         <View style={styles.modalHeader}>
           <Icon
@@ -873,7 +874,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {value1 + ' Miles'}
+                 {(value1).toFixed(1)} Miles
               </Text>
             </View>
             <Slider
@@ -881,7 +882,7 @@ function NearMe(props) {
               minimumValue={0}
               maximumValue={5}
               value={value1}
-              step={0.5}
+              step={0.1}
               onValueChange={(value) => setValue1(value)}
               thumbTintColor={Colors.APPCOLOR}
               minimumTrackTintColor={Colors.APPCOLOR}
@@ -911,7 +912,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {value + ' Miles'}
+                {(value).toFixed(1) + ' Miles'}
               </Text>
             </View>
             <Slider
@@ -919,7 +920,7 @@ function NearMe(props) {
               minimumValue={0}
               maximumValue={5}
               value={value}
-              step={0.5}
+              step={0.1}
               onValueChange={(value) => setValue(value)}
               thumbTintColor={Colors.APPCOLOR}
               minimumTrackTintColor={Colors.APPCOLOR}
@@ -1066,12 +1067,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flex: 1,
   },
-  headerContainer: {
-    flexDirection: 'row',
-    backgroundColor: Colors.APPCOLOR,
-    paddingVertical: Scale(35),
-    paddingHorizontal: Scale(25),
-  },
+  
   location: {
     marginRight: Scale(10),
     width: Scale(25),
@@ -1131,15 +1127,6 @@ const styles = StyleSheet.create({
     marginBottom: Scale(15),
     fontWeight: 'bold',
   },
-  loginInputCont: {
-    flex: 1,
-    paddingTop: Scale(10),
-    paddingBottom: Scale(10),
-    paddingHorizontal: Scale(30),
-    borderTopLeftRadius: Scale(25),
-    borderTopRightRadius: Scale(25),
-    backgroundColor: Colors.WHITE,
-  },
   notificationStyle: {
     width: Scale(25),
     height: Scale(25),
@@ -1156,9 +1143,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: Scale(25),
   },
 
-  logoStyle: {
-    marginTop: Scale(15),
-    fontSize: Scale(25),
-    color: Colors.WHITE,
-  },
 })

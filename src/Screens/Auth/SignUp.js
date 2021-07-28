@@ -149,6 +149,7 @@ function SignUp(props) {
                   options={[
                     ...new Set(countryList.map((i) => `${i?.dial_code}`)),
                   ]}
+                  showsVerticalScrollIndicator={false}
                   onSelect={(country_Code) => setCountryCode(country_Code)}
                   defaultIndex={0}
                   defaultValue={countryList.dial_code || '+91'}
