@@ -180,7 +180,6 @@ function NearMe(props) {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
         alert('Error', error)
       }
     } else if (search) {
@@ -205,7 +204,6 @@ function NearMe(props) {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
         alert('Error', error)
       }
     } else {
@@ -220,9 +218,7 @@ function NearMe(props) {
         is_sort: `${false}`,
         is_filter: `${false}`,
       }
-      console.log('====================================')
-      console.log('Default ====>', payload)
-      console.log('====================================')
+
       try {
         const res = await axios.post(url, payload)
         setdata({
@@ -289,9 +285,7 @@ function NearMe(props) {
       setIsEnabled(false)
       navigate('NearMe')
       setModal2(false)
-    } catch (error) {
-      console.log('Error', error)
-    }
+    } catch (error) {}
   }
 
   const onSortByReset = async () => {
@@ -311,9 +305,7 @@ function NearMe(props) {
       setActiveTab(0)
       setModal(false)
       navigate('NearMe')
-    } catch (error) {
-      console.log('Error', error)
-    }
+    } catch (error) {}
   }
 
   const onFilter = async () => {
@@ -337,9 +329,6 @@ function NearMe(props) {
         is_filter: `${true}`,
         restaurent_type: restro_type,
       }
-      console.log('====================================')
-      console.log('DistanceLoad===>', payload)
-      console.log('====================================')
 
       try {
         const res = await axios.post(url, payload)
@@ -347,15 +336,11 @@ function NearMe(props) {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================')
-        console.log('Datata===>', res)
-        console.log('====================================')
 
         setModal2(false)
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
         alert('Error', error)
       }
     } else if (value) {
@@ -372,9 +357,6 @@ function NearMe(props) {
         is_filter: `${true}`,
         restaurent_type: restro_type,
       }
-      console.log('====================================')
-      console.log('RatimngPayLoad===>', payload)
-      console.log('====================================')
 
       try {
         const res = await axios.post(url, payload)
@@ -382,23 +364,17 @@ function NearMe(props) {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================')
-        console.log('RatingData===>', res?.data?.data?.restroNearMe)
-        console.log('====================================')
+
         setModal2(false)
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
         alert('Error', error)
       }
     }
   }
 
   const renderItems = ({item}) => {
-    console.log('====================================')
-    console.log(item)
-    console.log('====================================')
     return (
       <View style={styles.cardStyle}>
         <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>

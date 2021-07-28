@@ -147,12 +147,37 @@ function AddNewAddress(props) {
         const data = {
           created_by: user?._id,
         }
+
         navigate('ManageAddress')
-         setTimeout(() => {
-            navigate('ManageAddress')
-          }, 1000)
+
+        navigate('ManageAddress')
         dispatch(AddressListRequest(data))
       }
+
+      // dispatch(AddAddressRequest(data))
+      // if (addAddressStatus) {
+      //   const data = {
+      //     created_by: user?._id,
+      //   }
+      //   alert('Hi')
+      //   navigate('ManageAddress')
+      //   setTimeout(() => {
+      //     navigate('ManageAddress')
+      //     dispatch(AddressListRequest(data))
+      //   }, 1000)
+      // }
+      //
+
+      // if (addAddressStatus) {
+      //   const data = {
+      //     created_by: user?._id,
+      //   }
+      //   navigate('ManageAddress')
+      //   setTimeout(() => {
+      //     navigate('ManageAddress')
+      //   }, 1000)
+      //   dispatch(AddressListRequest(data))
+      // }
     }
   }
 

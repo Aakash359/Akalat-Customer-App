@@ -116,9 +116,7 @@ function Explore() {
         restroList: res?.data?.data?.restroNearMe,
         isLoading: false,
       })
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
@@ -141,69 +139,51 @@ function Explore() {
     dispatch(addfavouriteRequest(payload))
   }
 
-  
   const onSearch = async () => {
-
     var data = search
     if ((data = !search)) {
-
-      setdata({...data, isLoading: true})
-    const url = `${API_BASE}/restro/combinedSearchSortFilter`
-
-    const payload = {
-       
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-
-        
-    }
-
-    try {
-      const res = await axios.post(url, payload)
-
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNearMe,
-        isLoading: false,
-      })
-    } catch (error) {
-      
-    }
-
-    }
-    else {
-
       setdata({...data, isLoading: true})
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
-  
+
       const payload = {
-         
-        searchKey: search,
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        is_sort: `${false}`,
-        is_filter:`${false}`,
-       }
-  
+      }
+
       try {
         const res = await axios.post(url, payload)
-  
+
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
           isLoading: false,
         })
-      } catch (error) {
-        
-      }
-  
+      } catch (error) {}
+    } else {
+      setdata({...data, isLoading: true})
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+
+      const payload = {
+        searchKey: search,
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        is_sort: `${false}`,
+        is_filter: `${false}`,
       }
 
+      try {
+        const res = await axios.post(url, payload)
+
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+          isLoading: false,
+        })
+      } catch (error) {}
     }
-    
-
+  }
 
   React.useEffect(() => {
     onSearch()
@@ -361,12 +341,9 @@ function Explore() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        <ScrollView 
-        scrollEnabled={true}
-        >
+        <ScrollView style={{height: Scale(600)}}>
           <View
             style={{
-              
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingHorizontal: Scale(25),
@@ -392,15 +369,14 @@ function Explore() {
             </TouchableOpacity>
           </View>
           <FlatList
+            contentContainerStyle={{paddingBottom: Scale(100)}}
             data={data?.restroList}
-            contentContainerStyle={{paddingBottom:Scale(100)}}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
               return <Text style={{textAlign: 'center'}}>No data found</Text>
             }}
           />
-          
         </ScrollView>
       </ImageBackground>
     </View>
@@ -421,8 +397,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
-  
-   
   },
   searchView: {
     borderRadius: 10,
