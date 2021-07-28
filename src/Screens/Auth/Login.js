@@ -7,6 +7,8 @@ import {
   KeyboardAvoidingView,
   TextInput,
   ScrollView,
+  TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native'
 import {useNavigation, CommonActions} from '@react-navigation/native'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
@@ -84,6 +86,8 @@ function Login(props) {
     setHidePasswordl(!hidePassword)
   }
 
+  
+
   return (
     <ImageBackground
       source={ImagesPath.background}
@@ -109,15 +113,15 @@ function Login(props) {
               <ModalDropdown 
               options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
               onSelect={(country_Code) => setCountryCode(country_Code)}
+              renderRow={(rowData) => renderDropDownList(rowData)}
               defaultIndex={0}
+              showsVerticalScrollIndicator={false}
               defaultValue={countryList.dial_code || '+91'}
               style={styles.modal}
               textStyle={styles.modalText}
               dropdownStyle={styles.modalDropDown}
               dropdownTextStyle={styles.modalDropDownText}
-              dropdownTextHighlightStyle={
-                  styles.modalDropDownHighlightedText
-              }
+              
               />
               
               <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />

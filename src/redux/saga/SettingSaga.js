@@ -17,6 +17,7 @@ import {
   ADDADDRESS_REQUEST,
   ADDADDRESS_SUCCESS,
   ADDADDRESS_FAILED,
+  ADDADDRESS_LOADER,
   ADDRESSLIST_REQUEST,
   ADDRESSLIST_SUCCESS,
   ADDRESSLIST_FAILED,
@@ -36,7 +37,7 @@ import {
   OFFER_LIST_REQUEST,
   OFFER_LIST_SUCCESS,
   OFFER_LIST_FAILED,
-  OFFER_LIST_LOADER
+  OFFER_LIST_LOADER,
 } from '../Types/type'
 import {put, call, takeEvery, select} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
@@ -184,7 +185,7 @@ export const HelpSaga = function* HelpSaga({data}) {
 // ====================== Add Address  POST ======================
 export const AddAddressSaga = function* AddAddressSaga({data}) {
   const {signUp, ...payload} = data
-  //
+  yield put({type: SET_ADDRESS_LIST_LOADER, payload: true})
   try {
     const response = yield call(Request, {
       url: '/addUserAddress',
@@ -194,14 +195,17 @@ export const AddAddressSaga = function* AddAddressSaga({data}) {
 
     if (response?.error) {
       yield put({type: ADDADDRESS_FAILED, payload: response})
+      yield put({type: ADDADDRESS_LOADER, payload: false})
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)
     } else {
       yield put({type: ADDADDRESS_SUCCESS, payload: response})
+      yield put({type: ADDADDRESS_LOADER, payload: false})
       if (signUp) {
         yield put(signUpLogin())
       }
     }
   } catch (e) {
+    yield put({type: ADDADDRESS_LOADER, payload: false})
     yield put({type: ADDADDRESS_FAILED, payload: e})
   }
 }

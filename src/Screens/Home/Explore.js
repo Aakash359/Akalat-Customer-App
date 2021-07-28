@@ -362,7 +362,8 @@ function Explore() {
         source={ImagesPath.background}
         style={styles.loginInputCont}>
         <ScrollView 
-        style={{height:Scale(600),}}>
+        scrollEnabled={true}
+        >
           <View
             style={{
               
@@ -392,7 +393,7 @@ function Explore() {
           </View>
           <FlatList
             data={data?.restroList}
-            
+            contentContainerStyle={{paddingBottom:Scale(50)}}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
@@ -416,10 +417,11 @@ const styles = StyleSheet.create({
   loginInputCont: {
     top: Scale(-20),
     paddingTop: Scale(10),
-    paddingBottom: Scale(150),
+    paddingBottom:Scale(100),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
+  
    
   },
   searchView: {

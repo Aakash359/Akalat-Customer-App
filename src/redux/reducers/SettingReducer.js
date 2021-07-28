@@ -17,6 +17,7 @@ import {
   ADDADDRESS_REQUEST,
   ADDADDRESS_SUCCESS,
   ADDADDRESS_FAILED,
+  ADDADDRESS_LOADER,
   ADDRESSLIST_REQUEST,
   ADDRESSLIST_SUCCESS,
   ADDRESSLIST_FAILED,
@@ -68,7 +69,7 @@ const initialState = {
   changePasswordStatus: false,
   offerListResponse: false,
   offerListLoader:false,
-  
+  setAddressLoader:false,
 }
 
 export default function SettingReducer(state = initialState, action) {
@@ -145,6 +146,8 @@ export default function SettingReducer(state = initialState, action) {
         addAddressStatus: false,
         addAddressResponse: action.payload,
       }
+    case ADDADDRESS_LOADER:
+      return {...state, setAddressLoader: action.payload}  
     case DELETE_ADDRESS_SUCCESS:
       return {...state, delAddSucRes: action.data}
     case DELETE_ADDRESS_FAILED:
@@ -167,6 +170,7 @@ export default function SettingReducer(state = initialState, action) {
         addressListStatus: false,
         addressListResponse: action.payload,
       }
+      
     case SET_ADDRESS_LIST_LOADER:
       return {...state, setaddressListLoader: action.payload}
    

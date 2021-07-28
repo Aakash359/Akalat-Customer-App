@@ -24,7 +24,7 @@ import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
 import {
   AddAddressRequest,
-  AddressListLoader,
+  AddAddressLoader,
   AddressListRequest,
 } from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
