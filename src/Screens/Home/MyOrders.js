@@ -143,9 +143,6 @@ function MyOrders(props) {
     </View>
   )
   const renderItemPast = ({item, index}) => {
-    
-    
-    
     return (
       <View style={styles.cardStyle}>
         <View style={{flexDirection: 'row'}}>
@@ -249,7 +246,7 @@ function MyOrders(props) {
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => {
             return (
-              <Text style={{alignSelf: 'center'}}>
+              <Text style={{alignSelf: 'center', marginTop: 300, fontSize: 15}}>
                 You don't have any orders
               </Text>
             )

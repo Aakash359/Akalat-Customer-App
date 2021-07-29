@@ -126,7 +126,12 @@ function Favorites() {
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => {
             return (
-              <Text style={{alignSelf: 'center'}}>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  fontSize: 20,
+                  marginTop: 300,
+                }}>
                 You don't have any favourite list
               </Text>
             )
