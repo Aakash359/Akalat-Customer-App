@@ -438,6 +438,15 @@ function Card(props) {
                 onSubmit={redirectToPayment}
               />
             </View>
+            {/* <Text
+              style={{
+                marginBottom: 30,
+                color: 'red',
+                marginLeft: 30,
+                fontSize: 16,
+              }}>
+              *These items are available for pick up service only
+            </Text> */}
           </ScrollView>
         </ImageBackground>
         <Modal visible={modal} transparent={true} animationType="slide">

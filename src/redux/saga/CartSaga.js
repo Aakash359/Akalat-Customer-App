@@ -5,6 +5,7 @@ import {
   setCreateOrderError,
   setCreateOrderLoader,
 } from '../actions/CartActions'
+import {removeCoupon} from '../actions/CouponActions'
 import {CREATE_ORDER} from '../Types/CartActionTypes'
 
 // ====================== Sign-Up POST ======================
@@ -27,6 +28,7 @@ function* createOrder({payload, callback}) {
       yield put(setCreateOrderLoader(false))
       yield put(setCreateOrderError(''))
       yield put(createOrderSuccess())
+      yield put(removeCoupon())
       if (callback) {
         callback(response)
       }

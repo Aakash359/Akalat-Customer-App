@@ -559,7 +559,7 @@ function HomeMaker(props) {
                     color: Colors.WHITE,
                     fontSize: Scale(11),
                     fontFamily: Fonts.Regular,
-                    
+                    marginTop: 5,
                   }}>
                   {cartProducts?.length + ' items in cart'}
                 </Text>
