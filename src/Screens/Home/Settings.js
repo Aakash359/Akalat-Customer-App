@@ -26,7 +26,8 @@ function Settings() {
   const dispatch = useDispatch()
   const signupResponse = useSelector((state) => state.Auth)
   const [logoutModal, setLogoutModal] = useState(false)
-  const [isEnabled, setIsEnabled] = useState(true)
+  const [notification, setNotification] = useState(false)
+  const [isEnabled, setIsEnabled] = useState(false)
   const {isLoading} = useSelector((state) => state.Auth)
 
   const Userid = signupResponse?.user?._id

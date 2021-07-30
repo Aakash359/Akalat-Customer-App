@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "285528293632",
-    "project_id": "predictwin-98e1e",
-    "storage_bucket": "predictwin-98e1e.appspot.com"
+    "project_number": "734406996313",
+    "project_id": "akalat-d853c",
+    "storage_bucket": "akalat-d853c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:285528293632:android:c065c5c0db624ff2ba73e5",
+        "mobilesdk_app_id": "1:734406996313:android:8822c1e193bad9e2675c48",
         "android_client_info": {
-          "package_name": "com.predictwin.app"
+          "package_name": "com.resturantcustomer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "285528293632-qa2qe0fac5d7ovho7jgdohid10kb1gko.apps.googleusercontent.com",
+          "client_id": "734406996313-jplij1k9ona97stkehsle6u0n402hsgk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDu6f-8WPt35NbJLZzMIBLcEPehfSHW1LA"
+          "current_key": "AIzaSyAkRJ4FqalCMB5wXm01BkefSmhpV-VVrs8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "285528293632-qa2qe0fac5d7ovho7jgdohid10kb1gko.apps.googleusercontent.com",
+              "client_id": "734406996313-jplij1k9ona97stkehsle6u0n402hsgk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "734406996313-cnspdi36nufjkv78esac1itdhdgqobo3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.resturantcustomer"
+              }
             }
           ]
         }

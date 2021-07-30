@@ -19,9 +19,6 @@ function* applyCoupon({payload}) {
       method: 'POST',
       data,
     })
-    
-    
-    
     if (response?.error) {
       yield put(setApplyCouponLoader(false))
       yield put(setApplyCouponError(response?.message))

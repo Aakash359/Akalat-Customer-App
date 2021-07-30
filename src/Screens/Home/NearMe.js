@@ -35,6 +35,7 @@ import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function NearMe(props) {
@@ -47,53 +48,23 @@ function NearMe(props) {
   const [value, setValue] = useState(0)
   const [value1, setValue1] = useState(0)
   const [location, setLocation] = useState(null)
+  const couponResponse = useSelector((state) => state.Home.couponResponse)
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const {navigate} = useNavigation()
-
   const [isEnabled, setIsEnabled] = useState()
-
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }
-  const addFavouriteStatus = useSelector(
-    (state) => state.Home.addFavouriteStatus,
-  )
+  
   const [offercard, setofferCard] = React.useState(
     offercardResponse?.data || [],
   )
-  const couponResponse = useSelector((state) => state.Home.couponResponse)
-
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
     resetStatus: false,
   })
-  useEffect(() => {
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'ios') {
-        getOneTimeLocation()
-      } else {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Access Required',
-              message: 'This App needs to Access your location',
-            },
-          )
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            getOneTimeLocation()
-          } else {
-          }
-        } catch (err) {}
-      }
-    }
-    requestLocationPermission('whenInUse')
-    return () => {
-      Geolocation.clearWatch()
-    }
-  }, [])
 
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
@@ -374,6 +345,8 @@ function NearMe(props) {
     }
   }
 
+ 
+
   const renderItems = ({item}) => {
     return (
       <View style={styles.cardStyle}>
@@ -382,6 +355,7 @@ function NearMe(props) {
             source={{uri: item?.building_front_img}}
             style={styles.backgroundStyle}>
             <View style={{justifyContent: 'flex-end', flex: 1}}>
+           
               <View
                 style={{
                   flexDirection: 'row',
@@ -400,6 +374,7 @@ function NearMe(props) {
                   }}>
                   {item?.rating_from_user}
                 </Text>
+             
 
                 <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
                 <Icon name="star" type="FontAwesome" style={styles.iconStyle} />

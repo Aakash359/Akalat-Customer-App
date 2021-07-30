@@ -140,7 +140,7 @@ function ManageAddress() {
               renderItem={renderItems}
               keyExtractor={(item, index) => index.toString()}
             />
-            {/* <LoadWheel visible={setaddressListLoader} /> */}
+            <LoadWheel visible={setaddressListLoader} />
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>

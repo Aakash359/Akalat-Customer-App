@@ -284,7 +284,7 @@ function Address() {
                 setLogoutModal(false)
                 setTimeout(() => {
                   setLogoutModal(false)
-                  // setRootTo('Login')
+                 
                 }, 1500)
               }}
             />

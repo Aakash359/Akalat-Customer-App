@@ -93,9 +93,7 @@ function AddNewAddress(props) {
         )
       },
       (error) => {
-        console.log('====================================')
-        console.log(error)
-        console.log('====================================')
+
       },
     )
   }
@@ -108,7 +106,6 @@ function AddNewAddress(props) {
       alert('Please enter area')
     } else if (nearby) {
       let data = {
-        address_type: activeTab + '',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
@@ -118,68 +115,45 @@ function AddNewAddress(props) {
       }
       dispatch(AddAddressRequest(data))
       dispatch(AddAddressLoader(true))
+      dispatch(AddressListRequest(data))
       navigate('ManageAddress')
-      if (addAddressStatus) {
-        const data = {
-          created_by: user?._id,
-        } 
-        console.log('====================================');
-        console.log("Aakash===>",addAddressStatus);
-        console.log('====================================');
-        dispatch(AddressListRequest(data))
-     
-        
-       }
-      
     }
-     else {
+    else if (!activeTab) {
+      alert('Active')
       let data = {
-        address_type: activeTab + '',
+        
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
         area_name,
         created_by: user?._id,
+     
       }
       dispatch(AddAddressRequest(data))
       dispatch(AddAddressLoader(true))
-      if (addAddressStatus) {
-        const data = {
+      dispatch(AddressListRequest(data))
+      navigate('ManageAddress')
+      }
+       else if (!nearby) {
+        alert("Done")
+        let data = {
+          address_type: activeTab + '',
+          lng: location?.latitude,
+          lat: location?.longitude,
+          house_name_and_no,
+          area_name,
           created_by: user?._id,
         }
-
-        navigate('ManageAddress')
-
-        navigate('ManageAddress')
+        dispatch(AddAddressRequest(data))
+        dispatch(AddAddressLoader(true))
         dispatch(AddressListRequest(data))
+        navigate('ManageAddress')
       }
+     
 
-      // dispatch(AddAddressRequest(data))
-      // if (addAddressStatus) {
-      //   const data = {
-      //     created_by: user?._id,
-      //   }
-      //   alert('Hi')
-      //   navigate('ManageAddress')
-      //   setTimeout(() => {
-      //     navigate('ManageAddress')
-      //     dispatch(AddressListRequest(data))
-      //   }, 1000)
-      // }
-      //
-
-      // if (addAddressStatus) {
-      //   const data = {
-      //     created_by: user?._id,
-      //   }
-      //   navigate('ManageAddress')
-      //   setTimeout(() => {
-      //     navigate('ManageAddress')
-      //   }, 1000)
-      //   dispatch(AddressListRequest(data))
-      // }
+     
     }
-  }
+  
 
   return (
     <View style={styles.container}>

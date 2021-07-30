@@ -1,16 +1,75 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, StatusBar, ScrollView, FlatList, ImageBackground } from 'react-native';
+import React, {useState, useEffect} from 'react'
+import { Text,Image, View, StyleSheet, StatusBar,FlatList, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
 import Accordion from '../../Component/Accordion';
 import { useNavigation } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
+import { setFcmToken,  } from '../../CommonConfig/HelperFunctions/AppHelper'
 
 function Notification() {
   const { navigate } = useNavigation();
     const navigation = useNavigation();
+    const [notification, setNotification] = useState({
+      title: undefined,
+      body: undefined,
+      image: undefined,
+    });
     const redirectToPlaceOrder = () => {
         navigate('PlaceOrder');
     };
+
+    const getToken = async () => {
+      const token = await messaging().getToken();
+      setFcmToken(token)
+      console.log("Token=========>", token);
+    };
+
+    useEffect(() => {
+      getToken();
+      messaging().onMessage(async remoteMessage => {
+        console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+        setNotification({
+          title: remoteMessage.notification.title,
+          body: remoteMessage.notification.body,
+          image: remoteMessage.notification.android.imageUrl,
+        });
+      });
+  
+      messaging().onNotificationOpenedApp(remoteMessage => {
+        console.log('onNotificationOpenedApp: ', JSON.stringify(remoteMessage));
+        setNotification({
+          title: remoteMessage.notification.title,
+          body: remoteMessage.notification.body,
+          image: remoteMessage.notification.android.imageUrl,
+        });
+      });
+  
+      messaging()
+        .getInitialNotification()
+        .then(remoteMessage => {
+          if (remoteMessage) {
+            console.log(
+              'Notification caused app to open from quit state:',
+              JSON.stringify(remoteMessage),
+            );
+            setNotification({
+              title: remoteMessage.notification.title,
+              body: remoteMessage.notification.body,
+              image: remoteMessage.notification.android.imageUrl,
+            });
+          }
+        });
+    }, []);
+
+    const renderItems = ({item, index}) => (
+      <View >
+         <Text>Firebase Messaging</Text>
+      <Text>{`title: ${notification?.title}`}</Text>
+      <Text>{`title: ${notification?.body}`}</Text>
+      <Image source={{uri: notification?.image}} width={500} height={500} />
+      </View>
+    )
     
   return (
     <View style={styles.container}>
@@ -25,12 +84,19 @@ function Notification() {
        <Text style={styles.headerText}>Notification </Text>
      
         <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
+         <FlatList
+          data={[0,1,2,3]}
+          renderItem={renderItems}
           contentContainerStyle={{paddingBottom: 30}}
-          // data={[0,1,2]}
-          // renderItem={({item}) => (<Accordion  item={item} />)}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={() => {
+            return (
+              <Text style={{alignSelf: 'center'}}>
+                You don't have any notifications 
+              </Text>
+            )
+          }}
         />
         </ImageBackground>
     

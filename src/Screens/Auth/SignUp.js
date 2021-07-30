@@ -28,6 +28,7 @@ import {
   SafeAreaView,
   SafeAreaInsetsContext,
 } from 'react-native-safe-area-context'
+import { getDeviceType, getFcmToken } from '../../CommonConfig/HelperFunctions/AppHelper'
 
 function SignUp(props) {
   const {navigate} = useNavigation()
@@ -47,23 +48,37 @@ function SignUp(props) {
     (state) => state.Auth.counrtryListResponse,
   )
   const countryList = counrtryListResponse?.data || []
+  
+  
+     
 
   useEffect(() => {
     if (signupResponse?.SignStatus) {
       navigate('Otp', {phone, email})
+      
     }
     dispatch(countryListRequest())
   }, [signupResponse?.SignStatus])
 
   const onSubmit = async () => {
+    let fcmToken = await getFcmToken()
+    let FcmToken= fcmToken.slice(23)
+    console.log('====================================');
+    console.log("TrimToken===>", FcmToken);
+    console.log('====================================');
+    const deviceType = getDeviceType()
     const {
       navigation: {navigate},
       t: translate,
     } = props
     let reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  
+    const regMatch = /^[a-zA-Z]*$/
     if (first_name == '') {
       alert('Please enter First Name')
+    }else if (regMatch.test(first_name)==false) {
+      alert('Please enter valid First Name')
+    }else if (regMatch.test(last_name)==false) {
+      alert('Please enter valid Last Name')
     }else if (last_name == '') {
       alert('Please enter Last Name')
     } else if (phone == '') {
@@ -95,8 +110,12 @@ function SignUp(props) {
         password: password,
         country_code: COUNTRY == 'IN' ? '91' : '971',
         role_for_user: 'user',
+        device_token : FcmToken,
+        device_type : deviceType+"",
       }
-
+      console.log('====================================');
+      console.log("Payload===>", data);
+      console.log('====================================');
       dispatch(loaderRequest(true))
       dispatch(SignUpRequest(data))
     }

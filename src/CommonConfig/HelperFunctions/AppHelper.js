@@ -19,6 +19,10 @@ export const getDeviceId = async () => {
         return null
     }
 }
+export const getDeviceType = () => {
+    
+    return Platform.select({ ios: 2, android: 1 })
+}
 
 export const setFcmToken = async (value = '') => {
     try {
@@ -30,6 +34,7 @@ export const setFcmToken = async (value = '') => {
 export const getFcmToken = async () => {
     try {
         return (await AsyncStorage.getItem(fcmToken)) || 'no fcm token'
+        
     } catch (err) {
         logError(err, '[getFcmToken] AsyncStorage Error')
         return null
