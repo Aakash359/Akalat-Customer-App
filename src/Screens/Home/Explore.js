@@ -323,20 +323,17 @@ function Explore() {
         />
       </View>
       <View style={styles.filterContainer}>
-        <View style={check ? styles.leftContainer : styles.leftContainer1}>
-          <TouchableOpacity onPress={redirectTocheck}>
+       <TouchableOpacity onPress={redirectTocheck} style={check ? styles.leftContainer : styles.leftContainer1}>
             <Text style={check ? styles.normalText : styles.normalText1}>
               Restaurant
             </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={check ? styles.leftContainer1 : styles.leftContainer}>
-          <TouchableOpacity onPress={redirectTocheck}>
+        </TouchableOpacity>
+         <TouchableOpacity onPress={redirectTocheck} style={check ? styles.leftContainer1 : styles.leftContainer}>
             <Text style={check ? styles.normalText1 : styles.normalText}>
               Dishes
             </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+        
       </View>
       <ImageBackground
         source={ImagesPath.background}

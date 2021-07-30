@@ -18,10 +18,13 @@ import {PersistGate} from 'redux-persist/integration/react'
 import RootStack from './navigation'
 import AsyncStorage from '@react-native-community/async-storage'
 import Geolocation from '@react-native-community/geolocation'
+import messaging from '@react-native-firebase/messaging';
 
 LogBox.ignoreLogs(['Warning: ...'])
 LogBox.ignoreAllLogs()
-
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
+});
 export class App extends Component {
   componentDidMount() {
     SplashScreen.hide()
@@ -44,6 +47,7 @@ export class App extends Component {
       Geolocation.requestAuthorization()
     }
   }
+  
 
   render() {
     return (

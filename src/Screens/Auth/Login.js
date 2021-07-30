@@ -7,8 +7,6 @@ import {
   KeyboardAvoidingView,
   TextInput,
   ScrollView,
-  TouchableOpacity,
-  TouchableHighlight,
 } from 'react-native'
 import {useNavigation, CommonActions} from '@react-navigation/native'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'

@@ -70,15 +70,15 @@ function HungryNow(props) {
             <View style={{ flexDirection: 'row' }}>
                 <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
                 <View >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>
                        <Image source={ImagesPath.veg}/>
-                        <Text style={{ color: Colors.BLACK, fontSize: Scale(18), fontWeight: 'normal' }}>  {item.name}</Text>
+                        <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {item.name}</Text>
                     </View>
-                    <Text style={{ color: 'grey', fontSize: Scale(13), marginTop:Scale(8), fontWeight: 'normal' }}>{item.description}</Text>
+                    <Text style={{ color: 'grey', fontSize: Scale(13), marginTop:Scale(8), fontWeight: 'normal',marginLeft:Scale(10) }}>{item.description}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>$ {item.final_price}<Text style={{ color: 'grey', fontSize: Scale(14), fontWeight: 'normal',textDecorationLine:'line-through',}}> ${item.price}</Text>
+                <Text style={styles.headingText}>${item.final_price}<Text style={{ color: 'grey', fontSize: Scale(18), fontWeight: 'normal',textDecorationLine:'line-through',}}> ${item.price}</Text>
                 </Text>
                 {inCart ?
                   <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -89,12 +89,13 @@ function HungryNow(props) {
                   </View> 
                   
                :  <View style={styles.addButton}>
-                  <Text onPress={() =>addToCart(item)} style={[styles.textStyle,{color:Colors.APPCOLOR}]}>ADD</Text>
+                  <Text onPress={() =>addToCart(item)} style={[styles.Add,{color:Colors.APPCOLOR}]}>ADD</Text>
                 </View>}
               </View>
-              <Text style={{ color: 'grey', fontSize: Scale(13), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: {item.qty}</Text>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between',height:Scale(2), marginVertical:Scale(15) ,backgroundColor:"#E0E0E0"}}>
-                
+              
+              <View style={{ flexDirection: 'row', justifyContent:'flex-end'}}>
+              <Text style={{ color: 'grey', fontSize: Scale(13), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: </Text>
+              <Text style={{ color: Colors.BLACK, fontSize: Scale(13), marginLeft:Scale(5)}}>{item.qty}</Text>
             </View>
             </View>
 
@@ -140,12 +141,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.APPCOLOR
     },
-    headingText:{ fontSize: Scale(18), fontWeight: 'bold' },
+    headingText:{ 
+        fontSize: Scale(18), 
+        fontWeight: 'bold' 
+    },
   addButton:{                  
     height: Scale(33),
-    width: Scale(70),
+    width: Scale(75),
     borderColor: Colors.APPCOLOR,
-    borderRadius: 3,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center'
@@ -154,8 +157,13 @@ const styles = StyleSheet.create({
   textStyle: { 
       color: Colors.BLACK, 
       fontSize: Scale(16), 
-      fontWeight: 'bold' 
+      
     },
+   Add: { 
+        color: Colors.BLACK, 
+        fontSize: Scale(16), 
+        
+      },  
     loginInputCont: {
         flex:1,
         paddingTop: Scale(10),
@@ -164,10 +172,10 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.WHITE,
     },
     backgroundStyle: {
-        width: Scale(100),
-        height: Scale(100),
+        width: Scale(120),
+        height: Scale(90),
         resizeMode: 'stretch',
-        borderRadius: Scale(30),
+        borderRadius: Scale(8),
         marginRight: Scale(10)
     },
 
