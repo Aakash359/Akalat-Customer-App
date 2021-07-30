@@ -55,6 +55,7 @@ function HomeScreen(props) {
     const restro = [...data?.restroList]
     const index = restro.findIndex((i) => i?._id === item?._id)
     restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    setdata({...data, restroList: restro})
     const payload = {
       userid: user?._id,
       restro_id: item?._id,
@@ -195,7 +196,17 @@ function HomeScreen(props) {
           renderItem={renderItems}
           keyExtractor={(item, i) => `${i}`}
           ListEmptyComponent={() => {
-            return <Text style={{textAlign: 'center'}}>No data found</Text>
+            return (
+              <Text
+                style={{
+                  fontSize: 20,
+                  textAlign: 'center',
+                  marginTop: 200,
+                  marginHorizontal: 50,
+                }}>
+                Sorry, online ordering isn't available at your location
+              </Text>
+            )
           }}
         />
         {/* <LoadWheel visible={viewallData.isLoading} /> */}

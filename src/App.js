@@ -7,6 +7,7 @@ import {
   Clipboard,
   LogBox,
   Platform,
+  PermissionsAndroid,
 } from 'react-native'
 import {Colors} from './CommonConfig'
 import SplashScreen from 'react-native-splash-screen'
@@ -43,8 +44,25 @@ export class App extends Component {
       authorizationLevel: 'whenInUse',
       skipPermissionRequests: false,
     })
+    this.requestLocationPermission()
+  }
+
+  requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
-      Geolocation.requestAuthorization()
+      Geolocation.requestAuthorization('whenInUse')
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This App needs to Access your location',
+          },
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        } else {
+        }
+      } catch (err) {}
     }
   }
   

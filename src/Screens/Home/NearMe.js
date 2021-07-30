@@ -294,7 +294,7 @@ function NearMe(props) {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance:value1.toFixed(1)+"",
+        distance: value1.toFixed(1) + '',
         rating_from_user: undefined,
         is_sort: `${false}`,
         is_filter: `${true}`,
@@ -323,7 +323,7 @@ function NearMe(props) {
         lat: 28.4922,
         lng: 77.0966,
         distance: undefined,
-        rating_from_user:value.toFixed(1)+"",
+        rating_from_user: value.toFixed(1) + '',
         is_sort: `${false}`,
         is_filter: `${true}`,
         restaurent_type: restro_type,
@@ -361,7 +361,7 @@ function NearMe(props) {
                   flexDirection: 'row',
                   paddingBottom: Scale(10),
                   alignItems: 'center',
-                  paddingHorizontal: Scale(10),
+                  paddingHorizontal: Scale(4),
                 }}>
                 <Text
                   style={{
@@ -369,7 +369,7 @@ function NearMe(props) {
                     color: Colors.WHITE,
                     marginLeft: Scale(7),
                     paddingHorizontal: Scale(7),
-                    paddingVertical: Scale(5),
+                    paddingVertical: Scale(4),
                     backgroundColor: 'green',
                   }}>
                   {item?.rating_from_user}
@@ -636,11 +636,21 @@ function NearMe(props) {
           renderItem={renderItems}
           keyExtractor={(item, i) => `${i}`}
           ListEmptyComponent={() => {
-            return <Text style={{textAlign: 'center'}}>No data found</Text>
+            return (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 20,
+                  marginTop: 200,
+                  marginHorizontal: 50,
+                }}>
+                Sorry, online ordering isn't available at your location
+              </Text>
+            )
           }}
         />
       </ScrollView>
-    
+
       <Modal visible={modal} animationType="slide">
         <View style={styles.modalHeader}>
           <Icon
@@ -849,7 +859,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                 {(value1).toFixed(1)} Miles
+                {value1.toFixed(1)} Miles
               </Text>
             </View>
             <Slider
@@ -887,7 +897,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {(value).toFixed(1) + ' Miles'}
+                {value.toFixed(1) + ' Miles'}
               </Text>
             </View>
             <Slider
@@ -1042,7 +1052,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flex: 1,
   },
-  
+
   location: {
     marginRight: Scale(10),
     width: Scale(25),
@@ -1117,5 +1127,4 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.APPCOLOR,
     paddingHorizontal: Scale(25),
   },
-
 })

@@ -205,7 +205,7 @@ function Explore() {
                 flexDirection: 'row',
                 paddingBottom: Scale(10),
                 alignItems: 'center',
-                paddingHorizontal: Scale(10),
+                paddingHorizontal: Scale(4),
               }}>
               <Text
                 style={{
@@ -213,7 +213,7 @@ function Explore() {
                   color: Colors.WHITE,
                   marginLeft: Scale(7),
                   paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(5),
+                  paddingVertical: Scale(4),
                   backgroundColor: 'green',
                 }}>
                 {item?.rating_from_user}
@@ -371,7 +371,17 @@ function Explore() {
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
-              return <Text style={{textAlign: 'center'}}>No data found</Text>
+              return (
+                <Text
+                  style={{
+                    fontSize: 20,
+                    textAlign: 'center',
+                    marginTop: 200,
+                    marginHorizontal: 50,
+                  }}>
+                  Sorry, online ordering isn't available at your location
+                </Text>
+              )
             }}
           />
         </ScrollView>
@@ -390,7 +400,7 @@ const styles = StyleSheet.create({
   loginInputCont: {
     top: Scale(-20),
     paddingTop: Scale(10),
-    paddingBottom:Scale(120),
+    paddingBottom: Scale(120),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
