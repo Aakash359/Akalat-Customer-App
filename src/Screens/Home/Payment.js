@@ -55,7 +55,7 @@ function Payment(props) {
     }
     if (check) {
       props?.createOrder(payload, (res) => {
-        navigate('PlaceOrder', {orderDetails :res?.data} )
+        navigate('PlaceOrder', {orderDetails: res?.data})
       })
     } else {
       Alert.alert('', 'Select payment method')

@@ -54,9 +54,10 @@ function ForgotPassword() {
     } else {
       const data = {
         phone: phone,
-        role: 'customer',
+        role: 'user',
         country_code: COUNTRY == 'IN' ? '91' : '971',
       }
+      console.log(data)
 
       navigate('Otp', data)
       dispatch(OTPRequest(data))

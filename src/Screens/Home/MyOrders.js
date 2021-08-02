@@ -36,6 +36,9 @@ function MyOrders(props) {
     orderDetailList: [],
     isLoading: true,
   })
+  const redirectToHomeMaker = (item) => {
+    navigate('OrderDetails', item)
+  }
 
   const onOrderDetails = async () => {
     setOrderDetail({...orderDetail, isLoading: true})
@@ -145,63 +148,65 @@ function MyOrders(props) {
   const renderItemPast = ({item, index}) => {
     return (
       <View style={styles.cardStyle}>
-        <View style={{flexDirection: 'row'}}>
-          <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
-          <View>
-            <Text style={styles.primaryText}>
-              {item?.restro_detail.restro_name}
-            </Text>
-            <Text style={styles.normatText}>
-              {item?.restro_detail.street_name}, {item?.restro_detail.area_name}
-              ,{'\n'}
-              {item?.restro_detail.region}, {item?.restro_detail.state}...
-            </Text>
+        <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
+          <View style={{flexDirection: 'row'}}>
+            <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+            <View>
+              <Text style={styles.primaryText}>
+                {item?.restro_detail.restro_name}
+              </Text>
+              <Text style={styles.normatText}>
+                {item?.restro_detail.street_name},{' '}
+                {item?.restro_detail.area_name},{'\n'}
+                {item?.restro_detail.region}, {item?.restro_detail.state}...
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.borderStyle} />
-        <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>
-          Items
-        </Text>
-        {productRender(item?.product_list)}
-        <Text style={styles.seconderyText}>Ordered on</Text>
-        <Text style={styles.itemText}>
-          {moment(item?.order_date_placed).format('MMM D, LT')}
-        </Text>
-        <Text style={styles.seconderyText}>Total Amount</Text>
-        <Text style={styles.itemText}>$ {item?.total_price}</Text>
-        <View style={styles.heading}>
-          <TouchableOpacity
-            onPress={() => {
-              props.reOrder({
-                restroDetails: item?.restro_detail,
-                products: item?.product_list,
-              })
-              navigate('Card')
-            }}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: Colors.APPCOLOR,
-              paddingHorizontal: 35,
-              paddingVertical: 10,
-              borderRadius: 25,
-            }}>
-            <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
-              Re-Order
-            </Text>
-          </TouchableOpacity>
-          {['CC', 'RC'].includes(item?.status) && (
-            <Text
+          <View style={styles.borderStyle} />
+          <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>
+            Items
+          </Text>
+          {productRender(item?.product_list)}
+          <Text style={styles.seconderyText}>Ordered on</Text>
+          <Text style={styles.itemText}>
+            {moment(item?.order_date_placed).format('MMM D, LT')}
+          </Text>
+          <Text style={styles.seconderyText}>Total Amount</Text>
+          <Text style={styles.itemText}>$ {item?.total_price}</Text>
+          <View style={styles.heading}>
+            <TouchableOpacity
+              onPress={() => {
+                props.reOrder({
+                  restroDetails: item?.restro_detail,
+                  products: item?.product_list,
+                })
+                navigate('Card')
+              }}
               style={{
-                color: 'red',
-                marginRight: 10,
-                fontSize: 20,
-                marginTop: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: Colors.APPCOLOR,
+                paddingHorizontal: 35,
+                paddingVertical: 10,
+                borderRadius: 25,
               }}>
-              Cancelled
-            </Text>
-          )}
-        </View>
+              <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
+                Re-Order
+              </Text>
+            </TouchableOpacity>
+            {['CC', 'RC'].includes(item?.status) && (
+              <Text
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  fontSize: 20,
+                  marginTop: 5,
+                }}>
+                Cancelled
+              </Text>
+            )}
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -210,6 +215,8 @@ function MyOrders(props) {
   let past = ['RC', 'OD', 'CC']
   let activeOrders = props?.orderList.filter((i) => active.includes(i.status))
   let pastOrders = props?.orderList.filter((i) => past.includes(i.status))
+
+  console.log(pastOrders)
 
   return (
     <View style={styles.container}>
