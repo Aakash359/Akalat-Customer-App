@@ -36,6 +36,7 @@ import RightButton from '../../containers/RightButton'
 import {headerLeftStyle} from '../Helper'
 import LogoTitle from '../../containers/LogoTitle'
 import HomeScreen from '../../Screens/Home/HomeScreen'
+import OrderDetails from '../../Screens/Home/OrderDetails'
 
 const Stack = createStackNavigator()
 
@@ -208,6 +209,11 @@ function HomeStack(navigation) {
       <Stack.Screen
         name="Coupon"
         component={Coupon}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OrderDetails"
+        component={OrderDetails}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
