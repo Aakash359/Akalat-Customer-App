@@ -42,11 +42,7 @@ function Coupon(props) {
   const [value, setValue] = useState(0)
   const [value1, setValue1] = useState(0)
   const [location, setLocation] = useState(null)
-  const [data, setdata] = React.useState({
-    restroList: [],
-    isLoading: true,
-    resetStatus: false,
-  })
+  const user = useSelector((state) => state.Auth.user)
 
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
@@ -59,7 +55,6 @@ function Coupon(props) {
     }
     try {
       const res = await axios.post(url, payload)
-      console.log(res)
 
       if (res?.data?.data) {
         setRestro({
@@ -98,27 +93,173 @@ function Coupon(props) {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
 
-  const redirectToNotification = () => {
-    navigate('Notification')
-  }
-
   const addFavouriteStatus = useSelector(
     (state) => state.Home.addFavouriteStatus,
   )
-  const user = useSelector((state) => state.Auth.user)
+
   const dispatch = useDispatch()
 
   const onFavorite = (item) => {
-    const restro = [...data?.restroList]
-    const index = restro.findIndex((i) => i?._id === item?._id)
-    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
-    setdata({...data, restroList: restro})
     const payload = {
       userid: user?._id,
       restro_id: item?._id,
       is_favourited_restro: !item?.is_favourited,
     }
     dispatch(addfavouriteRequest(payload))
+  }
+
+  const onSortBy = async () => {
+    setRestro({...restro, isLoading: true})
+    const url = `${API_BASE}/couponSortFilter`
+    var payload = {}
+    if (activeTab == 0) {
+      payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        relevance: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    } else if (activeTab == 1) {
+      payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        rating_high_to_low: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    } else if (activeTab == 2) {
+      payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        rating_low_to_high: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    } else if (activeTab == 3) {
+      payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        delivery_time: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    }
+    try {
+      const res = await axios.post(url, payload)
+      setRestro({
+        ...restro,
+        isLoading: false,
+        restroList: res?.data?.data?.restroNewList,
+      })
+      setModal(false)
+      navigate('Coupon')
+    } catch (error) {}
+  }
+
+  const onSortByReset = async () => {
+    setRestro({...restro, isLoading: true})
+    const url = `${API_BASE}/listRestroWithOffer`
+    const payload = {
+      coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+    }
+    try {
+      const res = await axios.post(url, payload)
+      setRestro({
+        ...restro,
+        isLoading: false,
+        restroList: res?.data?.data?.restroNewArrayList,
+      })
+      setActiveTab(0)
+      setValue(0)
+      setValue1(0)
+      setIsEnabled(false)
+      setModal2(false)
+      setModal(false)
+      navigate('Coupon')
+    } catch (error) {}
+  }
+
+  const onFilter = async () => {
+    var restro_type = ''
+    if (isEnabled) {
+      restro_type = 'non_veg'
+    } else {
+      restro_type = 'veg'
+    }
+    if (value1) {
+      var payload = {}
+      setRestro({...restro, isLoading: true})
+      const url = `${API_BASE}/couponSortFilter`
+      payload = {
+        userid: user?._id,
+        distance: value1.toFixed(1) + '',
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+        rating_from_user: undefined,
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setRestro({
+          ...restro,
+          isLoading: false,
+          restroList: res?.data?.data?.restroNewList,
+        })
+        setModal2(false)
+        navigate('Coupon')
+      } catch (error) {
+        alert('Error', error)
+      }
+    } else if (value) {
+      setRestro({...restro, isLoading: true})
+      const url = `${API_BASE}/couponSortFilter`
+      var payload = {}
+      payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        distance: undefined,
+        rating_from_user: value.toFixed(1) + '',
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setRestro({
+          ...restro,
+          isLoading: false,
+          restroList: res?.data?.data?.restroNewList,
+        })
+        setModal2(false)
+        navigate('Coupon')
+      } catch (error) {
+        alert('Error', error)
+      }
+    } else {
+      setRestro({...restro, isLoading: true})
+      const url = `${API_BASE}/couponSortFilter`
+      const payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        distance: value1.toFixed(1) + '',
+        rating_from_user: value.toFixed(1) + '',
+        is_sort: `${true}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setRestro({
+          ...restro,
+          isLoading: false,
+          restroList: res?.data?.data?.restroNewList,
+        })
+        setModal2(false)
+        navigate('Coupon')
+      } catch (error) {}
+    }
   }
 
   const renderItems = ({item, index}) => (
@@ -292,7 +433,7 @@ function Coupon(props) {
                 onPress={() => setModal(false)}
                 name="arrowleft"
                 type="AntDesign"
-                style={styles.logoStyle}
+                style={styles.backlogo}
               />
             </View>
             <View style={styles.headerText}>
@@ -443,16 +584,13 @@ function Coupon(props) {
                       flex: 1,
                       marginRight: Scale(10),
                     }}>
-                    <CustomButton
-                      title="Reset All"
-                      // onSubmit={onSortByReset}
-                    />
+                    <CustomButton title="Reset All" onSubmit={onSortByReset} />
                   </View>
                   <View style={{flex: 1}}>
                     <CustomButton
                       title="Apply"
                       isSecondary={true}
-                      // onSubmit={onSearch}
+                      onSubmit={onSortBy}
                     />
                   </View>
                 </View>
@@ -461,12 +599,12 @@ function Coupon(props) {
           </Modal>
 
           <Modal visible={modal2} animationType="slide">
-            <View style={styles.headerContainer}>
+            <View style={styles.modalHeader}>
               <Icon
                 onPress={() => setModal2(false)}
                 name="arrowleft"
                 type="AntDesign"
-                style={styles.logoStyle}
+                style={styles.backlogo}
               />
             </View>
             <View style={styles.headerText}>
@@ -591,16 +729,13 @@ function Coupon(props) {
                 }}>
                 <View style={{marginTop: Scale(50), flexDirection: 'row'}}>
                   <View style={{flex: 1, marginRight: Scale(15)}}>
-                    <CustomButton
-                      title="Reset All"
-                      //  onSubmit={onResetFilter}
-                    />
+                    <CustomButton title="Reset All" onSubmit={onSortByReset} />
                   </View>
                   <View style={{flex: 1}}>
                     <CustomButton
                       title="Apply"
                       isSecondary={true}
-                      // onSubmit={onFilter}
+                      onSubmit={onFilter}
                     />
                   </View>
                 </View>
@@ -619,6 +754,11 @@ const styles = StyleSheet.create({
   },
   logoStyle: {
     marginHorizontal: Scale(20),
+    fontSize: Scale(25),
+    color: Colors.WHITE,
+  },
+  backlogo: {
+    marginTop: Scale(15),
     fontSize: Scale(25),
     color: Colors.WHITE,
   },

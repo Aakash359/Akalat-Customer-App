@@ -34,13 +34,17 @@ function Profile(props) {
   const navigation = useNavigation()
 
   const onSave = async () => {
-    let reg =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let reg =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const regMatch = /^[a-zA-Z]*$/
     if (first_name == '') {
       alert('Please enter First Name')
-    } else if (last_name == '') {
+    }else if (regMatch.test(first_name)==false) {
+      alert('Please enter valid First Name')
+    }else if (last_name == '') {
       alert('Please enter Last Name')
-    } else if (phone == '') {
+    }else if (regMatch.test(last_name)==false) {
+      alert('Please enter valid Last Name')
+    }else if (phone == '') {
       alert('Please enter your Mobile Number')
     } else if (email == '') {
       alert('Please enter your Email')
