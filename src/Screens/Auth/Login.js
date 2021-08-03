@@ -111,7 +111,6 @@ function Login(props) {
               <ModalDropdown 
               options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
               onSelect={(country_Code) => setCountryCode(country_Code)}
-              renderRow={(rowData) => renderDropDownList(rowData)}
               defaultIndex={0}
               showsVerticalScrollIndicator={false}
               defaultValue={countryList.dial_code || '+91'}
@@ -119,7 +118,6 @@ function Login(props) {
               textStyle={styles.modalText}
               dropdownStyle={styles.modalDropDown}
               dropdownTextStyle={styles.modalDropDownText}
-              
               />
               
               <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />

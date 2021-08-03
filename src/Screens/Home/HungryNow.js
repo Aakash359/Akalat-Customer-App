@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView,TouchableOpacit
 import { Colors, Scale, ImagesPath ,Fonts} from '../../CommonConfig';
 import { Icon } from 'native-base';
 import {useSelector, useDispatch,connect} from 'react-redux'
-import {hungryNowListRequest,hungryNowListLoader} from '../../redux/actions'
+import {hungryNowListRequest, hungryNowListLoader} from '../../redux/actions'
 import { addToCart, subToCart } from '../../redux/actions/CartActions';
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
@@ -14,13 +14,18 @@ function HungryNow(props) {
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
+    const user = useSelector((state) => state.Auth.user)
 
-    
     useEffect(() => {
-        dispatch(hungryNowListLoader(true));
-        dispatch(hungryNowListRequest())
-     
-      }, [])
+        
+        const data = {
+            userid: user?._id,
+           }
+          console.log("Aakash=====>",data);
+          dispatch(hungryNowListRequest(data));
+          dispatch(hungryNowListLoader(true));
+        
+       },[])
 
       const addToCart = (item) => {
         

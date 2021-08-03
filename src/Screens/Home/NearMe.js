@@ -151,7 +151,7 @@ function NearMe(props) {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        alert('Error', error)
+        console('Error', error)
       }
     } else if (search) {
       setdata({...data, isLoading: true})

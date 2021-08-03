@@ -84,31 +84,45 @@ export const CouponSaga = function* CouponSaga({data}) {
 
 //====================== Hungry Now List POST ======================
 
-export const hungryNowListSaga = function* hungryNowListSaga({data}) {
- 
+export const hungryNowListSaga = function* hungryNowListSaga(data) {
+  
+  
+  let userId = { 
+    userid:data?.payload?.userid
+  }
+
+  let formData = new FormData();
+  formData.append("userid", data?.payload?.userid )
+
   
   yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: true})
   try {
       const response = yield call(Request, {
           url: 'product/listHungryProduct',
           method: 'POST',
-          data,
+          formData
         })
         if (response?.data?.error == true){
           yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: response?.data  });
-          
-          
+        
           yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
           global.dropDownAlertRef.alertWithType(
             'error',
             'Error',
              response?.data?.message,
           );
+          console.log('====================================');
+          console.log("Reslponse",response?.data?.message);
+          console.log('====================================');
+        
         }
      else{ 
-        
-         yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
+        yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
          yield put({ type: HUNGRY_NOW_LIST_SUCCESS, payload: response });
+         console.log('====================================');
+         console.log("Reslponse",response);
+         console.log('====================================');
+        
       }
       
   }
