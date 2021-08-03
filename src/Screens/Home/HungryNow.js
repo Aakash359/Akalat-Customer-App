@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, FlatList, StatusBar, ScrollView,TouchableOpacit
 import { Colors, Scale, ImagesPath ,Fonts} from '../../CommonConfig';
 import { Icon } from 'native-base';
 import {useSelector, useDispatch,connect} from 'react-redux'
-import {hungryNowListRequest,hungryNowListLoader} from '../../redux/actions'
+import {hungryNowListRequest, hungryNowListLoader} from '../../redux/actions'
 import { addToCart, subToCart } from '../../redux/actions/CartActions';
 import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
@@ -15,8 +15,8 @@ function HungryNow(props) {
     const product_list = hungryNowListResponse?.data?.product_list || []
     const user = useSelector((state) => state.Auth.user)
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
+   
 
-    
     useEffect(() => {
         
         const data = {
@@ -122,7 +122,7 @@ function HungryNow(props) {
 
                             </View>
                         :null}
-                         <LoadWheel visible={setHungryNowListLoader} />
+                         {/* <LoadWheel visible={setHungryNowListLoader} /> */}
                 </ImageBackground>
            
         </View>
