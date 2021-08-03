@@ -289,6 +289,9 @@ function* deleteAddress({data}) {
 // ====================== Favourite List POST ======================
 
 export const favouriteList = function* favouriteList({data}) {
+
+
+  
   yield put({type: SET_FAVOURITE_LIST_LOADER, payload: true})
 
   try {

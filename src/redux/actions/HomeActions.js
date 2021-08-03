@@ -8,7 +8,7 @@ import {
 
 // ================= Hungry Now Product List REQUEST =================
 export const hungryNowListRequest = (data) => {
-    
+  
     return {
         type: HUNGRY_NOW_LIST_REQUEST,
         payload: data,

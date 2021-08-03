@@ -119,7 +119,7 @@ function AddNewAddress(props) {
       navigate('ManageAddress')
     }
     else if (!activeTab) {
-      alert('Active')
+      
       let data = {
         
         lng: location?.latitude,
@@ -127,15 +127,14 @@ function AddNewAddress(props) {
         house_name_and_no,
         area_name,
         created_by: user?._id,
-     
-      }
+       }
       dispatch(AddAddressRequest(data))
-      dispatch(AddAddressLoader(true))
       dispatch(AddressListRequest(data))
+      dispatch(AddAddressLoader(true))
       navigate('ManageAddress')
       }
        else if (!nearby) {
-        alert("Done")
+        
         let data = {
           address_type: activeTab + '',
           lng: location?.latitude,

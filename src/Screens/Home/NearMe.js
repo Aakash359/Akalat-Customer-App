@@ -151,7 +151,7 @@ function NearMe(props) {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        alert('Error', error)
+        console('Error', error)
       }
     } else if (search) {
       setdata({...data, isLoading: true})
@@ -354,6 +354,7 @@ function NearMe(props) {
           <ImageBackground
             source={{uri: item?.building_front_img}}
             style={styles.backgroundStyle}>
+              
             <View style={{justifyContent: 'flex-end', flex: 1}}>
            
               <View
@@ -394,7 +395,7 @@ function NearMe(props) {
                       fontSize: Scale(16),
                       fontWeight: 'bold',
                     }}>
-                    {item?.distance}
+                    {item?.distance} Km
                   </Text>
                 </View>
               </View>
@@ -454,6 +455,7 @@ function NearMe(props) {
               </Text>
             </View>
           </View>
+         
         </TouchableOpacity>
       </View>
     )
@@ -567,6 +569,7 @@ function NearMe(props) {
               </Text>
             </Text>
           </View>
+         
         </ImageBackground>
       </TouchableOpacity>
     </View>
@@ -649,6 +652,7 @@ function NearMe(props) {
             )
           }}
         />
+       
       </ScrollView>
 
       <Modal visible={modal} animationType="slide">

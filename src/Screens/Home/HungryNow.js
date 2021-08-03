@@ -13,14 +13,20 @@ function HungryNow(props) {
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
+    const user = useSelector((state) => state.Auth.user)
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
 
     
     useEffect(() => {
-        dispatch(hungryNowListLoader(true));
-        dispatch(hungryNowListRequest())
-     
-      }, [])
+        
+        const data = {
+            userid: user?._id,
+           }
+         
+          dispatch(hungryNowListRequest(data))
+          dispatch(hungryNowListLoader(true));
+        
+       },[])
 
       const addToCart = (item) => {
         

@@ -86,6 +86,7 @@ export const CouponSaga = function* CouponSaga({data}) {
 
 export const hungryNowListSaga = function* hungryNowListSaga({data}) {
  
+
   
   yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: true})
   try {
@@ -96,8 +97,6 @@ export const hungryNowListSaga = function* hungryNowListSaga({data}) {
         })
         if (response?.data?.error == true){
           yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: response?.data  });
-          
-          
           yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
           global.dropDownAlertRef.alertWithType(
             'error',

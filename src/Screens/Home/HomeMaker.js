@@ -82,250 +82,9 @@ function HomeMaker(props) {
     setCheck(!check)
   }
 
-  const renderCustomizeModal = () => {
-    return (
-      <Modal
-        visible={customizeModal}
-        style={{backgroundColor: 'red'}}
-        transparent>
-        <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => setCustomizeModal(false)}
-            style={{
-              flex: 1,
-              backgroundColor: Colors.TRANSPARENT,
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-            }}>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => {}}
-              style={{
-                width: '85%',
-                borderRadius: Scale(10),
-                backgroundColor: Colors.WHITE,
-              }}>
-              <View
-                style={{
-                  height: Scale(80),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: '#202020',
-                    fontSize: Scale(20),
-                    fontFamily: Fonts.Regular,
-                  }}>
-                  Jumbo Cheese Burger{' '}
-                </Text>
-              </View>
-
-              {/* SUGAR */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  height: Scale(50),
-                  alignItems: 'center',
-                  paddingHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                    fontFamily: Fonts.Regular,
-                    fontWeight: 'bold',
-                  }}>
-                  Cheese
-                </Text>
-                <Image
-                  source={ImagesPath.downArrow}
-                  resizeMode={'contain'}
-                  style={{
-                    height: Scale(15),
-                    tintColor: '#AB8F8E',
-                    width: Scale(15),
-                  }}
-                />
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottomColor: '#00000029',
-                  alignItems: 'center',
-                  borderBottomWidth: 0.6,
-                  height: Scale(45),
-                  marginHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: Colors.MATEBLACK1,
-                    fontSize: Scale(14),
-                    fontFamily: Fonts.Regular,
-                  }}>
-                  Extra Cheese <Text style={{color: '#AF9163'}}> | </Text>
-                  <Text style={{color: Colors.DARK_RED}}>$5</Text>
-                </Text>
-                <TouchableOpacity onPress={checked}>
-                  <Image
-                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
-                    resizeMode={'contain'}
-                    style={{height: Scale(15), width: Scale(15)}}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              {/* MILK */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  height: Scale(50),
-                  alignItems: 'center',
-                  paddingHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: '#AB8F8E',
-                    fontSize: Scale(16),
-                    fontFamily: Fonts.Regular,
-                    fontWeight: 'bold',
-                  }}>
-                  Make it a combo
-                </Text>
-                <Image
-                  source={ImagesPath.downArrow}
-                  resizeMode={'contain'}
-                  style={{
-                    height: Scale(15),
-                    tintColor: '#AB8F8E',
-                    width: Scale(15),
-                  }}
-                />
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottomColor: '#00000029',
-                  alignItems: 'center',
-                  borderBottomWidth: 0.6,
-                  height: Scale(45),
-                  marginHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: Colors.MATEBLACK1,
-                    fontSize: Scale(14),
-                    fontFamily: Fonts.Regular,
-                  }}>
-                  Regular Fries + Pepsi [ 330 Ml]
-                  <Text style={{color: '#AB8F8E'}}> | </Text>
-                  <Text style={{color: Colors.DARK_RED}}>$10</Text>
-                </Text>
-                <TouchableOpacity onPress={checked}>
-                  <Image
-                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
-                    resizeMode={'contain'}
-                    style={{height: Scale(15), width: Scale(15)}}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottomColor: '#00000029',
-                  alignItems: 'center',
-                  borderBottomWidth: 0.6,
-                  height: Scale(45),
-                  marginHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: Colors.MATEBLACK1,
-                    fontSize: Scale(14),
-                    fontFamily: Fonts.Regular,
-                  }}>
-                  Medium Fries + Pepsi [ 330 Ml]
-                  <Text style={{color: '#AB8F8E'}}> | </Text>
-                  <Text style={{color: Colors.DARK_RED}}>$15</Text>
-                </Text>
-                <TouchableOpacity onPress={checked}>
-                  <Image
-                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
-                    resizeMode={'contain'}
-                    style={{height: Scale(15), width: Scale(15)}}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottomColor: '#00000029',
-                  alignItems: 'center',
-                  borderBottomWidth: 0.6,
-                  height: Scale(45),
-                  marginHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: Colors.MATEBLACK1,
-                    fontSize: Scale(14),
-                    fontFamily: Fonts.Regular,
-                  }}>
-                  King Fries + Pepsi [ 330 Ml]
-                  <Text style={{color: '#AB8F8E'}}> | </Text>
-                  <Text style={{color: Colors.DARK_RED}}>$20</Text>
-                </Text>
-                <TouchableOpacity onPress={checked}>
-                  <Image
-                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
-                    resizeMode={'contain'}
-                    style={{height: Scale(15), width: Scale(15)}}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <TouchableOpacity
-                onPress={() => {
-                  setCustomizeModal(false),
-                    navigate('Order', {orderCount: addItem})
-                }}
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: Scale(45),
-                  backgroundColor: Colors.APPCOLOR,
-                  borderRadius: Scale(35),
-                  marginBottom: Scale(20),
-                  marginTop: Scale(35),
-                  marginHorizontal: Scale(20),
-                }}>
-                <Text
-                  style={{
-                    color: Colors.WHITE,
-                    fontSize: Scale(15),
-                    fontFamily: Fonts.Regular,
-                  }}>
-                  Add To Cart
-                </Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    )
-  }
-
+  
+      
+ 
   const increment = () => {
     if (addItem > 8) {
       SetAddItem(addItem)
@@ -533,7 +292,245 @@ function HomeMaker(props) {
               }}
             />
             <LoadWheel visible={list.isLoading} />
-            {renderCustomizeModal()}
+
+            <Modal
+        visible={customizeModal}
+        style={{backgroundColor: 'red'}}
+        transparent>
+        <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => setCustomizeModal(false)}
+            style={{
+              flex: 1,
+              backgroundColor: Colors.TRANSPARENT,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            }}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {}}
+              style={{
+                width: '85%',
+                borderRadius: Scale(10),
+                backgroundColor: Colors.WHITE,
+              }}>
+              <View
+                style={{
+                  height: Scale(80),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#202020',
+                    fontSize: Scale(20),
+                    fontFamily: Fonts.Regular,
+                  }}>
+                  Jumbo Cheese Burger{' '}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  height: Scale(50),
+                  alignItems: 'center',
+                  paddingHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: '#AB8F8E',
+                    fontSize: Scale(16),
+                    fontFamily: Fonts.Regular,
+                    fontWeight: 'bold',
+                  }}>
+                  Cheese
+                </Text>
+                <Image
+                  source={ImagesPath.downArrow}
+                  resizeMode={'contain'}
+                  style={{
+                    height: Scale(15),
+                    tintColor: '#AB8F8E',
+                    width: Scale(15),
+                  }}
+                />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottomColor: '#00000029',
+                  alignItems: 'center',
+                  borderBottomWidth: 0.6,
+                  height: Scale(45),
+                  marginHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: Colors.MATEBLACK1,
+                    fontSize: Scale(14),
+                    fontFamily: Fonts.Regular,
+                  }}>
+                  Extra Cheese <Text style={{color: '#AF9163'}}> | </Text>
+                  <Text style={{color: Colors.DARK_RED}}>$5</Text>
+                </Text>
+                <TouchableOpacity onPress={checked}>
+                  <Image
+                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
+                    resizeMode={'contain'}
+                    style={{height: Scale(15), width: Scale(15)}}
+                  />
+                </TouchableOpacity>
+              </View>
+
+             
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  height: Scale(50),
+                  alignItems: 'center',
+                  paddingHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: '#AB8F8E',
+                    fontSize: Scale(16),
+                    fontFamily: Fonts.Regular,
+                    fontWeight: 'bold',
+                  }}>
+                  Make it a combo
+                </Text>
+                <Image
+                  source={ImagesPath.downArrow}
+                  resizeMode={'contain'}
+                  style={{
+                    height: Scale(15),
+                    tintColor: '#AB8F8E',
+                    width: Scale(15),
+                  }}
+                />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottomColor: '#00000029',
+                  alignItems: 'center',
+                  borderBottomWidth: 0.6,
+                  height: Scale(45),
+                  marginHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: Colors.MATEBLACK1,
+                    fontSize: Scale(14),
+                    fontFamily: Fonts.Regular,
+                  }}>
+                  Regular Fries + Pepsi [ 330 Ml]
+                  <Text style={{color: '#AB8F8E'}}> | </Text>
+                  <Text style={{color: Colors.DARK_RED}}>$10</Text>
+                </Text>
+                <TouchableOpacity onPress={checked}>
+                  <Image
+                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
+                    resizeMode={'contain'}
+                    style={{height: Scale(15), width: Scale(15)}}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottomColor: '#00000029',
+                  alignItems: 'center',
+                  borderBottomWidth: 0.6,
+                  height: Scale(45),
+                  marginHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: Colors.MATEBLACK1,
+                    fontSize: Scale(14),
+                    fontFamily: Fonts.Regular,
+                  }}>
+                  Medium Fries + Pepsi [ 330 Ml]
+                  <Text style={{color: '#AB8F8E'}}> | </Text>
+                  <Text style={{color: Colors.DARK_RED}}>$15</Text>
+                </Text>
+                <TouchableOpacity onPress={checked}>
+                  <Image
+                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
+                    resizeMode={'contain'}
+                    style={{height: Scale(15), width: Scale(15)}}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottomColor: '#00000029',
+                  alignItems: 'center',
+                  borderBottomWidth: 0.6,
+                  height: Scale(45),
+                  marginHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: Colors.MATEBLACK1,
+                    fontSize: Scale(14),
+                    fontFamily: Fonts.Regular,
+                  }}>
+                  King Fries + Pepsi [ 330 Ml]
+                  <Text style={{color: '#AB8F8E'}}> | </Text>
+                  <Text style={{color: Colors.DARK_RED}}>$20</Text>
+                </Text>
+                <TouchableOpacity onPress={checked}>
+                  <Image
+                    source={check ? ImagesPath.check1 : ImagesPath.uncheck}
+                    resizeMode={'contain'}
+                    style={{height: Scale(15), width: Scale(15)}}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                onPress={() => {
+                  setCustomizeModal(false),
+                    navigate('Order', {orderCount: addItem})
+                }}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: Scale(45),
+                  backgroundColor: Colors.APPCOLOR,
+                  borderRadius: Scale(35),
+                  marginBottom: Scale(20),
+                  marginTop: Scale(35),
+                  marginHorizontal: Scale(20),
+                }}>
+                <Text
+                  style={{
+                    color: Colors.WHITE,
+                    fontSize: Scale(15),
+                    fontFamily: Fonts.Regular,
+                  }}>
+                  Add To Cart
+                </Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+          
           </ScrollView>
           {cartProducts?.length ? (
             <View
@@ -564,6 +561,22 @@ function HomeMaker(props) {
                   {cartProducts?.length + ' items in cart'}
                 </Text>
               </View>
+              <TouchableOpacity
+                onPress={() => setCustomizeModal(true)}
+                style={{
+                  borderRadius: Scale(25),
+                  borderWidth: 1,
+                  borderColor: Colors.WHITE,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '30%',
+                  height: Scale(30),
+                  marginRight: Scale(5),
+                }}>
+                <Text style={{color: Colors.WHITE, fontSize: Scale(11)}}>
+                  {'Customization'}
+                </Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('Card')}
                 style={{

@@ -18,7 +18,7 @@ import axios from 'axios'
 function Rating() {
   const [value, setValue] = useState('0')
   const [rating, setRating] = useState('')
-  const [defaultRating, setDefaultRating] = useState(2)
+  const [defaultRating, setDefaultRating] = useState(1)
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5])
 
   const starImageFilled =
@@ -99,7 +99,6 @@ function Rating() {
             Rate
           </Text>
           <View style={{flexDirection: 'row', marginVertical: Scale(10)}}>
-            {/* <Icon type="FontAwesome" name="star" style={{fontSize:Scale(35),color:Colors.GRAY,marginRight:Scale(2)}}/>                  */}
 
             <CustomRatingBar />
           </View>

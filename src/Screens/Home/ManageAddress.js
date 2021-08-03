@@ -42,12 +42,15 @@ function ManageAddress() {
     const data = {
       created_by: user?._id,
     }
-    dispatch(AddressListLoader(true))
-    dispatch(AddressListRequest(data))
+    const unsubscribe = navigation.addListener('focus',() => {
+      dispatch(AddressListLoader(true));
+      dispatch(AddressListRequest(data));
+    })
 
     if (Platform.OS === 'ios') {
       Geolocation.requestAuthorization('whenInUse')
     }
+    return unsubscribe;
   }, [])
 
   const delAdd = () => {

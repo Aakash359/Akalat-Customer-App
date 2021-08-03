@@ -20,7 +20,7 @@ import {
   countryListRequest,
 } from '../../redux/actions'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
-
+import { getDeviceType, getFcmToken } from '../../CommonConfig/HelperFunctions/AppHelper'
 
 
 function Login(props) {
@@ -51,7 +51,9 @@ function Login(props) {
     )
   }
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const fcmToken = await getFcmToken()
+    const deviceType = await getDeviceType()
     if (phone == '') {
       alert('Please enter Mobile Number')
     } else if (password == '') {
@@ -61,7 +63,12 @@ function Login(props) {
         country_code: COUNTRY == 'IN' ? '91' : '971',
         phone: parseInt(phone),
         password: password,
+        device_token : fcmToken,
+        device_type : deviceType+"",
       }
+      console.log('====================================');
+      console.log("Aakash===>",data);
+      console.log('====================================');
       dispatch(loaderRequest(true))
 
       setTimeout(() => {
@@ -111,7 +118,6 @@ function Login(props) {
               <ModalDropdown 
               options={[...new Set(countryList.map(i => `${i?.dial_code}`))]}
               onSelect={(country_Code) => setCountryCode(country_Code)}
-              renderRow={(rowData) => renderDropDownList(rowData)}
               defaultIndex={0}
               showsVerticalScrollIndicator={false}
               defaultValue={countryList.dial_code || '+91'}
@@ -119,7 +125,6 @@ function Login(props) {
               textStyle={styles.modalText}
               dropdownStyle={styles.modalDropDown}
               dropdownTextStyle={styles.modalDropDownText}
-              
               />
               
               <Icon name="caretdown" size={Scale(10)} style={{marginLeft:Scale(8)}} />

@@ -321,20 +321,34 @@ function Explore() {
           inputStyle={{fontSize: Scale(14), marginLeft: Scale(-15)}}
           placeholder="Search here..."
         />
-      </View>
-      <View style={styles.filterContainer}>
-       <TouchableOpacity onPress={redirectTocheck} style={check ? styles.leftContainer : styles.leftContainer1}>
-            <Text style={check ? styles.normalText : styles.normalText1}>
-              Restaurant
-            </Text>
-        </TouchableOpacity>
-         <TouchableOpacity onPress={redirectTocheck} style={check ? styles.leftContainer1 : styles.leftContainer}>
-            <Text style={check ? styles.normalText1 : styles.normalText}>
-              Dishes
-            </Text>
-        </TouchableOpacity>
-        
-      </View>
+      </View>{
+        search ? <View style={styles.filterContainer}>
+        <TouchableOpacity onPress={redirectTocheck} style={check ? styles.leftContainer : styles.leftContainer1}>
+             <Text style={check ? styles.normalText : styles.normalText1}>
+               Restaurant
+             </Text>
+         </TouchableOpacity>
+          <TouchableOpacity onPress={redirectTocheck} style={check ? styles.leftContainer1 : styles.leftContainer}>
+             <Text style={check ? styles.normalText1 : styles.normalText}>
+               Dishes
+             </Text>
+         </TouchableOpacity>
+         
+       </View> : <View style={styles.filterContainer}>
+        <View style={check ? styles.leftContainer : styles.leftContainer1}>
+             <Text style={check ? styles.normalText : styles.normalText1}>
+               Restaurant
+             </Text>
+         </View>
+          <View  style={check ? styles.leftContainer1 : styles.leftContainer}>
+             <Text style={check ? styles.normalText1 : styles.normalText}>
+               Dishes
+             </Text>
+         </View>
+         
+       </View>
+      }
+      
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
@@ -366,7 +380,7 @@ function Explore() {
             </TouchableOpacity>
           </View>
           <FlatList
-            contentContainerStyle={{paddingBottom: Scale(100)}}
+            contentContainerStyle={{paddingBottom: Scale(130)}}
             data={data?.restroList}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
