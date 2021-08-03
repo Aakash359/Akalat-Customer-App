@@ -61,11 +61,11 @@ function SignUp(props) {
   }, [signupResponse?.SignStatus])
 
   const onSubmit = async () => {
-    let fcmToken = await getFcmToken()
-    let FcmToken= fcmToken.slice(23)
-    console.log('====================================');
-    console.log("TrimToken===>", FcmToken);
-    console.log('====================================');
+    const fcmToken = await getFcmToken()
+    // let FcmToken= fcmToken.slice(23)
+    // console.log('====================================');
+    // console.log("TrimToken===>", FcmToken);
+    // console.log('====================================');
     const deviceType = getDeviceType()
     const {
       navigation: {navigate},
@@ -110,7 +110,7 @@ function SignUp(props) {
         password: password,
         country_code: COUNTRY == 'IN' ? '91' : '971',
         role_for_user: 'user',
-        device_token : FcmToken,
+        device_token : fcmToken,
         device_type : deviceType+"",
       }
       console.log('====================================');
