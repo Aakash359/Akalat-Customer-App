@@ -170,7 +170,7 @@ function Payment(props) {
             </Text>
 
             <View style={[styles.bottomContainer, {alignItems: 'center'}]}>
-              <Text style={styles.itemText1}>Cash on delivery </Text>
+              <Text style={styles.cash}>Cash on delivery </Text>
               <Icon
                 onPress={() => checked('cod')}
                 type="FontAwesome"
@@ -182,7 +182,7 @@ function Payment(props) {
             </View>
             <View style={{height: 2, backgroundColor: '#E0E0E0'}}></View>
             <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Online Payment </Text>
+              <Text style={styles.cash}>Online Payment </Text>
               <Icon
                 onPress={() => checked('online')}
                 type="FontAwesome"
@@ -253,8 +253,18 @@ const styles = StyleSheet.create({
     marginVertical: Scale(5),
     alignItems: 'center',
   },
-  itemText1: {color: Colors.GRAY, fontSize: Scale(18)},
-  normatText1: {color: Colors.GRAY, fontSize: Scale(18)},
+  itemText1: {
+    color: Colors.BLACK, 
+    fontSize: Scale(18)
+  },
+  cash: {
+    color: Colors.BLACK, 
+    fontSize: Scale(18)
+  },
+  normatText1: {
+    color: Colors.BLACK, 
+    fontSize: Scale(18)
+  },
   itemContainer: {flexDirection: 'row', justifyContent: 'space-between'},
   rightContainer: {flexDirection: 'row', alignItems: 'center'},
   countText: {
