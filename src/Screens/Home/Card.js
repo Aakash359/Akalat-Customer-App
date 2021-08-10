@@ -226,7 +226,7 @@ function Card(props) {
                   <Text style={styles.normatText}>
                     {cartRestroDetails?.street_name},{' '}
                     {cartRestroDetails?.area_name}, {'\n'}
-                    {cartRestroDetails?.region},{cartRestroDetails?.state}...
+                    {cartRestroDetails?.region},{cartRestroDetails?.state}
                   </Text>
                 </View>
               </View>
@@ -438,15 +438,6 @@ function Card(props) {
                 onSubmit={redirectToPayment}
               />
             </View>
-            {/* <Text
-              style={{
-                marginBottom: 30,
-                color: 'red',
-                marginLeft: 30,
-                fontSize: 16,
-              }}>
-              *These items are available for pick up service only
-            </Text> */}
           </ScrollView>
         </ImageBackground>
         <Modal visible={modal} transparent={true} animationType="slide">
@@ -590,6 +581,7 @@ const styles = StyleSheet.create({
   textStyle: {color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold'},
   loginInputCont: {
     flex: 1,
+    marginTop:Scale(-21),
     paddingTop: Scale(10),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),

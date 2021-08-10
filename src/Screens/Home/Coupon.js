@@ -207,6 +207,9 @@ function Coupon(props) {
           isLoading: false,
           restroList: res?.data?.data?.restroNewList,
         })
+        console.log('====================================');
+        console.log("Aakash====>",res?.data?.data?.restroNewList);
+        console.log('====================================');
         setModal2(false)
         navigate('Coupon')
       } catch (error) {
@@ -256,6 +259,7 @@ function Coupon(props) {
           isLoading: false,
           restroList: res?.data?.data?.restroNewList,
         })
+        
         setModal2(false)
         navigate('Coupon')
       } catch (error) {}
@@ -266,7 +270,7 @@ function Coupon(props) {
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
-          source={{uri: item?.profile_image}}
+          source={{uri: item?.building_front_img}}
           style={styles.backgroundStyle}>
           <View style={{justifyContent: 'flex-end', flex: 1}}>
             <View
@@ -281,8 +285,7 @@ function Coupon(props) {
                   fontSize: Scale(12),
                   color: Colors.WHITE,
                   marginLeft: Scale(7),
-                  paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(5),
+                  paddingHorizontal: Scale(10),
                   backgroundColor: 'green',
                 }}>
                 {item?.rating_from_user}
@@ -322,7 +325,7 @@ function Coupon(props) {
                     textAlign: 'right',
                     fontSize: Scale(15),
                   }}>
-                  1.5km
+                  {item.distance} Km
                 </Text>
               </View>
             </View>
@@ -674,7 +677,7 @@ function Coupon(props) {
                       fontSize: Scale(14),
                       color: Colors.DARK_RED,
                     }}>
-                    {value.toFixed(1) + ' Miles'}
+                    {value.toFixed(1)}
                   </Text>
                 </View>
                 <Slider

@@ -109,9 +109,6 @@ function SignUp(props) {
         device_token : fcmToken,
         device_type : deviceType+"",
       }
-      console.log('====================================');
-      console.log("Payload===>", data);
-      console.log('====================================');
       dispatch(loaderRequest(true))
       dispatch(SignUpRequest(data))
     }
@@ -336,7 +333,7 @@ const styles = StyleSheet.create({
     marginBottom: Scale(5),
     color: Colors.BORDERCOLOR,
     textAlign: 'left',
-    marginTop: Scale(5),
+    marginTop: Scale(8),
     marginLeft: Scale(2),
   },
   modal: {

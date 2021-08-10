@@ -8,12 +8,13 @@ import messaging from '@react-native-firebase/messaging';
 import { setFcmToken,  } from '../../CommonConfig/HelperFunctions/AppHelper'
 
 function Notification() {
+
   const { navigate } = useNavigation();
     const navigation = useNavigation();
     const [notification, setNotification] = useState({
-      title: undefined,
-      body: undefined,
-      image: undefined,
+      title: '',
+      body: '',
+      image: '',
     });
     const redirectToPlaceOrder = () => {
         navigate('PlaceOrder');
@@ -22,7 +23,7 @@ function Notification() {
     const getToken = async () => {
       const token = await messaging().getToken();
       setFcmToken(token)
-      console.log("Token=========>", token);
+     
     };
 
     useEffect(() => {
@@ -64,7 +65,7 @@ function Notification() {
 
     const renderItems = ({item, index}) => (
       <View >
-         <Text>Firebase Messaging</Text>
+      <Text>Firebase Messaging</Text>
       <Text>{`title: ${notification?.title}`}</Text>
       <Text>{`title: ${notification?.body}`}</Text>
       <Image source={{uri: notification?.image}} width={500} height={500} />

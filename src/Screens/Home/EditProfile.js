@@ -44,11 +44,13 @@ function Profile(props) {
       alert('Please enter Last Name')
     }else if (regMatch.test(last_name)==false) {
       alert('Please enter valid Last Name')
+    }else if (phone.length<10) {
+      alert('Please enter 10 digit mobile number')
     }else if (phone == '') {
       alert('Please enter your Mobile Number')
-    } else if (email == '') {
+    }else if (email == '') {
       alert('Please enter your Email')
-    } else if (reg.test(email) == false) {
+    }else if (reg.test(email) == false) {
       alert('Please enter valid email')
     } else {
       const data = {
@@ -57,15 +59,14 @@ function Profile(props) {
         phone: phone,
         email: email,
         _id: profileDetails?._id != undefined ? profileDetails?._id : 0,
-        // country_code: COUNTRY == 'IN' ? '91' : '971',
+        country_code: COUNTRY == 'IN' ? '91' : '971',
       }
 
       dispatch(
         EditProfileRequest(data, (res) => {
-          console.log('====================================')
-          console.log(res)
-          console.log('====================================')
+  
         }),
+        alert("Profile updated successfully")
       )
     }
   }
@@ -75,6 +76,8 @@ function Profile(props) {
       navigate('Profile')
     }
   }, [props?.editProfileStatus])
+
+  
 
   return (
     <View style={styles.container}>
@@ -123,6 +126,7 @@ function Profile(props) {
                   options={[
                     ...new Set(countryList.map((i) => `${i?.dial_code}`)),
                   ]}
+                  
                   showsVerticalScrollIndicator={false}
                   onSelect={(country_Code) => setCountryCode(country_Code)}
                   defaultIndex={0}
@@ -134,6 +138,7 @@ function Profile(props) {
                   dropdownTextHighlightStyle={
                     styles.modalDropDownHighlightedText
                   }
+                  
                 />
 
                 <Icon
@@ -145,6 +150,7 @@ function Profile(props) {
               <TextInput
                 style={styles.textInputContainer}
                 value={phone}
+                editable={false}
                 maxLength={10}
                 autoCapitalize="none"
                 placeholder="Mobile Number"
@@ -233,7 +239,7 @@ const styles = StyleSheet.create({
     height: Scale(80),
   },
   modalDropDownText: {
-    backgroundColor: Colors.TRANSPARENT,
+    backgroundColor: Colors.WHITE,
     color: Colors.BLACK,
     fontSize: Scale(14),
     paddingHorizontal: Scale(15),

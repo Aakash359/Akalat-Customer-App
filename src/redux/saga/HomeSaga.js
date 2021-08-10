@@ -84,8 +84,7 @@ export const CouponSaga = function* CouponSaga({data}) {
 
 //====================== Hungry Now List POST ======================
 
-export const hungryNowListSaga = function* hungryNowListSaga({data}) {
- 
+export const hungryNowListSaga = function* hungryNowListSaga({payload}) {
 
   
   yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: true})
@@ -93,7 +92,7 @@ export const hungryNowListSaga = function* hungryNowListSaga({data}) {
       const response = yield call(Request, {
           url: 'product/listHungryProduct',
           method: 'POST',
-          formData
+          data:payload
         })
         if (response?.data?.error == true){
           yield put({ type: HUNGRY_NOW_LIST_FAILED, payload: response?.data  });
@@ -103,17 +102,13 @@ export const hungryNowListSaga = function* hungryNowListSaga({data}) {
             'Error',
              response?.data?.message,
           );
-          console.log('====================================');
-          console.log("Reslponse",response?.data?.message);
-          console.log('====================================');
+         
         
         }
      else{ 
         yield put({type: SET_HUNGRY_NOW_LIST_LOADER, payload: false})
          yield put({ type: HUNGRY_NOW_LIST_SUCCESS, payload: response });
-         console.log('====================================');
-         console.log("Reslponse",response);
-         console.log('====================================');
+       
         
       }
       
@@ -157,7 +152,7 @@ export const SearchSaga = function* SearchSaga({params}) {
 
 //====================== Add favourite POST ======================
 
-export const AddFavouriteSaga = function* AddFavouriteSaga({data}) {
+export const AddFavouriteSaga = function* AddFavouriteSaga({data, callback}) {
  
     yield put(setFavouriteLoader(true));
     try {
@@ -176,9 +171,13 @@ export const AddFavouriteSaga = function* AddFavouriteSaga({data}) {
                response?.data?.message,
             );
           }
+          
        else{ 
            yield put(setFavouriteLoader(false));
            yield put({ type: ADD_FAVOURITE_SUCCESS, payload: response });
+           if(callback) {
+            callback()
+          }
         }
         
     }

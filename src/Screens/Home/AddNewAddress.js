@@ -104,8 +104,12 @@ function AddNewAddress(props) {
       alert('Please enter House No')
     } else if (area_name == '') {
       alert('Please enter area')
-    } else if (nearby) {
+    } else if (activeTab == undefined) {
+      alert('Address type must be selected')
+    }
+    else if (nearby) {
       let data = {
+        address_type: activeTab + '',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
@@ -117,24 +121,8 @@ function AddNewAddress(props) {
       dispatch(AddAddressLoader(true))
       dispatch(AddressListRequest(data))
       navigate('ManageAddress')
-    }
-    else if (!activeTab) {
-      
-      let data = {
-        
-        lng: location?.latitude,
-        lat: location?.longitude,
-        house_name_and_no,
-        area_name,
-        created_by: user?._id,
-       }
-      dispatch(AddAddressRequest(data))
-      dispatch(AddressListRequest(data))
-      dispatch(AddAddressLoader(true))
-      navigate('ManageAddress')
-      }
-       else if (!nearby) {
-        
+     }
+      else if (!nearby) {
         let data = {
           address_type: activeTab + '',
           lng: location?.latitude,
@@ -197,21 +185,19 @@ function AddNewAddress(props) {
             <FormInput
               placeholder="House No/Flat No"
               autoCapitalize="words"
-              maxLength={30}
               value={house_name_and_no}
               onChangeText={(text) => setHouseName(text)}
             />
             <FormInput
               placeholder="Area"
               autoCapitalize="words"
-              maxLength={30}
               value={area_name}
               onChangeText={(text) => setAreaName(text)}
             />
             <FormInput
               placeholder="Nearby"
               autoCapitalize="words"
-              maxLength={30}
+              maxLength={100}
               value={nearby}
               onChangeText={(text) => setNearby(text)}
             />
@@ -307,7 +293,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.BORDERCOLOR,
     color: Colors.BORDERCOLOR,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   forgotButton1: {
     backgroundColor: Colors.DARK_RED,
@@ -316,15 +302,15 @@ const styles = StyleSheet.create({
     borderRadius: Scale(25),
     fontSize: Scale(10),
     color: Colors.BORDERCOLOR,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   forgotButton2: {
     color: Colors.WHITE,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   forgotButton3: {
     color: Colors.BORDERCOLOR,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
 
   loginInputCont: {

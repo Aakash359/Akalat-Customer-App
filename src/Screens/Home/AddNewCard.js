@@ -9,6 +9,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
+  TextInput
 } from 'react-native'
 import {Icon} from 'native-base'
 import {
@@ -120,26 +121,42 @@ function AddNewCard() {
           behavior={Platform.OS == 'android' ? '' : 'padding'}
           enabled>
           <ScrollView indicatorStyle="white">
-            <FormInput
-              placeholder="Name On Card"
+            <Text style={styles.textStyle}> 
+              Name On Card
+            </Text>
+            <TextInput 
+              style={styles.textInputContainer}
+              placeholder="Ex: John"
               autoCapitalize="none"
               maxLength={30}
             />
-            <FormInput
-              placeholder="Card Number"
-              keyboardType={'numeric'}
+             <Text style={styles.textStyle}> 
+              Card Number
+             </Text>
+    
+            <TextInput 
+              style={styles.textInputContainer}
+              placeholder="Ex: 1234 5657 9012 3456"
+              autoCapitalize="none"
+              
+              maxLength={30}
+            />
+            <Text style={styles.textStyle}> 
+              Expiry Date
+             </Text>
+             <TextInput 
+              style={styles.textInputContainer}
+              placeholder="Ex: 04/26"
               autoCapitalize="none"
               maxLength={30}
             />
-            <FormInput
-              placeholder="Expiry Date"
-              autoCapitalize="none"
-              keyboardType={'numeric'}
-              maxLength={30}
-            />
-            <FormInput
-              placeholder="CVV Number"
-              keyboardType={'numeric'}
+            <Text style={styles.textStyle}> 
+              CVV Number
+             </Text>
+             
+             <TextInput 
+              style={styles.textInputContainer}
+              placeholder="Ex: 04/26"
               autoCapitalize="none"
               maxLength={30}
             />
@@ -162,10 +179,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.APPCOLOR,
   },
-  textStyle: {
+ 
+  textInputContainer: {
+    marginVertical: Scale(8),
+    height: Scale(50),
+    fontSize: Scale(16),
+    color: Colors.BLACK, 
+    fontWeight:'bold', 
+    paddingHorizontal: Scale(10),
+    borderWidth: Scale(1),
+    borderColor: "#AB8F8E",
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    borderRadius:Scale(5),
+  },
+  textStyle:{
     color: Colors.BORDERCOLOR,
-    fontSize: Scale(14),
-    marginTop: Scale(10),
+    fontSize:Scale(14),
+    marginBottom:Scale(2),
+    marginTop:Scale(8)
   },
   inputStyle: {
     color: Colors.BLACK,

@@ -94,7 +94,7 @@ function Explore() {
     if (check == true) {
       Datatype = 'restaurant'
     } else {
-      Datatype = 'Dishes'
+      Datatype = 'dishes'
     }
 
     setdata({...data, isLoading: true})
@@ -107,6 +107,7 @@ function Explore() {
       lat: 28.4922,
       lng: 77.0966,
     }
+  
 
     try {
       const res = await axios.post(url, payload)
@@ -116,6 +117,7 @@ function Explore() {
         restroList: res?.data?.data?.restroNearMe,
         isLoading: false,
       })
+    
     } catch (error) {}
   }
   const redirectToHomeMaker = (item) => {
@@ -212,8 +214,7 @@ function Explore() {
                   fontSize: Scale(12),
                   color: Colors.WHITE,
                   marginLeft: Scale(7),
-                  paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(4),
+                  paddingHorizontal: Scale(10),
                   backgroundColor: 'green',
                 }}>
                 {item?.rating_from_user}
@@ -291,7 +292,7 @@ function Explore() {
                 paddingBottom: 20,
                 paddingLeft: 12,
               }}>
-              {item?.categoryNameArray}...
+              {item?.categoryNameArray}
             </Text>
           </View>
         </View>
@@ -335,13 +336,13 @@ function Explore() {
          </TouchableOpacity>
          
        </View> : <View style={styles.filterContainer}>
-        <View style={check ? styles.leftContainer : styles.leftContainer1}>
-             <Text style={check ? styles.normalText : styles.normalText1}>
+        <View style={check ? styles.dishContainer : styles.dishContainer1}>
+             <Text style={check ? styles.dishText : styles.dishText1}>
                Restaurant
              </Text>
          </View>
-          <View  style={check ? styles.leftContainer1 : styles.leftContainer}>
-             <Text style={check ? styles.normalText1 : styles.normalText}>
+          <View  style={check ? styles.dishContainer1 : styles.dishContainer}>
+             <Text style={check ? styles.dishText1 : styles.dishText}>
                Dishes
              </Text>
          </View>
@@ -352,7 +353,7 @@ function Explore() {
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
-        <ScrollView style={{height: Scale(600)}}>
+        <ScrollView >
           <View
             style={{
               flexDirection: 'row',
@@ -380,7 +381,7 @@ function Explore() {
             </TouchableOpacity>
           </View>
           <FlatList
-            contentContainerStyle={{paddingBottom: Scale(130)}}
+            contentContainerStyle={{paddingBottom:Scale(120)}}
             data={data?.restroList}
             renderItem={renderItems}
             keyExtractor={(item, i) => `${i}`}
@@ -390,11 +391,11 @@ function Explore() {
                   style={{
                     fontSize: 20,
                     textAlign: 'center',
-                    marginTop: 200,
+                    marginTop: Scale(170),
                     marginHorizontal: 50,
                   }}>
-                  Sorry, online ordering isn't available at your location
-                </Text>
+                  This restaurant is not available
+              </Text>
               )
             }}
           />
@@ -414,7 +415,7 @@ const styles = StyleSheet.create({
   loginInputCont: {
     top: Scale(-20),
     paddingTop: Scale(10),
-    paddingBottom: Scale(120),
+    height: "100%",
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
@@ -442,9 +443,19 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontWeight: 'bold',
   },
+  dishText: {
+    fontSize: Scale(12),
+    color: Colors.BORDERCOLOR,
+    fontWeight: 'bold',
+  },
   normalText1: {
     fontSize: Scale(12),
     color: Colors.APPCOLOR,
+    fontWeight: 'bold',
+  },
+  dishText1: {
+    fontSize: Scale(12),
+    color: Colors.BORDERCOLOR,
     fontWeight: 'bold',
   },
   filterContainer: {
@@ -467,9 +478,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  dishContainer: {
+    borderRadius: Scale(30),
+    marginLeft: Scale(20),
+    borderColor: 'grey',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: Colors.WHITE,
+    height: Scale(45),
+    width: '30%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   leftContainer1: {
     borderRadius: Scale(30),
     backgroundColor: Colors.WHITE,
+    marginLeft: Scale(18),
+    borderColor: 'grey',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: Colors.WHITE,
+    height: Scale(45),
+    width: '30%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dishContainer1: {
+    borderRadius: Scale(30),
+    
     marginLeft: Scale(18),
     borderColor: 'grey',
     flexDirection: 'row',

@@ -80,5 +80,5 @@ export const orderDetailsRequest = (data) => {
 
 // ================= Add-Favourite REQUEST =================
 
-export const addfavouriteRequest = (data) => {return {type: ADD_FAVOURITE_REQUEST,data,}}
+export const addfavouriteRequest = (data, callback = false) => {return {type: ADD_FAVOURITE_REQUEST,data, callback}}
 export const setFavouriteLoader  = (data) => {return {type: SET_FAVOURITE_LOADER,data,}}

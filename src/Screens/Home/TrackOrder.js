@@ -5,7 +5,9 @@ import {
     View,
     Image,
     StyleSheet,
-    ImageBackground
+    ImageBackground,
+    Linking,
+    TouchableOpacityComponent
 } from 'react-native';
 import {
     ImagesPath,
@@ -17,7 +19,7 @@ import { homeStyle } from './homeStyles';
 import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { MapScreen } from "../../Component/MapScreen";
-
+import io from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux';
 
 const mapScreen = (props) => {
@@ -27,7 +29,31 @@ const mapScreen = (props) => {
     const dispatch = useDispatch();
     
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
-   
+
+    console.log('====================================');
+    console.log("OrderDetails=====>",orderDetails?.orderDetails?._id);
+    console.log('====================================');
+    
+    const callNumber = phone => {
+        console.log('callNumber ----> ', phone);
+        let phoneNumber = '';
+        if (Platform.OS !== 'android') {
+          phoneNumber = `telprompt:${123456789}`;
+        }
+        else  {
+          phoneNumber = `tel:${1234567894}`;
+        }
+        Linking.canOpenURL(phoneNumber)
+        .then(supported => {
+          if (!supported) {
+            Alert.alert('Phone number is not available');
+          } else {
+            return Linking.openURL(phoneNumber);
+          }
+        })
+        .catch(err => console.log(err));
+       
+      };
     return (
 
         <SafeAreaInsetsContext.Consumer>
@@ -47,10 +73,15 @@ const mapScreen = (props) => {
                     ,paddingBottom:Scale(0), 
                     borderBottomColor:Colors.GRAY,borderBottomWidth:0, }]}>
                                 <Text style={styles.primaryText}
-                                numberOfLines={1}>Order  ID {orderDetails?._id}</Text>
-                               <Image
+                                numberOfLines={1}>Order  ID {orderDetails?.orderDetails?._id}</Text>
+                                <TouchableOpacity 
+                                onPress={callNumber}
+                                >
+                                <Image
                                 source={ImagesPath.phonecall}
                                 style={styles.phonecall} />
+                                </TouchableOpacity>
+                              
                             </View>
                         <View style={[styles.cardStyle, {
                             justifyContent: 'center',
@@ -139,9 +170,9 @@ const styles = StyleSheet.create({
     },
     phonecall: {
         color: Colors.APPCOLOR,
-        width: Scale(50),
-        height: Scale(50),
-        marginTop: Scale(10),
+        width: Scale(40),
+        height: Scale(40),
+        
         resizeMode: 'contain',
     },
     imageStyle:{

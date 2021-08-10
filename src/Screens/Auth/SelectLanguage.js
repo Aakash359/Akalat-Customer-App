@@ -6,6 +6,7 @@ import {
     ImageBackground,
     TouchableOpacity,
     Image,
+    StatusBar
 } from 'react-native';
 import {
     SafeAreaInsetsContext,
@@ -76,7 +77,8 @@ class SelectLanguage extends Component {
         return (
             <SafeAreaInsetsContext.Consumer>
                 {(insets) => (
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1 ,}}>
+                        <StatusBar translucent backgroundColor="transparent" />
                         <ImageBackground source={ImagesPath.bg} style={{height:'100%',width:"100%",resizeMode:'stretch'}}>
                             <View
                                 style={{

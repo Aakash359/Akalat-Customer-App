@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   },
   loginInputCont: {
     top: Scale(-50),
-    paddingVertical: Scale(20),
     borderTopLeftRadius: Scale(25),
     borderTopRightRadius: Scale(25),
     backgroundColor: Colors.WHITE,
@@ -105,7 +104,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.APPCOLOR,
     height: Scale(100),
-    // paddingTop: Scale(35),
     alignItems: 'center',
     paddingHorizontal: Scale(25),
   },

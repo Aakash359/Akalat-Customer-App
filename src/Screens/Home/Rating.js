@@ -15,7 +15,8 @@ import {CustomButton, FormArea} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
-function Rating() {
+
+function Rating(props) {
   const [value, setValue] = useState('0')
   const [rating, setRating] = useState('')
   const [defaultRating, setDefaultRating] = useState(1)
@@ -23,7 +24,7 @@ function Rating() {
 
   const starImageFilled =
     'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png'
-  // Empty Star. You can also give the path from local
+  
   const starImageCorner =
     'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png'
   const {navigate} = useNavigation()
@@ -31,6 +32,8 @@ function Rating() {
   const redirectToMyAccount = () => {
     navigate('SavedCard')
   }
+    
+  const OrderDetails = props.route.params 
 
   const CustomRatingBar = () => {
     return (
@@ -62,16 +65,28 @@ function Rating() {
   }
 
   const onRatings = async () => {
-    const url = `${API_BASE}/order/rateReviewOrderFromUser`
+
+    if (rating==''){
+      alert("Please enter reviews")
+    }
+    else{
+
+      const url = `${API_BASE}/order/rateReviewOrderFromUser`
     const payload = {
-      _id: '60d962f26143c57f9f046eb0',
+      _id: OrderDetails?.OrderDetail?.order?._id,
       review_restro: rating,
       rating_restro: maxRating + '',
     }
     try {
       const res = await axios.post(url, payload)
-      alert('Order rated error from user successfully!')
-    } catch (error) {}
+      alert('Order rated from user successfully!')
+      navigate('OrderDetails', { ratingRes : res} )
+    } catch (error) {
+      console.log('Error',error)
+    }
+
+    }
+    
   }
 
   return (
@@ -104,6 +119,7 @@ function Rating() {
           </View>
           <FormArea
             placeholder="Write your reviews..."
+            
             label="Reviews"
             autoCapitalize="none"
             maxLength={30}
@@ -111,7 +127,7 @@ function Rating() {
             onChangeText={(text) => setRating(text)}
           />
 
-          <View style={{marginTop: Scale(180)}}>
+          <View style={{marginTop: Scale(130)}}>
             <CustomButton
               title="Submit"
               isSecondary={true}

@@ -38,7 +38,7 @@ function Otp(props) {
 
   const onSubmit = () => {
     if (otp == '') {
-      alert('Please enter otp')
+      alert('Please enter OTP')
     } else {
       const data = {
         otp: otp,
@@ -103,7 +103,7 @@ function Otp(props) {
                 </TouchableOpacity>
                 <Text style={styles.primaryText}>OTP Verification</Text>
                 <Text style={styles.normalText}>
-                  Enter the verification code send to {phone}, otp:{' '}
+                  Enter the verification code send to {phone}, OTP:{' '}
                   {otpData?.data?.otp}
                 </Text>
                 <View
@@ -144,6 +144,7 @@ function Otp(props) {
                       style={{
                         color: Colors.DARK_RED,
                         justifyContent: 'center',
+                        fontSize: Scale(16),
                       }}>
                       {' '}
                       Resend OTP

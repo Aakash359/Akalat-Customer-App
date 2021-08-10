@@ -12,13 +12,11 @@ function AboutUs() {
     const navigation = useNavigation();   
     const { navigate } = useNavigation();
  
-   
-
-     const data = aboutUsResponse
+   const data = aboutUsResponse
       
        useEffect(() => {
          dispatch(AboutUsRequest());
-        },[]); 
+    },[]); 
 
       
 

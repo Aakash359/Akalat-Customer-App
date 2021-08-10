@@ -60,6 +60,8 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
+       
+        
       } else {
         setList({...list, isLoading: false, error: res?.data?.message})
       }
@@ -110,12 +112,19 @@ function HomeMaker(props) {
 
   const {restroDetails = {}} = props.route.params || {}
 
+  
+
   const {restroDetails: resDet} = list
+
   const {cartProducts} = props
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
     0,
   )
+
+  console.log('====================================');
+  console.log("Aakash====>",list?.productList);
+  console.log('====================================');
 
   return (
     <View style={styles.container}>
@@ -150,12 +159,12 @@ function HomeMaker(props) {
               </View>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>
-                  {resDet?.restro_cooking_time} Min
+                  {list?.productList?.deliveryTime} Min
                 </Text>
                 <Text style={styles.normalText}>Delivery Time</Text>
               </View>
               <View style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>2.7 km</Text>
+                <Text style={styles.textStyle}>{restroDetails?.distance} Km </Text>
                 <Text style={styles.normalText}>Distance</Text>
               </View>
             </View>
@@ -180,7 +189,7 @@ function HomeMaker(props) {
                 Veg Only
               </Text>
               <Switch
-                trackColor={{false: Colors.GRAY, true: Colors.RED}}
+                trackColor={{false: Colors.RED, true: Colors.GREEN}}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
                 ios_backgroundColor={Colors.GREEN}
                 style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
@@ -213,7 +222,10 @@ function HomeMaker(props) {
                         marginVertical: Scale(5),
                         alignItems: 'center',
                       }}>
-                      <Image source={ImagesPath.veg} />
+                        { 
+                         item.product_type==='veg'? <Image source={ImagesPath.veg}/>:<Image source={ImagesPath.non_veg}/>
+                        }
+                      
                       <Text
                         style={{
                           fontSize: Scale(16),

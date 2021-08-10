@@ -14,8 +14,7 @@ target 'ResturantCustomer' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
+
   
   target 'ResturantCustomerTests' do
     inherit! :complete

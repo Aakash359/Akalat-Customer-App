@@ -90,7 +90,7 @@ function ForgotPassword() {
             </View>
             <ImageBackground
               source={ImagesPath.background}
-              style={[AuthStyle.loginInputCont, {top: -20}]}>
+              style={[AuthStyle.loginInputCont, {top: -15,}]}>
               <View style={{paddingHorizontal: Scale(25)}}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Image
@@ -103,6 +103,7 @@ function ForgotPassword() {
                   Please enter your registered mobile number to reset password
                 </Text>
                 <Text style={styles.mobile}>Mobile Number</Text>
+
                 <View style={styles.textInputView}>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <ModalDropdown
@@ -164,14 +165,17 @@ const styles = StyleSheet.create({
     height: screenHeight / 2,
     alignItems: 'center',
   },
-  mainContainer: {justifyContent: 'space-between', paddingBottom: Scale(10)},
+  mainContainer: {
+    justifyContent: 'space-between', 
+    paddingBottom: Scale(10)
+  },
   normalText: {
-    fontSize: Scale(16),
+    fontSize: Scale(15),
     fontFamily: Fonts.Medium,
     marginTop: Scale(5),
     textAlign: 'left',
     width: '90%',
-    color: Colors.GRAY,
+    color: Colors.BLACK,
   },
   textInputView: {
     flexDirection: 'row',
@@ -191,7 +195,7 @@ const styles = StyleSheet.create({
     marginBottom: Scale(5),
     color: Colors.BORDERCOLOR,
     textAlign: 'left',
-    marginTop: Scale(5),
+    marginTop: Scale(15),
     marginLeft: Scale(2),
   },
   textInputContainer: {
@@ -242,7 +246,7 @@ const styles = StyleSheet.create({
     height: Scale(80),
   },
   modalDropDownText: {
-    backgroundColor: Colors.TRANSPARENT,
+    backgroundColor: Colors.WHITE,
     color: Colors.BLACK,
     fontSize: Scale(14),
     paddingHorizontal: Scale(15),

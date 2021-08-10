@@ -36,6 +36,7 @@ import axios from 'axios'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
+
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function NearMe(props) {
@@ -66,7 +67,35 @@ function NearMe(props) {
     resetStatus: false,
   })
 
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation()
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            getOneTimeLocation()
+          } else {
+          }
+        } catch (err) {}
+      }
+    }
+    requestLocationPermission()
+    return () => {
+      Geolocation.clearWatch()
+    }
+  }, [])
+
   const getOneTimeLocation = () => {
+
     Geolocation.getCurrentPosition(
       (position) => {
         setLocation(position.coords)
@@ -81,7 +110,9 @@ function NearMe(props) {
           },
         )
       },
-      (error) => {},
+      (error) => {
+        
+      },
       {
         timeout: 30000,
         maximumAge: 1000,
@@ -294,20 +325,21 @@ function NearMe(props) {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance: value1.toFixed(1) + '',
+        distance: value1.toFixed(1),
         rating_from_user: undefined,
         is_sort: `${false}`,
         is_filter: `${true}`,
         restaurent_type: restro_type,
       }
-
-      try {
+       try {
         const res = await axios.post(url, payload)
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-
+        console.log('====================================');
+        console.log("Aaksh====>",res?.data?.data?.restroNearMe);
+        console.log('====================================');
         setModal2(false)
         setModal(false)
         navigate('NearMe')
@@ -369,8 +401,7 @@ function NearMe(props) {
                     fontSize: Scale(12),
                     color: Colors.WHITE,
                     marginLeft: Scale(7),
-                    paddingHorizontal: Scale(7),
-                    paddingVertical: Scale(4),
+                    paddingHorizontal: Scale(10),
                     backgroundColor: 'green',
                   }}>
                   {item?.rating_from_user}
@@ -393,7 +424,7 @@ function NearMe(props) {
                       color: '#fff',
                       textAlign: 'right',
                       fontSize: Scale(16),
-                      fontWeight: 'bold',
+                     
                     }}>
                     {item?.distance} Km
                   </Text>
@@ -451,7 +482,7 @@ function NearMe(props) {
                   paddingBottom: 20,
                   paddingLeft: 12,
                 }}>
-                {item?.categoryNameArray}...
+                {item?.categoryNameArray}
               </Text>
             </View>
           </View>
@@ -644,7 +675,7 @@ function NearMe(props) {
                 style={{
                   textAlign: 'center',
                   fontSize: 20,
-                  marginTop: 200,
+                  marginTop: 50,
                   marginHorizontal: 50,
                 }}>
                 Sorry, online ordering isn't available at your location
@@ -901,7 +932,7 @@ function NearMe(props) {
                   fontSize: Scale(14),
                   color: Colors.DARK_RED,
                 }}>
-                {value.toFixed(1) + ' Miles'}
+                {value.toFixed(1)}
               </Text>
             </View>
             <Slider

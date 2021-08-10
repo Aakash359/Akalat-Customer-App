@@ -66,9 +66,7 @@ function Login(props) {
         device_token : fcmToken,
         device_type : deviceType+"",
       }
-      console.log('====================================');
-      console.log("Aakash===>",data);
-      console.log('====================================');
+      
       dispatch(loaderRequest(true))
 
       setTimeout(() => {
@@ -94,6 +92,7 @@ function Login(props) {
   
 
   return (
+    
     <ImageBackground
       source={ImagesPath.background}
       style={styles.imageBachgroundStyle}>
@@ -205,7 +204,6 @@ const styles = StyleSheet.create({
     paddingHorizontal:Scale(10),
     
   },
-
   imageBachgroundStyle: {
     height: '100%',
     width: '100%',
@@ -262,7 +260,7 @@ const styles = StyleSheet.create({
     height:Scale(80)
   },
   modalDropDownText: {
-    backgroundColor: Colors.TRANSPARENT,
+    backgroundColor: Colors.WHITE,
     color: Colors.BLACK,
     fontSize: Scale(14),
     paddingHorizontal: Scale(15),

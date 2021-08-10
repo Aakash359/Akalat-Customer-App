@@ -309,14 +309,13 @@ const styles = StyleSheet.create({
   },
   forgotButton2: {
     color: Colors.WHITE,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   forgotButton3: {
     color: Colors.BORDERCOLOR,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   forgotButton: {
-    // backgroundColor:Colors.DARK_RED,
     paddingHorizontal: Scale(30),
     paddingVertical: Scale(13),
     borderRadius: Scale(30),
@@ -333,6 +332,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(30),
     fontSize: Scale(16),
     color: Colors.WHITE,
+    fontWeight: 'bold',
   },
   logoStyle: {
     fontSize: Scale(25),

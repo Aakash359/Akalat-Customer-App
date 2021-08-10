@@ -90,8 +90,7 @@ function HomeScreen(props) {
                   fontSize: Scale(12),
                   color: Colors.WHITE,
                   marginLeft: Scale(7),
-                  paddingHorizontal: Scale(7),
-                  paddingVertical: Scale(5),
+                  paddingHorizontal: Scale(10),
                   backgroundColor: 'green',
                 }}>
                 {item?.rating_from_user}

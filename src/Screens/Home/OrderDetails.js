@@ -17,7 +17,7 @@ import axios from 'axios'
 import {API_BASE} from '../../apiServices/ApiService'
 import {useSelector} from 'react-redux'
 
-function Card(props) {
+function OrderDetail(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const [orderDetail, setOrderDetail] = useState({
@@ -26,12 +26,21 @@ function Card(props) {
     errorMsg: '',
   })
 
-  const getOrderDetails = async () => {
+    const ratingRes = props?.route?.params?.ratingRes;
+
+    console.log('====================================');
+    console.log("rating response====>", ratingRes?.data?.status);
+    console.log('====================================');
+
+   const getOrderDetails = async () => {
     setOrderDetail({...orderDetail, isLoading: true})
     const url = `${API_BASE}/order/orderDetail`
     const payload = {
-      _id: props?.route?.params?._id,
+      _id: props?.route?.params?._id
     }
+   
+  
+  
 
     try {
       const res = await axios.post(url, payload)
@@ -41,6 +50,9 @@ function Card(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
+    //   console.log('====================================');
+    // console.log("Aakash====>", orderDetail?.order?.status);
+    // console.log('====================================');
     } catch (error) {
       setOrderDetail({
         ...orderDetail,
@@ -54,9 +66,7 @@ function Card(props) {
     getOrderDetails()
   }, [])
 
-  console.log('====================================')
-  console.log(orderDetail?.order)
-  console.log('====================================')
+  
 
   return (
     <View style={styles.container}>
@@ -95,7 +105,7 @@ function Card(props) {
                 justifyContent: 'center',
               },
             ]}>
-            <Text style={{color: Colors.GRAY, fontSize: 17}}>
+            <Text style={{color: '#AB8F8E', fontSize: 17}}>
               Transaction ID
             </Text>
             <Text style={{marginTop: 5, fontSize: 18}}>
@@ -103,7 +113,7 @@ function Card(props) {
                 'MMM D, LT',
               )}{' '}
             </Text>
-            <Text style={{color: Colors.GRAY, fontSize: 17, marginTop: 15}}>
+            <Text style={{color: '#AB8F8E', fontSize: 17, marginTop: 15}}>
               Delivery Items
             </Text>
             <Text style={{marginTop: 5, fontSize: 18}}>
@@ -117,15 +127,24 @@ function Card(props) {
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
-              style={{marginTop: 10, fontSize: 18}}>
+              style={{marginTop: 10,fontSize: 18, 
+              }}>
               {orderDetail?.order?.restro_detail?.street_name},{' '}
               {orderDetail?.order?.restro_detail?.area_name},{' '}
               {orderDetail?.order?.restro_detail?.region},{' '}
+              
+            </Text>
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{fontSize: 18, }}>
+              
               {orderDetail?.order?.restro_detail?.state}
             </Text>
           </View>
-
-          <View style={[styles.cardStyle2]}>
+          {
+             orderDetail?.order?.status=='OD' ? 
+             <View style={[styles.cardStyle2]}>
             <Text
               style={{
                 color: '#AB8F8E',
@@ -135,29 +154,48 @@ function Card(props) {
               }}>
               Rating and Reviews
             </Text>
-            <TouchableOpacity onPress={() => navigate('Rating')}>
-              <View
-                style={{
-                  height: '65%',
-                  width: Scale(290),
-                  backgroundColor: Colors.APPCOLOR,
-                  borderRadius: Scale(30),
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  marginTop: 13,
-                }}>
-                <Text
-                  style={{
-                    color: Colors.WHITE,
-                    fontSize: 18,
-                    fontWeight: '600',
-                  }}>
-                  Rating and Reviews
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+
+            
+            <>
+           {
+             ratingRes?.data?.status == 1 ? <Text
+             style={{
+               color: Colors.BLACK,
+               fontWeight: 'bold',
+               fontSize: 16,
+               marginLeft: 3,
+               marginTop:Scale(10)
+             }}>
+             You have rated successfully 
+           </Text>:
+             <TouchableOpacity onPress={() => navigate('Rating', {OrderDetail:orderDetail})}>
+             <View
+               style={{
+                 height: '65%',
+                 width: Scale(290),
+                 backgroundColor: Colors.APPCOLOR,
+                 borderRadius: Scale(30),
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 alignSelf: 'center',
+                 marginTop: 13,
+               }}>
+               <Text
+                 style={{
+                   color: Colors.WHITE,
+                   fontSize: 18,
+                   fontWeight: '600',
+                 }}>
+                 Rating and Reviews
+               </Text>
+             </View>
+           </TouchableOpacity>
+           }
+            </>
+          </View>: null 
+
+          }
+          
           <View
             style={[
               styles.cardStyle,
@@ -253,7 +291,7 @@ function Card(props) {
   )
 }
 
-export default Card
+export default OrderDetail
 
 const styles = StyleSheet.create({
   container: {
@@ -316,7 +354,11 @@ const styles = StyleSheet.create({
   },
 
   itemText: {color: Colors.BLACK, fontSize: Scale(18)},
-  itemText2: {color: Colors.BLACK, fontSize: Scale(18)},
+  itemText2: {
+    color: Colors.BLACK,
+    fontSize: Scale(18),
+     
+  },
   textStyle: {color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold'},
   loginInputCont: {
     flex: 1,
@@ -369,7 +411,7 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE,
   },
   cardStyle: {
-    height: Scale(120),
+    height: Scale(130),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),
@@ -380,7 +422,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
   },
   cardStyle1: {
-    height: Scale(80),
+    height: Scale(120),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),

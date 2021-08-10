@@ -23,7 +23,7 @@ import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
 import {color} from 'react-native-reanimated'
-import {AddAddressRequest,AddressListRequest} from '../../redux/actions'
+import {AddAddressRequest,AddAddressLoader,} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
@@ -70,11 +70,14 @@ function EditAddress(props) {
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
       (position) => {
+        setLocation(position.coords)
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
+           
             let addressComponent = json.results[1].formatted_address
             setAddress(addressComponent)
           },
+          
         )
       },
       (error) => {},
@@ -85,6 +88,7 @@ function EditAddress(props) {
       },
     )
   }
+ 
   const checked = () => setValue(!value)
 
   const redirectToMyAccount = async () => {
@@ -92,8 +96,12 @@ function EditAddress(props) {
       alert('Please enter House No')
     } else if (area_name == '') {
       alert('Please enter area')
-    } else if (nearby) {
+    } else if (activeTab == undefined) {
+      alert('Address type must be selected')
+    }
+    else if (nearby) {
       let data = {
+        address_type: activeTab + '',
         lng: location?.latitude,
         lat: location?.longitude,
         house_name_and_no,
@@ -106,23 +114,7 @@ function EditAddress(props) {
       dispatch(AddAddressLoader(true))
       navigate('ManageAddress')
     }
-    else if (!activeTab) {
-      alert('Active')
-      let data = {
-        
-        lng: location?.latitude,
-        lat: location?.longitude,
-        house_name_and_no,
-        area_name,
-        created_by: user?._id,
-        _id: address?._id,
-     
-      }
-      dispatch(AddAddressRequest(data))
-      dispatch(AddAddressLoader(true))
-      navigate('ManageAddress')
-      }
-      else if (!nearby) {
+    else if (!nearby) {
         let data = {
           address_type: activeTab + '',
           lng: location?.latitude,
@@ -132,6 +124,7 @@ function EditAddress(props) {
           created_by: user?._id,
           _id: address?._id,
         }
+        console.log("NearBy=====>", data);
         dispatch(AddAddressRequest(data))
         dispatch(AddAddressLoader(true))
         navigate('ManageAddress')

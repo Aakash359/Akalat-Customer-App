@@ -10,13 +10,12 @@ import {
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
-import {OfferListRequest,OfferListLoader} from '../../redux/actions'
+import {couponRequest,OfferListLoader} from '../../redux/actions'
 import { useSelector, useDispatch } from 'react-redux';
 
 function Offers() {
   const [checked, setChecked] = useState(false)
-  const  offerListResponse = useSelector((state) => state.Setting.offerListResponse);
-  const  offerList = offerListResponse?.data?.restroList || []
+  const couponResponse = useSelector((state) => state.Home.couponResponse)
   const  user = useSelector((state) => state.Auth.user);
   const {navigate} = useNavigation()
   const navigation = useNavigation()
@@ -27,27 +26,37 @@ function Offers() {
   const onPressChecked = () => {
     setChecked(!checked)
   }
-  useEffect(() => {
 
-    const data = { 
-         "userid": user?._id
-         }
-         dispatch(OfferListLoader(true))
-        setTimeout(() => {
-          dispatch(OfferListRequest(data));
-         
-        },)
-     },[]
-  ); 
+  useEffect(() => {
+   
+      dispatch(couponRequest())
+  
+  }, [])
+  
+  
+
+
+  console.log('====================================');
+  console.log("CouponResponse======>", couponResponse);
+  console.log('====================================');
+
+  
   
   const renderItemStore = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>
         <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
         <View>
-          <Text style={styles.primaryText}>Fire & Grill</Text>
-          <Text style={styles.normatText}>
-            Sector 29, Cyber hub{'\n'}Gurgoan
+          <Text style={styles.primaryText}>{item?.title}</Text>
+          <Text style={styles.normatText}
+          numberOfLines={1}>
+            {item?.restro_address?.street_name},{' '}
+            {item?.restro_address?.area_name}, 
+          </Text>
+          <Text style={styles.normatText}
+               numberOfLines={1}>
+            {item?.restro_address?.region},{' '}
+            {item?.restro_address?.state}
           </Text>
         </View>
       </View>
@@ -59,9 +68,8 @@ function Offers() {
           style={{fontSize: Scale(20), color: Colors.DARK_RED}}
         />
         <Text style={styles.itemText1}>
-          {' '}
-          20% off | Use code{' '}
-          <Text style={{color: Colors.DARK_RED}}> "AKALAT20"</Text>
+          {' '} {item.coupon_discount_in_percentage} off | Use code{' '}
+          <Text style={{color: Colors.DARK_RED}}>{item.coupon_code}</Text>
         </Text>
       </View>
     </View>
@@ -167,9 +175,16 @@ function Offers() {
         style={styles.loginInputCont}>
         <FlatList
           style={{paddingHorizontal: Scale(20)}}
-          data={[0, 1, 2, 3]}
+          data={checked ? couponResponse?.data : couponResponse?.data}
           renderItem={checked ? renderItemPayment : renderItemStore}
           keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={() => {
+            return (
+              <Text style={{alignSelf: 'center', marginTop: 300, fontSize: 15}}>
+                You don't have any offers
+              </Text>
+            )
+          }}
         />
       </ImageBackground>
     </View>
@@ -192,8 +207,6 @@ const styles = StyleSheet.create({
   },
   heading: {
     flexDirection: 'row',
-    //  justifyContent: 'space-between',
-    //marginTop: Scale(10),
     alignItems: 'center',
     marginBottom: Scale(5),
   },
@@ -259,6 +272,8 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     fontSize: Scale(16),
     marginTop: Scale(7),
+    
+    
   },
   buttonStyle: {
     borderRadius: Scale(20),

@@ -39,22 +39,11 @@ function MyOrders(props) {
   const redirectToHomeMaker = (item) => {
     navigate('OrderDetails', item)
   }
+  
+  
+  
 
-  const onOrderDetails = async () => {
-    setOrderDetail({...orderDetail, isLoading: true})
-    const url = `${API_BASE}/order/orderDetail`
-    const payload = {
-      _id: props?.user?._id,
-    }
-    try {
-      const res = await axios.post(url, payload)
-      setCreateOrder({
-        ...orderDetail,
-        setOrderDetail: res?.data?.data,
-        isLoading: false,
-      })
-    } catch (error) {}
-  }
+  
   React.useEffect(() => {
     props?.getOrderList()
   }, [])
@@ -85,6 +74,7 @@ function MyOrders(props) {
 
   const renderItemsActive = ({item, index}) => (
     <View style={styles.cardStyle}>
+      <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
       <View style={{flexDirection: 'row'}}>
         <Image
           source={{uri: item?.restro_detail?.building_front_img}}
@@ -97,7 +87,7 @@ function MyOrders(props) {
           <Text style={styles.normatText}>
             {item?.restro_detail.street_name}, {item?.restro_detail.area_name},
             {'\n'}
-            {item?.restro_detail.region}, {item?.restro_detail.state}...
+            {item?.restro_detail.region}, {item?.restro_detail.state}
           </Text>
         </View>
       </View>
@@ -143,6 +133,7 @@ function MyOrders(props) {
           </Text>
         </TouchableOpacity>
       </View>
+      </TouchableOpacity>
     </View>
   )
   const renderItemPast = ({item, index}) => {
@@ -150,7 +141,9 @@ function MyOrders(props) {
       <View style={styles.cardStyle}>
         <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
           <View style={{flexDirection: 'row'}}>
-            <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+            <Image 
+            source={{uri: item?.restro_detail?.building_front_img}}
+            style={styles.backgroundStyle1} />
             <View>
               <Text style={styles.primaryText}>
                 {item?.restro_detail.restro_name}
@@ -158,7 +151,7 @@ function MyOrders(props) {
               <Text style={styles.normatText}>
                 {item?.restro_detail.street_name},{' '}
                 {item?.restro_detail.area_name},{'\n'}
-                {item?.restro_detail.region}, {item?.restro_detail.state}...
+                {item?.restro_detail.region}, {item?.restro_detail.state}
               </Text>
             </View>
           </View>
@@ -204,7 +197,22 @@ function MyOrders(props) {
                 }}>
                 Cancelled
               </Text>
-            )}
+            )
+            
+            }
+            {['OD'].includes(item?.status) && (
+              <Text
+                style={{
+                  color: 'green',
+                  marginRight: 10,
+                  fontSize: 20,
+                  marginTop: 5,
+                }}>
+                Delivered
+              </Text>
+            )
+            
+            }
           </View>
         </TouchableOpacity>
       </View>
@@ -216,7 +224,7 @@ function MyOrders(props) {
   let activeOrders = props?.orderList.filter((i) => active.includes(i.status))
   let pastOrders = props?.orderList.filter((i) => past.includes(i.status))
 
-  console.log(pastOrders)
+  
 
   return (
     <View style={styles.container}>
@@ -367,6 +375,7 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     fontSize: Scale(16),
     marginTop: Scale(7),
+    
   },
   buttonStyle: {
     borderRadius: Scale(20),

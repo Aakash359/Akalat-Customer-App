@@ -16,13 +16,15 @@ function HungryNow(props) {
     const user = useSelector((state) => state.Auth.user)
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
    
-
+    console.log('====================================');
+    console.log("product_list", product_list);
+    console.log('====================================');
     useEffect(() => {
         
         const data = {
             userid: user?._id,
            }
-         
+        
           dispatch(hungryNowListRequest(data))
           dispatch(hungryNowListLoader(true));
         
@@ -71,14 +73,17 @@ function HungryNow(props) {
         <View style={styles.cardStyle}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
                 <Text style={styles.headingText}>{item.restro_name}</Text>
-                <Text style={styles.headingText}>{item?.distance} Km</Text>
+                <Text style={styles.headingText}>{item?.restro_details?.distance} Km</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={{ uri: item?.image }} style={styles.backgroundStyle} />
+                <Image source={{ uri: item?.image}} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>
-                       <Image source={ImagesPath.veg}/>
+                        { item.product_type==='veg'? <Image source={ImagesPath.veg}/>:<Image source={ImagesPath.non_veg}/>
+                        }
+                       
                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {item.name}</Text>
+                       
                     </View>
                     <Text style={{ color: 'grey', fontSize: Scale(13), marginTop:Scale(8), fontWeight: 'normal',marginLeft:Scale(10) }}>{item.description}</Text>
                 </View>
@@ -122,7 +127,7 @@ function HungryNow(props) {
 
                             </View>
                         :null}
-                         {/* <LoadWheel visible={setHungryNowListLoader} /> */}
+                         <LoadWheel visible={setHungryNowListLoader} />
                 </ImageBackground>
            
         </View>
@@ -170,8 +175,9 @@ const styles = StyleSheet.create({
         fontSize: Scale(16), 
         
       },  
-    loginInputCont: {
+   loginInputCont: {
         flex:1,
+        marginTop:Scale(20),
         paddingTop: Scale(10),
         borderTopLeftRadius: Scale(25),
         borderTopRightRadius: Scale(25),

@@ -20,6 +20,7 @@ import RootStack from './navigation'
 import AsyncStorage from '@react-native-community/async-storage'
 import Geolocation from '@react-native-community/geolocation'
 import messaging from '@react-native-firebase/messaging';
+import './config/socket'
 
 LogBox.ignoreLogs(['Warning: ...'])
 LogBox.ignoreAllLogs()

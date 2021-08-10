@@ -32,14 +32,16 @@ function Favorites() {
     setChecked(!checked)
   }
 
+  console.log('====================================');
+  console.log("Aakash====>",favouriteList);
+  console.log('====================================');
+
   useEffect(() => {
     const data = {
       userid: user?._id,
     }
-    dispatch(favouriteListLoader(true))
-    setTimeout(() => {
+     dispatch(favouriteListLoader(true))
       dispatch(favouriteListRequest(data))
-    })
   }, [])
 
   const onFavorite = (item) => {
@@ -48,8 +50,16 @@ function Favorites() {
       restro_id: item?._id,
       is_favourited_restro: false,
     }
-    dispatch(addfavouriteRequest(payload))
+    dispatch(addfavouriteRequest(payload, () => {
+      const data = {
+        userid: user?._id,
+      }
+      dispatch(favouriteListLoader(true))
+        dispatch(favouriteListRequest(data))
+    }))
   }
+
+  
 
   const renderItems = ({item, index}) => (
     <View style={styles.cardStyle}>
@@ -74,7 +84,7 @@ function Favorites() {
           </View>
           <Text style={styles.normatText}>
             {item?.street_name}, {item?.area_name}, {item?.region},{' '}
-            {item?.state}...
+            {item?.state}
           </Text>
         </View>
       </View>
