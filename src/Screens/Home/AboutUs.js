@@ -16,7 +16,8 @@ function AboutUs() {
       
        useEffect(() => {
          dispatch(AboutUsRequest());
-    },[]); 
+        },
+    []); 
 
       
 

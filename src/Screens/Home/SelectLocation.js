@@ -64,7 +64,7 @@ function SelectLocation(props) {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
-        //subscribeLocationLocation()
+        
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -185,11 +185,6 @@ function SelectLocation(props) {
           </View>
           <FlatList data={addressList} renderItem={renderItems} />
           <View style={{marginTop: Scale(80)}}>
-            {/* <CustomButton
-              title="Save"
-              isSecondary={true}
-              onSubmit={redirectToMyAccount}
-            /> */}
           </View>
         </ScrollView>
       </ImageBackground>
@@ -204,7 +199,7 @@ const styles = StyleSheet.create({
   },
   addStyle1: {
     color: Colors.WHITE,
-    fontWeight: '600',
+    fontWeight: 'bold',
     padding: 14,
     paddingLeft: 18,
     alignSelf: 'center',
@@ -243,7 +238,10 @@ const styles = StyleSheet.create({
     marginBottom: Scale(10),
   },
   locationStyle: {fontSize: Scale(16), color: Colors.APPCOLOR},
-  savedStyle: {color: '#AB8F8E', fontSize: Scale(16)},
+  savedStyle: {color: '#AB8F8E', 
+  fontSize: Scale(16),
+  fontWeight:'bold'
+},
   heading: {
     flexDirection: 'row',
     justifyContent: 'space-between',

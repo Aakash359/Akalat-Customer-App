@@ -24,7 +24,7 @@ import {
 } from '../../CommonConfig'
 import {AuthStyle} from './AuthStyle'
 import {useNavigation} from '@react-navigation/native'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, useDispatch,connect} from 'react-redux'
 import {CustomButton} from '../../Component'
 import Icon from 'react-native-vector-icons/AntDesign'
 import {
@@ -34,7 +34,7 @@ import {
 } from '../../redux/actions'
 import ModalDropdown from 'react-native-modal-dropdown'
 
-function ForgotPassword() {
+function ForgotPassword(props) {
   const counrtryListResponse = useSelector(
     (state) => state.Auth.counrtryListResponse,
   )
@@ -70,6 +70,20 @@ function ForgotPassword() {
     })
   }, [])
 
+  const forgotStatus = props
+  console.log('====================================');
+  console.log("Aakash====>",forgotStatus);
+  console.log('====================================');
+
+  React.useEffect(() => {
+    if (props?.forgotStatus) {
+        const {data} = props?.forgotReponse
+        navigate('Otp', {data: data})
+  
+    }
+  }, [props?.forgotStatus])
+  
+
   return (
     <SafeAreaInsetsContext.Consumer>
       {(insets) => (
@@ -84,13 +98,14 @@ function ForgotPassword() {
             <StatusBar translucent backgroundColor="transparent" />
             <View style={styles.container}>
               <Image
+                
                 source={ImagesPath.bug}
-                style={{width: screenWidth, flex: 1}}
+                style={{width: screenWidth,flex:1}}
               />
             </View>
             <ImageBackground
               source={ImagesPath.background}
-              style={[AuthStyle.loginInputCont, {top: -15,}]}>
+              style={[AuthStyle.loginInputCont,]}>
               <View style={{paddingHorizontal: Scale(25)}}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Image
@@ -158,12 +173,22 @@ function ForgotPassword() {
   )
 }
 
-export default ForgotPassword
+
+const mapStateToProps = (state) => {
+  return {
+    forgotStatus: state.Auth.OTPStatus,
+    forgotReponse: state.Auth.otpResponse,
+  }
+}
+
+export default connect(mapStateToProps, null)(ForgotPassword)
+
+
 
 const styles = StyleSheet.create({
   container: {
-    height: screenHeight / 2,
-    alignItems: 'center',
+    height: screenHeight / 1.7,
+    
   },
   mainContainer: {
     justifyContent: 'space-between', 

@@ -143,6 +143,7 @@ function Card(props) {
   const remove = () => {
     dispatch(removeCoupon())
   }
+  
 
   const renderItems = ({item, index}) => (
     <TouchableOpacity
@@ -348,10 +349,14 @@ function Card(props) {
                 <Text style={styles.itemText1}>Item Total</Text>
                 <Text style={styles.normatText1}>${totalCartAmt}</Text>
               </View>
-              <View style={styles.bottomContainer}>
+              {
+                det?.dis ? (
+                <View style={styles.bottomContainer}>
                 <Text style={styles.itemText1}>Total Discount</Text>
                 <Text style={styles.normatText1}>-${det?.dis}</Text>
-              </View>
+              </View>):null
+              }
+              
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText1}>Tax</Text>
                 <Text style={styles.normatText1}>${det?.tax}</Text>
@@ -389,7 +394,7 @@ function Card(props) {
                 }}
               />
               {det?.dis ? (
-                <Text style={[styles.itemText, {color: 'green'}]}>
+                <Text style={[styles.itemText, {color: 'green',textAlign:'center',marginTop:Scale(6)}]}>
                   You have saved ${det?.dis} on this order
                 </Text>
               ) : null}
@@ -496,7 +501,7 @@ const mapStateToProps = ({
   Cart: {restroDetails, products, instruction, selectedAddress},
   Setting: {addressListResponse},
   Auth: {user},
-  coupon: {applyCoupon, couponCode},
+  coupon: {applyCoupon, couponCode,applyCouponStatus},
 }) => {
   return {
     cartRestroDetails: restroDetails,
@@ -507,6 +512,7 @@ const mapStateToProps = ({
     user,
     applyCoupon,
     couponCode,
+    applyCouponStatus,
   }
 }
 

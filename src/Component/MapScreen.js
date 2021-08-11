@@ -161,21 +161,16 @@ export class MapScreen extends Component {
 
   render() {
     const {onMarkerPress} = this.props
+    
     return (
       <View style={{flex: 1}}>
         <MapView
           style={StyleSheet.absoluteFillObject}
           region={{
-            latitude:
-              this.state.location != undefined
-                ? this.state.location.coords.latitude
-                : 21.192572,
-            longitude:
-              this.state.location != undefined
-                ? this.state.location.coords.longitude
-                : 72.799736,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            ...this.props.driverLoc,
+            latitudeDelta: 0.0045,
+            longitudeDelta: 0.0045,
+
           }}
           loadingEnabled={true}
           loadingIndicatorColor="#666666"
@@ -185,79 +180,17 @@ export class MapScreen extends Component {
           showsCompass={true}
           provider={PROVIDER_GOOGLE}
           
-        >
-        
-          <Marker
-            
-            coordinate={{latitude:  26.4640454,
-              longitude: 80.3261518,}}
+        >{
+          this.props.driverLoc?.latitude && <Marker
+          coordinate={this.props.driverLoc}
+          >
 
-              
-            
-              source={require('../Assets/Images/bell.png')}
-                style={{height: 180, width: 180, justifyContent: 'center'}}
-              >
-              <Callout tooltip>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.name}>Favourite Restaurant</Text>
-             
-                  <Image 
-                    style={styles.image}
-                    source={require('../Assets/Images/back.png')}
-                  />
-                </View>
-                <View style={styles.arrowBorder} />
-                <View style={styles.arrow} />
-              </View>
-            </Callout>
-           
-            </Marker>
+            <View style={{width: 30, height: 30, backgroundColor: 'red'}} >
+              <Text>Hello</Text>
+            </View>
 
-            <Marker
-            
-            coordinate={{latitude:  26.4640454,
-              longitude: 80.32,}}
-
-              
-            
-              source={require('../Assets/Images/bell.png')}
-                style={{height: 180, width: 180, justifyContent: 'center'}}
-              >
-              <Callout tooltip>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.name}>Favourite Restaurant</Text>
-             
-                  <Image 
-                    style={styles.image}
-                    source={require('../Assets/Images/back.png')}
-                  />
-                </View>
-                <View style={styles.arrowBorder} />
-                <View style={styles.arrow} />
-              </View>
-            </Callout>
-           
-            </Marker>
-            <Polyline
-          coordinates={[
-            {latitude:
-              this.state.location != undefined
-                ? this.state.location.coords.latitude
-                : 21.192572,
-            longitude:
-              this.state.location != undefined
-                ? this.state.location.coords.longitude
-                : 72.799736,},
-            { latitude: 26.4640454, longitude: 80.32 }]}
-          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-          strokeColors={['#7F0000']}
-          strokeWidth={6}
-        />
-            
-         
-     
+          </Marker>
+          }
         </MapView>
       </View>
     )

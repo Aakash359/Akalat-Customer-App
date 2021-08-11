@@ -189,7 +189,7 @@ function HomeMaker(props) {
                 Veg Only
               </Text>
               <Switch
-                trackColor={{false: Colors.RED, true: Colors.GREEN}}
+                trackColor={{false: '#AB8F8E', true: Colors.GREEN}}
                 thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
                 ios_backgroundColor={Colors.GREEN}
                 style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
@@ -246,7 +246,7 @@ function HomeMaker(props) {
                         {'\n'}
                         <Text
                           style={[
-                            styles.normalText,
+                            styles.priceText,
                             {
                               textDecorationLine: 'line-through',
                               textDecorationStyle: 'solid',
@@ -687,6 +687,10 @@ const styles = StyleSheet.create({
   normalText: {
     color: '#AB8F8E',
     fontSize: Scale(12),
+  },
+  priceText: {
+    color: '#AB8F8E',
+    fontSize: Scale(16),
   },
   categoryText: {
     color: '#AB8F8E',

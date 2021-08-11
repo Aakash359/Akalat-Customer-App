@@ -19,20 +19,19 @@ import { homeStyle } from './homeStyles';
 import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { MapScreen } from "../../Component/MapScreen";
-import io from "socket.io-client";
+import io from "../../config/socket"
 import { useSelector, useDispatch } from 'react-redux';
+
 
 const mapScreen = (props) => {
 
     const { navigate } = useNavigation();
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [driverLoc ,setDriverLoc]= useState(null);
     
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
 
-    console.log('====================================');
-    console.log("OrderDetails=====>",orderDetails?.orderDetails?._id);
-    console.log('====================================');
     
     const callNumber = phone => {
         console.log('callNumber ----> ', phone);
@@ -54,12 +53,19 @@ const mapScreen = (props) => {
         .catch(err => console.log(err));
        
       };
+
+      useEffect(() => {
+        io.on("getLoc", (data)=> {
+        setDriverLoc(data.coords)
+        })
+      }, [])
+    
     return (
 
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
                 <View style={{ flex: 1 }}>
-                    <MapScreen />
+                    <MapScreen driverLoc={driverLoc} />
                     <ImageBackground
                         source={ImagesPath.background}
                         style={homeStyle.bottomViewCont}>

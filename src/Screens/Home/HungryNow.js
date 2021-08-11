@@ -71,11 +71,11 @@ function HungryNow(props) {
                             return(
 
         <View style={styles.cardStyle}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10) }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10), marginVertical:Scale(-8)}}>
                 <Text style={styles.headingText}>{item.restro_name}</Text>
                 <Text style={styles.headingText}>{item?.restro_details?.distance} Km</Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row' ,marginTop:Scale(8) }}>
                 <Image source={{ uri: item?.image}} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>

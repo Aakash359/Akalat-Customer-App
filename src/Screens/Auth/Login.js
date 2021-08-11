@@ -7,7 +7,11 @@ import {
   KeyboardAvoidingView,
   TextInput,
   ScrollView,
+  StatusBar,
 } from 'react-native'
+import {
+  SafeAreaInsetsContext,
+} from 'react-native-safe-area-context';
 import {useNavigation, CommonActions} from '@react-navigation/native'
 import {Scale, Colors, ImagesPath, COUNTRY} from '../../CommonConfig'
 import {FormInput, CustomButton, NumberInput} from '../../Component'
@@ -92,7 +96,11 @@ function Login(props) {
   
 
   return (
-    
+    <SafeAreaInsetsContext.Consumer>
+    {(insets) => (
+        <View style={{ flex: 1 ,}}>
+          <StatusBar translucent backgroundColor="transparent"
+          barStyle="dark-content" />
     <ImageBackground
       source={ImagesPath.background}
       style={styles.imageBachgroundStyle}>
@@ -169,6 +177,9 @@ function Login(props) {
         <LoadWheel visible={isLoading} />
       </KeyboardAvoidingView>
     </ImageBackground>
+    </View>
+    )}
+</SafeAreaInsetsContext.Consumer>
   )
 }
 

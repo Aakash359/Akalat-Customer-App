@@ -22,12 +22,10 @@ import {
     LANGUAGE_CODE,
     LOAD_LOOKUPS,
 } from '../../CommonConfig';
-import {connect} from 'react-redux'
 import { AuthStyle } from './AuthStyle';
 import RNRestart from 'react-native-restart';
 import { localize } from '../../Utils/Localization';
-import { scale } from '../../CommonConfig/HelperFunctions/functions';
-import {SET_INTRO_COMPLETE} from '../../redux/actions/AuthActions'
+
 
 class SelectLanguage extends Component {
     constructor() {
@@ -36,12 +34,6 @@ class SelectLanguage extends Component {
             languageCode: '1001',
         };
     }
-    /**
-     * Switch application language between English and Arabic(عربى) >>>>>
-     * English 1001
-     * Arabic 1002 عربى
-     * >>> pass language code during api calling in header with language tag
-     */
     async onPressContinue(languageCode) {
         if (this.state.languageCode == '1002') {
             await AsyncStorage.setItem(LANGUAGE_CODE, '1002');
@@ -61,7 +53,7 @@ class SelectLanguage extends Component {
             if (I18nManager.isRTL) {
                 I18nManager.forceRTL(false);
             }
-            // RNRestart.Restart();
+           
         }
         await AsyncStorage.multiSet([
             [FIRST_LAUNCH, JSON.stringify(false)],
@@ -78,7 +70,8 @@ class SelectLanguage extends Component {
             <SafeAreaInsetsContext.Consumer>
                 {(insets) => (
                     <View style={{ flex: 1 ,}}>
-                        <StatusBar translucent backgroundColor="transparent" />
+                        <StatusBar translucent backgroundColor="transparent"
+                        />
                         <ImageBackground source={ImagesPath.bg} style={{height:'100%',width:"100%",resizeMode:'stretch'}}>
                             <View
                                 style={{

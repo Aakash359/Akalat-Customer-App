@@ -337,9 +337,6 @@ function NearMe(props) {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================');
-        console.log("Aaksh====>",res?.data?.data?.restroNearMe);
-        console.log('====================================');
         setModal2(false)
         setModal(false)
         navigate('NearMe')
@@ -366,6 +363,7 @@ function NearMe(props) {
         setdata({
           ...data,
           restroList: res?.data?.data?.restroNearMe,
+          restroType: res?.data?.data?.restroNearMe?.categoryNameArray
         })
 
         setModal2(false)
@@ -376,7 +374,7 @@ function NearMe(props) {
       }
     }
   }
-
+  
  
 
   const renderItems = ({item}) => {
@@ -407,7 +405,7 @@ function NearMe(props) {
                   {item?.rating_from_user}
                 </Text>
              
-
+                
                 <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
                 <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
                 <Icon name="star" type="FontAwesome" style={styles.iconStyle} />

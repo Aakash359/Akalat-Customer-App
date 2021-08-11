@@ -108,10 +108,14 @@ function Payment(props) {
               <Text style={styles.itemText1}>Item Total</Text>
               <Text style={styles.normatText1}>${totalCartAmt}</Text>
             </View>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Total Discount</Text>
-              <Text style={styles.normatText1}>${det?.dis}</Text>
-            </View>
+            {
+              det?.dis ? ( <View style={styles.bottomContainer}>
+                <Text style={styles.itemText1}>Total Discount</Text>
+                <Text style={styles.normatText1}>-${det?.dis}</Text>
+              </View>
+              ): null
+            }
+           
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Tax</Text>
               <Text style={styles.normatText1}>${det?.tax}</Text>

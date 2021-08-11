@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Image,} from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, Image,StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Scale, Colors, ImagesPath } from '../../CommonConfig';
 import { CustomButton } from '../../Component';
 import { useDispatch } from 'react-redux';
 import { setSignupStatus } from '../../redux/actions';
-
+import {
+    SafeAreaInsetsContext,
+} from 'react-native-safe-area-context';
 
 
 
@@ -25,6 +27,11 @@ function SelectLoginSignup() {
       }, [])
     
     return (
+        <SafeAreaInsetsContext.Consumer>
+        {(insets) => (
+            <View style={{ flex: 1 ,}}>
+                <StatusBar translucent backgroundColor="transparent"
+                barStyle="dark-content" />
         <ImageBackground source={ImagesPath.bg} style={styles.imageBachgroundStyle}>            
              <View style={styles.container}>
                <View style={{marginTop:Scale(30),justifyContent:'center',flex:1}}>
@@ -37,6 +44,9 @@ function SelectLoginSignup() {
                 </View>
                   </View>            
         </ImageBackground>
+        </View>
+                )}
+    </SafeAreaInsetsContext.Consumer>
     );
 }
 export default SelectLoginSignup;

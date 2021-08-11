@@ -484,6 +484,7 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     flexDirection: 'row',
     borderWidth: 1,
+    backgroundColor:Colors.WHITE,
     borderColor: Colors.WHITE,
     height: Scale(45),
     width: '30%',
@@ -505,7 +506,7 @@ const styles = StyleSheet.create({
   },
   dishContainer1: {
     borderRadius: Scale(30),
-    
+    backgroundColor:Colors.WHITE,
     marginLeft: Scale(18),
     borderColor: 'grey',
     flexDirection: 'row',

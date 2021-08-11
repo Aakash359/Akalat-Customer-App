@@ -11,6 +11,8 @@ io.on('connect', async () => {
     console.log('====================================');
     console.log('Socket Connected: ', io);
     console.log('====================================');
+    io.emit('join', "aakash")
+    io.emit('new_visitor', {data: 'tarun'})
 })
 
 export default io

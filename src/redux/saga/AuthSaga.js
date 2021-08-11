@@ -79,6 +79,7 @@ export const loginSaga = function* loginSaga({data}) {
     }
   } catch (e) {
     yield put({type: LOGIN_FAILURE, payload: e})
+    alert("Server Error")
     yield put({type: LOADER_REQUEST, payload: false})
   }
 }
