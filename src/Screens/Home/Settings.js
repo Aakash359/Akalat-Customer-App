@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   Text,
   View,
@@ -15,7 +15,7 @@ import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath, LogoutAlert} from '../../CommonConfig'
 import {CustomButton} from '../../Component'
 import {useNavigation, CommonActions} from '@react-navigation/native'
-import {logOutRequest, loaderRequest} from '../../redux/actions'
+import {logOutRequest, loaderRequest,toggleRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
@@ -29,12 +29,23 @@ function Settings() {
   const [notification, setNotification] = useState(false)
   const [isEnabled, setIsEnabled] = useState(false)
   const {isLoading} = useSelector((state) => state.Auth)
-
-  const Userid = signupResponse?.user?._id
-
+  const user = useSelector((state) => state.Auth.user)
+  const toggleStatus = useSelector((state) => state.Setting.toggleStatus)
+  
+  
+  
   const setCheckedSwitch = () => {
+    const data = {
+      userid: user?._id,
+      status: isEnabled
+    }
+    dispatch(toggleRequest(data))
     setIsEnabled(!isEnabled)
   }
+  
+  
+  
+  
   const [data, setData] = React.useState([
     {name: 'Change Password', screenName: 'ChangePassword'},
     {name: 'Manage Address', screenName: 'ManageAddress'},
@@ -43,12 +54,13 @@ function Settings() {
 
   const redirectToLogin = async () => {
     dispatch(loaderRequest(true))
-    let keys = ['token']
-    // await AsyncStorage.clear()
+    
     dispatch(logOutRequest(data))
 
     setLogoutModal(false)
   }
+
+
   const renderItems = ({item, index}) => (
     <TouchableOpacity onPress={() => navigate(item.screenName)}>
       <View style={styles.cardStyle}>

@@ -22,6 +22,7 @@ import {
   CHANGE_ORDER_STATUS_LOADER,
   OFFER_LIST_REQUEST,
   OFFER_LIST_LOADER,
+  TOGGLE_REQUEST,
 } from '../Types/type'
 
 // =================About Us GET REQUEST =================
@@ -198,3 +199,12 @@ export const makeSignUpSuccess = (payload) => ({
   type: MAKE_SIGNUP_SUCCESS,
   payload,
 })
+
+// ================Notification Toggle Request =================
+
+export const toggleRequest = (data) => {
+  return {
+    type: TOGGLE_REQUEST,
+    data,
+  }
+}

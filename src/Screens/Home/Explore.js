@@ -387,15 +387,32 @@ function Explore() {
             keyExtractor={(item, i) => `${i}`}
             ListEmptyComponent={() => {
               return (
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textAlign: 'center',
-                    marginTop: Scale(170),
-                    marginHorizontal: 50,
-                  }}>
-                  This restaurant is not available
-              </Text>
+                <View>
+                  {
+                    search?
+                    <Text
+                    style={{
+                      fontSize: 20,
+                      textAlign: 'center',
+                      marginTop: Scale(170),
+                      marginHorizontal: 50,
+                    }}>
+                      
+                    This restaurant is not available
+                   </Text>:<Text
+                    style={{
+                      fontSize: 20,
+                      textAlign: 'center',
+                      marginTop: Scale(170),
+                      marginHorizontal: 50,
+                    }}>
+                      
+                    Sorry, online ordering isn't available at your location
+                   </Text>
+                  }
+                  
+                </View>
+                
               )
             }}
           />

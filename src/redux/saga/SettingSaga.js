@@ -38,6 +38,9 @@ import {
   OFFER_LIST_SUCCESS,
   OFFER_LIST_FAILED,
   OFFER_LIST_LOADER,
+  TOGGLE_REQUEST,
+  TOGGLE_SUCCESS,
+  TOGGLE_FAILED,
 } from '../Types/type'
 import {put, call, takeEvery, select} from 'redux-saga/effects'
 import Request from '../../apiServices/Request'
@@ -403,6 +406,30 @@ export const offerList = function* offerList({data}) {
   }
 }
 
+// ====================== About US GET ======================
+export const toggleSaga = function* toggleSaga({data}) {
+  try {
+    const response = yield call(Request, {
+      url: 'order/customerNotification',
+      method: 'POST',
+      data,
+    })
+
+    if (response?.data?.error == true) {
+      yield put({type: TOGGLE_FAILED, payload: response})
+      global.dropDownAlertRef.alertWithType(
+        'error',
+        'Error',
+        response?.data?.message,
+      )
+    } else {
+      yield put({type: TOGGLE_SUCCESS, payload: response?.data})
+    }
+  } catch (e) {
+    yield put({type: TOGGLE_FAILED, payload: e})
+  }
+}
+
 export function* settingSaga() {
   yield takeEvery(ABOUTUS_REQUEST, AboutUsSaga)
   yield takeEvery(PRIVACY_REQUEST, PrivacySaga)
@@ -417,5 +444,6 @@ export function* settingSaga() {
   yield takeEvery(CHANGE_PASSWORD_REQUEST, changePassword)
   yield takeEvery(CHANGE_ORDER_STATUS_REQUEST, changeOrderStatus)
   yield takeEvery(OFFER_LIST_REQUEST, offerList)
+  yield takeEvery(TOGGLE_REQUEST, toggleSaga)
 }
 export default settingSaga

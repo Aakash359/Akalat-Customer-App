@@ -50,9 +50,9 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
-    //   console.log('====================================');
-    // console.log("Aakash====>", orderDetail?.order?.status);
-    // console.log('====================================');
+      console.log('====================================');
+    console.log("Aakash====>", orderDetail?.order);
+    console.log('====================================');
     } catch (error) {
       setOrderDetail({
         ...orderDetail,
@@ -65,6 +65,11 @@ function OrderDetail(props) {
   React.useEffect(() => {
     getOrderDetails()
   }, [])
+
+
+  const onPress = async () => {
+    navigate("HomeMaker")
+  }
 
   
 
@@ -283,7 +288,10 @@ function OrderDetail(props) {
           </View>
 
           <View style={{paddingHorizontal: '5%', marginBottom: 50}}>
-            <CustomButton title="Re-Order" isSecondary={true} />
+            <CustomButton 
+             title="Re-Order" isSecondary={true} 
+             onPress={onPress}
+            />
           </View>
         </ScrollView>
       </ImageBackground>

@@ -37,7 +37,10 @@ import {
   OFFER_LIST_REQUEST,
   OFFER_LIST_SUCCESS,
   OFFER_LIST_FAILED,
-  OFFER_LIST_LOADER
+  OFFER_LIST_LOADER,
+  TOGGLE_REQUEST,
+  TOGGLE_SUCCESS,
+  TOGGLE_FAILED,
 } from '../Types/type'
 
 const initialState = {
@@ -70,7 +73,8 @@ const initialState = {
   changePasswordStatus: false,
   offerListResponse: false,
   offerListLoader:false,
-  
+  toggleStatus:false,
+  toggleResponse:{},
 }
 
 export default function SettingReducer(state = initialState, action) {
@@ -250,7 +254,25 @@ export default function SettingReducer(state = initialState, action) {
           changePasswordResponse: action.payload,
         }  
     case OFFER_LIST_LOADER:
-          return {...state, offerListLoader: action.payload}   
+        return {...state, offerListLoader: action.payload}
+    case TOGGLE_REQUEST:
+      return {
+        ...state,
+        toggleStatus: false,
+        toggleResponse: action.payload,
+      }
+    case TOGGLE_SUCCESS:
+      return {
+        ...state,
+        toggleStatus: true,
+        toggleResponse: action.payload,
+      }
+    case TOGGLE_FAILED:
+      return {
+        ...state,
+        toggleStatus: false,
+        toggleResponse: action.payload,
+      }       
 
     default:
       return state

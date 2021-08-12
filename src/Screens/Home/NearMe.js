@@ -43,6 +43,7 @@ function NearMe(props) {
   const [activeTab, setActiveTab] = useState(0)
   const [currentAddress, setAddress] = useState('')
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
+  const offercard = offercardResponse?.data || []
   const user = useSelector((state) => state.Auth.user)
   const [modal, setModal] = React.useState(false)
   const [modal2, setModal2] = React.useState(false)
@@ -58,9 +59,8 @@ function NearMe(props) {
     setIsEnabled(!isEnabled)
   }
   
-  const [offercard, setofferCard] = React.useState(
-    offercardResponse?.data || [],
-  )
+  
+  
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
@@ -242,13 +242,8 @@ function NearMe(props) {
   }, [search])
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(couponRequest())
-    }, 1000)
-  }, [])
-
-  useEffect(() => {
     dispatch(offercardRequest())
+    dispatch(couponRequest())
   }, [])
 
   const redirectToHomeMaker = (item) => {
@@ -669,15 +664,31 @@ function NearMe(props) {
           keyExtractor={(item, i) => `${i}`}
           ListEmptyComponent={() => {
             return (
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: 20,
-                  marginTop: 50,
-                  marginHorizontal: 50,
-                }}>
-                Sorry, online ordering isn't available at your location
-              </Text>
+              <View>
+                  {
+                    search?
+                    <Text
+                    style={{
+                      fontSize: 20,
+                      textAlign: 'center',
+                      marginTop: Scale(170),
+                      marginHorizontal: 50,
+                    }}>
+                      
+                    This restaurant is not available
+                   </Text>:<Text
+                    style={{
+                      fontSize: 20,
+                      textAlign: 'center',
+                      marginTop:Scale(50),
+                      marginHorizontal: 50,
+                    }}>
+                      
+                    Sorry, online ordering isn't available at your location
+                   </Text>
+                  }
+                  
+                </View>
             )
           }}
         />

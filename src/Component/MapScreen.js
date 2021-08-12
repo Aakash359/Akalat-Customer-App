@@ -161,7 +161,9 @@ export class MapScreen extends Component {
 
   render() {
     const {onMarkerPress} = this.props
-    
+    console.log('====================================');
+    console.log('Driver Loc: ', this.props.driverLoc);
+    console.log('====================================');
     return (
       <View style={{flex: 1}}>
         <MapView
@@ -180,8 +182,9 @@ export class MapScreen extends Component {
           showsCompass={true}
           provider={PROVIDER_GOOGLE}
           
-        >{
-          this.props.driverLoc?.latitude && <Marker
+        >
+
+      {this.props.driverLoc?.latitude && <Marker
           coordinate={this.props.driverLoc}
           >
 
@@ -189,8 +192,7 @@ export class MapScreen extends Component {
               <Text>Hello</Text>
             </View>
 
-          </Marker>
-          }
+          </Marker>}
         </MapView>
       </View>
     )

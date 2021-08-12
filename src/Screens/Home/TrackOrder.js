@@ -31,8 +31,6 @@ const mapScreen = (props) => {
     const [driverLoc ,setDriverLoc]= useState(null);
     
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
-
-    
     const callNumber = phone => {
         console.log('callNumber ----> ', phone);
         let phoneNumber = '';
@@ -56,6 +54,8 @@ const mapScreen = (props) => {
 
       useEffect(() => {
         io.on("getLoc", (data)=> {
+        console.log("TarckOrder====>",data)
+        
         setDriverLoc(data.coords)
         })
       }, [])
@@ -98,7 +98,7 @@ const mapScreen = (props) => {
                                 <Text style={styles.normalText}>Order Received </Text>
 
                                 {
-                                    orderDetails?.status=='P'? <Image
+                                    orderDetails?.orderDetails?.status=='P'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
@@ -111,7 +111,7 @@ const mapScreen = (props) => {
                                 <Text style={[styles.normalText,{marginTop:8}]}>Order Confirmed</Text>
                                 
                                 {
-                                    orderDetails?.status=='PR'? <Image
+                                    orderDetails?.orderDetails?.status=='PR'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
@@ -125,7 +125,7 @@ const mapScreen = (props) => {
                             <View style={styles.bottomContainer}>
                                 <Text style={styles.normalText}>Order Picked up</Text>
                                 {
-                                    orderDetails?.status=='OPU'? <Image
+                                    orderDetails?.orderDetails?.status=='OPU'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
@@ -139,7 +139,7 @@ const mapScreen = (props) => {
                             <View style={styles.bottomContainer}>
                                 <Text style={[styles.normalText,{marginTop:8}]}>Order Delivered</Text>
                                 {
-                                    orderDetails?.status=='OD'? <Image
+                                    orderDetails?.orderDetails?.status=='OD'? <Image
                                     source={ImagesPath.check2x}
                                  style={styles.imageStyle}
                                  />:null
