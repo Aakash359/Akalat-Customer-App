@@ -338,9 +338,11 @@ function Card(props) {
             <View
               style={[
                 styles.cardStyle,
+                
                 {
-                  height: Scale(330),
-                },
+                  height: Scale(250),
+                }
+                ,
               ]}>
               <Text style={[styles.primaryText, {marginLeft: Scale(-5)}]}>
                 {cartRestroDetails?.restro_name}

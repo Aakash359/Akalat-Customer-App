@@ -10,7 +10,7 @@ import {
   Text
 } from 'react-native'
 import {
-  androidMapAPIKey,} from '../CommonConfig';
+  androidMapAPIKey,screenWidth} from '../CommonConfig';
 import MapView, {PROVIDER_GOOGLE, Marker,Callout,Polyline} from 'react-native-maps'
 import Geolocation from 'react-native-geolocation-service'
 import {bool, func} from 'prop-types'
@@ -167,7 +167,7 @@ export class MapScreen extends Component {
     return (
       <View style={{flex: 1}}>
         <MapView
-          style={StyleSheet.absoluteFillObject}
+          style={{height:screenWidth/1}}
           region={{
             ...this.props.driverLoc,
             latitudeDelta: 0.0045,

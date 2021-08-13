@@ -98,7 +98,7 @@ function Favorites() {
           <Text style={styles.normalText}>Delivery Time</Text>
         </View>
         <View style={styles.buttonStyle1}>
-          <Text style={styles.textStyle1}>2.7 km</Text>
+          <Text style={styles.textStyle1}>{item?.distance_km}</Text>
           <Text style={styles.normalText}>Distance</Text>
         </View>
       </View>

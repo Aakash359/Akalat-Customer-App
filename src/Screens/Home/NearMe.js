@@ -42,6 +42,7 @@ Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 function NearMe(props) {
   const [activeTab, setActiveTab] = useState(0)
   const [currentAddress, setAddress] = useState('')
+  const [search, setSearch] = React.useState('')
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
   const offercard = offercardResponse?.data || []
   const user = useSelector((state) => state.Auth.user)
@@ -120,7 +121,7 @@ function NearMe(props) {
     )
   }
 
-  const [search, setSearch] = React.useState('')
+  
 
   const onSearch = async () => {
     var restro_type = ''
@@ -241,9 +242,33 @@ function NearMe(props) {
     onSearch()
   }, [search])
 
-  useEffect(() => {
+  const getDefaultRestro = async () => {
+    setdata({...data, isLoading: true})
+
+    const url = `${API_BASE}/restro/combinedSearchSortFilter`
+
+    const payload = {
+      userid: user?._id,
+      lat: 28.4922,
+      lng: 77.0966,
+      is_sort: `${false}`,
+      is_filter: `${false}`,
+    }
+    try {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restroNearMe,
+      })
+    } catch (error) {}
+  }
+
+  useEffect( () => {
     dispatch(offercardRequest())
     dispatch(couponRequest())
+    getDefaultRestro()
+
+    
   }, [])
 
   const redirectToHomeMaker = (item) => {
@@ -332,6 +357,10 @@ function NearMe(props) {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
+        console.log('====================================');
+        console.log("Aakash======>",res?.data?.data?.restroNearMe);
+        console.log('====================================');
+        
         setModal2(false)
         setModal(false)
         navigate('NearMe')
@@ -360,6 +389,7 @@ function NearMe(props) {
           restroList: res?.data?.data?.restroNearMe,
           restroType: res?.data?.data?.restroNearMe?.categoryNameArray
         })
+        
 
         setModal2(false)
         setModal(false)
@@ -369,6 +399,8 @@ function NearMe(props) {
       }
     }
   }
+
+  
   
  
 
@@ -475,7 +507,10 @@ function NearMe(props) {
                   paddingBottom: 20,
                   paddingLeft: 12,
                 }}>
-                {item?.categoryNameArray}
+                {item?.categoryNameArray?.reduce((a,b) => {
+    a += `${b}, `
+return a
+}, '').slice(0, -2)}
               </Text>
             </View>
           </View>

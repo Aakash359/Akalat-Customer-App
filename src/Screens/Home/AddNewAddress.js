@@ -119,7 +119,12 @@ function AddNewAddress(props) {
       }
       dispatch(AddAddressRequest(data))
       dispatch(AddAddressLoader(true))
-      dispatch(AddressListRequest(data))
+      dispatch(AddressListRequest(data))     
+      setHouseName('')
+      setNearby('')
+      setActiveTab(null)
+      setAreaName('')
+
       navigate('ManageAddress')
      }
       else if (!nearby) {
@@ -134,6 +139,10 @@ function AddNewAddress(props) {
         dispatch(AddAddressRequest(data))
         dispatch(AddAddressLoader(true))
         dispatch(AddressListRequest(data))
+        setHouseName('')
+        setNearby('')
+        setActiveTab(null)
+        setAreaName('')
         navigate('ManageAddress')
       }
      

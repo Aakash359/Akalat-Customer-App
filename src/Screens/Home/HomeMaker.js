@@ -39,9 +39,12 @@ function HomeMaker(props) {
   const [list, setList] = React.useState({
     restroDetails: {},
     productList: [],
+    filterData:[],
     isLoading: true,
     error: '',
   })
+
+  
 
   const getRestoDetails = async () => {
     setList({...list, isLoading: true})
@@ -51,8 +54,10 @@ function HomeMaker(props) {
     }
     try {
       const res = await axios.post(url, payload)
+     
+     
 
-      if (res?.status === 200) {
+  if (res?.status === 200) {
         setList({
           ...list,
           restroDetails: res?.data?.data?.restro_detail,
@@ -60,9 +65,7 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
-       
-        
-      } else {
+       } else {
         setList({...list, isLoading: false, error: res?.data?.message})
       }
     } catch (error) {
@@ -122,9 +125,14 @@ function HomeMaker(props) {
     0,
   )
 
-  console.log('====================================');
-  console.log("Aakash====>",list?.productList);
-  console.log('====================================');
+  const allData = list.productList
+  const veg =  allData.filter(function(item){
+    return item.product_type == 'veg';
+ })
+
+
+
+  
 
   return (
     <View style={styles.container}>
@@ -165,7 +173,7 @@ function HomeMaker(props) {
               </View>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>{restroDetails?.distance} Km </Text>
-                <Text style={styles.normalText}>Distance</Text>
+                <Text style={styles.normalText} numberOfLines={1}>Distance</Text>
               </View>
             </View>
             <View
@@ -200,7 +208,7 @@ function HomeMaker(props) {
             <Text style={styles.categoryText}>Recommended food</Text>
             <FlatGrid
               itemDimension={130}
-              data={list?.productList}
+              data={  !isEnabled? allData:veg}
               style={styles.gridView}
               spacing={Scale(12)}
               renderItem={({item}) => {
@@ -249,7 +257,7 @@ function HomeMaker(props) {
                             styles.priceText,
                             {
                               textDecorationLine: 'line-through',
-                              textDecorationStyle: 'solid',
+                              
                             },
                           ]}>
                           ${item?.price}
@@ -689,8 +697,10 @@ const styles = StyleSheet.create({
     fontSize: Scale(12),
   },
   priceText: {
-    color: '#AB8F8E',
+    color: Colors.BORDERCOLOR,
     fontSize: Scale(16),
+    fontWeight:'100'
+    
   },
   categoryText: {
     color: '#AB8F8E',

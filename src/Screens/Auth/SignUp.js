@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     height: Scale(80),
   },
   modalDropDownText: {
-    backgroundColor: Colors.TRANSPARENT,
+    backgroundColor: Colors.WHITE,
     color: Colors.BLACK,
     fontSize: Scale(14),
     paddingHorizontal: Scale(15),

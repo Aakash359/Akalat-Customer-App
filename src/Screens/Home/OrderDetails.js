@@ -217,12 +217,18 @@ function OrderDetail(props) {
                 ${orderDetail?.order?.total_price}
               </Text>
             </View>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.itemText1}>Total Discount</Text>
-              <Text style={styles.normatText1}>
-                -${orderDetail?.order?.discounted_price}
-              </Text>
-            </View>
+
+            {
+              props?.route?.params?.restro_detail?.det?.dis ? ( 
+                <View style={styles.bottomContainer}>
+                <Text style={styles.itemText1}>Total Discount</Text>
+                <Text style={styles.normatText1}>
+                  -${orderDetail?.order?.discounted_price}
+                </Text>
+              </View>
+              ): null
+            }
+            
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Tax</Text>
               <Text style={styles.normatText1}>
