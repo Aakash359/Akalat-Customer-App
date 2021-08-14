@@ -36,9 +36,9 @@ function Offers() {
   
 
 
-  console.log('====================================');
-  console.log("CouponResponse======>", couponResponse);
-  console.log('====================================');
+  
+  
+  
 
   
   
@@ -60,7 +60,8 @@ function Offers() {
           </Text>
         </View>
       </View>
-      <View style={styles.borderStyle} />
+      <View style={styles.borderStyle} 
+      />
       <View style={styles.heading}>
         <Icon
           type="Ionicons"

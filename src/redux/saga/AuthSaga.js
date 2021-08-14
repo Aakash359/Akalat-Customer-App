@@ -105,14 +105,12 @@ export const getUserDetails = function* getUserDetails({data}) {
 
 // ====================== OTP Send Post ======================
 export const OtpSaga = function* OtpSaga({data}) {
-  //
   try {
     const response = yield call(Request, {
       url: '/sendOtp',
       method: 'POST',
       data,
     })
-    //
     if (response?.error == true) {
       yield put({type: OTP_FAILED, payload: response})
       global.dropDownAlertRef.alertWithType('error', 'Error', response?.message)

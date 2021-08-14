@@ -29,7 +29,7 @@ function Notification() {
     useEffect(() => {
       getToken();
       messaging().onMessage(async remoteMessage => {
-        console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+        
         setNotification({
           title: remoteMessage.notification.title,
           body: remoteMessage.notification.body,
@@ -38,7 +38,7 @@ function Notification() {
       });
   
       messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log('onNotificationOpenedApp: ', JSON.stringify(remoteMessage));
+        
         setNotification({
           title: remoteMessage.notification.title,
           body: remoteMessage.notification.body,

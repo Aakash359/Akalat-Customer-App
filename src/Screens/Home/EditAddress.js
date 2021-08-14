@@ -124,7 +124,7 @@ function EditAddress(props) {
           created_by: user?._id,
           _id: address?._id,
         }
-        console.log("NearBy=====>", data);
+        
         dispatch(AddAddressRequest(data))
         dispatch(AddAddressLoader(true))
         navigate('ManageAddress')

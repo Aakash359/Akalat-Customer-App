@@ -207,9 +207,9 @@ function Coupon(props) {
           isLoading: false,
           restroList: res?.data?.data?.restroNewList,
         })
-        console.log('====================================');
-        console.log("Aakash====>",res?.data?.data?.restroNewList);
-        console.log('====================================');
+        
+        
+        
         setModal2(false)
         navigate('Coupon')
       } catch (error) {

@@ -25,38 +25,35 @@ export default class Location extends React.Component {
           }
         } catch (err) {
           alert('err', err);
-          console.warn(err);
         }
       }
       requestLocationPermission();
     }
   }
   callLocation(that) {
-    //alert("callLocation Called");
     Geolocation.getCurrentPosition(
-      //Will give you the current location
       position => {
         const currentLongitude = JSON.stringify(position.coords.longitude);
-        //getting the Longitude from the location json
+       
         const currentLatitude = JSON.stringify(position.coords.latitude);
-        //getting the Latitude from the location json
+      
         that.setState({currentLongitude: currentLongitude});
-        //Setting state Longitude to re re-render the Longitude Text
+       
         that.setState({currentLatitude: currentLatitude});
-        //Setting state Latitude to re re-render the Longitude Text
+       
       },
       error => console.log(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
     that.watchID = Geolocation.watchPosition(position => {
       const currentLongitude = JSON.stringify(position.coords.longitude);
-      //getting the Longitude from the location json
+      
       const currentLatitude = JSON.stringify(position.coords.latitude);
-      //getting the Latitude from the location json
+
       that.setState({currentLongitude: currentLongitude});
-      //Setting state Longitude to re re-render the Longitude Text
+      
       that.setState({currentLatitude: currentLatitude});
-      //Setting state Latitude to re re-render the Longitude Text
+     
     });
   }
   componentWillUnmount() {

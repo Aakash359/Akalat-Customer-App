@@ -27,16 +27,13 @@ export default function LogoTitle(props) {
     Cart,
     addressList: addressListResponse?.data?.addressList || [],
   }))
-  console.log('====================================')
-  console.log({addressId, selectedAddress, addressList})
-  console.log('====================================')
+
 
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         Geolocation.requestAuthorization('whenInUse')
         getOneTimeLocation()
-        //subscribeLocationLocation()
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -47,7 +44,6 @@ export default function LogoTitle(props) {
             },
           )
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
             getOneTimeLocation()
           } else {
           }
@@ -66,23 +62,18 @@ export default function LogoTitle(props) {
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
       (position) => {
-        console.log('====================================')
-        console.log('location', position)
-        console.log('====================================')
+       
         const currentLongitude = JSON.stringify(position.coords.longitude)
         const currentLatitude = JSON.stringify(position.coords.latitude)
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
             let addressComponent = json.results[1].formatted_address
-            console.log(addressComponent, 'addressComponent')
             setAddress(addressComponent)
           },
         )
       },
       (error) => {
-        console.log('====================================')
         console.log('location', error)
-        console.log('====================================')
       },
     )
   }

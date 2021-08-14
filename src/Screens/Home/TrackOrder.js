@@ -32,7 +32,7 @@ const mapScreen = (props) => {
     
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
     const callNumber = phone => {
-        console.log('callNumber ----> ', phone);
+        
         let phoneNumber = '';
         if (Platform.OS !== 'android') {
           phoneNumber = `telprompt:${123456789}`;
@@ -54,7 +54,6 @@ const mapScreen = (props) => {
 
       useEffect(() => {
         io.on("getLoc", (data)=> {
-        console.log("TarckOrder====>",data)
         
         setDriverLoc(data.coords)
         })

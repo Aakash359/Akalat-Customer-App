@@ -97,10 +97,7 @@ function Payment(props) {
           <View
             style={[
               styles.cardStyle,
-              {
-                height: Scale(320),
-              },
-            ]}>
+              [det?.dis ?  {height: Scale(320)}:{height: Scale(250)}]]}>
             <Text style={[styles.primaryText, {color: '#AB8F8E'}]}>
               {props?.restroDetails?.restro_name}
             </Text>
@@ -156,7 +153,7 @@ function Payment(props) {
               <Text
                 style={[
                   styles.itemText,
-                  {color: 'green', fontSize: Scale(16)},
+                  {color: 'green',textAlign:'center',marginTop:Scale(6)},
                 ]}>
                 You have saved $5 on this order
               </Text>
@@ -277,7 +274,7 @@ const styles = StyleSheet.create({
     marginHorizontal: Scale(5),
   },
 
-  itemText: {color: Colors.BLACK, fontSize: Scale(18)},
+  itemText: { color: Colors.BLACK, fontSize: Scale(18)},
   textStyle: {color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold'},
   loginInputCont: {
     flex: 1,

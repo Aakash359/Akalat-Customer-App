@@ -15,7 +15,9 @@ import {useNavigation} from '@react-navigation/native'
 import moment from 'moment'
 import axios from 'axios'
 import {API_BASE} from '../../apiServices/ApiService'
-import {useSelector} from 'react-redux'
+import {connect} from 'react-redux'
+import {reOrder} from '../../redux/actions/CartActions'
+
 
 function OrderDetail(props) {
   const {navigate} = useNavigation()
@@ -27,10 +29,15 @@ function OrderDetail(props) {
   })
 
     const ratingRes = props?.route?.params?.ratingRes;
+    const RestroDetails =props?.route?.params?.restro_detail
+    const products =props?.route?.product_list || []
 
-    console.log('====================================');
-    console.log("rating response====>", ratingRes?.data?.status);
-    console.log('====================================');
+    
+    
+    
+    
+
+  
 
    const getOrderDetails = async () => {
     setOrderDetail({...orderDetail, isLoading: true})
@@ -50,9 +57,7 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
-      console.log('====================================');
-    console.log("Aakash====>", orderDetail?.order);
-    console.log('====================================');
+     
     } catch (error) {
       setOrderDetail({
         ...orderDetail,
@@ -68,7 +73,10 @@ function OrderDetail(props) {
 
 
   const onPress = async () => {
-    navigate("HomeMaker")
+    navigate('Card', 
+    props.reOrder({
+      restroDetails:props?.route?.params?.restro_detail})
+    )
   }
 
   
@@ -202,12 +210,9 @@ function OrderDetail(props) {
           }
           
           <View
-            style={[
-              styles.cardStyle,
-              {
-                height: Scale(330),
-              },
-            ]}>
+            style={[styles.cardStyle,
+            [props?.route?.params?.restro_detail?.det?.dis ? { height: Scale(325)}:{ height: Scale(250)} ] ]}
+            >
             <Text style={[styles.primaryText, {marginLeft: Scale(-5)}]}>
               {props?.route?.params?.restro_detail.restro_name}
             </Text>
@@ -305,7 +310,11 @@ function OrderDetail(props) {
   )
 }
 
-export default OrderDetail
+const mapDispatchToProps = {
+  reOrder,
+}
+export default connect(null, mapDispatchToProps)(OrderDetail)
+
 
 const styles = StyleSheet.create({
   container: {

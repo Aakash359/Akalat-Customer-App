@@ -357,9 +357,9 @@ function NearMe(props) {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        console.log('====================================');
-        console.log("Aakash======>",res?.data?.data?.restroNearMe);
-        console.log('====================================');
+        
+        
+        
         
         setModal2(false)
         setModal(false)
@@ -1011,7 +1011,7 @@ return a
               <Switch
                 trackColor={{
                   false: Colors.GRAY,
-                  true: Colors.RED,
+                  true: Colors.GREEN,
                 }}
                 style={{
                   transform: [{scaleX: 1.1}, {scaleY: 1.1}],

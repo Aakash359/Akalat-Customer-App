@@ -32,9 +32,9 @@ function Favorites() {
     setChecked(!checked)
   }
 
-  console.log('====================================');
-  console.log("Aakash====>",favouriteList);
-  console.log('====================================');
+  
+  
+  
 
   useEffect(() => {
     const data = {

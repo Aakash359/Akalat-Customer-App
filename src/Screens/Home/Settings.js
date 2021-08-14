@@ -27,24 +27,29 @@ function Settings() {
   const signupResponse = useSelector((state) => state.Auth)
   const [logoutModal, setLogoutModal] = useState(false)
   const [notification, setNotification] = useState(false)
-  const [isEnabled, setIsEnabled] = useState(false)
+  const toggleStatus = useSelector((state) => state.Setting.toggleStatus)
+  const [isEnabled, setIsEnabled] = useState(toggleStatus)
   const {isLoading} = useSelector((state) => state.Auth)
   const user = useSelector((state) => state.Auth.user)
-  const toggleStatus = useSelector((state) => state.Setting.toggleStatus)
+
+  
+
+  
+  
   
   
   
   const setCheckedSwitch = () => {
+
     const data = {
       userid: user?._id,
       status: isEnabled
     }
     dispatch(toggleRequest(data))
     setIsEnabled(!isEnabled)
-  }
-  
-  
-  
+
+   }
+
   
   const [data, setData] = React.useState([
     {name: 'Change Password', screenName: 'ChangePassword'},
@@ -52,12 +57,13 @@ function Settings() {
     {name: 'Saved Cards', screenName: 'SavedCard'},
   ])
 
-  const redirectToLogin = async () => {
-    dispatch(loaderRequest(true))
-    
-    dispatch(logOutRequest(data))
+  const redirectToLogin = async () => 
+  {
 
+    dispatch(loaderRequest(true))
+    dispatch(logOutRequest(data))
     setLogoutModal(false)
+    
   }
 
 
@@ -85,7 +91,9 @@ function Settings() {
           style={styles.logoStyle}
         />
       </View>
-      <Text style={styles.headerText}>Settings </Text>
+
+      <Text style={styles.headerText}>Settings</Text>
+       
       <ImageBackground
         source={ImagesPath.background}
         style={styles.loginInputCont}>
@@ -111,6 +119,7 @@ function Settings() {
         </ScrollView>
       </ImageBackground>
       <LogoutAlert
+        
         visible={logoutModal}
         title={'Logout'}
         alertTitle={'Are you sure you want to\nlogout ? '}

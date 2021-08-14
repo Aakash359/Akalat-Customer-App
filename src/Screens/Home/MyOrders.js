@@ -40,10 +40,6 @@ function MyOrders(props) {
     navigate('OrderDetails', item)
   }
   
-  
-  
-
-  
   React.useEffect(() => {
     props?.getOrderList()
   }, [])

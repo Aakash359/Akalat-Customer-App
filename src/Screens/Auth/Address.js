@@ -33,10 +33,7 @@ import Geocoder from 'react-native-geocoding'
 import {AddAddressRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 
-// Geolocation.setRNConfiguration({
-//   authorizationLevel: 'whenInUse',
-//   skipPermissionRequests: false,
-// })
+
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function Address() {
@@ -95,9 +92,9 @@ function Address() {
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
       (position) => {
-        console.log('====================================')
-        console.log(position)
-        console.log('====================================')
+        
+        
+        
         setLocation(position.coords)
         Geocoder.from(position.coords.latitude, position.coords.longitude).then(
           (json) => {
@@ -110,9 +107,9 @@ function Address() {
         )
       },
       (error) => {
-        console.log('====================================')
-        console.log(error)
-        console.log('====================================')
+        
+        
+        
       },
     )
   }
@@ -124,7 +121,6 @@ function Address() {
       alert('Please enter area')
     } else {
       let data = {
-        // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
         address_type: activeTab,
         lng: location?.latitude,
         lat: location?.longitude,
@@ -136,7 +132,6 @@ function Address() {
       }
       if (!nearby) {
         data = {
-          // address_type: activeTab == 0 ? 'HOME' : activeTab == 1 ? 'WORK' : 'OTHER',
           address_type: activeTab,
           lng: location?.latitude,
           lat: location?.longitude,

@@ -82,7 +82,7 @@ function Rating(props) {
       alert('Order rated from user successfully!')
       navigate('OrderDetails', { ratingRes : res} )
     } catch (error) {
-      console.log('Error',error)
+      
     }
 
     }

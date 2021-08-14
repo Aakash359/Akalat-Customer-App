@@ -1,4 +1,3 @@
-// Libraries
 import React from 'react';
 import { StyleSheet, I18nManager } from 'react-native';
 

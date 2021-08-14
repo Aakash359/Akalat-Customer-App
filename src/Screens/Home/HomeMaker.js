@@ -14,7 +14,8 @@ import {
 } from 'react-native'
 import {Icon, List} from 'native-base'
 import {useNavigation} from '@react-navigation/native'
-import {Colors, Scale, ImagesPath, Fonts} from '../../CommonConfig'
+import {Colors, Scale, ImagesPath, Fonts,screenWidth,screenHeight,
+    } from '../../CommonConfig'
 import {FlatGrid} from 'react-native-super-grid'
 import {useDispatch, connect} from 'react-redux'
 import axios from 'axios'
@@ -203,12 +204,12 @@ function HomeMaker(props) {
                 style={{transform: [{scaleX: 0.9}, {scaleY: 0.8}]}}
                 onValueChange={toggleSwitch}
                 value={isEnabled}
-              />
+               />
             </View>
             <Text style={styles.categoryText}>Recommended food</Text>
             <FlatGrid
               itemDimension={130}
-              data={  !isEnabled? allData:veg}
+              data={!isEnabled? allData:veg}
               style={styles.gridView}
               spacing={Scale(12)}
               renderItem={({item}) => {
@@ -231,7 +232,9 @@ function HomeMaker(props) {
                         alignItems: 'center',
                       }}>
                         { 
-                         item.product_type==='veg'? <Image source={ImagesPath.veg}/>:<Image source={ImagesPath.non_veg}/>
+                          item.product_type==='veg'? 
+                           <Image source={ImagesPath.veg}/> 
+                         : <Image source={ImagesPath.non_veg}/>
                         }
                       
                       <Text
@@ -641,8 +644,8 @@ const styles = StyleSheet.create({
   },
   backgroundStyle: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    height: screenHeight/2.5,
+    width:'100%',
     paddingTop: Scale(70),
     backgroundColor: '#ccc',
   },
@@ -664,6 +667,7 @@ const styles = StyleSheet.create({
     marginBottom: Scale(30),
   },
   ratingContainer: {
+    
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: Scale(25),

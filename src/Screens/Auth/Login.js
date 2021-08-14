@@ -23,7 +23,6 @@ import {
   loaderRequest,
   countryListRequest,
 } from '../../redux/actions'
-import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import { getDeviceType, getFcmToken } from '../../CommonConfig/HelperFunctions/AppHelper'
 
 
@@ -174,7 +173,7 @@ function Login(props) {
             </View>
           </View>
         </ScrollView>
-        <LoadWheel visible={isLoading} />
+        
       </KeyboardAvoidingView>
     </ImageBackground>
     </View>

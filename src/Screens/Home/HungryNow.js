@@ -9,16 +9,43 @@ import { LoadWheel } from '../../CommonConfig/LoadWheel'
 
 
 function HungryNow(props) {
-
+    
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
     const user = useSelector((state) => state.Auth.user)
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
+    
    
-    console.log('====================================');
-    console.log("product_list", product_list);
-    console.log('====================================');
+    
+    
+    
+
+    let a = product_list
+
+    let res = [...new Set(a?.map(i => i?.res?.id))]
+    
+    let data = res.reduce((data, item) => {
+      let p = a?.filter(i => i?.res?.id === item)
+      data.push(p)
+      return data
+    }, [])
+
+    
+
+
+    // let filter = [{p: 1, res: {id: 1}}, {p: 2, res: {id: 1}}, {p: 3, res: {id: 2}}]
+
+    // let res = [...new Set(a?.map(i => i?.res?.id))]
+    // 
+    // let data = res.reduce((data, item) => {
+    //   let p = a?.filter(i => i?.res?.id === item)
+    //   data.push(p)
+    //   return data
+    // }, [])
+    
+    
+      
     useEffect(() => {
         
         const data = {
@@ -79,7 +106,8 @@ function HungryNow(props) {
                 <Image source={{ uri: item?.image}} style={styles.backgroundStyle} />
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>
-                        { item.product_type==='veg'? <Image source={ImagesPath.veg}/>:<Image source={ImagesPath.non_veg}/>
+                        { item.product_type==='veg'? <Image source={ImagesPath.veg}
+                        />:<Image source={ImagesPath.non_veg}/>
                         }
                        
                         <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {item.name}</Text>

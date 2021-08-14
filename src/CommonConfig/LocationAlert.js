@@ -3,8 +3,6 @@ import { View, Modal, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Scale, Colors, Fonts } from './index';
 export const LocationAlert = ({
     visible,
-    alertTitle,
-    title,
     rightButtonText,
     leftButtonText,
     onPressLeftButton,

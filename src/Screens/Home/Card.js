@@ -336,14 +336,8 @@ function Card(props) {
               </TouchableOpacity>
             </View>
             <View
-              style={[
-                styles.cardStyle,
-                
-                {
-                  height: Scale(250),
-                }
-                ,
-              ]}>
+              style={[ styles.cardStyle,[det?.dis ?  {height: Scale(325)}:{height: Scale(250)}]]}>
+
               <Text style={[styles.primaryText, {marginLeft: Scale(-5)}]}>
                 {cartRestroDetails?.restro_name}
               </Text>
