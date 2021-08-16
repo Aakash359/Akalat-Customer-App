@@ -66,6 +66,7 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
+       
        } else {
         setList({...list, isLoading: false, error: res?.data?.message})
       }
@@ -116,9 +117,15 @@ function HomeMaker(props) {
 
   const {restroDetails = {}} = props.route.params || {}
 
+  const {restroData = {}} = props.route.params || {}
   
+  console.log('====================================');
+  console.log("RestriDetails=======>",restroData);
+  console.log('====================================');
 
   const {restroDetails: resDet} = list
+
+
 
   const {cartProducts} = props
   const totalCartAmt = cartProducts?.reduce(
@@ -168,7 +175,7 @@ function HomeMaker(props) {
               </View>
               <View style={styles.buttonStyle}>
                 <Text style={styles.textStyle}>
-                  {list?.productList?.deliveryTime} Min
+                  {restroDetails?.delivery_time}
                 </Text>
                 <Text style={styles.normalText}>Delivery Time</Text>
               </View>

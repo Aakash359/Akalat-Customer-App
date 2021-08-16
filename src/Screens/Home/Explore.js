@@ -11,6 +11,7 @@ import {
   ImageBackground,
 } from 'react-native'
 import {Icon} from 'native-base'
+import StarRating from 'react-native-star-rating';
 import {useSelector, useDispatch} from 'react-redux'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
@@ -26,6 +27,7 @@ function Explore() {
   const [check, setChecked] = useState(false)
   const [search, setSearch] = React.useState('')
   const [currentAddress, setAddress] = useState('')
+  const [starCount, setStarCount] = useState(5)
   const [location, setLocation] = useState(null)
   const user = useSelector((state) => state.Auth.user)
   const addFavouriteStatus = useSelector(
@@ -220,15 +222,17 @@ function Explore() {
                 {item?.rating_from_user}
               </Text>
 
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {color: Colors.WHITE}]}
-              />
+              <StarRating
+                  disabled={false}
+                  maxStars={item?.rating_from_user}
+                  starSize= {20}
+                  starStyle={{marginHorizontal:Scale(5)}}
+                  rating={starCount}
+                  halfStarColor={'#FBFBFB'}
+                  fullStarColor	={'#FFBE33'}
+                  emptyStarColor={'#FBFBFB'}
+                  selectedStar={(rating) => setStarCount(rating)}
+                />
 
               <View style={{justifyContent: 'flex-end', flex: 1}}>
                 <Text

@@ -32,10 +32,6 @@ function Favorites() {
     setChecked(!checked)
   }
 
-  
-  
-  
-
   useEffect(() => {
     const data = {
       userid: user?._id,
@@ -94,7 +90,7 @@ function Favorites() {
           <Text style={styles.normalText}>Ratings</Text>
         </View>
         <View style={styles.buttonStyle1}>
-          <Text style={styles.textStyle1}>25 Min</Text>
+          <Text style={styles.textStyle1}>{item?.delivery_time}</Text>
           <Text style={styles.normalText}>Delivery Time</Text>
         </View>
         <View style={styles.buttonStyle1}>

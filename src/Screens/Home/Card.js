@@ -76,9 +76,7 @@ function Card(props) {
   }
   const {navigate} = useNavigation()
   const navigation = useNavigation()
-  const redirectToNotification = () => {
-    navigate('Notification')
-  }
+ 
   const redirectToPayment = () => {
     props?.setSelectedAddress(address?.selectedId)
     props?.setAddressId(props?.addressList[address?.selectedId]?._id)
@@ -111,6 +109,8 @@ function Card(props) {
   }
 
   const {cartRestroDetails, cartProducts} = props
+
+  
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
     0,
@@ -136,6 +136,7 @@ function Card(props) {
       setDet({...det, dis: 0})
     } else {
       setCoupon(props?.couponCode)
+      
       setDet({...det, dis: props?.applyCoupon?.discount_amount || 0})
     }
   }, [props.couponCode])
@@ -360,7 +361,7 @@ function Card(props) {
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText1}>Delivery charges</Text>
                 <Text style={styles.normatText1}>
-                  {det?.delivery ? `$${det?.delivery}` : `Free`}
+                  {det?.delivery ? `$${det?.delivery}` : `$${det?.delivery}`}
                 </Text>
               </View>
               <View

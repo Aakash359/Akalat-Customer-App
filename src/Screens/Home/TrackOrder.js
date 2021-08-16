@@ -31,6 +31,10 @@ const mapScreen = (props) => {
     const [driverLoc ,setDriverLoc]= useState(null);
     
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
+
+    console.log('====================================');
+    console.log("Aakash===>",orderDetails);
+    console.log('====================================');
     const callNumber = phone => {
         
         let phoneNumber = '';
@@ -64,7 +68,7 @@ const mapScreen = (props) => {
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
                 <View style={{ flex: 1 }}>
-                    <MapScreen driverLoc={driverLoc} />
+                    <MapScreen driverLoc={driverLoc} orderDetails = { orderDetails} />
                     <ImageBackground
                         source={ImagesPath.background}
                         style={homeStyle.bottomViewCont}>

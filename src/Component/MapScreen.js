@@ -160,20 +160,24 @@ export class MapScreen extends Component {
   }
 
   render() {
-    const {onMarkerPress} = this.props
+    
     console.log('====================================');
     console.log('Driver Loc: ', this.props.driverLoc);
+    console.log('====================================');
+
+    console.log('====================================');
+    console.log('OrderDetails: ', this.props.orderDetails.orderDetails.status);
     console.log('====================================');
     return (
       <View style={{flex: 1}}>
         <MapView
           style={{height:screenWidth/1}}
-          region={{
+          region={this.props.orderDetails.orderDetails.status=='OPU' ? [{ 
             ...this.props.driverLoc,
             latitudeDelta: 0.0045,
             longitudeDelta: 0.0045,
 
-          }}
+          }]:null}
           loadingEnabled={true}
           loadingIndicatorColor="#666666"
           loadingBackgroundColor="#eeeeee"
@@ -184,7 +188,7 @@ export class MapScreen extends Component {
           
         >
 
-      {this.props.driverLoc?.latitude && <Marker
+      {this.props.orderDetails.orderDetails.status=='OPU'? (this.props.driverLoc?.latitude && <Marker
           coordinate={this.props.driverLoc}
           >
 
@@ -192,16 +196,14 @@ export class MapScreen extends Component {
               <Text>Hello</Text>
             </View>
 
-          </Marker>}
+          </Marker>):null}
         </MapView>
       </View>
     )
   }
 }
 
-MapScreen.propTypes = {
-  onMarkerPress: func.isRequired,
-}
+
 export default MapScreen
 
 const styles = StyleSheet.create({

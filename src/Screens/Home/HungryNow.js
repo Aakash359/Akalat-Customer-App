@@ -23,26 +23,83 @@ function HungryNow(props) {
 
     let a = product_list
 
-    let res = [...new Set(a?.map(i => i?.res?.id))]
+    let res = [...new Set(a?.map(i => i?.restro_details?._id))]
+
     
     let data = res.reduce((data, item) => {
-      let p = a?.filter(i => i?.res?.id === item)
-      data.push(p)
-      return data
+        let p = a?.filter(i => i?.restro_details?._id === item)
+        data.push(p)
+        return data
     }, [])
-
     
+    const renderProduct = ({item, index })=>{
+       return (
+           <View style={styles.cardStyle}>
+               { item?.map((product, i) => {
+                   
+                    let inCart = cartProducts?.find(i => i?._id === item?._id)
+                    
+                    return(
+         
+         <View >
+         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10), marginVertical:Scale(-8)}}>
+         <Text style={styles.headingText}>{product.restro_name}</Text>
+         <Text style={styles.headingText}>{product?.restro_details?.distance} Km</Text>
+         </View>
+         <View style={{ flexDirection: 'row' ,marginTop:Scale(8) }}>
+         <Image source={{ uri: product?.image}} style={styles.backgroundStyle}/>
+         <View >
+            <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>
+                { product.product_type==='veg'? <Image source={ImagesPath.veg}
+                />:<Image source={ImagesPath.non_veg}/>
+                }
+               <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {product.name}</Text>
+               
+            </View>
+            <Text style={{ color: 'grey', fontSize: Scale(13), marginTop:Scale(8), fontWeight: 'normal',marginLeft:Scale(10) }}>{product.description}</Text>
+         </View>
+         </View>
+         <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
+         <Text style={styles.headingText}>${product.final_price}<Text style={{ color: 'grey', fontSize: Scale(18), fontWeight: 'normal',textDecorationLine:'line-through',}}> ${product.price}</Text>
+         </Text>
+         {inCart ?
+          <View style={{flexDirection:'row',alignItems:'center'}}>
+            <Icon onPress={() => subToCart(product)} type="AntDesign" name="minussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
+            <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}> {inCart?.qty} </Text>
+            <Icon onPress={() => addToCart(product)} type="AntDesign" name="plussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
+            
+          </View> 
+          
+         :  <View style={styles.addButton}>
+          <Text onPress={() =>addToCart(product)} style={[styles.Add,{color:Colors.APPCOLOR}]}>ADD</Text>
+         </View>}
+         </View>
+     
+   
+         <View style={{ flexDirection: 'row', justifyContent:'flex-end', marginBottom:Scale(30),}}>
 
-
-    // let filter = [{p: 1, res: {id: 1}}, {p: 2, res: {id: 1}}, {p: 3, res: {id: 2}}]
-
-    // let res = [...new Set(a?.map(i => i?.res?.id))]
-    // 
-    // let data = res.reduce((data, item) => {
-    //   let p = a?.filter(i => i?.res?.id === item)
-    //   data.push(p)
-    //   return data
-    // }, [])
+      
+         <Text style={{ color: 'grey', fontSize: Scale(13), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: </Text>
+         <Text style={{ color: Colors.BLACK, fontSize: Scale(13), marginLeft:Scale(5)}}>{product.qty}</Text>
+     
+         </View>
+         <View
+            style={{
+                borderBottomColor: 'grey',
+                borderBottomWidth: 0.8,
+                marginTop:Scale(-15),
+                marginBottom:Scale(18)
+            }}
+         />
+         </View>
+         
+                    )
+               }
+               
+               )}
+           </View>
+       )
+       }
     
     
       
@@ -92,54 +149,8 @@ function HungryNow(props) {
             
                 <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
                     <FlatList
-                        data={product_list}
-                        renderItem={({item, index })=>{
-                         let inCart = cartProducts?.find(i => i?._id === item?._id)
-                            return(
-
-        <View style={styles.cardStyle}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10), marginVertical:Scale(-8)}}>
-                <Text style={styles.headingText}>{item.restro_name}</Text>
-                <Text style={styles.headingText}>{item?.restro_details?.distance} Km</Text>
-            </View>
-            <View style={{ flexDirection: 'row' ,marginTop:Scale(8) }}>
-                <Image source={{ uri: item?.image}} style={styles.backgroundStyle} />
-                <View >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>
-                        { item.product_type==='veg'? <Image source={ImagesPath.veg}
-                        />:<Image source={ImagesPath.non_veg}/>
-                        }
-                       
-                        <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {item.name}</Text>
-                       
-                    </View>
-                    <Text style={{ color: 'grey', fontSize: Scale(13), marginTop:Scale(8), fontWeight: 'normal',marginLeft:Scale(10) }}>{item.description}</Text>
-                </View>
-            </View>
-            <View style={{ flexDirection: 'row', paddingVertical: Scale(10), alignItems: 'center',  justifyContent: 'space-between' }}>
-                <Text style={styles.headingText}>${item.final_price}<Text style={{ color: 'grey', fontSize: Scale(18), fontWeight: 'normal',textDecorationLine:'line-through',}}> ${item.price}</Text>
-                </Text>
-                {inCart ?
-                  <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Icon onPress={() => subToCart(item)} type="AntDesign" name="minussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
-                    <Text style={[styles.textStyle,{color:Colors.APPCOLOR}]}> {inCart?.qty} </Text>
-                    <Icon onPress={() => addToCart(item)} type="AntDesign" name="plussquareo" style={{fontSize:Scale(20),color:Colors.APPCOLOR}}/>
-                    
-                  </View> 
-                  
-               :  <View style={styles.addButton}>
-                  <Text onPress={() =>addToCart(item)} style={[styles.Add,{color:Colors.APPCOLOR}]}>ADD</Text>
-                </View>}
-              </View>
-              
-              <View style={{ flexDirection: 'row', justifyContent:'flex-end'}}>
-              <Text style={{ color: 'grey', fontSize: Scale(13), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: </Text>
-              <Text style={{ color: Colors.BLACK, fontSize: Scale(13), marginLeft:Scale(5)}}>{item.qty}</Text>
-            </View>
-            </View>
-
-                            )
-                        }}
+                        data={data}
+                        renderItem={renderProduct}
                     />
                         {cartProducts?.length ?
                             <View style = {{height:'15%',paddingHorizontal:'5%',flexDirection:'row',padding:10, justifyContent:'space-between', maxHeight:'15%',backgroundColor: Colors.APPCOLOR}}>
@@ -247,17 +258,14 @@ const styles = StyleSheet.create({
         tintColor: Colors.WHITE
     },
     cardStyle: {
+        padding: 15,  
+        borderRadius: 10, 
+        margin: 10,
         elevation: 3,
         shadowOpacity: 3,
-        height: Scale(250),
-        width: '90%',
         backgroundColor: '#ffffff',
         borderWidth: 2,
         borderColor: "#E0E0E0",
-        marginVertical: Scale(15),
-        padding: Scale(15),
-        alignSelf: 'center',
-        borderRadius: Scale(10)
     },
     iconStyle: {
         color: Colors.APPCOLOR,

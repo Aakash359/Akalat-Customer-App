@@ -15,7 +15,7 @@ import {Colors, Scale, ImagesPath} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
 import {useSelector, useDispatch, connect} from 'react-redux'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
-import {API_BASE} from '../../apiServices/ApiService'
+import StarRating from 'react-native-star-rating';
 import axios from 'axios'
 import {addfavouriteRequest} from '../../redux/actions'
 
@@ -23,6 +23,7 @@ function HomeScreen(props) {
   const user = useSelector((state) => state.Auth.user)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
+  const [starCount, setStarCount] = useState(5)
   const addFavouriteStatus = useSelector(
     (state) => state.Home.addFavouriteStatus,
   )
@@ -95,15 +96,17 @@ function HomeScreen(props) {
                 }}>
                 {item?.rating_from_user}
               </Text>
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {color: Colors.WHITE}]}
-              />
+              <StarRating
+                  disabled={false}
+                  maxStars={item?.rating_from_user}
+                  starSize= {20}
+                  starStyle={{marginHorizontal:Scale(5)}}
+                  rating={starCount}
+                  halfStarColor={'#FBFBFB'}
+                  fullStarColor	={'#FFBE33'}
+                  emptyStarColor={'#FBFBFB'}
+                  selectedStar={(rating) => setStarCount(rating)}
+                />
               <View style={{justifyContent: 'flex-end', flex: 1}}>
                 <Text
                   style={{

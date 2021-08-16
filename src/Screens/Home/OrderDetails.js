@@ -30,10 +30,12 @@ function OrderDetail(props) {
 
     const ratingRes = props?.route?.params?.ratingRes;
     const RestroDetails =props?.route?.params?.restro_detail
-    const products =props?.route?.product_list || []
+    const products =props?.route?.params?.product_list || []
 
     
-    
+    console.log('====================================');
+    console.log("Aakash====>",products);
+    console.log('====================================');
     
     
 
@@ -74,7 +76,7 @@ function OrderDetail(props) {
 
   const onPress = async () => {
     navigate('Card', 
-    props.reOrder({
+    props.reOrder({ products:props?.route?.params?.product_list,
       restroDetails:props?.route?.params?.restro_detail})
     )
   }

@@ -100,9 +100,13 @@ function AddNewAddress(props) {
   const checked = () => setValue(!value)
 
   const onSubmit = async () => {
+    const regMatch = /^[^!-\/:-@\[-`{-~]+$/;
     if (house_name_and_no == '') {
       alert('Please enter House No')
-    } else if (area_name == '') {
+    }else if (regMatch.test(house_name_and_no)==false) {
+      alert('Special character are not allowed')
+    }
+    else if (area_name == '') {
       alert('Please enter area')
     } else if (activeTab == undefined) {
       alert('Address type must be selected')

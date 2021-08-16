@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,useRef} from 'react'
 import {
   Text,
   View,
@@ -23,7 +23,7 @@ import {CustomButton} from '../../Component'
 import {useNavigation} from '@react-navigation/native'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
-import {Searchbar} from 'react-native-paper'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {AddressListRequest} from '../../redux/actions'
 import {useSelector, useDispatch} from 'react-redux'
 import {setAddressId, setSelectedAddress} from '../../redux/actions/CartActions'
@@ -31,6 +31,7 @@ Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
 function SelectLocation(props) {
   const [value, setValue] = useState(false)
+  const [addressText, setAddressText] = useState(false)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -53,11 +54,13 @@ function SelectLocation(props) {
   const redirectToAddress = () => {
     navigate('AddNewAddress')
   }
+  const ref = useRef();
+
   useEffect(() => {
     const data = {
       created_by: user?._id,
     }
-
+    ref.current?.setAddressText(addressText);
     dispatch(AddressListRequest(data))
   }, [])
   useEffect(() => {
@@ -169,11 +172,37 @@ function SelectLocation(props) {
             </Text>
           </View>
 
-          <Searchbar
-            style={styles.searchView}
-            onIconPress={clearImmediate}
-            inputStyle={{fontSize: Scale(16), marginLeft: Scale(-15)}}
-            placeholder="Search location..."
+          <GooglePlacesAutocomplete
+            ref={ref}
+            fetchDetails={true}
+            styles={{
+              
+              textInput: {
+                borderWidth: Scale(2),
+                borderColor: '#AB8F8E',
+                height: Scale(50),
+                width: '100%',
+                
+                paddingHorizontal: Scale(15),
+                paddingVertical: Scale(15),
+                alignSelf: 'center',
+                borderRadius: Scale(10),
+                color: Colors.BLACK,
+                fontSize: 16,
+              },
+             
+            }}
+            value={addressText}
+            onChangeText={(text) => setAddressText(text)}
+            placeholder='Search location...'
+            // onPress={(data) => {
+            //   console.log(data, details);
+             
+            // }}
+            query={{
+              key: Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey,
+              language: 'en',
+            }}
           />
           <View style={styles.heading}>
             <Text style={styles.savedStyle}>Saved Addresses</Text>
@@ -243,6 +272,7 @@ const styles = StyleSheet.create({
   fontWeight:'bold'
 },
   heading: {
+    marginTop:Scale(10),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -272,6 +302,7 @@ const styles = StyleSheet.create({
   },
   searchView: {
     borderRadius: 10,
+    backgroundColor:'red',
     height: 50,
     borderColor: '#AB8F8E',
     borderWidth: Scale(2),

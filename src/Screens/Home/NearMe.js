@@ -22,6 +22,7 @@ import {
   androidMapAPIKey,
 } from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
+import StarRating from 'react-native-star-rating';
 import {useNavigation, useRoute} from '@react-navigation/native'
 import Slider from '@react-native-community/slider'
 import {useSelector, useDispatch, connect} from 'react-redux'
@@ -43,6 +44,7 @@ function NearMe(props) {
   const [activeTab, setActiveTab] = useState(0)
   const [currentAddress, setAddress] = useState('')
   const [search, setSearch] = React.useState('')
+  const [starCount, setStarCount] = useState(5)
   const offercardResponse = useSelector((state) => state.Home.offercardResponse)
   const offercard = offercardResponse?.data || []
   const user = useSelector((state) => state.Auth.user)
@@ -67,6 +69,13 @@ function NearMe(props) {
     isLoading: true,
     resetStatus: false,
   })
+
+const onStarRatingPress = (rating) => {
+    setStarCount({
+      starCount: rating
+    });
+  }
+
 
 
   useEffect(() => {
@@ -272,7 +281,7 @@ function NearMe(props) {
   }, [])
 
   const redirectToHomeMaker = (item) => {
-    navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
+    navigate('HomeMaker', {restroId: item?._id, restroDetails: item, restroData:data?.restroList })
   }
 
   const onFavorite = (item) => {
@@ -302,6 +311,8 @@ function NearMe(props) {
         ...data,
         restroList: res?.data?.data?.restroNearMe,
       })
+     
+      
       setValue(0)
       setValue1(0)
       setIsEnabled(false)
@@ -358,9 +369,6 @@ function NearMe(props) {
           restroList: res?.data?.data?.restroNearMe,
         })
         
-        
-        
-        
         setModal2(false)
         setModal(false)
         navigate('NearMe')
@@ -389,8 +397,6 @@ function NearMe(props) {
           restroList: res?.data?.data?.restroNearMe,
           restroType: res?.data?.data?.restroNearMe?.categoryNameArray
         })
-        
-
         setModal2(false)
         setModal(false)
         navigate('NearMe')
@@ -431,17 +437,19 @@ function NearMe(props) {
                   }}>
                   {item?.rating_from_user}
                 </Text>
-             
-                
-                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-                <Icon name="star" type="FontAwesome" style={styles.iconStyle} />
-                <Icon
-                  name="star"
-                  type="FontAwesome"
-                  style={[styles.iconStyle, {color: Colors.WHITE}]}
+               
+                <StarRating
+                  disabled={false}
+                  maxStars={item?.rating_from_user}
+                  starSize= {20}
+                  starStyle={{marginHorizontal:Scale(5)}}
+                  rating={starCount}
+                  halfStarColor={'#FBFBFB'}
+                  fullStarColor	={'#FFBE33'}
+                  emptyStarColor={'#FBFBFB'}
+                  selectedStar={(rating) => setStarCount(rating)}
                 />
+               
 
                 <View style={{justifyContent: 'flex-end', flex: 1}}>
                   <Text
@@ -508,9 +516,9 @@ function NearMe(props) {
                   paddingLeft: 12,
                 }}>
                 {item?.categoryNameArray?.reduce((a,b) => {
-    a += `${b}, `
-return a
-}, '').slice(0, -2)}
+                    a += `${b}, `
+                return a
+                }, '').slice(0, -2)}
               </Text>
             </View>
           </View>
@@ -706,7 +714,7 @@ return a
                     style={{
                       fontSize: 20,
                       textAlign: 'center',
-                      marginTop: Scale(170),
+                      marginTop: Scale(50),
                       marginHorizontal: 50,
                     }}>
                       

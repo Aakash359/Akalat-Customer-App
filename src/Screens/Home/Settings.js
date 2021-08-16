@@ -34,9 +34,9 @@ function Settings() {
 
   
 
-  
-  
-  
+  console.log('====================================');
+  console.log("Aakaash======>",toggleStatus);
+  console.log('====================================');
   
   
   const setCheckedSwitch = () => {
