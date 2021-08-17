@@ -52,6 +52,7 @@ function Coupon(props) {
     const url = `${API_BASE}/listRestroWithOffer`
     const payload = {
       coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+      userid: user?._id
     }
     try {
       const res = await axios.post(url, payload)
@@ -64,6 +65,7 @@ function Coupon(props) {
           errorMsg: res?.data?.message,
           error: false,
         })
+        
       } else {
         setRestro({
           ...restro,
@@ -162,6 +164,7 @@ function Coupon(props) {
     const url = `${API_BASE}/listRestroWithOffer`
     const payload = {
       coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+      userid: user?._id
     }
     try {
       const res = await axios.post(url, payload)

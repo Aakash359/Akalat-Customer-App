@@ -130,9 +130,7 @@ const onStarRatingPress = (rating) => {
     )
   }
 
-  
-
-  const onSearch = async () => {
+ const onSearch = async () => {
     var restro_type = ''
     if (isEnabled) {
       restro_type = 'non_veg'
@@ -140,63 +138,8 @@ const onStarRatingPress = (rating) => {
       restro_type = 'veg'
     }
     var data = search
-    if ((data = !search)) {
+     if (search) {
       setdata({...data, isLoading: true})
-
-      const url = `${API_BASE}/restro/combinedSearchSortFilter`
-      var payload = {}
-      if (activeTab == 0) {
-        payload = {
-          userid: user?._id,
-          lat: 28.4922,
-          lng: 77.0966,
-          relevance: true,
-          is_sort: `${true}`,
-          is_filter: `${false}`,
-        }
-      } else if (activeTab == 1) {
-        payload = {
-          userid: user?._id,
-          lat: 28.4922,
-          lng: 77.0966,
-          rating_high_to_low: true,
-          is_sort: `${true}`,
-          is_filter: `${false}`,
-        }
-      } else if (activeTab == 2) {
-        payload = {
-          userid: user?._id,
-          lat: 28.4922,
-          lng: 77.0966,
-          rating_low_to_high: true,
-          is_sort: `${true}`,
-          is_filter: `${false}`,
-        }
-      } else if (activeTab == 3) {
-        payload = {
-          userid: user?._id,
-          lat: 28.4922,
-          lng: 77.0966,
-          delivery_time: true,
-          is_sort: `${true}`,
-          is_filter: `${false}`,
-        }
-      }
-      try {
-        const res = await axios.post(url, payload)
-        setdata({
-          ...data,
-          restroList: res?.data?.data?.restroNearMe,
-        })
-        setModal2(false)
-        setModal(false)
-        navigate('NearMe')
-      } catch (error) {
-        console('Error', error)
-      }
-    } else if (search) {
-      setdata({...data, isLoading: true})
-
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
       const payload = {
         searchKey: search,
@@ -216,29 +159,9 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        alert('Error', error)
+        console.log('Error', error)
       }
-    } else {
-      setdata({...data, isLoading: true})
-
-      const url = `${API_BASE}/restro/combinedSearchSortFilter`
-
-      const payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-        is_sort: `${false}`,
-        is_filter: `${false}`,
-      }
-
-      try {
-        const res = await axios.post(url, payload)
-        setdata({
-          ...data,
-          restroList: res?.data?.data?.restroNearMe,
-        })
-      } catch (error) {}
-    }
+    } 
   }
 
   React.useEffect(() => {
@@ -253,9 +176,7 @@ const onStarRatingPress = (rating) => {
 
   const getDefaultRestro = async () => {
     setdata({...data, isLoading: true})
-
     const url = `${API_BASE}/restro/combinedSearchSortFilter`
-
     const payload = {
       userid: user?._id,
       lat: 28.4922,
@@ -269,7 +190,9 @@ const onStarRatingPress = (rating) => {
         ...data,
         restroList: res?.data?.data?.restroNearMe,
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log('Error', error)
+    }
   }
 
   useEffect( () => {
@@ -297,7 +220,7 @@ const onStarRatingPress = (rating) => {
     dispatch(addfavouriteRequest(payload))
   }
 
-  const onResetFilter = async () => {
+  const onReset = async () => {
     const url = `${API_BASE}/restro/combinedSearchSortFilter`
     const payload = {
       userid: user?._id,
@@ -311,35 +234,19 @@ const onStarRatingPress = (rating) => {
         ...data,
         restroList: res?.data?.data?.restroNearMe,
       })
-     
-      
       setValue(0)
       setValue1(0)
+      setActiveTab(0)
       setIsEnabled(false)
       navigate('NearMe')
       setModal2(false)
-    } catch (error) {}
-  }
-
-  const onSortByReset = async () => {
-    const url = `${API_BASE}/restro/combinedSearchSortFilter`
-    const payload = {
-      userid: user?._id,
-      lat: 28.4922,
-      lng: 77.0966,
-    }
-
-    try {
-      const res = await axios.post(url, payload)
-      setdata({
-        ...data,
-        restroList: res?.data?.data?.restroNearMe,
-      })
-      setActiveTab(0)
       setModal(false)
-      navigate('NearMe')
-    } catch (error) {}
+    } catch (error) {
+      console.log('Error', error)
+    }
   }
+
+ 
 
   const onFilter = async () => {
     var restro_type = ''
@@ -373,7 +280,7 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        alert('Error', error)
+        console.log('Error', error)
       }
     } else if (value) {
       setdata({...data, isLoading: true})
@@ -401,8 +308,65 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        alert('Error', error)
+        console.log('Error', error)
       }
+    }
+  }
+
+
+  const onSortBy = async () => {
+
+    setdata({...data, isLoading: true})
+    const url = `${API_BASE}/restro/combinedSearchSortFilter`
+    var payload = {}
+    if (activeTab == 0) {
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        relevance: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    } else if (activeTab == 1) {
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        rating_high_to_low: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    } else if (activeTab == 2) {
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        rating_low_to_high: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    } else if (activeTab == 3) {
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        delivery_time: true,
+        is_sort: `${true}`,
+        is_filter: `${false}`,
+      }
+    }
+    try {
+      const res = await axios.post(url, payload)
+      setdata({
+        ...data,
+        restroList: res?.data?.data?.restroNearMe,
+      })
+      setModal2(false)
+      setModal(false)
+      navigate('NearMe')
+    } catch (error) {
+      console('Error', error)
     }
   }
 
@@ -895,19 +859,21 @@ const onStarRatingPress = (rating) => {
                   flex: 1,
                   marginRight: Scale(10),
                 }}>
-                <CustomButton title="Reset All" onSubmit={onSortByReset} />
+                <CustomButton title="Reset All" onSubmit={onReset} />
               </View>
               <View style={{flex: 1}}>
                 <CustomButton
                   title="Apply"
                   isSecondary={true}
-                  onSubmit={onSearch}
+                  onSubmit={onSortBy}
                 />
               </View>
             </View>
           </View>
         </ImageBackground>
       </Modal>
+
+
       <Modal visible={modal2} animationType="slide">
         <View style={styles.headerContainer}>
           <Icon
@@ -1039,7 +1005,7 @@ const onStarRatingPress = (rating) => {
             }}>
             <View style={{marginTop: Scale(50), flexDirection: 'row'}}>
               <View style={{flex: 1, marginRight: Scale(15)}}>
-                <CustomButton title="Reset All" onSubmit={onResetFilter} />
+                <CustomButton title="Reset All" onSubmit={onReset} />
               </View>
               <View style={{flex: 1}}>
                 <CustomButton

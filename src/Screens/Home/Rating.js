@@ -80,6 +80,9 @@ function Rating(props) {
     try {
       const res = await axios.post(url, payload)
       alert('Order rated from user successfully!')
+      console.log('====================================');
+      console.log("RatingResponse=====>",res);
+      console.log('====================================');
       navigate('OrderDetails', { ratingRes : res} )
     } catch (error) {
       

@@ -34,7 +34,7 @@ function OrderDetail(props) {
 
     
     console.log('====================================');
-    console.log("Aakash====>",products);
+    console.log("Aakash====>",ratingRes);
     console.log('====================================');
     
     

@@ -163,6 +163,9 @@ function Explore() {
           restroList: res?.data?.data?.restroNearMe,
           isLoading: false,
         })
+        console.log('====================================');
+        console.log("Aakash=====>",res?.data?.data?.restroNearMe);
+        console.log('====================================');
       } catch (error) {}
     } else {
       setdata({...data, isLoading: true})
@@ -289,15 +292,18 @@ function Explore() {
               marginTop: 5,
             }}>
             <Text
-              numberOfLines={1}
-              style={{
-                fontSize: Scale(12.5),
-                fontWeight: 'normal',
-                paddingBottom: 20,
-                paddingLeft: 12,
-              }}>
-              {item?.categoryNameArray}
-            </Text>
+                numberOfLines={1}
+                style={{
+                  fontSize: Scale(12.5),
+                  fontWeight: 'normal',
+                  paddingBottom: 20,
+                  paddingLeft: 12,
+                }}>
+                {item?.categoryNameArray?.reduce((a,b) => {
+                    a += `${b}, `
+                return a
+                }, '').slice(0, -2)}
+              </Text>
           </View>
         </View>
       </TouchableOpacity>

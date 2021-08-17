@@ -50,7 +50,9 @@ function HungryNow(props) {
          <Image source={{ uri: product?.image}} style={styles.backgroundStyle}/>
          <View >
             <View style={{ flexDirection: 'row', alignItems: 'center' , marginLeft:Scale(10)}}>
-                { product.product_type==='veg'? <Image source={ImagesPath.veg}
+                { product.product_type==='veg'? <Image 
+                style={{height:Scale(20),width:Scale(20)}}
+                source={ImagesPath.veg}
                 />:<Image source={ImagesPath.non_veg}/>
                 }
                <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {product.name}</Text>
@@ -74,19 +76,15 @@ function HungryNow(props) {
           <Text onPress={() =>addToCart(product)} style={[styles.Add,{color:Colors.APPCOLOR}]}>ADD</Text>
          </View>}
          </View>
-     
-   
-         <View style={{ flexDirection: 'row', justifyContent:'flex-end', marginBottom:Scale(30),}}>
-
-      
+        <View style={{ flexDirection: 'row', justifyContent:'flex-end', marginBottom:Scale(30),}}>
          <Text style={{ color: 'grey', fontSize: Scale(13), fontWeight: 'normal',textAlign:'right' }}>Available Quantity: </Text>
          <Text style={{ color: Colors.BLACK, fontSize: Scale(13), marginLeft:Scale(5)}}>{product.qty}</Text>
      
          </View>
          <View
             style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.8,
+                backgroundColor: '#00000029',
+                height: Scale(2),
                 marginTop:Scale(-15),
                 marginBottom:Scale(18)
             }}
