@@ -113,7 +113,7 @@ function MyOrders(props) {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigate('TrackOrder', item)}
+          // onPress={() => navigate('TrackOrder', item)}
           style={{
             justifyContent: 'center',
             alignItems: 'center',

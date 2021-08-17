@@ -32,26 +32,14 @@ function OrderDetail(props) {
     const RestroDetails =props?.route?.params?.restro_detail
     const products =props?.route?.params?.product_list || []
 
-    
-    console.log('====================================');
-    console.log("Aakash====>",ratingRes);
-    console.log('====================================');
-    
-    
-
-  
-
-   const getOrderDetails = async () => {
+    const getOrderDetails = async () => {
     setOrderDetail({...orderDetail, isLoading: true})
     const url = `${API_BASE}/order/orderDetail`
     const payload = {
       _id: props?.route?.params?._id
     }
    
-  
-  
-
-    try {
+   try {
       const res = await axios.post(url, payload)
 
       setOrderDetail({
@@ -59,6 +47,8 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
+
+    
      
     } catch (error) {
       setOrderDetail({
@@ -245,9 +235,9 @@ function OrderDetail(props) {
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Delivery charges</Text>
               <Text style={styles.normatText1}>
-                {props?.route?.params?.restro_detail.det?.delivery
-                  ? `$${props?.route?.params?.restro_detail.det?.delivery}`
-                  : `Free`}
+                {orderDetail?.order?.delivery_charge
+                  ? `${orderDetail?.order?.delivery_charge}`
+                  : `${orderDetail?.order?.delivery_charge}`}
               </Text>
             </View>
             <View
@@ -293,9 +283,10 @@ function OrderDetail(props) {
             </View>
 
             <Text style={styles.itemText2}>
+              {orderDetail?.order?.order_delivery_address?.address_type},
               {orderDetail?.order?.order_delivery_address?.house_name_and_no}
               {''}
-              {orderDetail?.order?.rorder_delivery_address?.area_name},{''}
+              {orderDetail?.order?.order_delivery_address?.area_name},{' '}
               {orderDetail?.order?.order_delivery_address?.nearby}
             </Text>
           </View>

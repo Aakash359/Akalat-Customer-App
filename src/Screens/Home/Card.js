@@ -130,14 +130,20 @@ function Card(props) {
     }
   }
 
+  const Data = props.couponCode
+
+
   React.useEffect(() => {
     if (!props?.couponCode) {
       setCoupon('')
       setDet({...det, dis: 0})
     } else {
       setCoupon(props?.couponCode)
-      
+      console.log('====================================');
+      console.log("Aakash======>",det);
+      console.log('====================================');
       setDet({...det, dis: props?.applyCoupon?.discount_amount || 0})
+     
     }
   }, [props.couponCode])
 
@@ -361,7 +367,7 @@ function Card(props) {
               <View style={styles.bottomContainer}>
                 <Text style={styles.itemText1}>Delivery charges</Text>
                 <Text style={styles.normatText1}>
-                  {det?.delivery ? `$${det?.delivery}` : `$${det?.delivery}`}
+                  {det?.delivery ? `$${det?.delivery}` : `$${det?.dc}`}
                 </Text>
               </View>
               <View

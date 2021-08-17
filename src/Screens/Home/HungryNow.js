@@ -16,11 +16,6 @@ function HungryNow(props) {
     const user = useSelector((state) => state.Auth.user)
     const  {setHungryNowListLoader} = useSelector((state) => state.Home);
     
-   
-    
-    
-    
-
     let a = product_list
 
     let res = [...new Set(a?.map(i => i?.restro_details?._id))]
@@ -53,7 +48,9 @@ function HungryNow(props) {
                 { product.product_type==='veg'? <Image 
                 style={{height:Scale(20),width:Scale(20)}}
                 source={ImagesPath.veg}
-                />:<Image source={ImagesPath.non_veg}/>
+                />:<Image 
+                style={{height:Scale(20),width:Scale(20)}}
+                source={ImagesPath.non_veg}/>
                 }
                <Text style={{ color: Colors.BLACK, fontSize: Scale(18), }}>  {product.name}</Text>
                

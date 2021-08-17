@@ -100,7 +100,7 @@ function AddNewAddress(props) {
   const checked = () => setValue(!value)
 
   const onSubmit = async () => {
-    const regMatch = /^[^!-\/:-@\[-`{-~]+$/;
+    const regMatch = /^[^!:-@\[-`{-~]+$/;
     if (house_name_and_no == '') {
       alert('Please enter House No')
     }else if (regMatch.test(house_name_and_no)==false) {

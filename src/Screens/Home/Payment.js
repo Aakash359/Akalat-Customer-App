@@ -120,7 +120,7 @@ function Payment(props) {
             <View style={styles.bottomContainer}>
               <Text style={styles.itemText1}>Delivery Charges</Text>
               <Text style={styles.normatText1}>
-                {det?.delivery ? `$${det?.delivery}` : `free`}
+                {det?.delivery ? `${det?.delivery}` : `${det?.dc}`}
               </Text>
             </View>
             <View

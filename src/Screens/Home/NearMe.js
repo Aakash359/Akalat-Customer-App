@@ -190,6 +190,9 @@ const onStarRatingPress = (rating) => {
         ...data,
         restroList: res?.data?.data?.restroNearMe,
       })
+      console.log('====================================');
+      console.log("Data=====>",res?.data?.data?.restroNearMe);
+      console.log('====================================');
     } catch (error) {
       console.log('Error', error)
     }

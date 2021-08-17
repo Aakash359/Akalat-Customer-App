@@ -55,10 +55,7 @@ function HomeMaker(props) {
     }
     try {
       const res = await axios.post(url, payload)
-     
-     
-
-  if (res?.status === 200) {
+    if (res?.status === 200) {
         setList({
           ...list,
           restroDetails: res?.data?.data?.restro_detail,
@@ -66,6 +63,7 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
+        
        
        } else {
         setList({...list, isLoading: false, error: res?.data?.message})
@@ -119,12 +117,19 @@ function HomeMaker(props) {
 
   const {restroData = {}} = props.route.params || {}
   
-  console.log('====================================');
-  console.log("RestriDetails=======>",restroData);
-  console.log('====================================');
+ 
 
-  const {restroDetails: resDet} = list
+  const {restroDetails: resDet, productList: prod} = list
 
+  // const data = prod?.product_categories?.item.reduce((a,b)=>{
+  //   a += `${b}`
+  //   return a
+  // }, '').slice(0, -2)
+  const prodData = prod
+
+        console.log('====================================');
+        console.log("ProductDetails=======>",prodData?.[0]?.product_categories);
+        console.log('====================================');
 
 
   const {cartProducts} = props
@@ -213,7 +218,10 @@ function HomeMaker(props) {
                 value={isEnabled}
                />
             </View>
-            <Text style={styles.categoryText}>Recommended food</Text>
+            <Text style={styles.categoryText}>{prod?.product_categories?.reduce((a,b)=>{
+              a += `${b}`
+              return a
+            }, '').slice(0, -2)}</Text>
             <FlatGrid
               itemDimension={130}
               data={!isEnabled? allData:veg}
@@ -240,8 +248,13 @@ function HomeMaker(props) {
                       }}>
                         { 
                           item.product_type==='veg'? 
-                           <Image source={ImagesPath.veg}/> 
-                         : <Image source={ImagesPath.non_veg}/>
+                          <Image 
+                          style={{height:Scale(20),width:Scale(20)}}
+                          source={ImagesPath.veg}
+                          />
+                         : <Image 
+                         style={{height:Scale(20),width:Scale(20)}}
+                         source={ImagesPath.non_veg}/>
                         }
                       
                       <Text

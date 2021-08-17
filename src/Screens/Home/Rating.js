@@ -34,6 +34,9 @@ function Rating(props) {
   }
     
   const OrderDetails = props.route.params 
+  console.log('====================================');
+  console.log("Aakash---->",OrderDetails?.OrderDetail?.order?._id);
+  console.log('====================================');
 
   const CustomRatingBar = () => {
     return (
@@ -77,6 +80,9 @@ function Rating(props) {
       review_restro: rating,
       rating_restro: maxRating + '',
     }
+    console.log('====================================');
+    console.log("Aakash===>",payload);
+    console.log('====================================');
     try {
       const res = await axios.post(url, payload)
       alert('Order rated from user successfully!')
