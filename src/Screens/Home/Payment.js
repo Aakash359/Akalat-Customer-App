@@ -155,7 +155,7 @@ function Payment(props) {
                   styles.itemText,
                   {color: 'green',textAlign:'center',marginTop:Scale(6)},
                 ]}>
-                You have saved $5 on this order
+                You have saved ${det?.dis} on this order
               </Text>
             ) : null}
           </View>

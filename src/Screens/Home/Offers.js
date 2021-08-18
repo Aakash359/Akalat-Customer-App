@@ -33,15 +33,6 @@ function Offers() {
   
   }, [])
   
-  
-
-
-  
-  
-  
-
-  
-  
   const renderItemStore = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>

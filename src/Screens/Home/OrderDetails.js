@@ -32,6 +32,8 @@ function OrderDetail(props) {
     const RestroDetails =props?.route?.params?.restro_detail
     const products =props?.route?.params?.product_list || []
 
+    
+
     const getOrderDetails = async () => {
     setOrderDetail({...orderDetail, isLoading: true})
     const url = `${API_BASE}/order/orderDetail`
@@ -47,6 +49,12 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
+      console.log('====================================');
+      console.log("Aakash====>",orderDetail?.order?.status);
+      console.log('====================================');
+      
+
+    
 
     
      
@@ -71,6 +79,10 @@ function OrderDetail(props) {
     )
   }
 
+  let active = ['P', 'RPL', 'OPU', 'AD', 'RCH', 'PR', 'PRD']
+  let past = ['RC', 'OD', 'CC']
+
+  
   
 
   return (
@@ -291,12 +303,38 @@ function OrderDetail(props) {
             </Text>
           </View>
 
-          <View style={{paddingHorizontal: '5%', marginBottom: 50}}>
+          <View style={{paddingHorizontal: '5%', 
+          marginBottom: 50,flexDirection:'column',
+          }}>
             <CustomButton 
              title="Re-Order" isSecondary={true} 
              onPress={onPress}
             />
+            <View style={{marginTop:Scale(-22)}}>
+            {
+              orderDetail?.order?.status != 'CC'?
+              <TouchableOpacity
+          // onPress={() => navigate('TrackOrder', item)}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginVertical:Scale(10),
+            backgroundColor: Colors.RED,
+            paddingHorizontal: 35,
+            paddingVertical: 14,
+            borderRadius: 25,
+            
+          }}>
+          <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
+            Track Order
+          </Text>
+        </TouchableOpacity>:null
+            }
+            
+            </View>
+            
           </View>
+         
         </ScrollView>
       </ImageBackground>
     </View>

@@ -12,6 +12,7 @@ const initialState = {
   isLoading: false,
   error: '',
   couponCode: '',
+  applyCouponStatus:false,
  
 }
 
@@ -20,13 +21,13 @@ export default function couponReducer(state = initialState, {type, payload}) {
     case SET_APPLY_COUPON_LOADER:
       return {...state, isLoading: payload}
     case SET_APPLY_COUPON_ERROR:
-      return {...state, error: payload,}
+      return {...state, error: payload, applyCouponStatus:false}
     case APPLY_COUPON_SUCCESS:
-      return {...state, applyCoupon: payload, }
+      return {...state, applyCoupon: payload,applyCouponStatus:true}
     case SET_COUPON_CODE:
       return {...state, couponCode: payload, }
     case REMOVE_COUPON:
-      return {...state, couponCode: '', applyCoupon: null,}
+      return {...state, couponCode: '', applyCoupon: null, applyCouponStatus:false}
     default:
       return state
   }

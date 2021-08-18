@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(20),
     fontSize: Scale(16),
     color: Colors.WHITE,
-    // borderRadius: 20,
+    
   },
   borderStyle: {
     height: Scale(2),

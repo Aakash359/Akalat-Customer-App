@@ -254,7 +254,7 @@ const onStarRatingPress = (rating) => {
   const onFilter = async () => {
     var restro_type = ''
     if (isEnabled) {
-      restro_type = 'non_veg'
+      restro_type = 'veg_non_veg'
     } else {
       restro_type = 'veg'
     }
@@ -313,6 +313,66 @@ const onStarRatingPress = (rating) => {
       } catch (error) {
         console.log('Error', error)
       }
+    }else if (isEnabled){
+      const isEnabled = 'veg'
+      setdata({...data, isLoading: true})
+      var payload = {}
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        distance: undefined,
+        rating_from_user: undefined,
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: 'veg',
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+          restroType: res?.data?.data?.restroNearMe?.categoryNameArray
+        })
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+      }
+      
+    }
+    else {
+      const isEnabled = 'veg_and_non_veg'
+      
+      setdata({...data, isLoading: true})
+      var payload = {}
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        distance: undefined,
+        rating_from_user: undefined,
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: 'veg_and_non_veg',
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+          restroType: res?.data?.data?.restroNearMe?.categoryNameArray
+        })
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        console.log('Error', error)
+      }
+      
     }
   }
 

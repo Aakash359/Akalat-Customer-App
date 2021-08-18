@@ -42,6 +42,7 @@ import {useSelector, useDispatch} from 'react-redux'
 function Card(props) {
   const [count, setIsPopupVisible] = useState(1)
   const [coupon, setCoupon] = useState(props?.couponCode || '')
+  const applyCouponStatus = useSelector((state) => state.coupon.user)
   const [modal, setModal] = React.useState(false)
   const product_list = props.route.params
 
@@ -76,32 +77,39 @@ function Card(props) {
   }
   const {navigate} = useNavigation()
   const navigation = useNavigation()
+  
  
   const redirectToPayment = () => {
-    props?.setSelectedAddress(address?.selectedId)
-    props?.setAddressId(props?.addressList[address?.selectedId]?._id)
+   
+      props?.setSelectedAddress(address?.selectedId)
+      props?.setAddressId(props?.addressList[address?.selectedId]?._id)
+  
+      const totalCartAmt = props?.cartProducts?.reduce(
+        (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
+        0,
+      )
+  
+      const data = {
+        totalCartAmt,
+        det,
+      }
+  
+      if (props?.addressList?.length) {
+        navigate('Payment', data)
+      } else {
+        Alert.alert('', 'Please add an address')
+      }
 
-    const totalCartAmt = props?.cartProducts?.reduce(
-      (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
-      0,
-    )
-
-    const data = {
-      totalCartAmt,
-      det,
-    }
-
-    if (props?.addressList?.length) {
-      navigate('Payment', data)
-    } else {
-      Alert.alert('', 'Please add an address')
-    }
+    
+   
   }
 
   const addToCart = (item) => {
     const {cartRestroDetails, addToCart} = props
     addToCart({restroDetails: cartRestroDetails, product: item})
   }
+
+  
 
   const subToCart = (item) => {
     const {subToCart} = props
@@ -126,27 +134,29 @@ function Card(props) {
         'error',
         'Error',
         'Please enter coupon code',
+       
       )
     }
   }
 
-  const Data = props.couponCode
+
 
 
   React.useEffect(() => {
+    
     if (!props?.couponCode) {
       setCoupon('')
       setDet({...det, dis: 0})
+    
     } else {
       setCoupon(props?.couponCode)
-      console.log('====================================');
-      console.log("Aakash======>",det);
-      console.log('====================================');
+     
       setDet({...det, dis: props?.applyCoupon?.discount_amount || 0})
      
     }
+   
   }, [props.couponCode])
-
+  
   const remove = () => {
     dispatch(removeCoupon())
   }

@@ -106,7 +106,7 @@ function Settings() {
               thumbColor={isEnabled ? Colors.WHITE : Colors.WHITE}
               ios_backgroundColor={Colors.GREEN}
               onValueChange={setCheckedSwitch}
-              value={isEnabled}
+              value={toggleStatus? !isEnabled: isEnabled}
             />
           </View>
           <FlatList data={data} renderItem={renderItems} />
