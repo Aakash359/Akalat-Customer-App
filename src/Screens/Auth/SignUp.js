@@ -49,9 +49,6 @@ function SignUp(props) {
   )
   const countryList = counrtryListResponse?.data || []
   
-  
-     
-
   useEffect(() => {
     if (signupResponse?.SignStatus) {
       navigate('Otp', {phone, email})

@@ -27,16 +27,20 @@ function Offers() {
     setChecked(!checked)
   }
 
+  console.log('====================================');
+  console.log("Aakash=====>",couponResponse);
+  console.log('====================================');
+
   useEffect(() => {
    
       dispatch(couponRequest())
   
   }, [])
-  
+
   const renderItemStore = ({item, index}) => (
     <View style={styles.cardStyle}>
       <View style={{flexDirection: 'row'}}>
-        <Image source={ImagesPath.reset} style={styles.backgroundStyle1} />
+        <Image source={{uri:item.offer_image}} style={styles.backgroundStyle1} />
         <View>
           <Text style={styles.primaryText}>{item?.title}</Text>
           <Text style={styles.normatText}

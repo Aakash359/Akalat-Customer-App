@@ -8,6 +8,7 @@ import {
   FlatList,
   ImageBackground,
   TouchableOpacity,
+  PixelRatio,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {Colors, Scale, ImagesPath} from '../../CommonConfig'
@@ -67,15 +68,22 @@ function Favorites() {
         <View style={styles.heading}>
           <View style={styles.textContainer}>
             <Text style={styles.primaryText}>{item?.restro_name}</Text>
-            <TouchableOpacity onPress={() => onFavorite(item)}>
+            <TouchableOpacity onPress={() => onFavorite(item)} >
+              <View style={{height:Scale(50/2),width:Scale(50/2),
+                borderRadius:Scale(30)/ PixelRatio.get(),
+                alignItems:'center'
+                 }}>
               <Icon
                 name="heart"
                 type="FontAwesome"
                 style={{
                   color: Colors.DARK_RED,
+                   marginTop:Scale(6),
                   fontSize: Scale(16),
                 }}
               />
+              </View>
+             
             </TouchableOpacity>
           </View>
           <Text style={styles.normatText}>

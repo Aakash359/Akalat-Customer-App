@@ -5,7 +5,7 @@ import {
   SET_ORDER_LIST_LOADER,
 } from '../Types/OrderActionTypes'
 
-export const orderList = (payload) => {
+export const orderList = (payload,) => {
   return {
     type: ORDER_LIST,
     payload,

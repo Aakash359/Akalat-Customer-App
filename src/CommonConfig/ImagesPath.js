@@ -1,5 +1,6 @@
 const ImagesPath = {
   bg: require('../Assets/Images/back1.png'), //my
+  rider_image: require('../Assets/Images/rider.png'), //my
   offer_setting: require('../Assets/Images/offer_setting.png'), //my
   check2x: require('../Assets/Images/check3x.png'), //my
   check: require('../Assets/Images/check.png'), //my

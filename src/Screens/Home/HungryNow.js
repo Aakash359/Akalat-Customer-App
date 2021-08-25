@@ -26,20 +26,25 @@ function HungryNow(props) {
         data.push(p)
         return data
     }, [])
+
     
     const renderProduct = ({item, index })=>{
        return (
            <View style={styles.cardStyle}>
+               <View style={{justifyContent:'space-between',flexDirection:'row',}}>
+               <Text style={styles.headingText}>{item[0]?.restro_name}</Text>
+         <Text style={styles.headingText}>{item[0]?.restro_details?.distance} Km</Text>
+               </View>
+               
                { item?.map((product, i) => {
                    
-                    let inCart = cartProducts?.find(i => i?._id === item?._id)
+                    let inCart = cartProducts?.find(i => i?._id === product?._id)
                     
                     return(
          
          <View >
-         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10), marginVertical:Scale(-8)}}>
-         <Text style={styles.headingText}>{product.restro_name}</Text>
-         <Text style={styles.headingText}>{product?.restro_details?.distance} Km</Text>
+         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: Scale(10), marginVertical:Scale(-8),marginTop:Scale(2)}}>
+         
          </View>
          <View style={{ flexDirection: 'row' ,marginTop:Scale(8) }}>
          <Image source={{ uri: product?.image}} style={styles.backgroundStyle}/>
@@ -69,7 +74,7 @@ function HungryNow(props) {
             
           </View> 
           
-         :  <View style={styles.addButton}>
+         : <View style={styles.addButton}>
           <Text onPress={() =>addToCart(product)} style={[styles.Add,{color:Colors.APPCOLOR}]}>ADD</Text>
          </View>}
          </View>
@@ -78,14 +83,17 @@ function HungryNow(props) {
          <Text style={{ color: Colors.BLACK, fontSize: Scale(13), marginLeft:Scale(5)}}>{product.qty}</Text>
      
          </View>
-         <View
-            style={{
-                backgroundColor: '#00000029',
-                height: Scale(2),
-                marginTop:Scale(-15),
-                marginBottom:Scale(18)
-            }}
-         />
+         {
+             index===res.length-1 ? null :<View
+             style={{
+                 backgroundColor: '#00000029',
+                 height: Scale(2),
+                 marginTop:Scale(-15),
+                 marginBottom:Scale(18)
+             }}
+          />
+         }
+         
          </View>
          
                     )
@@ -113,7 +121,8 @@ function HungryNow(props) {
         
         const {cartRestroDetails, addToCart} = props
         const {restroDetails = {}} = props.route?.params || {}
-        if(cartRestroDetails && cartRestroDetails?._id !== item?.restro_details?._id) {
+        if(cartRestroDetails && cartRestroDetails?._id !== item?.restro_details?._id) 
+        {
           return Alert.alert('You have another other in your cart')
         }
         else {
@@ -134,6 +143,7 @@ function HungryNow(props) {
       }
       const {cartProducts} = props
       const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
+      const {cartRestroDetails} = props
     return (
         <View style={styles.container}>
             <StatusBar
@@ -153,7 +163,7 @@ function HungryNow(props) {
                                     <Text style={{ color: Colors.WHITE, fontSize: Scale(14), fontFamily: Fonts.Regular }}>{`$ ${totalCartAmt}`}</Text>
                                     <Text style={{ color: Colors.WHITE, fontSize: Scale(11), fontFamily: Fonts.Regular }}>{cartProducts?.length +' items in cart'}</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => props.navigation.navigate('Card',product_list)}
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Card',cartRestroDetails )}
                                 
                                 style={{ borderRadius: Scale(25), borderWidth: 1, borderColor: Colors.WHITE, justifyContent: 'center', alignItems: 'center', width: '30%', height: Scale(30),marginRight:Scale(5) }}>
                                     <Text style={{ color: Colors.WHITE, fontSize: Scale(11), }}>{'Go To Cart'}</Text>

@@ -7,7 +7,7 @@ import {
   StatusBar,
   ScrollView,
   TouchableOpacity,
-  Image,
+  PixelRatio,
   ImageBackground,
 } from 'react-native'
 import {Icon} from 'native-base'
@@ -72,7 +72,7 @@ function HomeScreen(props) {
     })
   }
 
-  const renderItems = ({item, is_favourited_restro}) => (
+  const renderItems = ({item,}) => (
     <View style={styles.cardStyle}>
       <TouchableOpacity onPress={() => redirectToHomeMaker(item)}>
         <ImageBackground
@@ -97,7 +97,7 @@ function HomeScreen(props) {
                 {item?.rating_from_user}
               </Text>
               <StarRating
-                  disabled={false}
+                  disabled={true}
                   maxStars={item?.rating_from_user}
                   starSize= {20}
                   starStyle={{marginHorizontal:Scale(5)}}
@@ -143,14 +143,20 @@ function HomeScreen(props) {
             ({item?.opening_time} - {item?.closing_time})
           </Text>
           <TouchableOpacity onPress={() => onFavorite(item)}>
+          <View style={{height:Scale(50/2),width:Scale(50/2),
+                borderRadius:Scale(30)/ PixelRatio.get(),
+                alignItems:'center'
+                 }}>
             <Icon
               name="heart"
               type="FontAwesome"
               style={{
                 color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
                 fontSize: Scale(16),
+                marginTop:Scale(6),
               }}
             />
+            </View>
           </TouchableOpacity>
         </View>
         <View

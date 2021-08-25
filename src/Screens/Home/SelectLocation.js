@@ -32,6 +32,7 @@ Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 function SelectLocation(props) {
   const [value, setValue] = useState(false)
   const [addressText, setAddressText] = useState(false)
+  const [show, setShow] = React.useState(false)
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -54,13 +55,14 @@ function SelectLocation(props) {
   const redirectToAddress = () => {
     navigate('AddNewAddress')
   }
+
   const ref = useRef();
 
   useEffect(() => {
     const data = {
       created_by: user?._id,
     }
-    ref.current?.setAddressText(addressText);
+    
     dispatch(AddressListRequest(data))
   }, [])
   useEffect(() => {
@@ -112,6 +114,19 @@ function SelectLocation(props) {
       },
     )
   }
+
+  const manageAddress = (details) => {
+    console.log("Datata====>",details)
+   let params ={
+       "latitude": details?.geometry?.location?.lat,
+       "location": details?.formatted_address,
+       "longitude": details?.geometry?.location?.lng
+     }
+     console.log("location",params)
+    //  setLocation(params)
+     ref.current?.setAddressText(addressText);
+ 
+   }
   const checked = () => setValue(!value)
   const renderItems = ({item, index}) => (
     <TouchableOpacity
@@ -171,7 +186,7 @@ function SelectLocation(props) {
               Use current location
             </Text>
           </View>
-
+        
           <GooglePlacesAutocomplete
             ref={ref}
             fetchDetails={true}
@@ -182,7 +197,6 @@ function SelectLocation(props) {
                 borderColor: '#AB8F8E',
                 height: Scale(50),
                 width: '100%',
-                
                 paddingHorizontal: Scale(15),
                 paddingVertical: Scale(15),
                 alignSelf: 'center',
@@ -192,15 +206,23 @@ function SelectLocation(props) {
               },
              
             }}
-            value={addressText}
-            onChangeText={(text) => setAddressText(text)}
+           
+            // onChangeText={(text) => setAddressText(text)}
             placeholder='Search location...'
-            // onPress={(data) => {
-            //   console.log(data, details);
-             
-            // }}
+          //   onPress={(data, details = null) => {
+          //     console.log('====================================');
+          //     console.log("Aakash====>",data);
+          //     console.log('====================================');
+          //     manageAddress(details)
+          // }}
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            console.log(data, details);
+          }}
             query={{
-              key: Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey,
+              types: "geocode",
+              fields:'geometry',
+              key: androidMapAPIKey,
               language: 'en',
             }}
           />

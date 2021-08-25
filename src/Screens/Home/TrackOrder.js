@@ -29,12 +29,9 @@ const mapScreen = (props) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [driverLoc ,setDriverLoc]= useState(null);
-    
+    const [restroDetails,setRestroDetails]= useState(props?.route?.params)
     const [orderDetails,setOrderDetails]= useState(props?.route?.params)
 
-    console.log('====================================');
-    console.log("Aakash===>",orderDetails);
-    console.log('====================================');
     const callNumber = phone => {
         
         let phoneNumber = '';
@@ -62,13 +59,17 @@ const mapScreen = (props) => {
         setDriverLoc(data.coords)
         })
       }, [])
+
+    
+  
     
     return (
 
         <SafeAreaInsetsContext.Consumer>
             {(insets) => (
                 <View style={{ flex: 1 }}>
-                    <MapScreen driverLoc={driverLoc} orderDetails = { orderDetails} />
+                    <MapScreen driverLoc={driverLoc} orderDetails = { orderDetails} 
+                    restroDetails={restroDetails}/>
                     <ImageBackground
                         source={ImagesPath.background}
                         style={homeStyle.bottomViewCont}>

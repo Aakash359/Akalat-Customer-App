@@ -163,9 +163,9 @@ function Explore() {
           restroList: res?.data?.data?.restroNearMe,
           isLoading: false,
         })
-        console.log('====================================');
-        console.log("Aakash=====>",res?.data?.data?.restroNearMe);
-        console.log('====================================');
+        
+        
+        
       } catch (error) {}
     } else {
       setdata({...data, isLoading: true})
@@ -226,7 +226,7 @@ function Explore() {
               </Text>
 
               <StarRating
-                  disabled={false}
+                  disabled={true}
                   maxStars={item?.rating_from_user}
                   starSize= {20}
                   starStyle={{marginHorizontal:Scale(5)}}

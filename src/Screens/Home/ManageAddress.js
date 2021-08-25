@@ -99,7 +99,7 @@ function ManageAddress() {
       </View>
       <View style={{flexDirection: 'row'}}>
         <Text style={styles.placeText}>
-          {item?.house_name_and_no},{item?.area_name},{item?.nearby}
+          {item?.house_name_and_no},{' '}{item?.area_name},{' '}{item?.nearby}
         </Text>
       </View>
     </View>

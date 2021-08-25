@@ -12,6 +12,7 @@ import {
   Modal,
   Switch,
   PermissionsAndroid,
+  PixelRatio,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {
@@ -20,6 +21,7 @@ import {
   ImagesPath,
   iOSMapAPIKey,
   androidMapAPIKey,
+  
 } from '../../CommonConfig'
 import {Searchbar} from 'react-native-paper'
 import StarRating from 'react-native-star-rating';
@@ -159,7 +161,7 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
+        
       }
     } 
   }
@@ -190,11 +192,11 @@ const onStarRatingPress = (rating) => {
         ...data,
         restroList: res?.data?.data?.restroNearMe,
       })
-      console.log('====================================');
-      console.log("Data=====>",res?.data?.data?.restroNearMe);
-      console.log('====================================');
+      
+      
+      
     } catch (error) {
-      console.log('Error', error)
+      
     }
   }
 
@@ -245,7 +247,7 @@ const onStarRatingPress = (rating) => {
       setModal2(false)
       setModal(false)
     } catch (error) {
-      console.log('Error', error)
+      
     }
   }
 
@@ -278,14 +280,15 @@ const onStarRatingPress = (rating) => {
           ...data,
           restroList: res?.data?.data?.restroNearMe,
         })
-        
         setModal2(false)
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
+        
       }
-    } else if (value) {
+    }  
+
+    else if (value) {
       setdata({...data, isLoading: true})
       var payload = {}
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
@@ -311,7 +314,7 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
+        
       }
     }else if (isEnabled){
       const isEnabled = 'veg'
@@ -339,7 +342,7 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
+        
       }
       
     }
@@ -370,7 +373,7 @@ const onStarRatingPress = (rating) => {
         setModal(false)
         navigate('NearMe')
       } catch (error) {
-        console.log('Error', error)
+        
       }
       
     }
@@ -466,7 +469,7 @@ const onStarRatingPress = (rating) => {
                 </Text>
                
                 <StarRating
-                  disabled={false}
+                  disabled={true}
                   maxStars={item?.rating_from_user}
                   starSize= {20}
                   starStyle={{marginHorizontal:Scale(5)}}
@@ -518,14 +521,20 @@ const onStarRatingPress = (rating) => {
               </Text>
 
               <TouchableOpacity onPress={() => onFavorite(item)}>
+              <View style={{height:Scale(50/2),width:Scale(50/2),
+                borderRadius:Scale(30)/ PixelRatio.get(),
+                alignItems:'center'
+                 }}>
                 <Icon
                   name="heart"
                   type="FontAwesome"
                   style={{
                     color: item?.is_favourited ? Colors.DARK_RED : '#AB8F8E',
+                    marginTop:Scale(6),
                     fontSize: Scale(16),
                   }}
                 />
+                </View>
               </TouchableOpacity>
             </View>
             <View

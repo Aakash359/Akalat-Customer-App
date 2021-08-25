@@ -36,6 +36,9 @@ import {
 // ====================== Sign-Up POST ======================
 export const SignUpSaga = function* SignUpSaga({params}) {
   let data = params
+  console.log('====================================');
+  console.log("SignupData====>",data);
+  console.log('====================================');
   try {
     const response = yield call(Request, {
       url: '/addUser',
@@ -190,8 +193,6 @@ function* EditProfileSaga({data, callback}) {
       yield put(setEditProfileLoader(false))
       yield put(editProfileFailed(''))
       yield put(editProfileSuccess(response.data))
-      // let ud = {...response.data}
-      // yield put(setUserDetails(ud))
       if (callback) {
         callback(response)
       }

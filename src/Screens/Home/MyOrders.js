@@ -32,10 +32,11 @@ function MyOrders(props) {
     item: null,
   })
 
-  const [orderDetail, setOrderDetail] = React.useState({
-    orderDetailList: [],
-    isLoading: true,
-  })
+  const data = props.orderList
+  console.log("Data=====>",data);
+
+
+
   const redirectToHomeMaker = (item) => {
     navigate('OrderDetails', item)
   }
@@ -63,6 +64,7 @@ function MyOrders(props) {
     props?.changeOrderStatusRequest(payload, (res) => {
       if (!res?.data?.error) {
         dispatch({type: 'ORDER_LIST'})
+        
         setModal({...modal, visible: false})
       }
     })
@@ -96,7 +98,7 @@ function MyOrders(props) {
         {moment(item?.order_date_placed).format('MMM D, LT')}
       </Text>
       <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>$ {item?.total_price}</Text>
+      <Text style={styles.itemText}>${item?.total_price-item.discounted_price+item.gst_charge_total}</Text>
       <View style={styles.heading}>
         <TouchableOpacity
           onPress={() => setModal({...modal, visible: true, item})}
@@ -113,7 +115,7 @@ function MyOrders(props) {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          // onPress={() => navigate('TrackOrder', item)}
+          onPress={() => navigate('TrackOrder', {restroDetails: item?.restro_detail, orderDetails: item})}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -220,8 +222,6 @@ function MyOrders(props) {
   let activeOrders = props?.orderList.filter((i) => active.includes(i.status))
   let pastOrders = props?.orderList.filter((i) => past.includes(i.status))
 
-  
-
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -263,7 +263,7 @@ function MyOrders(props) {
             )
           }}
         />
-        {/* <LoadWheel visible={orderDetail.isLoading} /> */}
+        {/* <LoadWheel visible={orderDetail?.isLoading} /> */}
       </ImageBackground>
       <LogoutAlert
         visible={modal?.visible}

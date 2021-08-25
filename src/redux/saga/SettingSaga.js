@@ -293,9 +293,7 @@ function* deleteAddress({data}) {
 
 export const favouriteList = function* favouriteList({data}) {
 
-
-  
-  yield put({type: SET_FAVOURITE_LIST_LOADER, payload: true})
+yield put({type: SET_FAVOURITE_LIST_LOADER, payload: true})
 
   try {
     const response = yield call(Request, {

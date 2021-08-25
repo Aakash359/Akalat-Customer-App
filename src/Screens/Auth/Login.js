@@ -59,6 +59,8 @@ function Login(props) {
     const deviceType = await getDeviceType()
     if (phone == '') {
       alert('Please enter Mobile Number')
+    } else if (phone.length<10) {
+      alert('Please enter 10 digit mobile number')
     } else if (password == '') {
       alert('Please enter Password')
     } else {

@@ -121,15 +121,12 @@ function HomeMaker(props) {
 
   const {restroDetails: resDet, productList: prod} = list
 
-  // const data = prod?.product_categories?.item.reduce((a,b)=>{
-  //   a += `${b}`
-  //   return a
-  // }, '').slice(0, -2)
+  
   const prodData = prod
 
-        console.log('====================================');
-        console.log("ProductDetails=======>",prodData?.[0]?.product_categories);
-        console.log('====================================');
+  console.log('====================================');
+  console.log("ProductDetails=======>",prodData?.[0]?.product_categories);
+  console.log('====================================');
 
 
   const {cartProducts} = props

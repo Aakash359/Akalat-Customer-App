@@ -48,6 +48,9 @@ function ForgotPassword(props) {
 
   const onSubmit = () => {
     const forgotStatus = props
+    console.log('====================================');
+    console.log("Aakash====>",forgotStatus);
+    console.log('====================================');
     if (phone == '') {
       alert('Please enter phone number')
     } else if (phone.length < 10) {
@@ -67,12 +70,14 @@ function ForgotPassword(props) {
       dispatch(OTPRequest(data))
     }
   }
+
   useEffect(() => {
     dispatch(countryListRequest())
     navigation.addListener('focus', () => {
       dispatch(setOtpVerifyStatus(false))
     })
   }, [])
+
 
  
   

@@ -10,7 +10,7 @@ import {
   Text
 } from 'react-native'
 import {
-  androidMapAPIKey,screenWidth} from '../CommonConfig';
+  androidMapAPIKey,ImagesPath,Scale,screenWidth} from '../CommonConfig';
 import MapView, {PROVIDER_GOOGLE, Marker,Callout,Polyline} from 'react-native-maps'
 import Geolocation from 'react-native-geolocation-service'
 import {bool, func} from 'prop-types'
@@ -55,7 +55,18 @@ export class MapScreen extends Component {
       return
     } else {
       this.getLocation()
+      locateCurrentPosition();
+
     }
+  }
+
+  locateCurrentPosition=() => {
+    Geolocation.getCurrentPosition(
+        position =>{
+          setlatitude(position.coords.latitude);
+          setlongitude(position.coords.longitude);
+        },
+      )
   }
 
 
@@ -77,7 +88,7 @@ export class MapScreen extends Component {
 
     if (status === 'disabled') {
       Alert.alert(
-        `Turn on Location Services to allow "Lavena Coffee" to determine your location.`,
+        `Turn on Location Services to allow "Customer App" to determine your location.`,
         '',
         [
           {text: 'Go to Settings', onPress: openSetting},
@@ -160,19 +171,22 @@ export class MapScreen extends Component {
   }
 
   render() {
+
     
-    console.log('====================================');
-    console.log('Driver Loc: ', this.props.driverLoc);
-    console.log('====================================');
+
+    const restroDetails = this.props?.restroDetails?.restroDetails || this.props?.restroDetails
 
     console.log('====================================');
-    console.log('OrderDetails: ', this.props.orderDetails.orderDetails.status);
+    console.log('RestroData====>: ', this.props.restroDetails);
     console.log('====================================');
+
+    
     return (
       <View style={{flex: 1}}>
         <MapView
-          style={{height:screenWidth/1}}
-          region={this.props.orderDetails.orderDetails.status=='OPU' ? [{ 
+          // style={{height:screenWidth/1}}
+          style={StyleSheet.absoluteFillObject}
+          region={restroDetails?.status=='OPU' ? [{ 
             ...this.props.driverLoc,
             latitudeDelta: 0.0045,
             longitudeDelta: 0.0045,
@@ -183,20 +197,41 @@ export class MapScreen extends Component {
           loadingBackgroundColor="#eeeeee"
           moveOnMarkerPress={false}
           showsUserLocation={true}
-          showsCompass={true}
           provider={PROVIDER_GOOGLE}
-          
-        >
+          ref={c => this.mapView = c}
+         >
+       
+       
+         
 
-      {this.props.orderDetails.orderDetails.status=='OPU'? (this.props.driverLoc?.latitude && <Marker
+      {restroDetails?.status=='OPU'? (this.props.driverLoc?.latitude && <Marker
           coordinate={this.props.driverLoc}
           >
-
-            <View style={{width: 30, height: 30, backgroundColor: 'red'}} >
-              <Text>Hello</Text>
+           <View style={{width: 30, height: 30, backgroundColor: 'red'}} >
+            <Image source={ImagesPath.rider_image} style={{height:Scale(20),width:Scale(20)}} />
             </View>
 
-          </Marker>):null}
+          </Marker>):
+         (
+          <Polyline
+          coordinates={[
+            {latitude:
+              this.state.location != undefined
+                ? this.state.location.coords.latitude
+                : restroDetails?.lat,
+            longitude:
+              this.state.location != undefined
+                ? this.state.location.coords.longitude
+                : 72.799736,},
+            { latitude: restroDetails?.lat, longitude: restroDetails?.lng }]}
+          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColors={['#7F0000']}
+          strokeWidth={4}
+          lineDashPhase={[10]}
+          lineDashPattern={[10]}
+        />)
+}
+     
         </MapView>
       </View>
     )

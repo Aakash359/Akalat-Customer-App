@@ -54,9 +54,11 @@ function Otp(props) {
 
   const onPress = () => {
     const data = {
+      otp: otp,
       phone: phone,
       role: 'user',
       country_code: COUNTRY == 'IN' ? '91' : '971',
+      verification_status: 'true',
     }
 
     navigate('Otp', data)

@@ -17,22 +17,33 @@ import axios from 'axios'
 import {API_BASE} from '../../apiServices/ApiService'
 import {connect} from 'react-redux'
 import {reOrder} from '../../redux/actions/CartActions'
-
+import StarRating from 'react-native-star-rating';
+import {LoadWheel} from '../../CommonConfig/LoadWheel'
+import {LogoutAlert} from '../../CommonConfig'
+import {changeOrderStatusRequest} from '../../redux/actions/SettingActions'
+import {useSelector, useDispatch} from 'react-redux'
 
 function OrderDetail(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const [starCount, setStarCount] = useState(5)
+  const [modal, setModal] = useState({
+    visible: false,
+    item: null,
+  })
   const [orderDetail, setOrderDetail] = useState({
     order: {},
-    isLoading: '',
+    isLoading: true,
     errorMsg: '',
   })
 
     const ratingRes = props?.route?.params?.ratingRes;
     const RestroDetails =props?.route?.params?.restro_detail
     const products =props?.route?.params?.product_list || []
+    const {totalCartAmt, det} = props?.route?.params
 
-    
+   
 
     const getOrderDetails = async () => {
     setOrderDetail({...orderDetail, isLoading: true})
@@ -49,26 +60,19 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
-      console.log('====================================');
-      console.log("Aakash====>",orderDetail?.order?.status);
-      console.log('====================================');
-      
-
-    
-
-    
-     
-    } catch (error) {
+      } catch (error) {
       setOrderDetail({
         ...orderDetail,
         isLoading: false,
         errorMsg: error.message,
       })
+   
     }
   }
 
   React.useEffect(() => {
     getOrderDetails()
+    
   }, [])
 
 
@@ -79,12 +83,28 @@ function OrderDetail(props) {
     )
   }
 
-  let active = ['P', 'RPL', 'OPU', 'AD', 'RCH', 'PR', 'PRD']
-  let past = ['RC', 'OD', 'CC']
+  const cancelOrder = () => {
+
+    const payload = {
+      _id:orderDetail?.order?._id,
+      status: 'CC',
+    }
+    props?.changeOrderStatusRequest(payload, (res) => {
+      console.log('====================================');
+      console.log("Aakash====>",res);
+      console.log('====================================');
+      if (!res?.data?.error) {
+        
+        dispatch({type: 'ORDER_LIST'})
+        
+        setModal({...modal, visible: false})
+        
+      }
+    })
+    navigate('MyOrders')
+  }
 
   
-  
-
   return (
     <View style={styles.container}>
       <StatusBar
@@ -115,6 +135,7 @@ function OrderDetail(props) {
         source={ImagesPath.background}
         style={styles.loginInputCont}>
         <ScrollView>
+        <LoadWheel visible={orderDetail.isLoading} />
           <View
             style={[
               styles.cardStyle,
@@ -175,7 +196,28 @@ function OrderDetail(props) {
             
             <>
            {
-             ratingRes?.data?.status == 1 ? <Text
+             ratingRes?.data?.status == 1 ?
+
+             <View style={{justifyContent:'flex-start'}}>
+               <StarRating
+                  disabled={true}
+                  maxStars={5}
+                  starSize= {20}
+                  starStyle={{
+                    marginTop:Scale(10),
+                    marginHorizontal:Scale(5),
+                    marginLeft:Scale(1)
+                    
+                    }}
+                  containerStyle={{width:Scale(50)}}
+                  rating={starCount}
+                  halfStarColor={'#FBFBFB'}
+                  fullStarColor	={'#FFBE33'}
+                  emptyStarColor={'#FBFBFB'}
+                  starSize={25}
+                  selectedStar={(rating) => setStarCount(rating)}
+                />
+                <Text
              style={{
                color: Colors.BLACK,
                fontWeight: 'bold',
@@ -184,7 +226,10 @@ function OrderDetail(props) {
                marginTop:Scale(10)
              }}>
              You have rated successfully 
-           </Text>:
+           </Text>
+             </View>
+             
+             :
              <TouchableOpacity onPress={() => navigate('Rating', {OrderDetail:orderDetail})}>
              <View
                style={{
@@ -268,9 +313,10 @@ function OrderDetail(props) {
                   {color: Colors.BLACK, fontWeight: '700'},
                 ]}>
                 $
-                {orderDetail?.order?.total_price -
+                { orderDetail?.order?.total_price -
                   orderDetail?.order?.discounted_price +
-                  orderDetail?.order?.gst_charge_total}
+                  orderDetail?.order?.gst_charge_total
+                }
               </Text>
             </View>
             <View
@@ -295,31 +341,56 @@ function OrderDetail(props) {
             </View>
 
             <Text style={styles.itemText2}>
-              {orderDetail?.order?.order_delivery_address?.address_type},
-              {orderDetail?.order?.order_delivery_address?.house_name_and_no}
-              {''}
-              {orderDetail?.order?.order_delivery_address?.area_name},{' '}
-              {orderDetail?.order?.order_delivery_address?.nearby}
+              
+              {orderDetail?.order?.order_delivery_address?.house_name_and_no},{' '}{orderDetail?.order?.order_delivery_address?.area_name},{' '}{orderDetail?.order?.order_delivery_address?.nearby}
             </Text>
           </View>
 
           <View style={{paddingHorizontal: '5%', 
-          marginBottom: 50,flexDirection:'column',
+          marginBottom: Scale(50),flexDirection:'column',
+          }}>{
+            ['P', 'RPL', 'OPU', 'AD', 'RCH', 'PR', 'PRD'].includes(orderDetail?.order?.status)?
+           <TouchableOpacity
+           onPress={() => setModal({...modal, visible: true})}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginVertical:Scale(30),
+            backgroundColor: Colors.DARK_RED,
+            paddingHorizontal: 35,
+            paddingVertical: 14,
+            borderRadius: 25,
+            
           }}>
-            <CustomButton 
+            <Text style={{color: 'white', fontWeight: '600', fontSize: 16}}>
+            Cancel Order
+            </Text>
+          </TouchableOpacity>
+             
+             
+             :
+             <View style={{marginTop:Scale(22)}}>
+              <CustomButton 
              title="Re-Order" isSecondary={true} 
              onPress={onPress}
-            />
+             />
+
+             </View>
+            
+            
+          }
+
+            
             <View style={{marginTop:Scale(-22)}}>
             {
-              orderDetail?.order?.status != 'CC'?
+              !['RC', 'CC', 'OD'].includes(orderDetail?.order?.status)?
               <TouchableOpacity
-          // onPress={() => navigate('TrackOrder', item)}
+          onPress={() => navigate('TrackOrder',{restroDetails: props?.route?.params?.restro_detail, orderDetails: orderDetail?.order})}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
             marginVertical:Scale(10),
-            backgroundColor: Colors.RED,
+            backgroundColor: Colors.APPCOLOR,
             paddingHorizontal: 35,
             paddingVertical: 14,
             borderRadius: 25,
@@ -336,6 +407,15 @@ function OrderDetail(props) {
           </View>
          
         </ScrollView>
+        <LogoutAlert
+        visible={modal?.visible}
+        title={'Cancel Order'}
+        alertTitle={'Are you sure you want to cancel this order?'}
+        rightButtonText={'Yes'}
+        leftButtonText={'No'}
+        onPressRightButton={() => cancelOrder(modal?.orderDetail?.order)}
+        onPressLeftButton={() => setModal({...modal, visible: false})}
+      />
       </ImageBackground>
     </View>
   )
@@ -343,6 +423,7 @@ function OrderDetail(props) {
 
 const mapDispatchToProps = {
   reOrder,
+  changeOrderStatusRequest,
 }
 export default connect(null, mapDispatchToProps)(OrderDetail)
 
@@ -498,7 +579,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
   },
   cardStyle2: {
-    height: Scale(100),
+    height: Scale(120),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),

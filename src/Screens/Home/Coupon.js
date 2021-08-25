@@ -26,6 +26,7 @@ import {
 import Slider from '@react-native-community/slider'
 import {LoadWheel} from '../../CommonConfig/LoadWheel'
 import axios from 'axios'
+import StarRating from 'react-native-star-rating';
 
 function Coupon(props) {
   const [restro, setRestro] = React.useState({
@@ -34,6 +35,7 @@ function Coupon(props) {
     errorMsg: '',
     error: false,
   })
+  const [starCount, setStarCount] = useState(5)
   const [isEnabled, setIsEnabled] = useState()
   const [activeTab, setActiveTab] = useState(0)
   const [currentAddress, setAddress] = useState('')
@@ -218,7 +220,8 @@ function Coupon(props) {
       } catch (error) {
         alert('Error', error)
       }
-    } else if (value) {
+    } 
+    else if (value) {
       setRestro({...restro, isLoading: true})
       const url = `${API_BASE}/couponSortFilter`
       var payload = {}
@@ -243,7 +246,36 @@ function Coupon(props) {
       } catch (error) {
         alert('Error', error)
       }
-    } else {
+    } 
+    else if (isEnabled) {
+      const isEnabled = 'veg'
+      setRestro({...restro, isLoading: true})
+      const url = `${API_BASE}/couponSortFilter`
+      var payload = {}
+      payload = {
+        userid: user?._id,
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        distance: undefined,
+        rating_from_user: value.toFixed(1) + '',
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setRestro({
+          ...restro,
+          isLoading: false,
+          restroList: res?.data?.data?.restroNewList,
+        })
+        setModal2(false)
+        navigate('Coupon')
+      } catch (error) {
+        alert('Error', error)
+      }
+    } 
+    else {
+      const isEnabled = 'veg_and_non_veg'
       setRestro({...restro, isLoading: true})
       const url = `${API_BASE}/couponSortFilter`
       const payload = {
@@ -251,7 +283,7 @@ function Coupon(props) {
         coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
         distance: value1.toFixed(1) + '',
         rating_from_user: value.toFixed(1) + '',
-        is_sort: `${true}`,
+        is_sort: `${false}`,
         is_filter: `${true}`,
         restaurent_type: restro_type,
       }
@@ -293,34 +325,17 @@ function Coupon(props) {
                 }}>
                 {item?.rating_from_user}
               </Text>
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {paddingLeft: 10}]}
-              />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {paddingLeft: 3}]}
-              />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {paddingLeft: 3}]}
-              />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[styles.iconStyle, {paddingLeft: 3}]}
-              />
-              <Icon
-                name="star"
-                type="FontAwesome"
-                style={[
-                  styles.iconStyle,
-                  {color: Colors.WHITE, paddingLeft: 3},
-                ]}
-              />
+              <StarRating
+                  disabled={true}
+                  maxStars={item?.rating_from_user}
+                  starSize= {20}
+                  starStyle={{marginHorizontal:Scale(5)}}
+                  rating={starCount}
+                  halfStarColor={'#FBFBFB'}
+                  fullStarColor	={'#FFBE33'}
+                  emptyStarColor={'#FBFBFB'}
+                  selectedStar={(rating) => setStarCount(rating)}
+                />
               <View style={{justifyContent: 'flex-end', flex: 1}}>
                 <Text
                   style={{
@@ -373,16 +388,19 @@ function Coupon(props) {
               flex: 1,
               marginTop: 5,
             }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                fontSize: Scale(12.5),
-                fontWeight: 'normal',
-                paddingBottom: 20,
-                paddingLeft: 12,
-              }}>
-              {item?.categoryNameArray}
-            </Text>
+             <Text
+                numberOfLines={1}
+                style={{
+                  fontSize: Scale(12.5),
+                  fontWeight: 'normal',
+                  paddingBottom: 20,
+                  paddingLeft: 12,
+                }}>
+                {item?.categoryNameArray?.reduce((a,b) => {
+                    a += `${b}, `
+                return a
+                }, '').slice(0, -2)}
+              </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -715,7 +733,7 @@ function Coupon(props) {
                   <Switch
                     trackColor={{
                       false: Colors.GRAY,
-                      true: Colors.RED,
+                      true: Colors.GREEN,
                     }}
                     style={{
                       transform: [{scaleX: 1.1}, {scaleY: 1.1}],

@@ -42,10 +42,10 @@ import {useSelector, useDispatch} from 'react-redux'
 function Card(props) {
   const [count, setIsPopupVisible] = useState(1)
   const [coupon, setCoupon] = useState(props?.couponCode || '')
-  const applyCouponStatus = useSelector((state) => state.coupon.user)
+  const applyCouponStatus = useSelector((state) => state.coupon.applyCouponStatus)
+  const couponError = useSelector((state) => state.coupon.error)
   const [modal, setModal] = React.useState(false)
   const product_list = props.route.params
-
   const [det, setDet] = useState({
     dis: props?.applyCoupon?.discount_amount || 0,
     tax: 0,
@@ -78,31 +78,61 @@ function Card(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   
+
  
   const redirectToPayment = () => {
-   
-      props?.setSelectedAddress(address?.selectedId)
-      props?.setAddressId(props?.addressList[address?.selectedId]?._id)
-  
-      const totalCartAmt = props?.cartProducts?.reduce(
-        (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
-        0,
-      )
-  
-      const data = {
-        totalCartAmt,
-        det,
-      }
-  
-      if (props?.addressList?.length) {
-        navigate('Payment', data)
-      } else {
-        Alert.alert('', 'Please add an address')
-      }
-
+ 
+      if (applyCouponStatus){
+        
+        props?.setSelectedAddress(address?.selectedId)
+        props?.setAddressId(props?.addressList[address?.selectedId]?._id)
     
-   
-  }
+        const totalCartAmt = props?.cartProducts?.reduce(
+          (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
+          0,
+        )
+    
+        const data = {
+          totalCartAmt,
+          det,
+        }
+    
+        if (props?.addressList?.length) {
+          navigate('Payment', data, )
+        } else {
+          Alert.alert('', 'Please add an address')
+        }
+      }else if( coupon==''){
+
+        props?.setSelectedAddress(address?.selectedId)
+        props?.setAddressId(props?.addressList[address?.selectedId]?._id)
+    
+        const totalCartAmt = props?.cartProducts?.reduce(
+          (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
+          0,
+        )
+    
+        const data = {
+          totalCartAmt,
+          det,
+        }
+    
+        if (props?.addressList?.length) {
+          navigate('Payment', data, )
+        } else {
+          Alert.alert('', 'Please add an address')
+        }
+
+      }else{
+        alert(couponError)
+      }
+   }
+
+
+
+  React.useEffect(() => {
+
+  }, [applyCouponStatus,coupon])
 
   const addToCart = (item) => {
     const {cartRestroDetails, addToCart} = props
@@ -116,9 +146,7 @@ function Card(props) {
     subToCart(item)
   }
 
-  const {cartRestroDetails, cartProducts} = props
-
-  
+  const {cartRestroDetails, cartProducts} = props  
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
     0,
@@ -147,10 +175,11 @@ function Card(props) {
     if (!props?.couponCode) {
       setCoupon('')
       setDet({...det, dis: 0})
+      console.log("Details====>",det);
     
     } else {
       setCoupon(props?.couponCode)
-     
+      
       setDet({...det, dis: props?.applyCoupon?.discount_amount || 0})
      
     }
@@ -430,10 +459,7 @@ function Card(props) {
                 </View>
 
                 <Text style={styles.itemText2}>
-                  {props?.addressList[address?.selectedId]?.house_name_and_no},
-                  {''}
-                  {props?.addressList[address?.selectedId]?.area_name},{''}
-                  {props?.addressList[address?.selectedId]?.nearby}
+                  {props?.addressList[address?.selectedId]?.house_name_and_no},{' '}{props?.addressList[address?.selectedId]?.area_name},{' '}{props?.addressList[address?.selectedId]?.nearby}
                 </Text>
               </View>
             ) : (

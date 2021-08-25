@@ -34,7 +34,9 @@ function Payment(props) {
       return res
     }, [])
   }
-
+  const {restroDetails} = props
+  const restroData = restroDetails
+  
   const createOrder = () => {
     const {restroDetails, products, user, instruction, addressId} = props
     const {totalCartAmt, det} = props?.route?.params
@@ -55,7 +57,7 @@ function Payment(props) {
     }
     if (check) {
       props?.createOrder(payload, (res) => {
-        navigate('PlaceOrder', {orderDetails: res?.data})
+        navigate('PlaceOrder', {orderDetails: res?.data, restroDetails})
       })
     } else {
       Alert.alert('', 'Select payment method')
