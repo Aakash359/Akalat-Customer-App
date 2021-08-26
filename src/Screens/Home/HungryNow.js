@@ -11,6 +11,7 @@ import { LoadWheel } from '../../CommonConfig/LoadWheel'
 function HungryNow(props) {
     
     const hungryNowListResponse = useSelector((state) => state.Home.hungryNowListResponse)
+  
     const dispatch = useDispatch()
     const product_list = hungryNowListResponse?.data?.product_list || []
     const user = useSelector((state) => state.Auth.user)
@@ -121,12 +122,16 @@ function HungryNow(props) {
         
         const {cartRestroDetails, addToCart} = props
         const {restroDetails = {}} = props.route?.params || {}
+   
         if(cartRestroDetails && cartRestroDetails?._id !== item?.restro_details?._id) 
         {
           return Alert.alert('You have another other in your cart')
         }
         else {
             addToCart({restroDetails: item?.restro_details, product: item, })
+            console.log('====================================');
+            console.log("Aakash===>",item?.restro_details);
+            console.log('====================================');
         }
       } 
       const increment = () => {
@@ -144,6 +149,7 @@ function HungryNow(props) {
       const {cartProducts} = props
       const totalCartAmt =  cartProducts?.reduce((sum, i) => sum += i?.final_price * i?.qty || i?.price || i?.qty, 0)
       const {cartRestroDetails} = props
+    
     return (
         <View style={styles.container}>
             <StatusBar

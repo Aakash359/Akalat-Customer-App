@@ -11,10 +11,11 @@ import {
   ImageBackground,
   Modal,
   Switch,
+  PixelRatio,
 } from 'react-native'
 import {Icon} from 'native-base'
 import {CustomButton} from '../../Component'
-import {Colors, Scale, ImagesPath} from '../../CommonConfig'
+import {Colors, Scale, ImagesPath,screenHeight} from '../../CommonConfig'
 import {useNavigation} from '@react-navigation/native'
 import {API_BASE} from '../../apiServices/ApiService'
 import {useSelector, useDispatch, connect} from 'react-redux'
@@ -38,14 +39,12 @@ function Coupon(props) {
   const [starCount, setStarCount] = useState(5)
   const [isEnabled, setIsEnabled] = useState()
   const [activeTab, setActiveTab] = useState(0)
-  const [currentAddress, setAddress] = useState('')
   const [modal, setModal] = React.useState(false)
   const [modal2, setModal2] = React.useState(false)
   const [value, setValue] = useState(0)
   const [value1, setValue1] = useState(0)
-  const [location, setLocation] = useState(null)
   const user = useSelector((state) => state.Auth.user)
-
+  const dispatch = useDispatch()
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }
@@ -87,7 +86,10 @@ function Coupon(props) {
   }
 
   React.useEffect(() => {
-    onRestro()
+    navigation.addListener('focus', () => {
+     onRestro()
+    })
+   
   }, [])
 
   const {navigate} = useNavigation()
@@ -97,13 +99,11 @@ function Coupon(props) {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
 
-  const addFavouriteStatus = useSelector(
-    (state) => state.Home.addFavouriteStatus,
-  )
-
-  const dispatch = useDispatch()
-
   const onFavorite = (item) => {
+    const restro = [...restro?.restroList]
+    const index = restro.findIndex((i) => i?._id === item?._id)
+    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
+    setRestro({...restro, restroList: restro})
     const payload = {
       userid: user?._id,
       restro_id: item?._id,
@@ -161,6 +161,8 @@ function Coupon(props) {
     } catch (error) {}
   }
 
+  
+
   const onSortByReset = async () => {
     setRestro({...restro, isLoading: true})
     const url = `${API_BASE}/listRestroWithOffer`
@@ -187,12 +189,38 @@ function Coupon(props) {
 
   const onFilter = async () => {
     var restro_type = ''
-    if (isEnabled) {
-      restro_type = 'non_veg'
+    if (!isEnabled) {
+      restro_type = 'veg_and_non_veg'
     } else {
       restro_type = 'veg'
     }
-    if (value1) {
+    if (value && value1) {
+      var payload = {}
+      setRestro({...restro, isLoading: true})
+      const url = `${API_BASE}/couponSortFilter`
+      payload = {
+        userid: user?._id,
+        distance: value1.toFixed(1) + '',
+        coupon_discount_in_percentage: `${couponDetails?.coupon_discount_in_percentage}`,
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+        rating_from_user: value.toFixed(1) + '',
+      }
+      try {
+        const res = await axios.post(url, payload)
+        setRestro({
+          ...restro,
+          isLoading: false,
+          restroList: res?.data?.data?.restroNewList,
+        })
+        setModal2(false)
+        navigate('Coupon')
+      } catch (error) {
+        alert('Error', error)
+      }
+    } 
+   else if (value1) {
       var payload = {}
       setRestro({...restro, isLoading: true})
       const url = `${API_BASE}/couponSortFilter`
@@ -212,9 +240,6 @@ function Coupon(props) {
           isLoading: false,
           restroList: res?.data?.data?.restroNewList,
         })
-        
-        
-        
         setModal2(false)
         navigate('Coupon')
       } catch (error) {
@@ -343,7 +368,7 @@ function Coupon(props) {
                     textAlign: 'right',
                     fontSize: Scale(15),
                   }}>
-                  {item.distance} Km
+                  {/* {item.distance} Km */}
                 </Text>
               </View>
             </View>
@@ -372,6 +397,10 @@ function Coupon(props) {
             </Text>
 
             <TouchableOpacity onPress={() => onFavorite(item)}>
+            <View style={{height:Scale(50/2),width:Scale(50/2),
+                borderRadius:Scale(30)/ PixelRatio.get(),
+                alignItems:'center'
+                 }}>
               <Icon
                 name="heart"
                 type="FontAwesome"
@@ -380,6 +409,7 @@ function Coupon(props) {
                   fontSize: Scale(16),
                 }}
               />
+              </View>
             </TouchableOpacity>
           </View>
           <View
@@ -447,7 +477,10 @@ function Coupon(props) {
                 <Image source={ImagesPath.filter} />
               </TouchableOpacity>
             </View>
-            <FlatList data={restro?.restroList} renderItem={renderItems} />
+            <FlatList data={restro?.restroList} 
+            renderItem={renderItems}
+            keyExtractor={(item, i) => `${i}`}
+            />
             <LoadWheel visible={restro.isLoading} />
           </ScrollView>
 
@@ -853,7 +886,7 @@ const styles = StyleSheet.create({
   backgroundStyle1: {
     flex: 1,
     width: '100%',
-    height: '100%',
+    height: screenHeight/2.5,
     paddingTop: Scale(70),
   },
   backgroundStyle: {

@@ -91,8 +91,7 @@ function MyOrders(props) {
       </View>
       <View style={styles.borderStyle} />
       <Text style={[styles.seconderyText, {marginTop: Scale(-10)}]}>Items</Text>
-
-      <Text style={styles.itemText}>{productRender(item?.product_list)}</Text>
+      {productRender(item?.product_list)}
       <Text style={styles.seconderyText}>Ordered on</Text>
       <Text style={styles.itemText}>
         {moment(item?.order_date_placed).format('MMM D, LT')}

@@ -66,7 +66,7 @@ function Notification() {
     const renderItems = ({item, index}) => (
       <View >
       <Text>Firebase Messaging</Text>
-      <Text>{`title: ${notification?.title}`}</Text>
+      <Text>{`Notifications ${notification?.title}`}</Text>
       <Text>{`title: ${notification?.body}`}</Text>
       <Image source={{uri: notification?.image}} width={500} height={500} />
       </View>
@@ -86,7 +86,7 @@ function Notification() {
      
         <ImageBackground source={ImagesPath.background} style={styles.loginInputCont}>
          <FlatList
-          data={[0,1,2,3]}
+          data={[0]}
           renderItem={renderItems}
           contentContainerStyle={{paddingBottom: 30}}
           showsVerticalScrollIndicator={false}

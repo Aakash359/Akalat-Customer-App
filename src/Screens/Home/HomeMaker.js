@@ -53,6 +53,7 @@ function HomeMaker(props) {
     const payload = {
       _id: props?.route.params?.restroId,
     }
+  
     try {
       const res = await axios.post(url, payload)
     if (res?.status === 200) {
@@ -63,7 +64,7 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
-        
+       
        
        } else {
         setList({...list, isLoading: false, error: res?.data?.message})
@@ -114,21 +115,7 @@ function HomeMaker(props) {
   }
 
   const {restroDetails = {}} = props.route.params || {}
-
-  const {restroData = {}} = props.route.params || {}
-  
- 
-
   const {restroDetails: resDet, productList: prod} = list
-
-  
-  const prodData = prod
-
-  console.log('====================================');
-  console.log("ProductDetails=======>",prodData?.[0]?.product_categories);
-  console.log('====================================');
-
-
   const {cartProducts} = props
   const totalCartAmt = cartProducts?.reduce(
     (sum, i) => (sum += i?.final_price * i?.qty || i?.price || i?.qty),
@@ -224,6 +211,7 @@ function HomeMaker(props) {
               data={!isEnabled? allData:veg}
               style={styles.gridView}
               spacing={Scale(12)}
+              keyExtractor={(item, i) => `${i}`}
               renderItem={({item}) => {
                 let inCart = cartProducts?.find((i) => i?._id === item?._id)
                 return (

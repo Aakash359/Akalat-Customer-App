@@ -114,8 +114,8 @@ function AddNewAddress(props) {
     else if (nearby) {
       let data = {
         address_type: activeTab + '',
-        lng: location?.latitude,
-        lat: location?.longitude,
+        lng: location?.longitude,
+        lat: location?.latitude,
         house_name_and_no,
         area_name,
         nearby,
@@ -134,8 +134,8 @@ function AddNewAddress(props) {
       else if (!nearby) {
         let data = {
           address_type: activeTab + '',
-          lng: location?.latitude,
-          lat: location?.longitude,
+          lng: location?.longitude,
+          lat: location?.latitude,
           house_name_and_no,
           area_name,
           created_by: user?._id,

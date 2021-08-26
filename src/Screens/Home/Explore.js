@@ -145,29 +145,7 @@ function Explore() {
 
   const onSearch = async () => {
     var data = search
-    if ((data = !search)) {
-      setdata({...data, isLoading: true})
-      const url = `${API_BASE}/restro/combinedSearchSortFilter`
-
-      const payload = {
-        userid: user?._id,
-        lat: 28.4922,
-        lng: 77.0966,
-      }
-
-      try {
-        const res = await axios.post(url, payload)
-
-        setdata({
-          ...data,
-          restroList: res?.data?.data?.restroNearMe,
-          isLoading: false,
-        })
-        
-        
-        
-      } catch (error) {}
-    } else {
+    if ((data = search)) {
       setdata({...data, isLoading: true})
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
 
@@ -189,16 +167,54 @@ function Explore() {
           isLoading: false,
         })
       } catch (error) {}
-    }
+    } 
+  
+  }
+
+  const getDefaultRestro = async () => {
+    setdata({...data, isLoading: true})
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+
+      const payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+      }
+
+      try {
+        const res = await axios.post(url, payload)
+
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+          isLoading: false,
+        })
+        
+        
+        
+      } catch (error) {}
   }
 
   React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      onSearch()
+      getDefaultRestro()
+    })
     onSearch()
+    setSearch('')
   }, [])
 
   React.useEffect(() => {
     onSearch()
+   
   }, [search])
+
+  useEffect( () => {
+    
+    getDefaultRestro()
+    setSearch('')
+    
+  }, [])
 
   const renderItems = ({item}) => (
     <View style={styles.cardStyle}>

@@ -65,12 +65,18 @@ function HomeScreen(props) {
 
     dispatch(addfavouriteRequest(payload))
   }
-  const onBack = (res) => {
-    setdata({
-      ...data,
-      restroList: res.restro,
+  useEffect( () => {
+    const {viewallData} = props.route.params
+     navigation.addListener('focus', () => {
+
+      if(viewallData){
+        viewallData
+      }
     })
-  }
+    
+
+    
+  }, [viewallData])
 
   const renderItems = ({item,}) => (
     <View style={styles.cardStyle}>
@@ -174,7 +180,7 @@ function HomeScreen(props) {
                   paddingLeft: 12,
                 }}>
                 {item?.categoryNameArray?.reduce((a,b) => {
-                    a += `${b},`
+                    a += `${b}, `
                 return a
                 }, '').slice(0, -2)}
               </Text>

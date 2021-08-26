@@ -38,7 +38,7 @@ import {API_BASE} from '../../apiServices/ApiService'
 import axios from 'axios'
 import Geolocation from 'react-native-geolocation-service'
 import Geocoder from 'react-native-geocoding'
-import {LoadWheel} from '../../CommonConfig/LoadWheel'
+
 
 Geocoder.init(Platform.OS == 'ios' ? iOSMapAPIKey : androidMapAPIKey)
 
@@ -63,25 +63,20 @@ function NearMe(props) {
   const setCheckedSwitch = () => {
     setIsEnabled(!isEnabled)
   }
-  
-  
-  
   const [data, setdata] = React.useState({
     restroList: [],
     isLoading: true,
     resetStatus: false,
   })
 
-const onStarRatingPress = (rating) => {
+  const onStarRatingPress = (rating) => {
     setStarCount({
       starCount: rating
     });
   }
+   useEffect(() => {
 
-
-
-  useEffect(() => {
-    const requestLocationPermission = async () => {
+     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation()
       } else {
@@ -169,6 +164,7 @@ const onStarRatingPress = (rating) => {
   React.useEffect(() => {
     navigation.addListener('focus', () => {
       onSearch()
+      getDefaultRestro()
     })
   }, [])
 
@@ -255,12 +251,12 @@ const onStarRatingPress = (rating) => {
 
   const onFilter = async () => {
     var restro_type = ''
-    if (isEnabled) {
-      restro_type = 'veg_non_veg'
+    if (!isEnabled) {
+      restro_type = 'veg_and_non_veg'
     } else {
       restro_type = 'veg'
     }
-    if (value1) {
+    if (value && value1) {
       setdata({...data, isLoading: true})
       var payload = {}
       const url = `${API_BASE}/restro/combinedSearchSortFilter`
@@ -268,12 +264,40 @@ const onStarRatingPress = (rating) => {
         userid: user?._id,
         lat: 28.4922,
         lng: 77.0966,
-        distance: value1.toFixed(1),
+        distance: value1.toFixed(1)+'',
+        rating_from_user: value.toFixed(1) + '',
+        is_sort: `${false}`,
+        is_filter: `${true}`,
+        restaurent_type: restro_type,
+      }
+       try {
+        const res = await axios.post(url, payload)
+        setdata({
+          ...data,
+          restroList: res?.data?.data?.restroNearMe,
+        })
+        setModal2(false)
+        setModal(false)
+        navigate('NearMe')
+      } catch (error) {
+        
+      }
+    }  
+   else if (value1) {
+      setdata({...data, isLoading: true})
+      var payload = {}
+      const url = `${API_BASE}/restro/combinedSearchSortFilter`
+      payload = {
+        userid: user?._id,
+        lat: 28.4922,
+        lng: 77.0966,
+        distance: value1.toFixed(1)+'',
         rating_from_user: undefined,
         is_sort: `${false}`,
         is_filter: `${true}`,
         restaurent_type: restro_type,
       }
+    
        try {
         const res = await axios.post(url, payload)
         setdata({
@@ -302,7 +326,7 @@ const onStarRatingPress = (rating) => {
         is_filter: `${true}`,
         restaurent_type: restro_type,
       }
-
+      
       try {
         const res = await axios.post(url, payload)
         setdata({
@@ -331,6 +355,7 @@ const onStarRatingPress = (rating) => {
         is_filter: `${true}`,
         restaurent_type: 'veg',
       }
+      
       try {
         const res = await axios.post(url, payload)
         setdata({
@@ -362,6 +387,7 @@ const onStarRatingPress = (rating) => {
         is_filter: `${true}`,
         restaurent_type: 'veg_and_non_veg',
       }
+      
       try {
         const res = await axios.post(url, payload)
         setdata({
@@ -369,6 +395,7 @@ const onStarRatingPress = (rating) => {
           restroList: res?.data?.data?.restroNearMe,
           restroType: res?.data?.data?.restroNearMe?.categoryNameArray
         })
+
         setModal2(false)
         setModal(false)
         navigate('NearMe')
@@ -697,8 +724,9 @@ const onStarRatingPress = (rating) => {
         <Searchbar
           style={styles.searchView}
           onIconPress={clearImmediate}
-          inputStyle={{fontSize: Scale(14), marginLeft: Scale(-15)}}
-          placeholder="Search restaurant, dishes(or food)..."
+          inputStyle={{fontSize: Scale(14), marginLeft: Scale(-15),
+          paddingVertical:Scale(10),}}
+          placeholder="Search restaurant, dishes(food)..."
           onChangeText={(text) => setSearch(text)}
           value={search}
         />
@@ -1113,6 +1141,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.GRAY_LINES,
     borderWidth: 0,
     width: '100%',
+    marginHorizontal:Scale(-5),
     fontSize: 12,
     marginTop: -12,
     backgroundColor: Colors.WHITE,
