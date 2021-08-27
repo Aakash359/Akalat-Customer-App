@@ -28,6 +28,7 @@ function OrderDetail(props) {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const [starCount, setStarCount] = useState(5)
+  const applyCoupon = useSelector((state) => state.coupon.applyCoupon)
   const [modal, setModal] = useState({
     visible: false,
     item: null,
@@ -37,6 +38,7 @@ function OrderDetail(props) {
     isLoading: true,
     errorMsg: '',
   })
+ 
 
     const ratingRes = props?.route?.params?.ratingRes;
     const RestroDetails =props?.route?.params?.restro_detail
@@ -60,6 +62,7 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
+    
       } catch (error) {
       setOrderDetail({
         ...orderDetail,
@@ -90,9 +93,7 @@ function OrderDetail(props) {
       status: 'CC',
     }
     props?.changeOrderStatusRequest(payload, (res) => {
-      console.log('====================================');
-      console.log("Aakash====>",res);
-      console.log('====================================');
+  
       if (!res?.data?.error) {
         
         dispatch({type: 'ORDER_LIST'})
@@ -103,6 +104,13 @@ function OrderDetail(props) {
     })
     navigate('MyOrders')
   }
+
+  const productRender = (productList) => {
+    return productList?.map((product) => {
+      return <Text style={{marginTop: 5, fontSize: 18}}>{`${product?.qty} x ${product?.product_detail?.name}`}</Text>
+    })
+  }
+
 
   
   return (
@@ -143,9 +151,14 @@ function OrderDetail(props) {
                 justifyContent: 'center',
               },
             ]}>
+             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             <Text style={{color: '#AB8F8E', fontSize: 17}}>
-              Transaction ID
+              Transaction ID :
             </Text>
+            <Text style={{color: Colors.BLACK, fontSize: 17,}}>
+              123ZYGDSW
+            </Text>
+            </View>
             <Text style={{marginTop: 5, fontSize: 18}}>
               {moment(orderDetail?.order?.order_date_placed).format(
                 'MMM D, LT',
@@ -154,9 +167,9 @@ function OrderDetail(props) {
             <Text style={{color: '#AB8F8E', fontSize: 17, marginTop: 15}}>
               Delivery Items
             </Text>
-            <Text style={{marginTop: 5, fontSize: 18}}>
-              $ {orderDetail?.order?.total_price}
-            </Text>
+            
+              {productRender(orderDetail?.order?.product_list)}
+           
           </View>
           <View style={[styles.cardStyle1]}>
             <Text style={{fontSize: 18, fontWeight: '700'}}>
@@ -260,7 +273,7 @@ function OrderDetail(props) {
           
           <View
             style={[styles.cardStyle,
-            [props?.route?.params?.restro_detail?.det?.dis ? { height: Scale(325)}:{ height: Scale(250)} ] ]}
+              [orderDetail?.order?.discounted_price ? {height: Scale(325)}:{height: Scale(250)}]]}
             >
             <Text style={[styles.primaryText, {marginLeft: Scale(-5)}]}>
               {props?.route?.params?.restro_detail.restro_name}
@@ -273,7 +286,7 @@ function OrderDetail(props) {
             </View>
 
             {
-              props?.route?.params?.restro_detail?.det?.dis ? ( 
+              orderDetail?.order?.discounted_price ? ( 
                 <View style={styles.bottomContainer}>
                 <Text style={styles.itemText1}>Total Discount</Text>
                 <Text style={styles.normatText1}>
@@ -313,12 +326,14 @@ function OrderDetail(props) {
                   {color: Colors.BLACK, fontWeight: '700'},
                 ]}>
                 $
-                { orderDetail?.order?.total_price -
-                  orderDetail?.order?.discounted_price +
-                  orderDetail?.order?.gst_charge_total
+                { 
+                 orderDetail?.order?.total_price
                 }
               </Text>
+             
+             
             </View>
+            
             <View
               style={{
                 marginVertical: Scale(10),
@@ -327,8 +342,8 @@ function OrderDetail(props) {
                 borderRadius: 1,
               }}
             />
-            {props?.route?.params?.restro_detail?.det?.dis ? (
-              <Text style={[styles.itemText, {color: 'green'}]}>
+            {orderDetail?.order?.discounted_price? (
+              <Text style={[styles.itemText, {color: 'green',textAlign:'center',marginTop:Scale(6)}]}>
                 You have saved ${orderDetail?.order?.discounted_price} on this
                 order
               </Text>
@@ -494,7 +509,11 @@ const styles = StyleSheet.create({
     fontSize: Scale(18),
      
   },
-  textStyle: {color: Colors.BLACK, fontSize: Scale(16), fontWeight: 'bold'},
+  textStyle: {
+    color: Colors.BLACK, 
+    fontSize: Scale(16), 
+    fontWeight: 'bold'
+  },
   loginInputCont: {
     flex: 1,
     paddingTop: Scale(10),
@@ -517,7 +536,10 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingTop: 5,
   },
-  iconStyles: {fontSize: Scale(20), color: Colors.APPCOLOR},
+  iconStyles: {
+    fontSize: Scale(20), 
+    color: Colors.APPCOLOR
+  },
   notificationStyle: {
     width: Scale(25),
     height: Scale(25),
@@ -546,7 +568,6 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE,
   },
   cardStyle: {
-    height: Scale(130),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),
@@ -557,7 +578,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
   },
   cardStyle1: {
-    height: Scale(120),
+    height: 'auto',
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),
@@ -568,7 +589,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
   },
   cardStyle3: {
-    height: Scale(110),
+    height: 'auto',
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),
@@ -579,7 +600,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
   },
   cardStyle2: {
-    height: Scale(120),
+    height: 'auto',
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),

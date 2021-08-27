@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {Text, View, StyleSheet, ImageBackground, Image} from 'react-native'
+import React, {useState, useEffect} from 'react'
+import {Text, View, StyleSheet, ImageBackground, Image,BackHandler,} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {Scale, Colors, ImagesPath} from '../../CommonConfig'
 import {CustomButton} from '../../Component'
@@ -11,8 +11,20 @@ function PlaceOrder(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   
+  const backAction = () => {
+        
+    navigate('NearMe')
+    
+    return true;
+  };
 
- 
+  
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, []);
  
   const redirectToHome = () => {
     navigate('NearMe')
@@ -30,6 +42,8 @@ function PlaceOrder(props) {
       <View style={styles.container}>
         <Image source={ImagesPath.checkmark} style={{alignSelf: 'center'}} />
         <Text style={styles.primaryText}>Order Placed Succusfully</Text>
+        
+
         <View style={{marginTop: Scale(40)}}>
           <CustomButton
             title="Track Order"

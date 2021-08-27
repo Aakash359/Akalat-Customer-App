@@ -64,7 +64,7 @@ function Card(props) {
 
   React.useEffect(() => {
     props?.AddressListRequest({created_by: props?.user?._id})
-
+    setCoupon('')
     props?.navigation.setOptions({headerShown: false})
   }, [])
 
@@ -134,6 +134,7 @@ function Card(props) {
 
 
   React.useEffect(() => {
+
 
   }, [applyCouponStatus,coupon])
 
@@ -385,7 +386,7 @@ function Card(props) {
               </TouchableOpacity>
             </View>
             <View
-              style={[ styles.cardStyle,[det?.dis ?  {height: Scale(325)}:{height: Scale(250)}]]}>
+              style={[ styles.cardStyle,[det?.dis ? {height: Scale(325)}:{height: Scale(250)}]]}>
 
               <Text style={[styles.primaryText, {marginLeft: Scale(-5)}]}>
                 {cartRestroDetails?.restro_name}
@@ -438,11 +439,13 @@ function Card(props) {
                   borderRadius: 1,
                 }}
               />
-              {det?.dis ? (
+              {
+               det?.dis ? (
                 <Text style={[styles.itemText, {color: 'green',textAlign:'center',marginTop:Scale(6)}]}>
                   You have saved ${det?.dis} on this order
                 </Text>
-              ) : null}
+              ) : null
+              }
             </View>
             {props?.addressList && props?.addressList?.length ? (
               <View
@@ -679,7 +682,7 @@ const styles = StyleSheet.create({
     tintColor: Colors.WHITE,
   },
   cardStyle: {
-    // height: Scale(120),
+   
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),

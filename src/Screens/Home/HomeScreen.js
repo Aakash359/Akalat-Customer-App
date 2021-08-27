@@ -24,39 +24,23 @@ function HomeScreen(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const [starCount, setStarCount] = useState(5)
-  const addFavouriteStatus = useSelector(
-    (state) => state.Home.addFavouriteStatus,
-  )
-
+ 
   const redirectToNotification = () => {
     navigate('Notification')
   }
   const {viewallData} = props.route.params
 
   const dispatch = useDispatch()
-
-  const restroResponse = useSelector((state) => state.Home.restroResponse)
-
-  const [restroItems, setrestroItems] = React.useState(
-    restroResponse?.data || [],
-  )
-  const [cartList, setcartList] = useState([])
-
-  const [data, setdata] = React.useState({
-    restroList: [],
-    isLoading: true,
-    resetStatus: false,
-  })
-
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
 
   const onFavorite = (item) => {
-    const restro = [...data?.restroList]
+    const restro = [...viewallData]
     const index = restro.findIndex((i) => i?._id === item?._id)
     restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
-    setdata({...data, restroList: restro})
+    setdata({...viewallData, restroList: restro})
+
     const payload = {
       userid: user?._id,
       restro_id: item?._id,
@@ -65,18 +49,18 @@ function HomeScreen(props) {
 
     dispatch(addfavouriteRequest(payload))
   }
+
+  const rawData = [...viewallData]
+
+  global.data = rawData
+  
+  console.log("global.data----->", global.data)
+
   useEffect( () => {
-    const {viewallData} = props.route.params
-     navigation.addListener('focus', () => {
 
-      if(viewallData){
-        viewallData
-      }
-    })
+   {global.data}
     
-
-    
-  }, [viewallData])
+  },)
 
   const renderItems = ({item,}) => (
     <View style={styles.cardStyle}>

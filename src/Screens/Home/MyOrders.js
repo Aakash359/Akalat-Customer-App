@@ -51,7 +51,8 @@ function MyOrders(props) {
 
   const productRender = (productList) => {
     return productList?.map((product) => {
-      return <Text>{`${product?.qty} x ${product?.product_detail?.name}`}</Text>
+      return <Text style={styles.itemText}>
+        {`${product?.qty} x ${product?.product_detail?.name}`}</Text>
     })
   }
 
@@ -97,7 +98,7 @@ function MyOrders(props) {
         {moment(item?.order_date_placed).format('MMM D, LT')}
       </Text>
       <Text style={styles.seconderyText}>Total Amount</Text>
-      <Text style={styles.itemText}>${item?.total_price-item.discounted_price+item.gst_charge_total}</Text>
+      <Text style={styles.itemText}>$ {item?.total_price}</Text>
       <View style={styles.heading}>
         <TouchableOpacity
           onPress={() => setModal({...modal, visible: true, item})}

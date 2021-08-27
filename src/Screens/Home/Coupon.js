@@ -66,6 +66,7 @@ function Coupon(props) {
           errorMsg: res?.data?.message,
           error: false,
         })
+       
         
       } else {
         setRestro({
@@ -100,10 +101,10 @@ function Coupon(props) {
   }
 
   const onFavorite = (item) => {
-    const restro = [...restro?.restroList]
-    const index = restro.findIndex((i) => i?._id === item?._id)
-    restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
-    setRestro({...restro, restroList: restro})
+    const data = [...restro?.restroList]
+    const index = data.findIndex((i) => i?._id === item?._id)
+    data[index] = {...data[index], is_favourited: !item?.is_favourited}
+    setRestro({...restro, restroList: data})
     const payload = {
       userid: user?._id,
       restro_id: item?._id,

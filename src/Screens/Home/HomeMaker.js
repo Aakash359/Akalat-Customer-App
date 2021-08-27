@@ -64,6 +64,9 @@ function HomeMaker(props) {
           productCategory: res?.data?.data?.product_list?.product_categories,
           isLoading: false,
         })
+        console.log('====================================');
+        console.log("ProductListResponse=====>",res?.data?.data?.product_list);
+        console.log('====================================');
        
        
        } else {

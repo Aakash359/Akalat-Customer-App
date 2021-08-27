@@ -43,7 +43,7 @@ function Payment(props) {
     const payload = {
       restro_id: restroDetails?._id,
       userid: user?._id,
-      total_price: totalCartAmt,
+      total_price: totalAmount,
       instruction,
       address_id: addressId,
       payment_mode: check,
@@ -55,6 +55,7 @@ function Payment(props) {
       discounted_price: det?.dis,
       transaction_id: '123',
     }
+  
     if (check) {
       props?.createOrder(payload, (res) => {
         navigate('PlaceOrder', {orderDetails: res?.data, restroDetails})
@@ -65,6 +66,8 @@ function Payment(props) {
   }
 
   const {totalCartAmt, det} = props?.route?.params
+  const totalAmount = totalCartAmt - det?.dis + (det?.tax + det?.delivery || 0)
+ 
 
   return (
     <View style={styles.container}>
