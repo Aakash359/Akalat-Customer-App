@@ -36,9 +36,6 @@ import {
 // ====================== Sign-Up POST ======================
 export const SignUpSaga = function* SignUpSaga({params}) {
   let data = params
-  console.log('====================================');
-  console.log("SignupData====>",data);
-  console.log('====================================');
   try {
     const response = yield call(Request, {
       url: '/addUser',

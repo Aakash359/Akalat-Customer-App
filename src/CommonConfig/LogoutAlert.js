@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Modal, TouchableOpacity, Text} from 'react-native'
 import {Scale, Colors, Fonts} from './index'
+
 export const LogoutAlert = ({
   visible,
   alertTitle,
@@ -32,7 +33,6 @@ export const LogoutAlert = ({
           <Text
             style={{
               fontSize: Scale(20),
-              // fontFamily: Fonts.Regular,
               color: Colors.BUTTON_COLOR,
               width: '80%',
               textAlign: 'center',
@@ -43,7 +43,6 @@ export const LogoutAlert = ({
           <Text
             style={{
               fontSize: Scale(16),
-              // fontFamily: Fonts.Medium,
               color: 'rgb(100,100,100)',
               width: '80%',
               textAlign: 'center',

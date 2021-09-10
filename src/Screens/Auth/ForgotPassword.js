@@ -47,10 +47,8 @@ function ForgotPassword(props) {
   const dispatch = useDispatch()
 
   const onSubmit = () => {
-    const forgotStatus = props
-    console.log('====================================');
-    console.log("Aakash====>",forgotStatus);
-    console.log('====================================');
+
+    
     if (phone == '') {
       alert('Please enter phone number')
     } else if (phone.length < 10) {
@@ -61,13 +59,21 @@ function ForgotPassword(props) {
         role: 'user',
         country_code: COUNTRY == 'IN' ? '91' : '971',
       }
+      console.log('====================================');
+      console.log("Payload======>",data);
+      console.log('====================================');
+      dispatch(OTPRequest(data))
 
-     
-      if (forgotStatus==='true'){
+      const forgotStatus = props?.forgotStatus
+      console.log('====================================');
+      console.log(props?.forgotStatus);
+      console.log('====================================');
+      if (forgotStatus){
+        alert(forgotStatus)
         navigate('Otp', data)
       }
+      // navigate('Otp', data)
       
-      dispatch(OTPRequest(data))
     }
   }
 

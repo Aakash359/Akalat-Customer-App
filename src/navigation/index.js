@@ -19,6 +19,7 @@ import {useSelector, useDispatch} from 'react-redux'
 
 const Stack = createStackNavigator()
 function index() {
+  
   const Home = () => {
     return (
       <Stack.Navigator>

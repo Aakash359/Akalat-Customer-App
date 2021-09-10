@@ -16,6 +16,7 @@ const appReducer = combineReducers({
   coupon:couponReducer
 })
 const rootReducer = (state, action) => {
+  
   if (action.type === LOGOUT_REQUEST) {
     state = undefined
   }

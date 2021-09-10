@@ -34,12 +34,13 @@ function HomeScreen(props) {
   const redirectToHomeMaker = (item) => {
     navigate('HomeMaker', {restroId: item?._id, restroDetails: item})
   }
+  
 
   const onFavorite = (item) => {
     const restro = [...viewallData]
     const index = restro.findIndex((i) => i?._id === item?._id)
     restro[index] = {...restro[index], is_favourited: !item?.is_favourited}
-    setdata({...viewallData, restroList: restro})
+    // setdaa({...viewallData, restroList: restro})
 
     const payload = {
       userid: user?._id,
@@ -50,17 +51,9 @@ function HomeScreen(props) {
     dispatch(addfavouriteRequest(payload))
   }
 
-  const rawData = [...viewallData]
+ 
 
-  global.data = rawData
   
-  console.log("global.data----->", global.data)
-
-  useEffect( () => {
-
-   {global.data}
-    
-  },)
 
   const renderItems = ({item,}) => (
     <View style={styles.cardStyle}>

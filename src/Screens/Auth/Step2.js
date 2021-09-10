@@ -26,6 +26,7 @@ import {connect} from 'react-redux'
 import { AuthStyle } from './AuthStyle';
 import { localize } from '../../Utils/Localization';
 import { CustomButton } from '../../Component';
+
 export class Step2 extends Component {
     state = {
         data: [
@@ -90,7 +91,8 @@ export class Step2 extends Component {
                             <ImageBackground source={ImagesPath.background} style={[AuthStyle.loginInputCont, { padding: Scale(25), }]}>
                                 <Text style={styles.primaryText}>Step 3</Text>
                                 <Text style={styles.normalText}>Deliver it hot</Text>
-                                <CustomButton title="Get Started" onSubmit={() => {this.props.navigation.navigate('SelectLoginSignup')
+                                <CustomButton title="Get Started" onSubmit={() => 
+                                {this.props.navigation.navigate('SelectLoginSignup')
                             this.props.setIntroComplete() }}isSecondary={true} />
 
                             </ImageBackground>

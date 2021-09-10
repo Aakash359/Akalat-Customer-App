@@ -153,7 +153,12 @@ export const SetEditProfileStatus = (data) => {
   }
 }
 
-export const setUserDetails = (payload) => ({type: SET_USER_DETAILS, payload})
+export const setUserDetails = (payload) => (
+  {
+    type: SET_USER_DETAILS, 
+    payload
+  }
+  )
 
 export const setOtpVerifyStatus = (payload) => ({
   type: SET_OTP_VERIFY_STATUS,
@@ -161,5 +166,7 @@ export const setOtpVerifyStatus = (payload) => ({
 })
 
 export function setIntroComplete() {
-  return {type: SET_INTRO_COMPLETE}
+  return {
+    type: SET_INTRO_COMPLETE
+  }
 }

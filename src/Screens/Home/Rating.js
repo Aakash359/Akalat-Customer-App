@@ -33,10 +33,9 @@ function Rating(props) {
     navigate('SavedCard')
   }
     
-  const OrderDetails = props.route.params 
-  console.log('====================================');
-  console.log("Aakash---->",OrderDetails?.OrderDetail?.order?._id);
-  console.log('====================================');
+  const orderDetail = props.route.params 
+ 
+  console.log("OrderId====>",orderDetail?.order?._id);
 
   const CustomRatingBar = () => {
     return (
@@ -76,19 +75,16 @@ function Rating(props) {
 
       const url = `${API_BASE}/order/rateReviewOrderFromUser`
     const payload = {
-      _id: OrderDetails?.OrderDetail?.order?._id,
+      _id: orderDetail?.order?._id,
       review_restro: rating,
       rating_restro: maxRating + '',
     }
-    console.log('====================================');
-    console.log("Aakash===>",payload);
-    console.log('====================================');
     try {
       const res = await axios.post(url, payload)
+      console.log('====================================');
+      console.log("RatingResponse======>",res);
+      console.log('====================================');
       alert('Order rated from user successfully!')
-      console.log('====================================');
-      console.log("RatingResponse=====>",res);
-      console.log('====================================');
       navigate('OrderDetails', { ratingRes : res} )
     } catch (error) {
       

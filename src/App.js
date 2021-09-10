@@ -28,6 +28,7 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
 });
 export class App extends Component {
+  
   componentDidMount() {
     SplashScreen.hide()
     NetInfo.addEventListener((state) => {

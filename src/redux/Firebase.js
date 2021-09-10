@@ -68,6 +68,7 @@ export const onNavigationOpendApp = (callback = undefined) => {
 }
 
 // Check whether an initial notification is available
+
 export const getInitailNotification = (callback = undefined) => {
     messaging()
         .getInitialNotification()

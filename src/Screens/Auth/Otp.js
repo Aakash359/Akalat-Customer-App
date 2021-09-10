@@ -51,7 +51,7 @@ function Otp(props) {
       dispatch(OTPVerifyRequest(data))
     }
   }
-
+π
   const onPress = () => {
     const data = {
       otp: otp,
@@ -60,8 +60,6 @@ function Otp(props) {
       country_code: COUNTRY == 'IN' ? '91' : '971',
       verification_status: 'true',
     }
-
-    navigate('Otp', data)
     dispatch(OTPRequest(data))
     alert('OTP has been sent successfully')
   }

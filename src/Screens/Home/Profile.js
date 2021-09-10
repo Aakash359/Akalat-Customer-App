@@ -13,7 +13,8 @@ function Profile(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-
+ 
+  
   const EditProfile = (user) => {
     navigate('EditProfile', {
       profileDetails: user,

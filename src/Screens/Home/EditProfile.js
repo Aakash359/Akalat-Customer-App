@@ -33,6 +33,10 @@ function Profile(props) {
   const {navigate} = useNavigation()
   const navigation = useNavigation()
 
+  console.log('====================================');
+  console.log("first_nam",first_name);
+  console.log('====================================');
+
   const onSave = async () => {
     let reg =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     const regMatch = /^[a-zA-Z]*$/

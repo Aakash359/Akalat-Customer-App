@@ -74,7 +74,9 @@ function NearMe(props) {
       starCount: rating
     });
   }
-   useEffect(() => {
+
+
+useEffect(() => {
 
      const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
@@ -100,6 +102,7 @@ function NearMe(props) {
       Geolocation.clearWatch()
     }
   }, [])
+
 
   const getOneTimeLocation = () => {
 

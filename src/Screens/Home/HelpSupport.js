@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,} from 'react';
 import { Text, View, StyleSheet, StatusBar, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
@@ -29,7 +29,7 @@ function HelpSupport(props) {
             const data = { 
                 'subject_for_support': sub,
                 'description_for_support':des,
-                }
+            }
                    
               navigate('MyAccount')
               dispatch(HelpRequest(data));

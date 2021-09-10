@@ -41,6 +41,7 @@ function OrderDetail(props) {
  
 
     const ratingRes = props?.route?.params?.ratingRes;
+    // console.log("Aakash====>",ratingRes);
     const RestroDetails =props?.route?.params?.restro_detail
     const products =props?.route?.params?.product_list || []
     const {totalCartAmt, det} = props?.route?.params
@@ -62,6 +63,7 @@ function OrderDetail(props) {
         order: res?.data?.data[0],
         isLoading: false,
       })
+      // console.log("OrderDearils=====>",orderDetail);
     
       } catch (error) {
       setOrderDetail({
@@ -243,7 +245,7 @@ function OrderDetail(props) {
              </View>
              
              :
-             <TouchableOpacity onPress={() => navigate('Rating', {OrderDetail:orderDetail})}>
+             <TouchableOpacity onPress={() => navigate('Rating', orderDetail)}>
              <View
                style={{
                  height: '65%',
@@ -600,7 +602,7 @@ const styles = StyleSheet.create({
     borderRadius: Scale(5),
   },
   cardStyle2: {
-    height: 'auto',
+    height: Scale(120),
     width: '90%',
     backgroundColor: '#ffffff',
     borderWidth: Scale(1),

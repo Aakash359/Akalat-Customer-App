@@ -10,7 +10,7 @@ target 'ResturantCustomer' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
-
+  pod 'Firebase/Analytics'
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
@@ -25,10 +25,10 @@ target 'ResturantCustomer' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!
-  post_install do |installer|
-    flipper_post_install(installer)
-  end
+  # use_flipper!
+  # post_install do |installer|
+  #   flipper_post_install(installer)
+  # end
 end
 
 target 'ResturantCustomer-tvOS' do

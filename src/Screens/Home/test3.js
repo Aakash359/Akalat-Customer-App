@@ -1,0 +1,7 @@
+"@react-native-community/push-notification-ios": "^1.1.1",
+"@react-native-firebase/admob": "^10.1.1",
+"@react-native-firebase/analytics": "^10.1.1",
+"@react-native-firebase/app": "^10.1.0",
+"@react-native-firebase/dynamic-links": "^10.1.1",
+"@react-native-firebase/iid": "^10.1.1",
+"@react-native-firebase/messaging": "^10.1.1",

@@ -32,13 +32,7 @@ function Settings() {
   const {isLoading} = useSelector((state) => state.Auth)
   const user = useSelector((state) => state.Auth.user)
 
-  
-
-  console.log('====================================');
-  console.log("Aakaash======>",toggleStatus);
-  console.log('====================================');
-  
-  
+   
   const setCheckedSwitch = () => {
 
     const data = {

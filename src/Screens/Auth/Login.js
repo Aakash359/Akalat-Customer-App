@@ -128,7 +128,7 @@ function Login(props) {
               onSelect={(country_Code) => setCountryCode(country_Code)}
               defaultIndex={0}
               showsVerticalScrollIndicator={false}
-              defaultValue={countryList.dial_code || '+91'}
+              defaultValue={countryList.dial_code ||'+91'}
               style={styles.modal}
               textStyle={styles.modalText}
               dropdownStyle={styles.modalDropDown}
