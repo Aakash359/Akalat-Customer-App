@@ -38,7 +38,7 @@ function Favorites() {
       userid: user?._id,
     }
      dispatch(favouriteListLoader(true))
-      dispatch(favouriteListRequest(data))
+     dispatch(favouriteListRequest(data))
   }, [])
 
   const onFavorite = (item) => {

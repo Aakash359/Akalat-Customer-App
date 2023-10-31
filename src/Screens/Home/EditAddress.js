@@ -40,7 +40,7 @@ function EditAddress(props) {
   const user = useSelector((state) => state.Auth.user)
   const dispatch = useDispatch()
   const [location, setLocation] = useState(null)
-  const addAddressStatus = useSelector((state) => state.Setting.addAddressStatus)
+   console.log("Aakash===>",address);  
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {

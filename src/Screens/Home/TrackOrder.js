@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
         color: Colors.APPCOLOR,
         width: Scale(40),
         height: Scale(40),
-        
         resizeMode: 'contain',
     },
     imageStyle:{

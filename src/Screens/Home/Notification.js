@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { Text,Image, View, StyleSheet, StatusBar,FlatList, ImageBackground } from 'react-native';
 import { Icon } from 'native-base';
 import { Colors, Scale, ImagesPath } from '../../CommonConfig';
-import Accordion from '../../Component/Accordion';
 import { useNavigation } from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
 import { setFcmToken,  } from '../../CommonConfig/HelperFunctions/AppHelper'
@@ -22,6 +21,7 @@ function Notification() {
 
     const getToken = async () => {
       const token = await messaging().getToken();
+      console.log("Taoken",token);
       setFcmToken(token)
      
     };
